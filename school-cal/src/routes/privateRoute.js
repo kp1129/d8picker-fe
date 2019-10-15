@@ -1,20 +1,26 @@
-import {React , useContext} from "react" 
+import React , {useContext} from "react" 
 import {Redirect , Route} from "react-router-dom"
+import db from '../firebase/index'
 
-const privateRoute = ({component : Component, ...rest}) => { 
-    //const {ifUserCurrent} = useContext()
+const PrivateRoute = ({component : Component, ...rest}) => {  
+    //const {ifUserCurrent} = useContext()  
+    console.log(db);
+
   return (
-      <Route 
-       {...rest} 
-       render = {props => 
-        !!ifUserCurrent ? (
-         <Component {...props}/> 
-        ) : (
-        <Redirect to = {"login"} />
-        )
-    } 
-    />
-  ) 
+      <div>
+        <h1>Private Route</h1>
+      </div>
+      //<Route 
+    //    {...rest} 
+    //    render = {props => 
+    //     !!ifUserCurrent ? (
+    //      <Component {...props}/> 
+    //     ) : (
+    //     <Redirect to = {"login"} />
+    //     )
+    // } 
+   // />
+  )
 } 
 
-export default privateRoute;
+export default PrivateRoute;
