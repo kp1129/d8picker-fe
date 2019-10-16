@@ -53,7 +53,7 @@ const Navbar = ({ drawerWidth }) => {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Calendar
+            School Calendar
           </Typography>
           <Button color="inherit" onClick={signOut}>
             Sign Out

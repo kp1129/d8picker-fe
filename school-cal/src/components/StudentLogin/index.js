@@ -67,13 +67,7 @@ export default function AdminLogin() {
   const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
 
 
-  const login = event => {
-    event.preventDefault();
-    firebase.auth().signInWithEmailAndPassword(credentials.email, credentials.password)
-    .then(res =>{
-        console.log(res)
-    })
-  }
+
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
@@ -93,9 +87,9 @@ export default function AdminLogin() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Admin Login
+          Student Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={login}>
+        <form className={classes.form} noValidate onSubmit={event => {}}>
           <Grid container spacing={2}>
 
             <Grid item xs={12}>
@@ -145,7 +139,7 @@ export default function AdminLogin() {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/AdminRegister">
+                <RouterLink to="/StudentRegister">
                   Don't have an account?
                 </RouterLink>
               </Link>
@@ -154,7 +148,7 @@ export default function AdminLogin() {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
+                <RouterLink to="/AdminRegister">Not an Student?</RouterLink>
               </Link>
             </Grid>
           </Grid>

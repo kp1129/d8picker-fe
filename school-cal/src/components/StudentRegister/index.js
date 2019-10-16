@@ -160,7 +160,8 @@ export default function Login() {
           <Grid container justify="center">
             <Grid item>
               <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <RouterLink to='/StudentLogin'>Already have an account? Sign in</RouterLink>
+                
               </Link>
             </Grid>
           </Grid>
