@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./components/Login";
+import Landing from "./pages/Landing";
+import AdminLogin from "./components/AdminLogin";
 import StudentRegister from "./components/StudentRegister";
 import AdminRegister from "./components/AdminRegister";
 import AdminDashboard from "./components/AdminDashboard/DummyAdminDashboard";
@@ -10,11 +11,11 @@ const AppRouter = () => {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" /> {/* For a future landing page */}
-          <Route path="/AdminLogin" component={Login} />
+          <Route exact path="/" component={Landing} />
+          <Route path="/AdminLogin" component={AdminLogin} />
           <Route path="/StudentRegister" component={StudentRegister} />
           <Route path="/AdminRegister" component={AdminRegister} />
-          <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
+          <PrivateRoute path="/AdminDashboard" component={AdminDashboard} />
         </Switch>
       </Router>
     </>
