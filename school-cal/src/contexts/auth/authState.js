@@ -4,8 +4,8 @@ import { app, db } from "../../firebase";
 //import GoogleAPI from "../../services/googleAPI";
 import {
   IS_LOADING,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAILURE,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
@@ -19,7 +19,7 @@ export const AuthContext = createContext();
 export const AuthState = props => {
   const initialState = {
     isLoading: false,
-    loginError: null,
+    signInError: null,
     signUpError: null,
     signOutError: null,
     currentUser: null
@@ -57,12 +57,13 @@ export const AuthState = props => {
     }
   };
   const signInWithEmailAndPassword = async (email, password) => {
+    
     dispatch({ type: IS_LOADING, payload: true });
     try {
       await app.auth().signInWithEmailAndPassword(email, password);
-      dispatch({ type: LOGIN_SUCCESS, payload: true });
+      dispatch({ type: SIGNIN_SUCCESS, payload: true });
     } catch (error) {
-      dispatch({ type: LOGIN_FAILURE, payload: error.message });
+      dispatch({ type: SIGNIN_FAILURE, payload: error });
     }
   };
 
@@ -97,7 +98,7 @@ export const AuthState = props => {
     <AuthContext.Provider
       value={{
         isLoading: state.isLoading,
-        loginError: state.loginError,
+        signInError: state.signInError,
         signUpError: state.signUpError,
         currentUser: state.currentUser,
         signInWithEmailAndPassword,

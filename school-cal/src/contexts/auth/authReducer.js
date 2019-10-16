@@ -1,7 +1,7 @@
 import {
   IS_LOADING,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
+  SIGNIN_SUCCESS,
+  SIGNIN_FAILURE,
   SIGNIN_WITH_GOOGLE_SUCCESS,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
@@ -17,34 +17,30 @@ const setIsLoading = (state, action) => {
     isLoading: action.payload
   };
 };
-const setLoginSuccess = (state, action) => {
+const setSignInSuccess = (state, action) => {
   return {
     ...state,
-    isAuthenticated: true,
     isLoading: false
   };
 };
 
-const setLoginFailure = (state, action) => {
+const setSignInFailure = (state, action) => {
   return {
     ...state,
-    isAuthenticated: false,
-    loginError: action.payload,
+
+    signInError: action.payload,
     isLoading: false
   };
 };
 const setSignInWithGoogleSuccess = (state, action) => {
   return {
     ...state,
-    isAuthenticated: true,
-    gAccessToken: action.payload,
     isLoading: false
   };
 };
 const setSignUpSuccess = (state, action) => {
   return {
     ...state,
-    isAuthenticated: true,
     isLoading: false
   };
 };
@@ -52,7 +48,6 @@ const setSignUpSuccess = (state, action) => {
 const setSignUpFailure = (state, action) => {
   return {
     ...state,
-    isAuthenticated: false,
     isLoading: false
   };
 };
@@ -60,7 +55,7 @@ const setSignUpFailure = (state, action) => {
 const setSignOutSuccess = (state, action) => {
   return {
     ...state,
-    isAuthenticated: false
+    currentUser: null
   };
 };
 const setSignOutFailure = (state, action) => {
@@ -79,10 +74,10 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case IS_LOADING:
       return setIsLoading(state, action);
-    case LOGIN_SUCCESS:
-      return setLoginSuccess(state, action);
-    case LOGIN_FAILURE:
-      return setLoginFailure(state, action);
+    case SIGNIN_SUCCESS:
+      return setSignInSuccess(state, action);
+    case SIGNIN_FAILURE:
+      return setSignInFailure(state, action);
     case SIGNIN_WITH_GOOGLE_SUCCESS:
       localStorage.setItem("state", JSON.stringify(action.payload));
       return setSignInWithGoogleSuccess(state, action);

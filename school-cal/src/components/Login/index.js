@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext,useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
-import { Link as RouterLink } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -14,8 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import { Redirect } from 'react-router-dom'
 import { AuthContext } from "../../contexts/auth/authState";
-import { db } from "../../firebase/index";
+import {emailLoginHandler, useSession} from '../../utilities/useAuth';
+
+import firebase, { db } from "../../firebase/index";
 
 function Copyright() {
   return (
@@ -55,50 +57,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AdminLogin({ history }) {
+export default function Login() {
   const classes = useStyles();
 
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const {
-    currentUser,
-    isLoading,
-    signInError,
-    signInWithEmailAndPassword
-  } = useContext(AuthContext);
+  const [credentials, setCredentials] = useState({ email: "", password: "password" });
+  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (signInError) {
-      if (signInError.code === "auth/invalid-email") {
-        setEmailError(true);
-      }
-
-      if (signInError.code === "auth/wrong-password") {
-        setPasswordError(true);
-      }
-    }
-  }, [signInError]);
-
-  useEffect(() => {
-    if (currentUser) {
-      history.push("/admin-dashboard");
-    }
-  });
-
-  const login = event => {
-    event.preventDefault();
-
-    signInWithEmailAndPassword(credentials.email, credentials.password);
-    if (currentUser) {
-      console.log("no-error");
-      history.push("/admin-dashboard");
-    }
-  };
 
   const handleChange = event => {
     setCredentials({ ...credentials, [event.target.name]: event.target.value });
   };
+
+ 
+  
+  if (isLoading) {
+    return <Redirect to="/studentdashboard" />;
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -108,17 +82,11 @@ export default function AdminLogin({ history }) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Admin Login
+          Login
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={event => {
-            event.preventDefault();
-            signInWithEmailAndPassword(credentials.email, credentials.password);
-          }}
-        >
+        <form className={classes.form} noValidate onSubmit={event => {event.preventDefault(); signInWithEmailAndPassword(credentials.email, credentials.password)}}>
           <Grid container spacing={2}>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -133,6 +101,7 @@ export default function AdminLogin({ history }) {
               />
             </Grid>
             <Grid item xs={12}>
+
               <TextField
                 variant="outlined"
                 required
@@ -162,19 +131,10 @@ export default function AdminLogin({ history }) {
           >
             Log In
           </Button>
-          <Grid container justify="center">
+          <Grid container justify="flex-end">
             <Grid item>
-              <Link variant="body2">
-                <RouterLink to="/AdminRegister">
-                  Don't have an account?
-                </RouterLink>
-              </Link>
-            </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <Grid item>
-              <Link variant="body2">
-                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
+              <Link href="#" variant="body2">
+                Don't have an account?
               </Link>
             </Grid>
           </Grid>

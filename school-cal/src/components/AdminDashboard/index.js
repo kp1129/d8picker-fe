@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing(10, 3)
+    padding: theme.spacing(10, 2)
   },
   list: {
     textAlign: "center"
@@ -40,6 +40,7 @@ const AdminDashBoard = () => {
   const classes = useStyles();
   return (
     <div className={getDayClasses.root}>
+      <Navbar drawerWidth={drawerWidth} />
       <Drawer
         anchor="left"
         classes={{ paper: classes.drawerPaper }}
