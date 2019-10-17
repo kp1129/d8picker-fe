@@ -47,17 +47,15 @@ export const AuthState = props => {
         .doc(data.user.uid)
         .set({
           firstName: values.firstName,
-          lastName: values.lastName,
-          phoneNumber: values.phoneNumber
+          lastName: values.lastName
         });
 
       dispatch({ type: SIGNUP_SUCCESS, payload: true });
     } catch (error) {
-      dispatch({ type: SIGNUP_FAILURE, payload: error.message });
+      dispatch({ type: SIGNUP_FAILURE, payload: error });
     }
   };
   const signInWithEmailAndPassword = async (email, password) => {
-    
     dispatch({ type: IS_LOADING, payload: true });
     try {
       await app.auth().signInWithEmailAndPassword(email, password);

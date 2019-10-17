@@ -1,16 +1,7 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../contexts/auth/authState";
+import React from 'react';
+import fireapp from "../../firebase/index";
+
 import Navbar from "../../components/Navbar";
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import Button from "@material-ui/core/Button";
-import Drawer from "@material-ui/core/Drawer";
-import Divider from "@material-ui/core/Divider";
-// full calendar
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
 
 import { app } from "../../firebase";
 import { getDayClasses } from "@fullcalendar/core";
@@ -53,16 +44,6 @@ const AdminDashBoard = () => {
           <Button>Add Event</Button>
         </List>
       </Drawer>
-
-      <main className={classes.content}>
-        <FullCalendar
-          defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
-          events={[{ title: "Sample Meeting", date: "2019-10-14" }]}
-        />
-      </main>
-    </div>
-  );
+      </div>
+  )
 };
-
-export default AdminDashBoard;

@@ -18,6 +18,9 @@ const Navbar = ({ drawerWidth }) => {
     menuButton: {
       marginRight: theme.spacing(2)
     },
+    greeting: {
+      marginRight: theme.spacing(2)
+    },
     title: {
       flexGrow: 1
     },
@@ -32,9 +35,7 @@ const Navbar = ({ drawerWidth }) => {
   useEffect(() => {
     const getUserProfile = async () => {
       try {
-        const profileRef = await db
-          .collection("userProfiles")
-          .doc(currentUser.uid);
+        const profileRef = await db.collection("users").doc(currentUser.uid);
 
         const profile = await profileRef.get();
         setUserProfile(profile.data());
@@ -55,6 +56,11 @@ const Navbar = ({ drawerWidth }) => {
           <Typography variant="h6" className={classes.title}>
             School Calendar
           </Typography>
+          {userProfile && (
+            <Typography className={classes.greeting}>
+              Hello, {userProfile.firstName}
+            </Typography>
+          )}
           <Button color="inherit" onClick={signOut}>
             Sign Out
           </Button>
