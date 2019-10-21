@@ -1,188 +1,78 @@
 import React, { useContext, useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import { Link as RouterLink } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-
+import { CssBaseline, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import AdminLoginForm from "./AdminLoginForm";
 import { AuthContext } from "../../contexts/auth/authState";
-import { db } from "../../firebase/index";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
+import { Formik } from "formik";
+import * as Yup from "yup";
+import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg";
 const useStyles = makeStyles(theme => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white
-    }
+  root: {
+    flexGrow: 1
   },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+  image: {
+    width: "100%",
+    height: "100%"
   }
 }));
 
-export default function AdminLogin({ history }) {
-  const classes = useStyles();
-
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+const AdminLogin = ({ history }) => {
   const {
     currentUser,
     isLoading,
     signInError,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signInWithGoogle
   } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (signInError) {
-      if (signInError.code === "auth/invalid-email") {
-        setEmailError(true);
-      }
-
-      if (signInError.code === "auth/wrong-password") {
-        setPasswordError(true);
-      }
-    }
-  }, [signInError]);
+  const classes = useStyles();
 
   useEffect(() => {
     if (currentUser) {
       history.push("/admin-dashboard");
     }
+  }, [currentUser]);
+
+  const AdminLoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email.")
+      .required("Email is required."),
+    password: Yup.string()
+      .min(6, "Password must be greater 6 characters.")
+      .required("Password is required.")
   });
 
-  const login = event => {
-    event.preventDefault();
-
-    signInWithEmailAndPassword(credentials.email, credentials.password);
-    if (currentUser) {
-      console.log("no-error");
-      history.push("/admin-dashboard");
-    }
-  };
-
-  const handleChange = event => {
-    setCredentials({ ...credentials, [event.target.name]: event.target.value });
-  };
-
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Admin Login
-        </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={event => {
-            event.preventDefault();
-            signInWithEmailAndPassword(credentials.email, credentials.password);
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={credentials.email}
-                onChange={handleChange}
+    <div className={classes.root}>
+      <Grid container>
+        <Grid item md={6}>
+          <img
+            className={classes.image}
+            src={desktopCalendarImg}
+            alt={"desktopCalendar"}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            onSubmit={(values, actions) => {
+              signInWithEmailAndPassword(values);
+              actions.resetForm();
+            }}
+            render={formikProps => (
+              <AdminLoginForm
+                {...formikProps}
+                isLoading={isLoading}
+                signInError={signInError}
+                signInWithGoogle={signInWithGoogle}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={credentials.password}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Stay signed in."
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Log In
-          </Button>
-          <Grid container justify="center">
-            <Grid item>
-              <Link variant="body2">
-                <RouterLink to="/AdminRegister">
-                  Don't have an account?
-                </RouterLink>
-              </Link>
-            </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <Grid item>
-              <Link variant="body2">
-                <RouterLink to="/StudentRegister">Not an Admin?</RouterLink>
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+            )}
+            validationSchema={AdminLoginSchema}
+          />
+        </Grid>
+      </Grid>
+    </div>
   );
-}
+};
+
+export default AdminLogin;

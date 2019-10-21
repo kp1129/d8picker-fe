@@ -1,8 +1,9 @@
-import React from 'react';
-import fireapp from "../../firebase/index";
+import React, { useContext, useEffect } from "react";
+import { Button, Divider, Drawer, List } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import Navbar from "../../components/Navbar";
-
+import { AuthContext } from "../../contexts/auth/authState";
 import { app } from "../../firebase";
 import { getDayClasses } from "@fullcalendar/core";
 const drawerWidth = 240;
@@ -27,7 +28,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AdminDashBoard = () => {
+const AdminDashBoard = ({ history }) => {
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!currentUser) {
+      history.push("/admin-signin");
+    }
+  }, [currentUser]);
+
   const classes = useStyles();
   return (
     <div className={getDayClasses.root}>
@@ -44,6 +53,8 @@ const AdminDashBoard = () => {
           <Button>Add Event</Button>
         </List>
       </Drawer>
-      </div>
-  )
+    </div>
+  );
 };
+
+export default AdminDashBoard;

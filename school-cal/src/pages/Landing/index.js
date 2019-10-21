@@ -13,6 +13,12 @@ const Landing = () => {
         <ListItem>
           <Link to="/admin-register">Admin Register</Link>
         </ListItem>
+        <ListItem>
+          <Link to="/student-register">Student Register</Link>
+        </ListItem>
+        <ListItem>
+          <Link to="/student-signin">Student Sign In</Link>
+        </ListItem>
       </List>
     </>
   );

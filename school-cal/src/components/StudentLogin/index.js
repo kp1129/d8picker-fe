@@ -139,7 +139,7 @@ export default function AdminLogin() {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/StudentRegister">
+                <RouterLink to="/student-register">
                   Don't have an account?
                 </RouterLink>
               </Link>
@@ -148,7 +148,7 @@ export default function AdminLogin() {
           <Grid container justify="center">
             <Grid item>
               <Link variant="body2">
-                <RouterLink to="/AdminRegister">Not an Student?</RouterLink>
+                <RouterLink to="/admin-signin">Not an Student?</RouterLink>
               </Link>
             </Grid>
           </Grid>

@@ -48,6 +48,7 @@ const setSignUpSuccess = (state, action) => {
 const setSignUpFailure = (state, action) => {
   return {
     ...state,
+    signUpError: action.payload,
     isLoading: false
   };
 };
