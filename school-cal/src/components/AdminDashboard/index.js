@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import EventDisplay from '../Events/EventDisplay';
 import {
   Button,
   Divider,
@@ -65,6 +66,9 @@ const AdminDashBoard = ({ history }) => {
           </ListItem>
         </List>
       </Drawer>
+      <main className="classes.content">
+        <EventDisplay />
+      </main>
       <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
     </div>
   )

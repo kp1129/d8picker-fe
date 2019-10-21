@@ -22,17 +22,17 @@ export default function Landing() {
   }, [])
   console.log(calendars)
 
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection("calendars")
-      .doc("")
-      .collection("events")
-      .get()
-      .then(docs => {
-        console.log(docs)
-      })
-  }, [])
+  // useEffect(() => {
+  //   firebase
+  //     .firestore()
+  //     .collection("calendars")
+  //     .doc("")
+  //     .collection("events")
+  //     .get()
+  //     .then(docs => {
+  //       console.log(docs)
+  //     })
+  // }, [])
 
   return (
     <>
