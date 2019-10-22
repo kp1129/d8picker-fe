@@ -5,24 +5,53 @@ import './EventDisplay.css'
 
 const EventDisplay = () => {
     const [data, setData] = useState([]);
+
+    const eventsDbRef = db
+        .collection("calendars")
+        .doc("aWBlKnc7wrTCOQenDfaA")
+        .collection("events");
+
     useEffect(() => {
-        db
-            .collection("calendars")
-            .doc("aWBlKnc7wrTCOQenDfaA")
-            .collection("events")
+        eventsDbRef
             .get()
             .then(snapshot => {
-                setData(snapshot.docs.map(doc=> doc.data()))
+                snapshot.docs.map(doc => console.log(doc.id))
+                setData(snapshot.docs.map(doc => doc.data()))
             })
             .catch(err=> console.log('something is up', err))
     },[])
 
+        // useEffect(() => {
+    //     eventsDbRef
+    //         .get()
+    //         .then(snapshot => {
+    //             snapshot.docs.map(doc => console.log(doc.id))
+    //             setData(snapshot.docs.map(doc => doc.data()))
+    //         })
+    //         .catch(err=> console.log('something is up', err))
+    // },[])
+    // useEffect(() => {
+    //     eventsDbRef
+    //         .onSnapshot(
+    //             // doc => {
+    //             //     console.log('docs', doc)
+    //             // },
+    //             // err => {
+    //             //     console.log('error', err)
+    //             // }
+    //         )
+    // },[])
+
+    const deleteEvent = () => {
+
+    }
     // const [events, setEvents] = useState([]);
     // const async snapshot = await firebase.firebase().collection('calendars').doc('aWBlKnc7wrTCOQenDfaA').collection('events').get()
     // console.log('this is the snapshop', snapshot)
 
     // return snapshot.docs.map(doc => doc.data())
     return (
+
         <div className='event-display-container'>
             <h1>Events Go HERE</h1>
             <ul 
@@ -32,7 +61,6 @@ const EventDisplay = () => {
                     <li
                         className='event-display-card'
                         key={item.date}
-                    
                     >
                         <br />
                         When: {item.date}
@@ -44,6 +72,7 @@ const EventDisplay = () => {
                         Name: {item.name}
                         <br />
                         User ID: {item.uid}
+                        <button>X</button>
                     </li>
                 ))}
             </ul>
