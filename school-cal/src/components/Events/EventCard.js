@@ -4,6 +4,7 @@ const EventCard = (props) => {
 
     return (
         <>
+        
         </>
     )
 }
