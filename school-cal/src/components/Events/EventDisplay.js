@@ -25,10 +25,25 @@ const EventDisplay = () => {
     return (
         <div className='event-display-container'>
             <h1>Events Go HERE</h1>
-            <ul>
+            <ul 
+                className='event-display-cards'
+                >
                 {data.map(item => (
-                    <li key={item.date}>
-                        {item.useEffect}:{item.date}
+                    <li
+                        className='event-display-card'
+                        key={item.date}
+                    
+                    >
+                        <br />
+                        When: {item.date}
+                        <br />
+                        description: {item.description}
+                        <br />
+                        Location: {item.location}
+                        <br />
+                        Name: {item.name}
+                        <br />
+                        User ID: {item.uid}
                     </li>
                 ))}
             </ul>
