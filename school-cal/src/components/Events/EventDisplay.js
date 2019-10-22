@@ -4,7 +4,7 @@ import firebase, { db } from '../../firebase/'
 import './EventDisplay.css'
 
 const EventDisplay = () => {
-
+    const [data, setData] = useState([]);
     useEffect(() => {
         db
             .collection("calendars")
@@ -12,8 +12,9 @@ const EventDisplay = () => {
             .collection("events")
             .get()
             .then(snapshot => {
-                snapshot.docs.map(doc => console.log(doc.data()))
+                setData(snapshot.docs.map(doc=> doc.data()))
             })
+            .catch(err=> console.log('something is up', err))
     },[])
 
     // const [events, setEvents] = useState([]);
@@ -24,6 +25,13 @@ const EventDisplay = () => {
     return (
         <div className='event-display-container'>
             <h1>Events Go HERE</h1>
+            <ul>
+                {data.map(item => (
+                    <li key={item.date}>
+                        {item.useEffect}:{item.date}
+                    </li>
+                ))}
+            </ul>
 
         </div>
     )
