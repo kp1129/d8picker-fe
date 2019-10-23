@@ -42,7 +42,7 @@ const AdminDashBoard = ({ history }) => {
   const [isAddEventOpen, setAddEvent] = useState(false)
   useEffect(() => {
     if (!currentUser) {
-      // history.push("/sign-in")
+      history.push("/sign-in")
     }
   }, [currentUser])
 
