@@ -6,8 +6,8 @@ import StudentRegister from "./components/StudentRegister"
 import StudentLogin from "./components/StudentLogin"
 import Registration from "./pages/Registration"
 import StudentDashboard from "./components/StudentDashboard"
+import AdminDashboard from "./components/AdminDashboard";
 
-import AdminDashboard from "./components/AdminDashboard"
 
 const AppRouter = () => {
   return (
