@@ -8,7 +8,7 @@ const EventDisplay = () => {
 
     const eventsDbRef = db
         .collection("calendars")
-        .doc("U3pUUyW2xKV0nleepKrP")
+        .doc("2ErFGeyXi7p7yYeOaOvH")
         .collection("events");
     //keep in state first calendar as default, have dropdown select for individual calendars
 
