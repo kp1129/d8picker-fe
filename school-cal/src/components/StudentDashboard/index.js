@@ -1,9 +1,6 @@
-import React from 'react';
+import React from "react"
 
- const StudentDashboard = () => {
-
-    return(
-        <h1>Future Student Dash/ Settings page</h1>
-    )
+const StudentDashboard = () => {
+  return <h1>Future Student Dash/ Settings page</h1>
 }
-export default StudentDashboard;
+export default StudentDashboard

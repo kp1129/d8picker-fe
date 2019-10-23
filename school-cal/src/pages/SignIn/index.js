@@ -1,37 +1,37 @@
-import React, { useContext, useState, useEffect } from "react";
-import { CssBaseline, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
-import AdminLoginForm from "./AdminLoginForm";
-import { AuthContext } from "../../contexts/auth/authState";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg";
+import React, { useContext, useState, useEffect } from "react"
+import { CssBaseline, Grid } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core"
+import AdminLoginForm from "./SignInForm"
+import { AuthContext } from "../../contexts/auth/authState"
+import { Formik } from "formik"
+import * as Yup from "yup"
+import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   image: {
     width: "100%",
-    height: "100%"
-  }
-}));
+    height: "100%",
+  },
+}))
 
-const AdminLogin = ({ history }) => {
+const SignIn = ({ history }) => {
   const {
     currentUser,
     isLoading,
     signInError,
     signInWithEmailAndPassword,
-    signInWithGoogle
-  } = useContext(AuthContext);
+    signInWithGoogle,
+  } = useContext(AuthContext)
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
     if (currentUser) {
-      history.push("/admin-dashboard");
+      history.push("/admin-dashboard")
     }
-  }, [currentUser]);
+  }, [currentUser])
 
   const AdminLoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -39,8 +39,8 @@ const AdminLogin = ({ history }) => {
       .required("Email is required."),
     password: Yup.string()
       .min(6, "Password must be greater 6 characters.")
-      .required("Password is required.")
-  });
+      .required("Password is required."),
+  })
 
   return (
     <div className={classes.root}>
@@ -56,8 +56,8 @@ const AdminLogin = ({ history }) => {
           <Formik
             initialValues={{ email: "", password: "" }}
             onSubmit={(values, actions) => {
-              signInWithEmailAndPassword(values);
-              actions.resetForm();
+              signInWithEmailAndPassword(values)
+              actions.resetForm()
             }}
             render={formikProps => (
               <AdminLoginForm
@@ -72,7 +72,7 @@ const AdminLogin = ({ history }) => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default AdminLogin;
+export default SignIn

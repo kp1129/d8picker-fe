@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Avatar,
   Box,
@@ -15,8 +15,8 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography
-} from "@material-ui/core";
+  Typography,
+} from "@material-ui/core"
 const copyRight = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -27,47 +27,47 @@ const copyRight = () => {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white
-    }
+      backgroundColor: theme.palette.common.white,
+    },
   },
   paper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
     padding: "0 20px",
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   formControl: {
-    minWidth: 160
+    minWidth: 160,
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   signInWithGoogle: {
-    margin: theme.spacing(2, 0, 2)
+    margin: theme.spacing(2, 0, 2),
   },
 
   progress: {
     margin: theme.spacing(1),
-    color: "white"
+    color: "white",
   },
   link: {
-    textAlign: "center"
-  }
-}));
+    textAlign: "center",
+  },
+}))
 const RegistrationForm = ({
   values,
   errors,
@@ -77,18 +77,19 @@ const RegistrationForm = ({
   handleBlur,
   signInWithGoogle,
   isLoading,
-  signUpError
+  signUpError,
 }) => {
-  const classes = useStyles();
-  const [fireBaseError, setFireBaseError] = useState(null);
-  console.log("Errors ", errors);
+  const classes = useStyles()
+
+  const [fireBaseError, setFireBaseError] = useState(null)
+
   useEffect(() => {
     if (signUpError) {
       if (signUpError.code === "auth/email-already-in-use") {
-        setFireBaseError("The email is already registered.");
+        setFireBaseError("The email is already registered.")
       }
     }
-  }, [signUpError]);
+  }, [signUpError])
 
   return (
     <>
@@ -98,8 +99,7 @@ const RegistrationForm = ({
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh" }}
-      >
+        style={{ minHeight: "100vh" }}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -116,8 +116,7 @@ const RegistrationForm = ({
                     inputProps={{ name: "userRole", id: "user-role" }}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.userRole}
-                  >
+                    value={values.userRole}>
                     <MenuItem value={"student"}>Student</MenuItem>
                     <MenuItem value={"teacher"}>Teacher</MenuItem>
                   </Select>
@@ -228,8 +227,7 @@ const RegistrationForm = ({
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={classes.submit}
-              >
+                className={classes.submit}>
                 {!isLoading ? (
                   "Sign Up"
                 ) : (
@@ -237,7 +235,7 @@ const RegistrationForm = ({
                 )}
               </Button>
               <div className={classes.link}>
-                <Link href="/sign-in">Alread has an account ? Sign In</Link>
+                <Link href="/sign-in">Already has an account ? Sign In</Link>
               </div>
 
               <Divider />
@@ -247,8 +245,7 @@ const RegistrationForm = ({
                 fullWidth
                 onClick={signInWithGoogle}
                 type="button"
-                variant="contained"
-              >
+                variant="contained">
                 Sign In With Google
               </Button>
             </Grid>
@@ -258,7 +255,7 @@ const RegistrationForm = ({
         </div>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default RegistrationForm;
+export default RegistrationForm

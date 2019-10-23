@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import {
   Avatar,
   Button,
@@ -8,55 +8,58 @@ import {
   Link,
   Box,
   Grid,
-  Typography
-} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { makeStyles } from "@material-ui/core/styles";
+  Typography,
+} from "@material-ui/core"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import { makeStyles } from "@material-ui/core/styles"
 
 const copyRight = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="/">
         School Calendar
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
-};
+  )
+}
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white
-    }
+      backgroundColor: theme.palette.common.white,
+    },
   },
   paper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   signInWithGoogle: {
-    margin: theme.spacing(2, 0, 2)
+    margin: theme.spacing(2, 0, 2),
   },
   progress: {
     margin: theme.spacing(1),
-    color: "white"
-  }
-}));
+    color: "white",
+  },
+  link: {
+    textAlign: "center",
+  },
+}))
 
-const AdminLoginForm = ({
+const SignInForm = ({
   values,
   handleSubmit,
   handleChange,
@@ -65,22 +68,22 @@ const AdminLoginForm = ({
   isLoading,
   signInError,
   errors,
-  touched
+  touched,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [fireBaseError, setFireBaseError] = useState(null);
+  const [fireBaseError, setFireBaseError] = useState(null)
   useEffect(() => {
     if (signInError) {
       if (signInError.code === "auth/invalid-email") {
-        setFireBaseError("The email is not valid.");
+        setFireBaseError("The email is not valid.")
       } else if (signInError.code === "auth/user-not-found") {
-        setFireBaseError("The email is not registered. ");
+        setFireBaseError("The email is not registered. ")
       } else if (signInError.code === "auth/wrong-password") {
-        setFireBaseError("The password is not valid. ");
+        setFireBaseError("The password is not valid. ")
       }
     }
-  }, [signInError]);
+  }, [signInError])
   return (
     <>
       <Grid
@@ -89,14 +92,13 @@ const AdminLoginForm = ({
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh" }}
-      >
+        style={{ minHeight: "100vh" }}>
         <Grid item xs={12} className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Admin Sign In
+            Sign In
           </Typography>
 
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -141,14 +143,19 @@ const AdminLoginForm = ({
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
-            >
+              className={classes.submit}>
               {!isLoading ? (
                 "Sign In"
               ) : (
                 <CircularProgress className={classes.progress} size={30} />
               )}
             </Button>
+            <div className={classes.link}>
+              <Link href="/registration" variant="body2">
+                Don't have an account? Register
+              </Link>
+            </div>
+
             <Divider />
             <Button
               className={classes.signInWithGoogle}
@@ -156,30 +163,15 @@ const AdminLoginForm = ({
               fullWidth
               onClick={signInWithGoogle}
               type="button"
-              variant="contained"
-            >
+              variant="contained">
               Sign In With Google
             </Button>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/admin-register" variant="body2">
-                  Don't have an account?
-                </Link>
-              </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/student-signin" variant="body2">
-                  Not an Admin?
-                </Link>
-              </Grid>
-            </Grid>
           </form>
           <Box mt={5}>{copyRight}</Box>
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default AdminLoginForm;
+export default SignInForm
