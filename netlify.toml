@@ -1,4 +1,4 @@
-[build]
+[start]
 base='/school-cal'
 
 [[redirects]]
