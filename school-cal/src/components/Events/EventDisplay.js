@@ -1,47 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import firebase, { db } from '../../firebase/'
+import firebase, { db } from '../../config/firebase/index'
 // import EventCard from './EventCard';
 import './EventDisplay.css'
 
 const EventDisplay = () => {
     const [data, setData] = useState([]);
 
+    const eventsDbRef = db
+        .collection("calendars")
+        .doc("hURNrIybLCJE0dJ9GqKM")
+        .collection("events");
+    //keep in state first calendar as default, have dropdown select for individual calendars
+
     useEffect(() => {
-        db
-            .collection("calendars")
-            .doc("hURNrIybLCJE0dJ9GqKM")
-            .collection("events")
+        eventsDbRef
             .get()
             .then(snapshot => {
-                setData(snapshot.docs.map(doc=> doc.data()))
+                snapshot.docs.map(doc => console.log(doc.id))
+                setData(snapshot.docs.map(doc => doc.data()))
             })
             .catch(err=> console.log('something is up', err))
-    },[])
-    // const eventsDbRef = db
-    //     .collection("calendars")
-    //     .doc("hURNrIybLCJE0dJ9GqKM")
-    //     .collection("events");
-    // //keep in state first calendar as default, have dropdown select for individual calendars
+    },[]) //have an empty array, do .map then push to empty array, set data to array
 
-    // useEffect(() => {
-    //     eventsDbRef
-    //         .get()
-    //         .then(snapshot => {
-    //             snapshot.docs.map(doc => console.log(doc.id))
-    //             setData(snapshot.docs.map(doc => doc.data()))
-    //         })
-    //         .catch(err=> console.log('something is up', err))
-    // },[]) //have an empty array, do .map then push to empty array, set data to array
-
-        // useEffect(() => {
-    //     eventsDbRef
-    //         .get()
-    //         .then(snapshot => {
-    //             snapshot.docs.map(doc => console.log(doc.id))
-    //             setData(snapshot.docs.map(doc => doc.data()))
-    //         })
-    //         .catch(err=> console.log('something is up', err))
-    // },[])
     // useEffect(() => {
     //     eventsDbRef
     //         .onSnapshot(
@@ -57,11 +37,7 @@ const EventDisplay = () => {
     const deleteEvent = () => {
 
     }
-    // const [events, setEvents] = useState([]);
-    // const async snapshot = await firebase.firebase().collection('calendars').doc('aWBlKnc7wrTCOQenDfaA').collection('events').get()
-    // console.log('this is the snapshop', snapshot)
 
-    // return snapshot.docs.map(doc => doc.data())
     return (
 
         <div className='event-display-container'>
