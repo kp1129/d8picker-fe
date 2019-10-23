@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import EventDisplay from "../../components/Events/EventDisplay"
 import {
   Button,
   Divider,
@@ -243,7 +244,9 @@ const AdminDashBoard = () => {
           <Grid item xs={12}></Grid>
         </Grid>
       </Drawer>
-      <main className={classes.content}></main>
+      <main className={classes.content}>
+        <EventDisplay />
+      </main>
       <AddEvent
         handleClose={() => setAddEvent(false)}
         open={isAddEventOpen}
