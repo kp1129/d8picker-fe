@@ -7,14 +7,17 @@ import './EventDisplay.css'
 const EventDisplay = () => {
     const [data, setData] = useState([]);
 
+    const eventsDbRef = db
+        .collection("calendars")
+        .doc("aWBlKnc7wrTCOQenDfaA")
+        .collection("events");
+
     useEffect(() => {
-        db
-            .collection("calendars")
-            .doc("aWBlKnc7wrTCOQenDfaA")
-            .collection("events")
+        eventsDbRef
             .get()
             .then(snapshot => {
-                setData(snapshot.docs.map(doc=> doc.data()))
+                snapshot.docs.map(doc => console.log(doc.id))
+                setData(snapshot.docs.map(doc => doc.data()))
             })
             .catch(err=> console.log('something is up', err))
     },[])
@@ -30,6 +33,7 @@ const EventDisplay = () => {
     //     .delete()
     // }
     return (
+
         <div className='event-display-container'>
             <h1>Events Go HERE</h1>
             <ul 
