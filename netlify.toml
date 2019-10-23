@@ -4,6 +4,6 @@ base='/school-cal'
 publish='/build/
 
 [[redirects]]
-from='/*'
+from="/*"
 to='/'
 status=200
