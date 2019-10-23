@@ -3,8 +3,10 @@ import firebase, { db } from '../../firebase/'
 // import EventCard from './EventCard';
 import './EventDisplay.css'
 
+
 const EventDisplay = () => {
     const [data, setData] = useState([]);
+
     useEffect(() => {
         db
             .collection("calendars")
@@ -17,11 +19,16 @@ const EventDisplay = () => {
             .catch(err=> console.log('something is up', err))
     },[])
 
-    // const [events, setEvents] = useState([]);
-    // const async snapshot = await firebase.firebase().collection('calendars').doc('aWBlKnc7wrTCOQenDfaA').collection('events').get()
-    // console.log('this is the snapshop', snapshot)
 
-    // return snapshot.docs.map(doc => doc.data())
+    // const doDelete = id => {
+    //     firebase
+    //     .firestore()
+    //     .collection("calendars")
+    //     .doc('aWBlKnc7wrTCOQenDfaA')
+    //     .collection('events')
+        
+    //     .delete()
+    // }
     return (
         <div className='event-display-container'>
             <h1>Events Go HERE</h1>
@@ -31,7 +38,7 @@ const EventDisplay = () => {
                 {data.map(item => (
                     <li
                         className='event-display-card'
-                        key={item.date}
+                        key={item.events}
                     
                     >
                         <br />
@@ -44,6 +51,11 @@ const EventDisplay = () => {
                         Name: {item.name}
                         <br />
                         User ID: {item.uid}
+                        <button
+                            // onClick={}
+                        >
+                            Delete
+                        </button>
                     </li>
                 ))}
             </ul>
