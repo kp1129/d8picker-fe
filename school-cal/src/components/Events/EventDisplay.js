@@ -6,21 +6,32 @@ import './EventDisplay.css'
 const EventDisplay = () => {
     const [data, setData] = useState([]);
 
-    const eventsDbRef = db
-        .collection("calendars")
-        .doc("2ErFGeyXi7p7yYeOaOvH")
-        .collection("events");
-    //keep in state first calendar as default, have dropdown select for individual calendars
-
     useEffect(() => {
-        eventsDbRef
+        db
+            .collection("calendars")
+            .doc("hURNrIybLCJE0dJ9GqKM")
+            .collection("events")
             .get()
             .then(snapshot => {
-                snapshot.docs.map(doc => console.log(doc.id))
-                setData(snapshot.docs.map(doc => doc.data()))
+                setData(snapshot.docs.map(doc=> doc.data()))
             })
             .catch(err=> console.log('something is up', err))
-    },[]) //have an empty array, do .map then push to empty array, set data to array
+    },[])
+    // const eventsDbRef = db
+    //     .collection("calendars")
+    //     .doc("hURNrIybLCJE0dJ9GqKM")
+    //     .collection("events");
+    // //keep in state first calendar as default, have dropdown select for individual calendars
+
+    // useEffect(() => {
+    //     eventsDbRef
+    //         .get()
+    //         .then(snapshot => {
+    //             snapshot.docs.map(doc => console.log(doc.id))
+    //             setData(snapshot.docs.map(doc => doc.data()))
+    //         })
+    //         .catch(err=> console.log('something is up', err))
+    // },[]) //have an empty array, do .map then push to empty array, set data to array
 
         // useEffect(() => {
     //     eventsDbRef
