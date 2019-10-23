@@ -5,5 +5,5 @@ publish='/build/
 
 [[redirects]]
 from="/*"
-to='/'
+to="/"
 status=200
