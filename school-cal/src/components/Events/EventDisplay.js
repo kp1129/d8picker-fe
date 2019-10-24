@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import firebase, { db } from '../../config/firebase/index'
-// import EventCard from './EventCard';
+import firebase, { db } from '../../config/firebase/index';
+import { AuthContext } from "../../contexts/auth/authState"
+
 import './EventDisplay.css'
 
 
 const EventDisplay = () => {
     const initialValue = [
         {
+            id: 1,
             date:'',
             description:'',
             location:'',
             name:'',
             uid:0
-        }
+        },
     ]
-    const [data, setData] = useState(initialValue);
+    const [event, setEvent] = useState(initialValue);
+    // const { currentUser } = useContext(AuthContext)
+
 
     const eventsDbRef = db
         .collection("calendars")
@@ -27,17 +31,16 @@ const EventDisplay = () => {
         //     .get()
         //     .then(snapshot => {
         //         snapshot.docs.map(doc => console.log(doc.id))
-        //         setData(snapshot.docs.map(doc => doc.data()))
+        //         setevent(snapshot.docs.map(doc => doc.data()))
         //     })
         //     .catch(err=> console.log('something is up', err))
-        const results = [
-            ...data
-        ]
-        console.log(results)
+
     },[])
 
 
-    const doDelete = () => {
+    const doDelete = id => {
+        console.log('delete')
+        setEvent(event.filter(event => event.id !== id))
     }
     return (
 
@@ -46,10 +49,10 @@ const EventDisplay = () => {
             <ul 
                 className='event-display-cards'
                 >
-                {data.map(event => (
+                {event.map(event => (
                     <li
                         className='event-display-card'
-                        key={event.events}
+                        key={event.id}
                     >
                         <br />
                         When: {event.date}
@@ -62,7 +65,7 @@ const EventDisplay = () => {
                         <br />
                         User ID: {event.uid}
                         <button
-                            onClick={doDelete}
+                            onClick={() => doDelete(event.id)}
                         >
                             Delete
                         </button>
