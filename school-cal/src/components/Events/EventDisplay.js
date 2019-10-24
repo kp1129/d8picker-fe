@@ -5,6 +5,22 @@ import './EventDisplay.css'
 
 const EventDisplay = () => {
     const [data, setData] = useState([]);
+    const [calendars, setCalendars] = useState([]);
+    const [admins, setAdmins] = useState([]);
+
+    const userID = firebase.auth().currentUser.uid;
+
+    const calDbRef = db
+        .collection("calendars")
+        .where("admins", "array-contains", userID);
+
+    calDbRef
+        .get()
+        .then(snapshot => {
+            snapshot.docs.map(doc => console.log('primarycal', doc.data()))
+        })
+
+    console.log('primarycal', calDbRef);
 
     const eventsDbRef = db
         .collection("calendars")
@@ -16,7 +32,7 @@ const EventDisplay = () => {
         eventsDbRef
             .get()
             .then(snapshot => {
-                snapshot.docs.map(doc => console.log(doc.id))
+                // snapshot.docs.map(doc => console.log(doc.id))
                 setData(snapshot.docs.map(doc => doc.data()))
             })
             .catch(err=> console.log('something is up', err))
