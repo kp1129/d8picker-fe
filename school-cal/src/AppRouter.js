@@ -3,13 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Landing from "./pages/Landing"
 import SignIn from "./pages/SignIn"
 import Registration from "./pages/Registration"
-<<<<<<< HEAD
-import StudentDashboard from "./components/StudentDashboard"
-import AdminDashboard from "./components/AdminDashboard";
-
-=======
 import StudentDashboard from "./pages/StudentDashboard"
->>>>>>> 3608fa0e2887a33ec5e6b14ec28201ae2a081425
 
 import AdminDashboard from "./pages/AdminDashboard"
 import PrivateRoute from "./components/Routes/PrivateRoute"

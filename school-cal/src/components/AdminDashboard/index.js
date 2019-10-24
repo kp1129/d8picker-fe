@@ -1,9 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-<<<<<<< HEAD
-import EventDisplay from '../Events/EventDisplay';
-=======
 import EventDisplay from "../Events/EventDisplay"
->>>>>>> 3608fa0e2887a33ec5e6b14ec28201ae2a081425
 import {
   Button,
   Divider,

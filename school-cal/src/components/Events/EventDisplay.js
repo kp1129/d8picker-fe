@@ -3,8 +3,18 @@ import firebase, { db } from '../../config/firebase/index'
 // import EventCard from './EventCard';
 import './EventDisplay.css'
 
+
 const EventDisplay = () => {
-    const [data, setData] = useState([]);
+    const initialValue = [
+        {
+            date:'',
+            description:'',
+            location:'',
+            name:'',
+            uid:0
+        }
+    ]
+    const [data, setData] = useState(initialValue);
 
     const eventsDbRef = db
         .collection("calendars")
@@ -13,13 +23,17 @@ const EventDisplay = () => {
     //keep in state first calendar as default, have dropdown select for individual calendars
 
     useEffect(() => {
-        eventsDbRef
-            .get()
-            .then(snapshot => {
-                snapshot.docs.map(doc => console.log(doc.id))
-                setData(snapshot.docs.map(doc => doc.data()))
-            })
-            .catch(err=> console.log('something is up', err))
+        // eventsDbRef
+        //     .get()
+        //     .then(snapshot => {
+        //         snapshot.docs.map(doc => console.log(doc.id))
+        //         setData(snapshot.docs.map(doc => doc.data()))
+        //     })
+        //     .catch(err=> console.log('something is up', err))
+        const results = [
+            ...data
+        ]
+        console.log(results)
     },[])
 
 
@@ -39,22 +53,21 @@ const EventDisplay = () => {
             <ul 
                 className='event-display-cards'
                 >
-                {data.map(item => (
+                {data.map(event => (
                     <li
                         className='event-display-card'
-                        key={item.events}
-                    
+                        key={event.events}
                     >
                         <br />
-                        When: {item.date}
+                        When: {event.date}
                         <br />
-                        description: {item.description}
+                        description: {event.description}
                         <br />
-                        Location: {item.location}
+                        Location: {event.location}
                         <br />
-                        Name: {item.name}
+                        Name: {event.name}
                         <br />
-                        User ID: {item.uid}
+                        User ID: {event.uid}
                         <button
                             // onClick={}
                         >
