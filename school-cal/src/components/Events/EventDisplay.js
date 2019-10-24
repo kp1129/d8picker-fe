@@ -82,7 +82,7 @@ const EventDisplay = () => {
                         Description: {info.description}
                       </Typography>
                       <Typography variant="body2" component="p">
-                        Time: {info.time}
+                        Time: {info.starts}
                       </Typography>
                     </CardContent>
 
