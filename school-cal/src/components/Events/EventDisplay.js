@@ -37,15 +37,8 @@ const EventDisplay = () => {
     },[])
 
 
-    // const doDelete = id => {
-    //     firebase
-    //     .firestore()
-    //     .collection("calendars")
-    //     .doc('aWBlKnc7wrTCOQenDfaA')
-    //     .collection('events')
-        
-    //     .delete()
-    // }
+    const doDelete = () => {
+    }
     return (
 
         <div className='event-display-container'>
@@ -69,7 +62,7 @@ const EventDisplay = () => {
                         <br />
                         User ID: {event.uid}
                         <button
-                            // onClick={}
+                            onClick={doDelete}
                         >
                             Delete
                         </button>
