@@ -1,6 +1,6 @@
-import React, { createContext, useReducer, useEffect } from "react";
-import * as firebase from "firebase/app";
-import { app, db, googleProvider } from "../../firebase";
+import React, { createContext, useReducer, useEffect } from "react"
+import * as firebase from "firebase/app"
+import { app, db, googleProvider } from "../../config/firebase"
 //import GoogleAPI from "../../services/googleAPI";
 import {
   IS_LOADING,
@@ -10,11 +10,11 @@ import {
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
   SET_CURRENT_USER,
-  SIGNOUT_FAILURE
-} from "./types";
-import authReducer from "./authReducer";
+  SIGNOUT_FAILURE,
+} from "./types"
+import authReducer from "./authReducer"
 
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 export const AuthState = props => {
   const initialState = {
@@ -22,68 +22,97 @@ export const AuthState = props => {
     signInError: null,
     signUpError: null,
     signOutError: null,
-    currentUser: null
-  };
+    currentUser: null,
+  }
 
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [state, dispatch] = useReducer(authReducer, initialState)
   // Google API CLient Library
   // let gapi = window.gapi;
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
-      dispatch({ type: SET_CURRENT_USER, payload: user });
-    });
-  }, []);
+      dispatch({ type: SET_CURRENT_USER, payload: user })
+    })
+  }, [])
 
   const signUpUser = async values => {
-    dispatch({ type: IS_LOADING, payload: true });
+    dispatch({ type: IS_LOADING, payload: true })
     try {
+      //create a new firebase user
       const data = await app
         .auth()
-        .createUserWithEmailAndPassword(values.email, values.password);
+        .createUserWithEmailAndPassword(values.email, values.password)
 
+      // create a new user
       await db
         .collection("users")
         .doc(data.user.uid)
         .set({
           firstName: values.firstName,
-          lastName: values.lastName
-        });
+          lastName: values.lastName,
+          email: values.email,
+          role: values.userRole,
+        })
 
-      dispatch({ type: SIGNUP_SUCCESS, payload: true });
+      await db.collection("calendars").add({
+        name: "primary",
+        admins: [data.user.uid],
+        students: [],
+      })
+
+      dispatch({ type: SIGNUP_SUCCESS, payload: true })
     } catch (error) {
-      dispatch({ type: SIGNUP_FAILURE, payload: error });
+      dispatch({ type: SIGNUP_FAILURE, payload: error })
     }
-  };
+  }
   const signInWithEmailAndPassword = async credential => {
-    dispatch({ type: IS_LOADING, payload: true });
+    dispatch({ type: IS_LOADING, payload: true })
     try {
       await app
         .auth()
-        .signInWithEmailAndPassword(credential.email, credential.password);
-      dispatch({ type: SIGNIN_SUCCESS, payload: true });
+        .signInWithEmailAndPassword(credential.email, credential.password)
+      dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error });
+      dispatch({ type: SIGNIN_FAILURE, payload: error })
     }
-  };
+  }
 
   const signInWithGoogle = async () => {
     try {
-      let data = await firebase.auth().signInWithPopup(googleProvider);
+      let data = await firebase.auth().signInWithPopup(googleProvider)
+      const { user } = data
 
-      dispatch({ type: SIGNIN_SUCCESS, payload: true });
+      const userRef = await db.collection("users").doc(user.uid)
+      const userDoc = await userRef.get()
+
+      if (!userDoc.exists) {
+        db.collection("users")
+          .doc(user.uid)
+          .set({
+            displayName: user.displayName,
+            email: user.email,
+          })
+
+        db.collection("calendars").add({
+          name: "primary",
+          admins: [user.uid],
+          students: [],
+        })
+      }
+
+      dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error });
+      dispatch({ type: SIGNIN_FAILURE, payload: error })
     }
-  };
+  }
   const signOut = async () => {
     try {
-      await app.auth().signOut();
-      dispatch({ type: SIGNOUT_SUCCESS });
+      await app.auth().signOut()
+      dispatch({ type: SIGNOUT_SUCCESS })
     } catch (error) {
-      dispatch({ type: SIGNOUT_FAILURE, payload: error.message });
+      dispatch({ type: SIGNOUT_FAILURE, payload: error.message })
     }
-  };
+  }
 
   return (
     <AuthContext.Provider
@@ -95,10 +124,9 @@ export const AuthState = props => {
         signInWithEmailAndPassword,
         signInWithGoogle,
         signUpUser,
-        signOut
-      }}
-    >
+        signOut,
+      }}>
       {props.children}
     </AuthContext.Provider>
-  );
-};
+  )
+}

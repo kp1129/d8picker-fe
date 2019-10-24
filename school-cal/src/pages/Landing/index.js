@@ -1,27 +1,12 @@
 import React, { useEffect, useState } from "react"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
 import { Link } from "react-router-dom"
 import firebase from "firebase"
-export default function Landing() {
-  const [calendars, setCalendars] = useState([])
-  useEffect(() => {
-    const unsubscribe = firebase
-      .firestore()
-      .collection("calendars")
-      .where("admins", "array-contains", "mdgq4B4KJjVisa8oik8aWdgNnDn1")
-      .onSnapshot(snap => {
-        let cals = []
-        snap.docs.forEach(doc => {
-          const data = doc.data()
-          cals.push({ ...data, id: doc.id })
-        })
-        setCalendars(cals)
-      })
-    return () => unsubscribe()
-  }, [])
-  console.log(calendars)
+import LandingNavbar from './LandingNavbar'
 
+import AppleCal from '../../assets/images/apple-cal.jpg'
+import '../../index.css'
+
+<<<<<<< HEAD
   // useEffect(() => {
   //   firebase
   //     .firestore()
@@ -33,27 +18,22 @@ export default function Landing() {
   //       console.log(docs)
   //     })
   // }, [])
+=======
+
+export default function Landing() {
+>>>>>>> 3608fa0e2887a33ec5e6b14ec28201ae2a081425
 
   return (
-    <>
-      <h1>Future Landing Page</h1>
-      {calendars.map(item => {
-        return <div>{item.name}</div>
-      })}
-      <List>
-        <ListItem>
-          <Link to="/admin-signin">Admin Sign In</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/admin-register">Admin Register</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/student-register">Student Register</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/student-signin">Student Sign In</Link>
-        </ListItem>
-      </List>
-    </>
+     <div className='container'>
+     <LandingNavbar/>
+     <div className='landing-grid-container'><img
+            className='landing-img'
+            src={AppleCal}
+            alt={"desktopCalendar"}
+          /><Link className='landing-link' to='/sign-in'>Sign In</Link></div>
+           <div><Link className='landing-link2' to='/register'>Sign Up</Link></div>
+     </div>
+        
+
   )
 }

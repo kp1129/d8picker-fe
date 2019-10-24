@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import firebase, { db } from '../../firebase/'
+import firebase, { db } from '../../config/firebase/index'
 // import EventCard from './EventCard';
 import './EventDisplay.css'
-
 
 const EventDisplay = () => {
     const [data, setData] = useState([]);
 
     const eventsDbRef = db
         .collection("calendars")
-        .doc("aWBlKnc7wrTCOQenDfaA")
+        .doc("hURNrIybLCJE0dJ9GqKM")
         .collection("events");
+    //keep in state first calendar as default, have dropdown select for individual calendars
 
     useEffect(() => {
         eventsDbRef
