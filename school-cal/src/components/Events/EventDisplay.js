@@ -30,12 +30,10 @@ const EventDisplay = () => {
 
     useEffect(() => {
         eventsDbRef
-            .get()
-            .then(snapshot => {
-                // snapshot.docs.map(doc => console.log(doc.id))
-                setData(snapshot.docs.map(doc => doc.data()))
+            .onSnapshot(doc => {
+                setData(doc.docs.map(item => console.log(item.data())))
+                setData(doc.docs.map(item => item.data()))
             })
-            .catch(err=> console.log('something is up', err))
     },[]) //have an empty array, do .map then push to empty array, set data to array
 
     // useEffect(() => {
@@ -66,17 +64,17 @@ const EventDisplay = () => {
                         className='event-display-card'
                         key={item.date}
                     >
-                        <br />
-                        When: {item.date}
+                        {/* <br />
+                        When: {item.date} */}
                         <br />
                         description: {item.description}
                         <br />
                         Location: {item.location}
                         <br />
                         Name: {item.name}
-                        <br />
+                        {/* <br />
                         User ID: {item.uid}
-                        <button>X</button>
+                        <button>X</button> */}
                     </li>
                 ))}
             </ul>
