@@ -14,11 +14,18 @@ const EventDisplay = () => {
         .collection("calendars")
         .where("admins", "array-contains", userID);
 
-    calDbRef
-        .get()
-        .then(snapshot => {
-            snapshot.docs.map(doc => console.log('primarycal', doc.data()))
-        })
+    useEffect(() => {
+        calDbRef
+            .onSnapshot(doc => {
+                doc.docs.map(item => console.log('admins', item.data()))
+                setAdmins(doc.docs.map(item => item.data()))
+            });
+    })
+    // calDbRef
+    //     .get()
+    //     .then(snapshot => {
+    //         snapshot.docs.map(doc => console.log('primarycal', doc.data()))
+    //     })
 
     console.log('primarycal', calDbRef);
 
@@ -31,7 +38,7 @@ const EventDisplay = () => {
     useEffect(() => {
         eventsDbRef
             .onSnapshot(doc => {
-                setData(doc.docs.map(item => console.log(item.data())))
+                doc.docs.map(item => console.log('events', item.data()))
                 setData(doc.docs.map(item => item.data()))
             })
     },[]) //have an empty array, do .map then push to empty array, set data to array
