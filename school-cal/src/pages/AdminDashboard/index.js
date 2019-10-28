@@ -20,6 +20,7 @@ import AddEvent from "../../components/Events/AddEvent"
 import { makeStyles } from "@material-ui/core/styles"
 import { db } from "../../config/firebase"
 import Navbar from "../../components/Navbar"
+import AdminDashCal from './AdminDashboard'
 
 import clsx from "clsx"
 import { useTheme } from "@material-ui/core/styles"
@@ -245,7 +246,7 @@ const AdminDashBoard = () => {
         </Grid>
       </Drawer>
       <main className={classes.content}>
-        <EventDisplay />
+        <AdminDashCal />
       </main>
       <AddEvent
         handleClose={() => setAddEvent(false)}
