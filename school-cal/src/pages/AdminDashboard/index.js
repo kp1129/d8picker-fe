@@ -245,7 +245,7 @@ const AdminDashBoard = () => {
           <Grid item xs={12}></Grid>
         </Grid>
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content} style={{height:"300px", width:"300px" }}>
         <AdminDashCal />
       </main>
       <AddEvent

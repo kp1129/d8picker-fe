@@ -63,6 +63,7 @@ export default class AdminDashBoard extends React.Component {
     console.log(this.state)
     return (
       <div className="full-calendar-admin">
+
         <FullCalendar
           defaultView="dayGridMonth"
           header={{
@@ -70,11 +71,19 @@ export default class AdminDashBoard extends React.Component {
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
           }}
+          unselectAuto={false}
+          unselectCancel={false}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           navLinks={true} //can click day/week names to navigate views
           selectable={true} // can highlight multiple days, by clicking and dragging
           events={this.state.events} //adds events from state
           dateClick={this.dateClick} //click on date to add event
+          // minTime={"07:00:00"}
+          // maxTime={'18:00:00'}
+          height={700}
+          // aspectRatio={3}
+          //https://fullcalendar.io/docs#toc This Links to all the props in fullcalendar io
+          
         />
         <AdminAddEvent
           addEvent={this.addEvent}
