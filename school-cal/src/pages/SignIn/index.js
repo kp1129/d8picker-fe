@@ -21,7 +21,7 @@ const SignIn = ({ history }) => {
     currentUser,
     isLoading,
     signInError,
-    signInWithEmailAndPassword,
+    signInWithUserIdAndPassword,
     signInWithGoogle,
   } = useContext(AuthContext)
 
@@ -34,9 +34,7 @@ const SignIn = ({ history }) => {
   }, [currentUser])
 
   const AdminLoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email.")
-      .required("Email is required."),
+    userId: Yup.string().required("User ID is required."),
     password: Yup.string()
       .min(6, "Password must be greater 6 characters.")
       .required("Password is required."),
@@ -54,9 +52,9 @@ const SignIn = ({ history }) => {
         </Grid>
         <Grid item md={6}>
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ userId: "", password: "" }}
             onSubmit={(values, actions) => {
-              signInWithEmailAndPassword(values)
+              signInWithUserIdAndPassword(values)
               actions.resetForm()
             }}
             render={formikProps => (

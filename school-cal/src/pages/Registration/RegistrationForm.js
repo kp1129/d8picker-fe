@@ -197,6 +197,23 @@ const RegistrationForm = ({
                   variant="outlined"
                   required
                   fullWidth
+                  name="username"
+                  label="Username"
+                  type="text"
+                  id="username"
+                  value={values.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="current-username"
+                  helperText={touched.username ? errors.username : ""}
+                  error={touched.username && Boolean(errors.username)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   name="passwordConfirmation"
                   label="Confirm Password"
                   type="password"

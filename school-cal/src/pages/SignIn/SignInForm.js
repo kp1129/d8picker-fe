@@ -108,15 +108,15 @@ const SignInForm = ({
                   variant="outlined"
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  value={values.email}
+                  id="userId"
+                  label="Username or Email"
+                  name="userId"
+                  autoComplete="userId"
+                  value={values.userId}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  helperText={touched.email ? errors.email : ""}
-                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.userId ? errors.userId : ""}
+                  error={touched.userId && Boolean(errors.userId)}
                 />
               </Grid>
               <Grid item xs={12}>

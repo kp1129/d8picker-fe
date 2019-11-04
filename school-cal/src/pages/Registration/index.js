@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import { Grid } from "@material-ui/core";
-import { AuthContext } from "../../contexts/auth/authState";
-import { Formik } from "formik";
-import RegistrationForm from "./RegistrationForm";
-import * as Yup from "yup";
-import { makeStyles } from "@material-ui/core/styles";
-import { CssBaseline } from "@material-ui/core";
-import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg";
+import React, { useContext, useEffect } from "react"
+import { Grid } from "@material-ui/core"
+import { AuthContext } from "../../contexts/auth/authState"
+import { Formik } from "formik"
+import RegistrationForm from "./RegistrationForm"
+import * as Yup from "yup"
+import { makeStyles } from "@material-ui/core/styles"
+import { CssBaseline } from "@material-ui/core"
+import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   image: {
     width: "100%",
-    height: "100%"
-  }
-}));
+    height: "100%",
+  },
+}))
 
 const Registration = ({ history }) => {
   const {
@@ -23,16 +23,16 @@ const Registration = ({ history }) => {
     isLoading,
     signUpError,
     signUpUser,
-    signInWithGoogle
-  } = useContext(AuthContext);
+    signInWithGoogle,
+  } = useContext(AuthContext)
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   useEffect(() => {
     if (currentUser) {
-      history.push("/admin-dashboard");
+      history.push("/admin-dashboard")
     }
-  }, [currentUser]);
+  }, [currentUser])
 
   const RegistrationSchema = Yup.object().shape({
     userRole: Yup.string().required("Are you a teacher or a student?"),
@@ -44,6 +44,10 @@ const Registration = ({ history }) => {
       .min(2, "Last name must be between 2 and 50 characters.")
       .max(50, "Last name must be between 2 and 50 characters.")
       .required("Last name is required."),
+    username: Yup.string()
+      .min(6, "Username must be between 6 and 36 characters ")
+      .max(50, "Last name must be between 2 and 50 characters.")
+      .required("Username is required."),
     email: Yup.string()
       .email("Invalid email.")
       .required("Email is required."),
@@ -53,8 +57,8 @@ const Registration = ({ history }) => {
       .required("Password is required."),
     passwordConfirmation: Yup.string()
       .oneOf([Yup.ref("password"), null], "Password must match.")
-      .required("Password confirmation is required.")
-  });
+      .required("Password confirmation is required."),
+  })
 
   return (
     <>
@@ -72,15 +76,16 @@ const Registration = ({ history }) => {
             <Formik
               initialValues={{
                 userRole: "",
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                passwordConfirmation: ""
+                firstName: "Thai",
+                lastName: "Nguyen",
+                username: "tnguyen",
+                email: "tnguyen@email.dev",
+                password: "password",
+                passwordConfirmation: "password",
               }}
               onSubmit={(values, actions) => {
-                signUpUser(values);
-                actions.resetForm();
+                signUpUser(values)
+                actions.resetForm()
               }}
               render={formikProps => (
                 <RegistrationForm
@@ -90,13 +95,13 @@ const Registration = ({ history }) => {
                   signInWithGoogle={signInWithGoogle}
                 />
               )}
-              validationSchema={RegistrationSchema}
+              //validationSchema={RegistrationSchema}
             />
           </Grid>
         </Grid>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Registration;
+export default Registration
