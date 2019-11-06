@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+
 import axios from "axios"
 
 import { loadState } from "../localStorage"

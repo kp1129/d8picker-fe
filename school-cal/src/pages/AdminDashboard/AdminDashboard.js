@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext } from "react"
 // full calendar
 import FullCalendar from "@fullcalendar/react"
