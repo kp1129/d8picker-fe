@@ -1,17 +1,18 @@
+
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
 
 export const config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+  apiKey: "AIzaSyCKHnk_AIoXYU7BcUa63LhQQWa6-Ma3ujQ",
+  authDomain: "school-calendar-staging.firebaseapp.com",
+  databaseURL: "https://school-calendar-staging.firebaseio.com",
+  projectId: "school-calendar-staging",
+  storageBucket: "school-calendar-staging.appspot.com",
+  messagingSenderId: "482714059970",
+  appId: "1:482714059970:web:b34c56dcb33f214576675b",
+  measurementId: "G-2NCWESMGBP"
 };
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -19,3 +20,4 @@ export const app = firebase.initializeApp(config);
 export const db = firebase.firestore();
 export const functions = firebase.functions();
 export default firebase;
+

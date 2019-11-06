@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {Link as RouterLink} from 'react-router-dom';
 import { red } from '@material-ui/core/colors';
-import SignInNav from "../../components/Navbar/signinnav"
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height:'0',
     zIndex:100,
+    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -27,12 +28,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ButtonAppBar() {
+export default function SignNavbar() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static"  style={{background:"#21242C"}}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
             School Calendar

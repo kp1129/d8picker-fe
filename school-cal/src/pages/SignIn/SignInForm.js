@@ -105,6 +105,7 @@ const SignInForm = ({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  style={{background: "#F2D2BF"}}
                   variant="outlined"
                   required
                   fullWidth
@@ -121,6 +122,7 @@ const SignInForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  style={{background: "#F2D2BF"}}
                   variant="outlined"
                   required
                   fullWidth
@@ -139,6 +141,7 @@ const SignInForm = ({
             </Grid>
             {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
             <Button
+              style={{background: "#F5945B", color: "#21242C"}}
               type="submit"
               fullWidth
               variant="contained"
@@ -151,13 +154,14 @@ const SignInForm = ({
               )}
             </Button>
             <div className={classes.link}>
-              <Link href="/registration" variant="body2">
+              <Link href="/register" variant="body2">
                 Don't have an account? Register
               </Link>
             </div>
 
             <Divider />
             <Button
+              style={{background: "#F5945B", color: "#21242C"}}
               className={classes.signInWithGoogle}
               color="primary"
               fullWidth

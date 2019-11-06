@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import firebase from "firebase"
 import LandingNavbar from './LandingNavbar'
+import SignInNav from "../../components/Navbar/signinnav"
 
 import AppleCal from '../../assets/images/apple-cal.jpg'
 import '../../index.css'
@@ -11,13 +12,15 @@ export default function Landing() {
 
   return (
      <div className='container'>
-     <LandingNavbar/>
-     <div className='landing-grid-container'><img
+     <SignInNav/>
+     <div className='landing-grid-container' style={{background:"#A35629"}}>
+       {/* <img
             className='landing-img'
             src={AppleCal}
             alt={"desktopCalendar"}
-          /><Link className='landing-link' to='/sign-in'>Sign In</Link></div>
-           <div><Link className='landing-link2' to='/register'>Sign Up</Link></div>
+          /> */}
+          <Link className='landing-link' to='/sign-in' style={{background:"white", color:"#F5945B", border: "2px solid #F5945B", borderRadius:"5px"}}>Sign In</Link></div>
+           <div><Link className='landing-link2' to='/register' style={{background: "#F5945B", color:"#21242C", borderRadius:"5px"}}>Sign Up</Link></div>
      </div>
         
 
