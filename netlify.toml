@@ -1,8 +1,9 @@
 [build]
-base = '/'
-publish = '/build/'
+command = "npm run build"
+base="/school-cal"
+publish="/build"
 
 [[redirects]]
-from = '/*'
-to = '/index.html'
-status = 200
+from="/*"
+to="/"
+status=200
