@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, createContext, useContext, useState } from 'react';
 
 import firebase, { db } from '../firebase';

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { createContext, useReducer, useEffect } from "react";
 import * as firebase from "firebase/app";
 import { app, db, googleProvider } from "../../firebase";

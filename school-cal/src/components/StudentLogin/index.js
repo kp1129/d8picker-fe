@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
