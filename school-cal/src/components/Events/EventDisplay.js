@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import React, { useState, useEffect } from 'react';
-import firebase, { db } from '../../config/firebase/index';
 import { AuthContext } from "../../contexts/auth/authState"
 
 import './EventDisplay.css'
@@ -48,7 +47,6 @@ const EventDisplay = () => {
         //         setevent(snapshot.docs.map(doc => doc.data()))
         //     })
         //     .catch(err=> console.log('something is up', err))
-
     },[])
 
 
@@ -64,7 +62,7 @@ const EventDisplay = () => {
                 {data.map(info => { return (
                     <Card className={classes.card} style={{width:"20%", margin:"2%"}}>
                     <CardContent>
-                      <Typography   gutterBottom>
+                      <Typography gutterBottom>
                         Event: {info.name}
                       </Typography>
                       <Typography>

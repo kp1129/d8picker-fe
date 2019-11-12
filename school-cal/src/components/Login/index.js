@@ -19,8 +19,6 @@ import { Redirect } from 'react-router-dom'
 import { AuthContext } from "../../contexts/auth/authState";
 import {emailLoginHandler, useSession} from '../../utilities/useAuth';
 
-import firebase, { db } from "../../firebase/index";
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">

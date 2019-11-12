@@ -12,8 +12,6 @@ import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
 
-import { app, db } from "../../config/firebase"
-
 //css
 import "./AdminDashboard.css"
 import Button from "@material-ui/core/Button"

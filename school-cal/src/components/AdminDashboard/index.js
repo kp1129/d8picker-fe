@@ -13,11 +13,7 @@ import {
 import AddEvent from "../Events/AddEvent"
 import { makeStyles } from "@material-ui/core/styles"
 
-import Navbar from "../../components/Navbar"
 import { AuthContext } from "../../contexts/auth/authState"
-import { app, db } from "../../firebase"
-
-
 
 import clsx from 'clsx';
 import {useTheme } from '@material-ui/core/styles';
@@ -30,13 +26,6 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-
-
-
-
-
-
 
 const drawerWidth = 240
 const useStyles = makeStyles(theme => ({
@@ -97,13 +86,13 @@ const useStyles = makeStyles(theme => ({
 
 const AdminDashBoard = ({ history }) => {
   const { currentUser, signOut } = useContext(AuthContext)
-  const [isAddEventOpen, setAddEvent] = useState(false)
-  const [open, setOpen] = React.useState(false);
+  const [ isAddEventOpen, setAddEvent ] = useState(false)
+  const [ open, setOpen ] = React.useState(false);
   const theme = useTheme();
 
   
-  const [userProfile, setUserProfile] = useState(null);
-  const [data, setData] = useState([]);
+  const [ userProfile, setUserProfile ] = useState(null);
+  const [ data, setData ] = useState([]);
 
 
   useEffect(() => {
@@ -153,7 +142,6 @@ const AdminDashBoard = ({ history }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-        <Navbar drawerWidth={drawerWidth} />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -183,6 +171,7 @@ const AdminDashBoard = ({ history }) => {
           </Button>
         </Toolbar>
       </AppBar>
+
       <Drawer
         className={classes.drawer}
         variant="persistent"

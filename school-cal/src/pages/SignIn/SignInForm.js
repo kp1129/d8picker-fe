@@ -74,15 +74,11 @@ const SignInForm = ({
 }) => {
   const classes = useStyles()
 
-  const [fireBaseError, setFireBaseError] = useState(null)
   useEffect(() => {
     if (signInError) {
       if (signInError.code === "auth/invalid-email") {
-        setFireBaseError("The email is not valid.")
       } else if (signInError.code === "auth/user-not-found") {
-        setFireBaseError("The email is not registered. ")
       } else if (signInError.code === "auth/wrong-password") {
-        setFireBaseError("The password is not valid. ")
       }
     }
   }, [signInError])
@@ -139,7 +135,6 @@ const SignInForm = ({
                 />
               </Grid>
             </Grid>
-            {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
             <Button
               type="submit"
               fullWidth

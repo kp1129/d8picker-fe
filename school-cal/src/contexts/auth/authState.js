@@ -61,8 +61,6 @@ export const AuthState = props => {
 
   const signInWithGoogle = async () => {
     try {
-      //let data = await firebase.auth().signInWithPopup(googleProvider)
-
       dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })

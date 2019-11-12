@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 
 import { AuthContext } from "../../contexts/auth/authState"
-import { db } from "../../config/firebase"
 
 const Navbar = ({ drawerWidth }) => {
   const { currentUser, signOut } = useContext(AuthContext)
