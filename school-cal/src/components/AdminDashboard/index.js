@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useEffect, useState } from "react"
 import EventDisplay from "../Events/EventDisplay"
 import {

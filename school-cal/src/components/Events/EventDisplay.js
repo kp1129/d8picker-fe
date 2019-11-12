@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from 'react';
 import firebase, { db } from '../../config/firebase/index'
 // import EventCard from './EventCard';
