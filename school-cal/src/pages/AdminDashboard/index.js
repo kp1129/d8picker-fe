@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useEffect, useState } from "react"
 import EventDisplay from "../../components/Events/EventDisplay"
 import {
@@ -20,6 +22,7 @@ import AddEvent from "../../components/Events/AddEvent"
 import { makeStyles } from "@material-ui/core/styles"
 import { db } from "../../config/firebase"
 import Navbar from "../../components/Navbar"
+import AdminDashCal from './AdminDashboard'
 
 import clsx from "clsx"
 import { useTheme } from "@material-ui/core/styles"
@@ -244,8 +247,8 @@ const AdminDashBoard = () => {
           <Grid item xs={12}></Grid>
         </Grid>
       </Drawer>
-      <main className={classes.content}>
-        <EventDisplay />
+      <main className={classes.content} style={{height:"300px", width:"300px" }}>
+        <AdminDashCal />
       </main>
       <AddEvent
         handleClose={() => setAddEvent(false)}

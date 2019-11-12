@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import { makeStyles } from "@material-ui/core/styles"
@@ -190,6 +192,23 @@ const RegistrationForm = ({
                   autoComplete="current-password"
                   helperText={touched.password ? errors.password : ""}
                   error={touched.password && Boolean(errors.password)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="username"
+                  label="Username"
+                  type="text"
+                  id="username"
+                  value={values.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="current-username"
+                  helperText={touched.username ? errors.username : ""}
+                  error={touched.username && Boolean(errors.username)}
                 />
               </Grid>
               <Grid item xs={12}>

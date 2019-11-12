@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     list-style-type: none;
+    width: 800px;
 }
 .event-display-card{
     margin: 10px 0px;

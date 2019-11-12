@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useEffect, useState } from "react"
 import EventDisplay from "../Events/EventDisplay"
 import {
@@ -29,10 +31,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+
 
 
 
@@ -104,6 +103,21 @@ const AdminDashBoard = ({ history }) => {
 
   
   const [userProfile, setUserProfile] = useState(null);
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+      eventsDbRef
+          .get()
+          .then(snapshot => {
+              snapshot.docs.map(doc => console.log(doc.id))
+              setData(snapshot.docs.map(doc => doc.data()))
+          })
+          .catch(err=> console.log('something is up', err))
+  },[])
+
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -193,7 +207,14 @@ const AdminDashBoard = ({ history }) => {
           </ListItem>
         </List>
         <Divider />
-        
+        <List>
+          <ListItem>
+            {data.map(info => {
+              <div><p>{console.log("IN THE SIDEBAR"+ info)}</p></div>
+            })}
+          </ListItem>
+        </List>
+        <Divider />
         
       </Drawer>
       <main className="classes.content">

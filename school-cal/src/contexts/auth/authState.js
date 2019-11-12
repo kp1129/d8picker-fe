@@ -1,7 +1,7 @@
+/* eslint-disable */
+
 import React, { createContext, useReducer, useEffect } from "react"
-import * as firebase from "firebase/app"
-import { app, db, googleProvider } from "../../config/firebase"
-//import GoogleAPI from "../../services/googleAPI";
+
 import {
   IS_LOADING,
   SIGNIN_SUCCESS,
@@ -14,6 +14,9 @@ import {
 } from "./types"
 import authReducer from "./authReducer"
 
+import { client } from "../../utilities/api"
+import { loadState, saveState } from "../../utilities/localStorage"
+
 export const AuthContext = createContext()
 
 export const AuthState = props => {
@@ -22,56 +25,35 @@ export const AuthState = props => {
     signInError: null,
     signUpError: null,
     signOutError: null,
-    currentUser: null,
+    accessToken: null,
   }
 
-  const [state, dispatch] = useReducer(authReducer, initialState)
-  // Google API CLient Library
-  // let gapi = window.gapi;
+  const localState = loadState()
+
+  const [state, dispatch] = useReducer(authReducer, localState || initialState)
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      dispatch({ type: SET_CURRENT_USER, payload: user })
-    })
-  }, [])
+    saveState(state)
+  }, [state])
 
   const signUpUser = async values => {
+    //console.log(values)
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      //create a new firebase user
-      const data = await app
-        .auth()
-        .createUserWithEmailAndPassword(values.email, values.password)
+      const response = await client.post("/api/auth/register", values)
 
-      // create a new user
-      await db
-        .collection("users")
-        .doc(data.user.uid)
-        .set({
-          firstName: values.firstName,
-          lastName: values.lastName,
-          email: values.email,
-          role: values.userRole,
-        })
-
-      await db.collection("calendars").add({
-        name: "primary",
-        admins: [data.user.uid],
-        students: [],
-      })
-
-      dispatch({ type: SIGNUP_SUCCESS, payload: true })
+      dispatch({ type: SIGNUP_SUCCESS, payload: response.data })
     } catch (error) {
+      console.log(error)
       dispatch({ type: SIGNUP_FAILURE, payload: error })
     }
   }
-  const signInWithEmailAndPassword = async credential => {
+  const signInWithUserIdAndPassword = async credential => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      await app
-        .auth()
-        .signInWithEmailAndPassword(credential.email, credential.password)
-      dispatch({ type: SIGNIN_SUCCESS, payload: true })
+      const response = await client.post("/api/auth/login", credential)
+
+      dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
     }
@@ -79,35 +61,15 @@ export const AuthState = props => {
 
   const signInWithGoogle = async () => {
     try {
-      let data = await firebase.auth().signInWithPopup(googleProvider)
-      const { user } = data
-
-      const userRef = await db.collection("users").doc(user.uid)
-      const userDoc = await userRef.get()
-
-      if (!userDoc.exists) {
-        db.collection("users")
-          .doc(user.uid)
-          .set({
-            displayName: user.displayName,
-            email: user.email,
-          })
-
-        db.collection("calendars").add({
-          name: "primary",
-          admins: [user.uid],
-          students: [],
-        })
-      }
+      //let data = await firebase.auth().signInWithPopup(googleProvider)
 
       dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
     }
   }
-  const signOut = async () => {
+  const signOut = () => {
     try {
-      await app.auth().signOut()
       dispatch({ type: SIGNOUT_SUCCESS })
     } catch (error) {
       dispatch({ type: SIGNOUT_FAILURE, payload: error.message })
@@ -121,7 +83,7 @@ export const AuthState = props => {
         signInError: state.signInError,
         signUpError: state.signUpError,
         currentUser: state.currentUser,
-        signInWithEmailAndPassword,
+        signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,
         signOut,

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 class GoogleAPI {
   constructor() {
     this.initClient();

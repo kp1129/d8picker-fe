@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Landing from "./pages/Landing"
@@ -14,7 +16,7 @@ const AppRouter = () => {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route path="/sign-in" component={SignIn} />
-          <Route path="/registration" component={Registration} />
+          <Route path="/register" component={Registration} />
           <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
           <Route path="/student-dashboard" component={StudentDashboard} />
         </Switch>
