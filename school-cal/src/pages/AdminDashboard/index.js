@@ -6,7 +6,7 @@ import axios from 'axios'
 //adding components
 import AddEvent from "../../components/Events/AddEvent";
 import Navbar from "../../components/Navbar"
-import AdminDashCal from './AdminDashboard'
+import AdminDashCal from '../../components/AdminDashboard/index'
 
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
@@ -37,9 +37,9 @@ import { AuthContext } from "../../contexts/auth/authState"
 // import MenuIcon from "@material-ui/icons/Menu"
 // import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 // import ChevronRightIcon from "@material-ui/icons/ChevronRight"
+// import { AppBar } from "@material-ui/core";
 
 import clsx from "clsx"
-import { AppBar } from "@material-ui/core";
 
 // setting styles
 // const drawerWidth = 240
@@ -183,6 +183,7 @@ const AdminDashBoard = () => {
   return (
     <div>
       <Navbar />
+      <AdminDashCal />
     </div>
   )
   // {
