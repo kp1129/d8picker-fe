@@ -79,7 +79,7 @@ const AddEventForm = ({
     <>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle>Add Event</DialogTitle>
+          <DialogTitle style={{background:"#21242C", color:"white"}}>Add Event</DialogTitle>
           <DialogContent>
             <Grid>
               <Grid item xs={12}>
@@ -87,6 +87,7 @@ const AddEventForm = ({
                   <MuiPickersUtilsProvider utils={MomentUtils}>
                     <Grid item xs={6}>
                       <Field
+                        
                         name="starts"
                         component={StartDateTimePickerField}
                       />
@@ -98,10 +99,10 @@ const AddEventForm = ({
                 </Grid>
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
                   fullWidth
                   id="event-name"
-                  label="Name"
+                  label="Event Title"
                   margin="normal"
                   name="name"
                   onBlur={handleBlur}
@@ -110,18 +111,7 @@ const AddEventForm = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="event-description"
-                  label="Description"
-                  margin="normal"
-                  name="description"
-                  onChange={handleChange}
-                  value={values.description}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
+                  <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
                   fullWidth
                   id="event-location"
                   label="Location"
@@ -131,6 +121,17 @@ const AddEventForm = ({
                   onChange={handleChange}
                   value={values.location}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
+                    fullWidth
+                    id="event-description"
+                    label="Description"
+                    margin="normal"
+                    name="description"
+                    onChange={handleChange}
+                    value={values.description}
+                  />
               </Grid>
             </Grid>
           </DialogContent>
