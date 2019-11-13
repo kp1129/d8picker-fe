@@ -33,10 +33,10 @@ const EventDisplay = () => {
     const classes = useStyles();
     const [data, setData] = useState([]);
 
-    const eventsDbRef = db
-        .collection("calendars")
-        .doc("hURNrIybLCJE0dJ9GqKM")
-        .collection("events");
+    // const eventsDbRef = db
+    //     .collection("calendars")
+    //     .doc("hURNrIybLCJE0dJ9GqKM")
+    //     .collection("events");
     //keep in state first calendar as default, have dropdown select for individual calendars
 
     useEffect(() => {

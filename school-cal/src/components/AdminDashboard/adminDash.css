@@ -1,0 +1,7 @@
+.greeting{
+    margin-top:75px
+}
+.calendars{
+    display: flex;
+    justify-content: center;
+}
