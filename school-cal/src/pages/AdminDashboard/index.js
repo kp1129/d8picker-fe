@@ -112,7 +112,9 @@ const AdminDashBoard = () => {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
+  console.log(currentUser)
+  console.log(calendar)
+  console.log(calendars)
   //used to get users
   useEffect(() => {
     const getUserProfile = async () => {
@@ -223,6 +225,17 @@ const AdminDashBoard = () => {
           </div>
           <div>
             <h3>UPCOMING EVENTS</h3>
+            <List>
+              <ListItem
+                button
+                className={classes.listItem}
+                onClick={() => setAddEvent(true)}>
+                <ListItemIcon>
+                  <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Add Event"} />
+              </ListItem>
+            </List>
           </div>
         </div>
       </div>

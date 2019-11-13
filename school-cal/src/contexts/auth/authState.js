@@ -40,8 +40,8 @@ export const AuthState = props => {
     //console.log(values)
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const response = await client.post("/api/auth/register", values)
-
+      const response = await client.post("https://school-calendar-mataka.herokuapp.com/users/register/owner", values)
+      console.log("WE ARE REGISTERING")
       dispatch({ type: SIGNUP_SUCCESS, payload: response.data })
     } catch (error) {
       console.log(error)
@@ -51,8 +51,8 @@ export const AuthState = props => {
   const signInWithUserIdAndPassword = async credential => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const response = await client.post("/api/auth/login", credential)
-
+      const response = await client.post("https://school-calendar-mataka.herokuapp.com/api/auth/login", credential)
+      console.log("WE ARE SIGNING IN")
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })

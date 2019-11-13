@@ -82,10 +82,10 @@ const Registration = ({ history }) => {
             <Formik
               initialValues={{
                 userRole: "",
-                firstName: "Thai",
-                lastName: "Nguyen",
-                username: "tnguyen",
-                email: "tnguyen@email.dev",
+                firstName: "sam",
+                lastName: "r",
+                username: "samr",
+                email: "samr@email.dev",
                 password: "password",
                 passwordConfirmation: "password",
               }}
