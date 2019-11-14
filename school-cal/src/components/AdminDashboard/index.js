@@ -90,29 +90,31 @@ import clsx from 'clsx';
 //   },
 // }));
 
-const AdminDashBoard = ({ history }) => {
-  const { currentUser, signOut } = useContext(AuthContext)
-  const [ isAddEventOpen, setAddEvent ] = useState(false)
-  const [ open, setOpen ] = React.useState(false);
-  // const theme = useTheme();
+const AdminDashBoard = ({props}) => {
+  // const { currentUser, signOut } = useContext(AuthContext)
+  // const [ isAddEventOpen, setAddEvent ] = useState(false)
+  // const [ open, setOpen ] = React.useState(false);
+  // // const theme = useTheme();
   
-  const [ userProfile, setUserProfile ] = useState(null);
-  const [data, setData] = useState([]);
+  // const [ userProfile, setUserProfile ] = useState(null);
+  // const [data, setData] = useState([]);
+  // console.log(props)
 
 
-  useEffect(() => {
-    const fetchData = () => {
-      axios
-      //get calendar id
-      // .get(`https://school-calendar-mataka.herokuapp.com/api/event/${id}/events`)
-        .get(`http://localhost:4000/api/users/${id}/calendar`)
-        .then(res => {
-          setData(res.data.calendars);
-        })
-        .catch(err => console.log(err))
-    }
-    fetchData()
-  },[]);
+  // useEffect(() => {
+  //   const fetchUsers = async() => {
+  //     try {
+  //       const id = props.match.params.id
+  //       //get calendar id
+  //       // .get(`https://school-calendar-mataka.herokuapp.com/users/${id}/calendars`)
+  //       const res = await axios.get(`http://localhost:4000/users/${id}/calendar`)
+  //       setData(res.data.calendars)
+  //     }catch (e){
+  //       console.log(e)
+  //     }
+  //   }
+  //   fetchUsers()
+  // },[]);
 
   // const handleDrawerOpen = () => {
   //   setOpen(true);
@@ -144,8 +146,8 @@ const AdminDashBoard = ({ history }) => {
   // const classes = useStyles()
   return (
     <div className="greeting">
-        <h2>Hello welcome </h2>
-        {data.length > 0 && data.map(calendar => (
+        {/* <h2>Hello welcome {`${props.calendars.username}`} </h2> */}
+        {/* {data.length > 0 && data.map(calendar => (
           <div 
             className='calendars'
             key={calendar.id}
@@ -153,7 +155,7 @@ const AdminDashBoard = ({ history }) => {
             <p>{calendar.calendarName}</p>
             <p>{calendar.calendarDescription}</p>
           </div>
-        ))}     
+        ))}      */}
       <EventDisplay 
 
       />

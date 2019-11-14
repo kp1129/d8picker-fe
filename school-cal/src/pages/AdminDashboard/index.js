@@ -2,6 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios'
+import { Link, Route } from "react-router-dom"
 
 //adding components
 import AddEvent from "../../components/Events/AddEvent";
@@ -38,6 +39,7 @@ import { AuthContext } from "../../contexts/auth/authState"
 // import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
 // import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 // import { AppBar } from "@material-ui/core";
+import '../../components/AdminDashboard/adminDash.css'
 
 import clsx from "clsx"
 
@@ -99,47 +101,63 @@ import clsx from "clsx"
 //   },
 // }))
 
-const AdminDashBoard = () => {
+const AdminDashBoard = (props) => {
 
-  const { currentUser, signOut } = useContext(AuthContext)
-  const [isAddEventOpen, setAddEvent] = useState(false)
-  const [calendars, setCalendars] = useState([])
-  const [calendar, setCalendar] = useState({ id: "" })
-  const [open, setOpen] = React.useState(false)
-  // const theme = useTheme()
-  const [userProfile, setUserProfile] = useState(null)
+  // const { currentUser, signOut } = useContext(AuthContext)
+  // const [isAddEventOpen, setAddEvent] = useState(false)
+  // const [calendar, setCalendar] = useState({ id: "" })
+  // const [open, setOpen] = React.useState(false)
+  // // const theme = useTheme()
+  // const [userProfile, setUserProfile] = useState(null)
+  // console.log(props)
+  // const handleDrawerOpen = () => {
+    //   setOpen(true)
+    // }
+    
+    // const handleDrawerClose = () => {
+      //   setOpen(false)
+      // }
+      // const [data, setData] = useState([]);
+      const [calendars, setCalendars] = useState([])
 
-  const handleDrawerOpen = () => {
-    setOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setOpen(false)
-  }
-
-  //used to get users
   useEffect(() => {
-    const getUserProfile = async () => {
+    const fetchUsers = async() => {
       try {
-        const profileRef = await db.collection("users").doc(currentUser.uid)
-
-        const profile = await profileRef.get()
-        setUserProfile(profile.data())
-
-        //setUserProfile(profileRef.get());
-      } catch (error) {
-        console.log("Unable to retrieve user profile.")
+        const id = props.match.params.id
+        //get calendar id
+        // .get(`https://school-calendar-mataka.herokuapp.com/users/${id}/calendars`)
+        const res = await axios.get(`http://localhost:4000/users/${id}/calendar`)
+        setCalendars(res.data.calendars)
+      }catch (e){
+        console.log(e)
       }
     }
+    fetchUsers()
+  },[]);
+  console.log(calendars)
+  //used to get users
+  // useEffect(() => {
+  //   const getUserProfile = async () => {
+  //     try {
+  //       const profileRef = await db.collection("users").doc(currentUser.uid)
 
-    getUserProfile()
-  }, [])
+  //       const profile = await profileRef.get()
+  //       setUserProfile(profile.data())
 
-  // load user calendars
-  useEffect(() => {
-    if (currentUser) {
-      axios('')
-      //   db.collection("calendars")
+  //       //setUserProfile(profileRef.get());
+  //     } catch (error) {
+  //       console.log("Unable to retrieve user profile.")
+  //     }
+  //   }
+
+  //   getUserProfile()
+  // }, [])
+
+  // // load user calendars
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     axios('')
+  //     //   db.collection("calendars")
       //     .where("admins", "array-contains", currentUser.uid)
       //     .get()
       //     .then(querySnapshot => {
@@ -158,9 +176,9 @@ const AdminDashBoard = () => {
       //       console.log(error)
       //     })
       // }
-    }
+    // }
       
-    }, [currentUser])
+    // }, [currentUser])
     
   // pre-select a default primary calendar
   // useEffect(() => {
@@ -183,7 +201,27 @@ const AdminDashBoard = () => {
   return (
     <div>
       <Navbar />
-      <AdminDashCal />
+      <h2 
+      className="greeting"
+      
+      >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
+      {calendars.length > 0 && calendars.map(calendar => (
+          <div 
+            className='calendars'
+            key={calendar.id}
+            >
+              <Link to ='/calendar/:id'>
+      <p>{calendar.username}</p>
+                <p>{calendar.calendarName}</p>
+                <p>{calendar.calendarDescription}</p>
+              </Link>
+          </div>
+      ))}     
+      <Route to path='/calendar/:id' /> 
+
+      {/* <AdminDashCal
+        // props= {props}
+      /> */}
     </div>
   )
   // {
