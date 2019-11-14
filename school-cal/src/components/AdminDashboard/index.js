@@ -145,6 +145,7 @@ const AdminDashBoard = ({props}) => {
 
   // const classes = useStyles()
   return (
+<<<<<<< HEAD
     <div className="greeting">
         {/* <h2>Hello welcome {`${props.calendars.username}`} </h2> */}
         {/* {data.length > 0 && data.map(calendar => (
@@ -159,6 +160,75 @@ const AdminDashBoard = ({props}) => {
       <EventDisplay 
 
       />
+=======
+    <div className={classes.root}>
+        <Navbar drawerWidth={drawerWidth} />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+        style={{background:"#21242C"}}
+      >
+        <Toolbar style={{background:"#21242C"}}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            School Calendar
+          </Typography>
+          {userProfile && (
+            <Typography className={classes.greeting} style={{marginLeft:"80%"}}>
+              Hello, {userProfile.firstName}
+            </Typography>
+          )}
+          <Button color="inherit" onClick={signOut}>
+            Sign Out
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItem
+            button
+            className={classes.listItem}
+            onClick={() => setAddEvent(true)}>
+            Add Event
+          </ListItem>
+        </List>
+        <Divider />
+        <List>
+          <ListItem>
+            {data.map(info => {
+              <div><p>{console.log("IN THE SIDEBAR"+ info)}</p></div>
+            })}
+          </ListItem>
+        </List>
+        <Divider />
+        
+      </Drawer>
+      <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
+>>>>>>> development
     </div>
     // <div className={classes.root}>
     //   <AppBar

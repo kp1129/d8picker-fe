@@ -7,6 +7,7 @@ import AdminLoginForm from "./SignInForm"
 import { AuthContext } from "../../contexts/auth/authState"
 import { Formik } from "formik"
 import * as Yup from "yup"
+import SignNavbar from "../../components/Navbar/signinnav"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,16 +45,17 @@ const SignIn = ({ history }) => {
 
   return (
     <div className={classes.root}>
+      <SignNavbar />
       <Grid container>
-        <Grid item md={6}>
-          <img
+        <Grid item md={6} style={{background: "#A35629"}}>
+          {/* <img
             className={classes.image}
             src={desktopCalendarImg}
             alt={"desktopCalendar"}
-          />
+          /> */}
         </Grid>
         <Grid item md={6}>
-          <Formik
+          <Formik 
             initialValues={{ userId: "", password: "" }}
             onSubmit={(values, actions) => {
               signInWithUserIdAndPassword(values)

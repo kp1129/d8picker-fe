@@ -7,15 +7,16 @@ import { loadState } from "../localStorage"
 
 const state = loadState() || ""
 
-const liveURL = "http://school-calendar-makata.herokuapp.com"
+const liveURL = "https://school-calendar-makata.herokuapp.com"
 export const client = axios.create({
   baseURL:
     process.env.NODE_ENV === "production"
       ? liveURL
-      : process.env.REACT_APP_BASE_URL,
+      : "localhost:4000",
   header: {
     "Content-Type": "application/json",
   },
+  
 })
 
 export const clientWithAuth = axios.create({

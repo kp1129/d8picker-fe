@@ -103,11 +103,12 @@ const SignInForm = ({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  style={{background: "#F2D2BF"}}
                   variant="outlined"
                   required
                   fullWidth
                   id="userId"
-                  label="Username or Email"
+                  label="Username"
                   name="userId"
                   autoComplete="userId"
                   value={values.userId}
@@ -119,6 +120,24 @@ const SignInForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  style={{background: "#F2D2BF"}}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  value={values.userId}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={touched.userId ? errors.userId : ""}
+                  error={touched.userId && Boolean(errors.userId)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{background: "#F2D2BF"}}
                   variant="outlined"
                   required
                   fullWidth
@@ -136,6 +155,7 @@ const SignInForm = ({
               </Grid>
             </Grid>
             <Button
+              style={{background: "#F5945B", color: "#21242C"}}
               type="submit"
               fullWidth
               variant="contained"
@@ -148,13 +168,14 @@ const SignInForm = ({
               )}
             </Button>
             <div className={classes.link}>
-              <Link href="/registration" variant="body2">
+              <Link href="/register" variant="body2">
                 Don't have an account? Register
               </Link>
             </div>
 
             <Divider />
             <Button
+              style={{background: "#F5945B", color: "#21242C"}}
               className={classes.signInWithGoogle}
               color="primary"
               fullWidth
