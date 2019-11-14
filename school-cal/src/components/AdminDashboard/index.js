@@ -101,7 +101,7 @@ const AdminDashBoard = ({ history }) => {
 
 
   useEffect(() => {
-    const fetchData = async (id) => {
+    const fetchData = () => {
       axios
       //get calendar id
       // .get(`https://school-calendar-mataka.herokuapp.com/api/event/${id}/events`)

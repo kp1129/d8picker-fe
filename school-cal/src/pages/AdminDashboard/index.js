@@ -163,21 +163,21 @@ const AdminDashBoard = () => {
     }, [currentUser])
     
   // pre-select a default primary calendar
-  useEffect(() => {
-    if (calendars.length > 0) {
-      const primaryCalendarIndex = calendars.findIndex(
-        calendar => calendar.name === "primary",
-      )
+  // useEffect(() => {
+  //   if (calendars.length > 0) {
+  //     const primaryCalendarIndex = calendars.findIndex(
+  //       calendar => calendar.name === "primary",
+  //     )
 
-      const primaryCalendar = calendars[primaryCalendarIndex]
-      setCalendar({ id: primaryCalendar.id })
-    }
-  }, [calendars])
+  //     const primaryCalendar = calendars[primaryCalendarIndex]
+  //     setCalendar({ id: primaryCalendar.id })
+  //   }
+  // }, [calendars])
 
-  // handling calendar selected from the drop-down
-  const handleChange = event => {
-    setCalendar({ id: event.target.value })
-  }
+  // // handling calendar selected from the drop-down
+  // const handleChange = event => {
+  //   setCalendar({ id: event.target.value })
+  // }
 
   // const classes = useStyles()
   return (
