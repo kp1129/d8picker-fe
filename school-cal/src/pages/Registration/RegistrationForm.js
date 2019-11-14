@@ -83,12 +83,10 @@ const RegistrationForm = ({
 }) => {
   const classes = useStyles()
 
-  const [fireBaseError, setFireBaseError] = useState(null)
 
   useEffect(() => {
     if (signUpError) {
       if (signUpError.code === "auth/email-already-in-use") {
-        setFireBaseError("The email is already registered.")
       }
     }
   }, [signUpError])
@@ -243,7 +241,6 @@ const RegistrationForm = ({
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
             </Grid>
 
             <Grid item xs={12}>

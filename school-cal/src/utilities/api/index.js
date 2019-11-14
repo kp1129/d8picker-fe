@@ -12,7 +12,7 @@ export const client = axios.create({
   baseURL:
     process.env.NODE_ENV === "production"
       ? liveURL
-      : process.env.REACT_APP_BASE_URL,
+      : "localhost:4000",
   header: {
     "Content-Type": "application/json",
   },

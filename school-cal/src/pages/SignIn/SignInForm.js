@@ -74,15 +74,11 @@ const SignInForm = ({
 }) => {
   const classes = useStyles()
 
-  const [fireBaseError, setFireBaseError] = useState(null)
   useEffect(() => {
     if (signInError) {
       if (signInError.code === "auth/invalid-email") {
-        setFireBaseError("The email is not valid.")
       } else if (signInError.code === "auth/user-not-found") {
-        setFireBaseError("The email is not registered. ")
       } else if (signInError.code === "auth/wrong-password") {
-        setFireBaseError("The password is not valid. ")
       }
     }
   }, [signInError])
@@ -112,9 +108,26 @@ const SignInForm = ({
                   required
                   fullWidth
                   id="userId"
-                  label="Username or Email"
+                  label="Username"
                   name="userId"
                   autoComplete="userId"
+                  value={values.userId}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={touched.userId ? errors.userId : ""}
+                  error={touched.userId && Boolean(errors.userId)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{background: "#F2D2BF"}}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
                   value={values.userId}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -141,7 +154,6 @@ const SignInForm = ({
                 />
               </Grid>
             </Grid>
-            {fireBaseError && <Box my={4}>{fireBaseError}</Box>}
             <Button
               style={{background: "#F5945B", color: "#21242C"}}
               type="submit"

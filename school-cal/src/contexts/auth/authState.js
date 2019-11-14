@@ -51,7 +51,7 @@ export const AuthState = props => {
   const signInWithUserIdAndPassword = async credential => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const response = await client.post("/api/auth/login", credential)
+      const response = await client.post("/auth/login", credential)
       console.log("WE ARE SIGNING IN")
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
@@ -61,8 +61,6 @@ export const AuthState = props => {
 
   const signInWithGoogle = async () => {
     try {
-      //let data = await firebase.auth().signInWithPopup(googleProvider)
-
       dispatch({ type: SIGNIN_SUCCESS, payload: true })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
