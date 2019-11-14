@@ -112,9 +112,26 @@ const SignInForm = ({
                   required
                   fullWidth
                   id="userId"
-                  label="Username or Email"
+                  label="Username"
                   name="userId"
                   autoComplete="userId"
+                  value={values.userId}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  helperText={touched.userId ? errors.userId : ""}
+                  error={touched.userId && Boolean(errors.userId)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{background: "#F2D2BF"}}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
                   value={values.userId}
                   onChange={handleChange}
                   onBlur={handleBlur}
