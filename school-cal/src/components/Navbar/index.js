@@ -53,10 +53,10 @@ const Navbar = ({ drawerWidth }) => {
 
   return (
     <div>
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} style={{background:"#21242C"}}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            School Calendar
+            WAHLUIGI
           </Typography>
           <Button color="inherit" onClick={signOut}>
             Sign Out

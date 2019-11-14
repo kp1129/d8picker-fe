@@ -159,8 +159,9 @@ const AdminDashBoard = ({ history }) => {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        style={{background:"#21242C"}}
       >
-        <Toolbar>
+        <Toolbar style={{background:"#21242C"}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"

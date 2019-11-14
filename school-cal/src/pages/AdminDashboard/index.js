@@ -30,6 +30,7 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 
 import Typography from "@material-ui/core/Typography"
+import EmptyPerson from "../../assets/images/emptyperson.png"
 
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
@@ -78,13 +79,13 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "flex-end",
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
+    // flexGrow: 1,
+    // padding: theme.spacing(3),
+    // transition: theme.transitions.create("margin", {
+    //   easing: theme.transitions.easing.sharp,
+    //   duration: theme.transitions.duration.leavingScreen,
+    // }),
+    // marginLeft: -drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -111,7 +112,9 @@ const AdminDashBoard = () => {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
+  console.log(currentUser)
+  console.log(calendar)
+  console.log(calendars)
   //used to get users
   useEffect(() => {
     const getUserProfile = async () => {
@@ -181,15 +184,15 @@ const AdminDashBoard = () => {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}>
-        <Toolbar>
-          <IconButton
+        <Toolbar style={{background:"#21242C"}}>
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}>
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={classes.title}>
             School Calendar
           </Typography>
@@ -201,7 +204,42 @@ const AdminDashBoard = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer
+      <div className="user-side-bar" style={{display:"flex",flexDirection:"row",background:"#F2D2BF", height:"48.75vw", width:"21.55%"}}>
+        <div><p style={{color:"white", background:"#F5945B", marginTop:"46vw", marginLeft:"30%", padding:"3px 8px"}}>+</p></div>
+        <div style={{borderRight:"1px solid #EAEAEA", marginLeft:"1.75vw", width:"500px", background:"white", display:"flex", alignItems:"center", flexDirection:"column", textAlign:"center"}}>
+          <div style={{marginTop:"20%"}}>
+            <img src={EmptyPerson} alt="empty person"/>
+          </div>
+          <div>
+            <h3>Pull Team Name From Backend</h3>
+            <h5>Pull Email Here</h5>
+          </div>
+          <div>
+            <Select onChange={handleChange} value={calendar.id} style={{background:"#F5945B"}}>
+              {calendars.map(calendar => (
+                <MenuItem key={calendar.id} value={calendar.id}>
+                  {calendar.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
+          <div>
+            <h3>UPCOMING EVENTS</h3>
+            <List>
+              <ListItem
+                button
+                className={classes.listItem}
+                onClick={() => setAddEvent(true)}>
+                <ListItemIcon>
+                  <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Add Event"} />
+              </ListItem>
+            </List>
+          </div>
+        </div>
+      </div>
+      {/* <Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -246,8 +284,9 @@ const AdminDashBoard = () => {
         <Grid container>
           <Grid item xs={12}></Grid>
         </Grid>
-      </Drawer>
-      <main className={classes.content} style={{height:"300px", width:"300px" }}>
+      </Drawer> */}
+      <main className={classes.content}>
+
         <AdminDashCal />
       </main>
       <AddEvent
