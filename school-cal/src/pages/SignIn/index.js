@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SignIn = ({ history }) => {
+   ReactGA.pageview(window.location.pathname + window.location.search);
   const {
     currentUser,
     isLoading,
@@ -58,6 +59,10 @@ const SignIn = ({ history }) => {
           <Formik 
             initialValues={{ userId: "", password: "" }}
             onSubmit={(values, actions) => {
+                ReactGA.event({
+                  category: 'Sign In',
+                  action: 'Existing User Signed In'
+                });
               signInWithUserIdAndPassword(values)
               actions.resetForm()
             }}
