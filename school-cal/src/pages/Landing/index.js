@@ -10,6 +10,7 @@ import '../../index.css'
 
 
 export default function Landing() {
+    ReactGA.pageview(window.location.pathname + window.location.search);
 
   return (
      <div className='container'>
