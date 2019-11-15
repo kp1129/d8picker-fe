@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { CssBaseline } from "@material-ui/core"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 import SigninNavbar from "../../components/Navbar/signinnav"
-
+import ReactGA from 'react-ga';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
