@@ -8,7 +8,7 @@ import { Link, Route } from "react-router-dom"
 import AddEvent from "../../components/Events/AddEvent";
 import Navbar from "../../components/Navbar"
 import AdminDashCal from '../../components/AdminDashboard/index'
-
+import ReactGA from 'react-ga';
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
 
@@ -206,7 +206,7 @@ const AdminDashBoard = (props) => {
       <div>
         <SideBar />
       <div>
-      <h2 
+      {/* <h2 
       className="greeting"
       
       >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
@@ -222,7 +222,7 @@ const AdminDashBoard = (props) => {
               </Link>
           </div>
       ))}     
-      <Route to path='/calendar/:id' /> 
+      <Route to path='/calendar/:id' />  */}
 
       {/* <AdminDashCal
         // props= {props}

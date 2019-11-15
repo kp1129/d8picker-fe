@@ -163,7 +163,7 @@ const SideBar = (props) => {
                 <ListItemText primary={"Add Event"} />
               </ListItem>
             </List>
-      <h2 
+      {/* <h2 
       className="greeting"
       
       >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
@@ -177,14 +177,14 @@ const SideBar = (props) => {
                 <p>{calendar.calendarName}</p>
                 <p>{calendar.calendarDescription}</p>
               </Link>
-          </div>
-      ))}     
+          </div> */}
+      {/* ))}      */}
       <Route to path='/calendar/:id' /> 
 
           </div>
         </div>
       </div>
-
+      <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
     </div>
   )
 
