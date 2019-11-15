@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Registration = ({ history }) => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
   const {
     currentUser,
     isLoading,
@@ -90,6 +91,10 @@ const Registration = ({ history }) => {
                 passwordConfirmation: "password",
               }}
               onSubmit={(values, actions) => {
+                  ReactGA.event({
+                  category: 'Register',
+                  action: 'New User Signed Up'
+                });
                 signUpUser(values)
                 actions.resetForm()
               }}
