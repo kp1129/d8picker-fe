@@ -8,7 +8,7 @@ import { Link, Route } from "react-router-dom"
 import AddEvent from "../../components/Events/AddEvent";
 import Navbar from "../../components/Navbar"
 import AdminDashCal from '../../components/AdminDashboard/index'
-import ReactGA from 'react-ga';
+
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
 

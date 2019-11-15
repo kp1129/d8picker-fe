@@ -9,7 +9,7 @@ import { Formik } from "formik"
 import * as Yup from "yup"
 import SignNavbar from "../../components/Navbar/signinnav"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
-import ReactGA from 'react-ga';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
