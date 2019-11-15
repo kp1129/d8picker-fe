@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+import ReactGA from 'react-ga';
 import React, { useContext, useState, useEffect } from "react"
 import { CssBaseline, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
@@ -9,6 +9,7 @@ import { Formik } from "formik"
 import * as Yup from "yup"
 import SignNavbar from "../../components/Navbar/signinnav"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SignIn = ({ history }) => {
+   ReactGA.pageview(window.location.pathname + window.location.search);
   const {
     currentUser,
     isLoading,
@@ -58,6 +60,10 @@ const SignIn = ({ history }) => {
           <Formik 
             initialValues={{ userId: "", password: "" }}
             onSubmit={(values, actions) => {
+                ReactGA.event({
+                  category: 'Sign In',
+                  action: 'Existing User Signed In'
+                });
               signInWithUserIdAndPassword(values)
               actions.resetForm()
             }}

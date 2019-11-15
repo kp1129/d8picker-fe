@@ -5,8 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom"
 
-//setting auth
-import { AuthContext } from "../../contexts/auth/authState"
+import clsx from "clsx"
 
 
 // adding components
@@ -18,11 +17,12 @@ import '../../components/AdminDashboard/adminDash.css'
 
 
 const AdminDashBoard = (props) => {
+   ReactGA.pageview(window.location.pathname + window.location.search);
 
-  // const { currentUser, signOut } = useContext(AuthContext)
-  // const [isAddEventOpen, setAddEvent] = useState(false)
-  // const [calendar, setCalendar] = useState({ id: "" })
-  // const [open, setOpen] = React.useState(false)
+  const { currentUser, signOut } = useContext(AuthContext)
+  const [isAddEventOpen, setAddEvent] = useState(false)
+  const [calendar, setCalendar] = useState({ id: "" })
+  const [open, setOpen] = React.useState(false)
   // // const theme = useTheme()
   // const [userProfile, setUserProfile] = useState(null)
     
@@ -86,3 +86,5 @@ const AdminDashBoard = (props) => {
     </div>
   )}
 export default AdminDashBoard
+
+
