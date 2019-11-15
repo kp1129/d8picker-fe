@@ -31,7 +31,7 @@ import AddEvent from "../Events/AddEvent"
 import EventDisplay from "../Events/EventDisplay"
 
 import clsx from 'clsx';
-
+import ReactGA from 'react-ga';
 //setting styles
 // const drawerWidth = 240
 // const useStyles = makeStyles(theme => ({
@@ -91,6 +91,7 @@ import clsx from 'clsx';
 // }));
 
 const AdminDashBoard = ({props}) => {
+  ReactGA.pageview(window.location.pathname + window.location.search);
   // const { currentUser, signOut } = useContext(AuthContext)
   // const [ isAddEventOpen, setAddEvent ] = useState(false)
   // const [ open, setOpen ] = React.useState(false);
