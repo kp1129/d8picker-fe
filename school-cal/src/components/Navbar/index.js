@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
-
+import clsx from "clsx"
 import { AuthContext } from "../../contexts/auth/authState"
 
 const Navbar = ({ drawerWidth }) => {
@@ -52,12 +52,20 @@ const Navbar = ({ drawerWidth }) => {
 
   return (
     <div>
-      <AppBar position="fixed" className={classes.appBar} style={{background:"#21242C"}}>
-        <Toolbar>
+       <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}>
+        <Toolbar style={{background:"#21242C"}}>
+
           <Typography variant="h6" className={classes.title}>
-            WAHLUIGI
+            School Calendar
           </Typography>
-          <Button color="inherit" onClick={signOut}>
+          <Button
+            color="inherit"
+            
+            style={{ marginLeft: "80%" }}>
             Sign Out
           </Button>
         </Toolbar>
