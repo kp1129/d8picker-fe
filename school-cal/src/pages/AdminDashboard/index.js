@@ -2,12 +2,12 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios'
-import { Link, Route } from "react-router-dom"
+import { useParams } from 'react-router'
+import {  BrowserRouter as Router, Link, Route, } from "react-router-dom"
 
 //adding components
 import AddEvent from "../../components/Events/AddEvent";
 import Navbar from "../../components/Navbar"
-import AdminDashCal from '../../components/AdminDashboard/index'
 
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
@@ -119,6 +119,7 @@ const AdminDashBoard = (props) => {
       // }
       // const [data, setData] = useState([]);
       const [calendars, setCalendars] = useState([])
+      console.log(props)
 
   useEffect(() => {
     const fetchUsers = async() => {
@@ -134,7 +135,6 @@ const AdminDashBoard = (props) => {
     }
     fetchUsers()
   },[]);
-  console.log(calendars)
   //used to get users
   // useEffect(() => {
   //   const getUserProfile = async () => {
@@ -201,27 +201,18 @@ const AdminDashBoard = (props) => {
   return (
     <div>
       <Navbar />
-      <h2 
-      className="greeting"
-      
-      >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
+      <h2 className="greeting">Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
       {calendars.length > 0 && calendars.map(calendar => (
           <div 
             className='calendars'
             key={calendar.id}
             >
               <Link to ='/calendar/:id'>
-      <p>{calendar.username}</p>
                 <p>{calendar.calendarName}</p>
                 <p>{calendar.calendarDescription}</p>
               </Link>
           </div>
       ))}     
-      <Route to path='/calendar/:id' /> 
-
-      {/* <AdminDashCal
-        // props= {props}
-      /> */}
     </div>
   )
   // {
