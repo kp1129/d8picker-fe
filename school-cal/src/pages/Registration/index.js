@@ -9,6 +9,8 @@ import * as Yup from "yup"
 import { makeStyles } from "@material-ui/core/styles"
 import { CssBaseline } from "@material-ui/core"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
+import SigninNavbar from "../../components/Navbar/signinnav"
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -65,23 +67,25 @@ const Registration = ({ history }) => {
   return (
     <>
       <div className={classes.root}>
+      <SigninNavbar />
         <CssBaseline />
         <Grid container>
-          <Grid item md={6}>
-            <img
+          
+          <Grid item md={6}  style={{background: "#A35629"}}>
+            {/* <img
               className={classes.image}
               src={desktopCalendarImg}
               alt={"desktopCalendar"}
-            />
+            /> */}
           </Grid>
           <Grid item md={6}>
             <Formik
               initialValues={{
                 userRole: "",
-                firstName: "Thai",
-                lastName: "Nguyen",
-                username: "tnguyen",
-                email: "tnguyen@email.dev",
+                firstName: "sam",
+                lastName: "r",
+                username: "samr",
+                email: "samr@email.dev",
                 password: "password",
                 passwordConfirmation: "password",
               }}

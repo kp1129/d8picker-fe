@@ -86,7 +86,20 @@ export default function Login() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={event => {event.preventDefault(); signInWithEmailAndPassword(credentials.email, credentials.password)}}>
           <Grid container spacing={2}>
-
+          <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={credentials.email}
+                onChange={handleChange}
+              />
+              
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -99,6 +112,7 @@ export default function Login() {
                 value={credentials.email}
                 onChange={handleChange}
               />
+              
             </Grid>
             <Grid item xs={12}>
 
