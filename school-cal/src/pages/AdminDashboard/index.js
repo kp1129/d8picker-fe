@@ -41,6 +41,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 import EmptyPerson from "../../assets/images/emptyperson.png"
 import SideBar from "../../components/sidebar/index"
 import '../../components/AdminDashboard/adminDash.css'
+import ReactGA from 'react-ga';
 
 import clsx from "clsx"
 

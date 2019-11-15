@@ -7,7 +7,7 @@ import SignInNav from "../../components/Navbar/signinnav"
 import ReactGA from 'react-ga';
 import AppleCal from '../../assets/images/apple-cal.jpg'
 import '../../index.css'
-
+import ReactGA from 'react-ga';
 
 export default function Landing() {
     ReactGA.pageview(window.location.pathname + window.location.search);
