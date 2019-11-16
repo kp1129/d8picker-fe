@@ -19,7 +19,7 @@ import '../../components/AdminDashboard/adminDash.css'
 const AdminDashBoard = (props) => {
    ReactGA.pageview(window.location.pathname + window.location.search);
 
-  const { currentUser, signOut } = useContext(AuthContext)
+  // const { currentUser, signOut } = useContext(AuthContext)
   const [isAddEventOpen, setAddEvent] = useState(false)
   const [calendar, setCalendar] = useState({ id: "" })
   const [open, setOpen] = React.useState(false)
@@ -37,7 +37,6 @@ const AdminDashBoard = (props) => {
         // .get(`https://school-calendar-mataka.herokuapp.com/users/${id}/calendars`)
         const res = await axios.get(`http://localhost:4000/users/${id}/calendar`)
         setCalendars(res.data.calendars)
-        console.log(res.data)
       }catch (e){
         console.log(e)
       }

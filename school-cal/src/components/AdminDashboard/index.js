@@ -41,7 +41,7 @@ const AdminDashBoard = (props) => {
     return data.map(event => (
       {
         title: event.eventName,
-        start:'2019-11-11'
+        start: event.startDate
       }
       ))
   } 
