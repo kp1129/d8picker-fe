@@ -7,6 +7,7 @@ import { Link, Route } from "react-router-dom"
 import AddEvent from "../../components/Events/AddEvent";
 import Navbar from "../../components/Navbar"
 import AdminDashCal from '../../components/AdminDashboard/index'
+import TwilioMessage from '../../components/addUserTwilioMessage/index'
 
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
@@ -172,6 +173,10 @@ const SideBar = (props) => {
                 </ListItemIcon>
                 <ListItemText primary={"Add Users"} />
               </ListItem>
+              
+            </List>
+            <List>
+              <TwilioMessage/>
             </List>
 
           </div>
