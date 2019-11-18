@@ -33,15 +33,32 @@ const AddUsers = ({ calendar, open, handleClose }) => {
           UserId: ""
         }}
         onSubmit={async (values, actions) => {
-          try {
-            await Axios
-            .post()
-            .then(actions.resetForm(),
-            handleClose())
-          } catch (error) {
-            console.log("Unable to add user.")
-          }
-        }}
+            console.log(values)
+          if (values.AdminId !== "") {
+            try {
+                console.log("trying to post admin")
+                await Axios
+                .post("https://school-calendar-mataka.herokuapp.com/api/calendars/:id/admins", values.AdminId)
+                .then(actions.resetForm(),
+                handleClose())
+            } catch (error) {
+                console.log("Unable to add Admin.")
+            }
+            } else {
+                try {
+                    console.log("trying to post user")
+                    await Axios
+                    .post("https://school-calendar-mataka.herokuapp.com/api/calendars/:id/subscribers", values.UserId)
+                    .then(actions.resetForm(),
+                    handleClose())
+                } catch (error) {
+                    console.log("Unable to add user.")
+                } 
+            }
+        }
+
+            }
+        
         render={formikProps => (
           <AddUsersForm
             open={open}
@@ -72,10 +89,10 @@ const AddUsersForm = ({
               <Grid item xs={12}>
                 <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
                   fullWidth
-                  id="admin-id"
+                  id="AdminId"
                   label="Admin ID"
                   margin="normal"
-                  name="admin-id"
+                  name="AdminId"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.adminid}
@@ -84,10 +101,10 @@ const AddUsersForm = ({
               <Grid item xs={12}>
                   <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
                   fullWidth
-                  id="user-id"
+                  id="UserId"
                   label="User ID"
                   margin="normal"
-                  name="user-id"
+                  name="UserId"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.userid}
