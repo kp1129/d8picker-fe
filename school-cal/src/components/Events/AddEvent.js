@@ -5,6 +5,7 @@ import moment from "moment"
 import { Formik, Field } from "formik"
 import * as Yup from "yup"
 import { AuthContext } from "../../contexts/auth/authState"
+import axios from "axios"
 
 import {
   Button,
@@ -24,6 +25,8 @@ import MomentUtils from "@date-io/moment"
 
 const AddEvent = ({ calendar, open, handleClose }) => {
   const { currentUser } = useContext(AuthContext)
+  const [data, setData] = useState([]);
+
   return (
     <>
       <Formik
@@ -33,26 +36,6 @@ const AddEvent = ({ calendar, open, handleClose }) => {
           name: "",
           description: "",
           location: "",
-        }}
-        onSubmit={async (values, actions) => {
-          try {
-            await db
-              .collection("calendars")
-              .doc(calendar.id)
-              .collection("events")
-              .add({
-                uid: currentUser.uid,
-                starts: moment(values.starts).format(),
-                ends: moment(values.ends).format(),
-                name: values.name,
-                description: values.description,
-                location: values.location,
-              })
-            actions.resetForm()
-            handleClose()
-          } catch (error) {
-            console.log("Unable to add event.")
-          }
         }}
         render={formikProps => (
           <AddEventForm
@@ -66,14 +49,22 @@ const AddEvent = ({ calendar, open, handleClose }) => {
   )
 }
 
-const AddEventForm = ({
+const AddEventForm = (props,{
   values,
   handleChange,
-  handleSubmit,
   handleBlur,
   handleClose,
   open,
 }) => {
+  const  handleSubmit = async(e) => {
+    e.preventDefault();
+    const { value } = e.target.elements
+    axios.post(`http://localhost:4000/api/calendars/${id}/events`, {event: value})
+    .then(res => {
+      console.log(res)
+      setData(value)
+    })
+  }
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
