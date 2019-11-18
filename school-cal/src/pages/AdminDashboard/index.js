@@ -3,11 +3,11 @@
 import React, { useContext, useEffect, useState } from "react"
 import { clientWithAuth } from "../../utilities/api"
 import { Link, Route } from "react-router-dom"
-
+import { AuthContext } from "../../contexts/auth/authState"
 //adding components
 import AddEvent from "../../components/Events/CreateEvent"
 import Navbar from "../../components/Navbar"
-import Sidebar from "../../components/Sidebar"
+import Sidebar from "../../components/sidebar/index"
 import Calendar from "../../components/Calendar"
 
 // styling/css
@@ -57,7 +57,7 @@ const AdminDashBoard = props => {
   const [open, setOpen] = React.useState(false)
 
   const [calendars, setCalendars] = useState([])
-
+  const classes = useStyles()
   return (
     <div className={classes.root}>
       <CssBaseline />

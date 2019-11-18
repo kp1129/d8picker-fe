@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
@@ -9,6 +7,15 @@ import AddIcon from "@material-ui/icons/Add"
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
 import moment from "moment"
+
+//fullcalendar
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid"
+import timeGridPlugin from "@fullcalendar/timegrid"
+import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import "@fullcalendar/core/main.css"
+import "@fullcalendar/daygrid/main.css"
+import "@fullcalendar/timegrid/main.css"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
@@ -47,7 +54,6 @@ const Calendar = () => {
           backgroundColor: event.eventColor,
         }
       })
-
       setEvents(formatted)
     }
   }, [userCalendarEvents])
@@ -66,6 +72,8 @@ const Calendar = () => {
     })
   }
 
+  // new Draggable({})
+
   return (
     <div>
       <Grid container className={classes.headerContainer}>
@@ -80,7 +88,14 @@ const Calendar = () => {
       </Grid>
       <FullCalendar
         defaultView="dayGridMonth"
-        plugins={[dayGridPlugin]}
+        header={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth, timeGridWeek, timeGridDay, listWeek",
+        }}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        editable={true}
+        droppable={true}
         events={events}
         eventClick={handleEventClick}
       />
