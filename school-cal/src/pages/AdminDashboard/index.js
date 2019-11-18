@@ -110,7 +110,7 @@ const AdminDashBoard = (props) => {
 
 
         <AdminDashCal />
-      </main>
+      
       <AddEvent
         handleClose={() => setAddEvent(false)}
         open={isAddEventOpen}

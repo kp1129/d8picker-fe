@@ -6,7 +6,6 @@ import Landing from "./pages/Landing"
 import SignIn from "./pages/SignIn"
 import Registration from "./pages/Registration"
 
-import StudentDashboard from "./pages/StudentDashboard"
 import Marketing from "./pages/marketing/index"
 
 import AdminDashboard from "./pages/AdminDashboard"
@@ -20,7 +19,7 @@ const AppRouter = () => {
           <Route path="/sign-in" component={SignIn} />
           <Route path="/register" component={Registration} />
           <Route path="/admin-dashboard" component={AdminDashboard} />     
-          <Route path="/student-dashboard" component={StudentDashboard} />
+          
 
         </Switch>
       </Router>
