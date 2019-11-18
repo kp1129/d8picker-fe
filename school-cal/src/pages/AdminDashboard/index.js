@@ -242,6 +242,7 @@ const AdminDashBoard = (props) => {
         open={isAddEventOpen}
         calendar={calendar}
       />
+   
     </div>
   )
   // {
