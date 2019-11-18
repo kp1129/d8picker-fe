@@ -18,3 +18,41 @@ code {
 .show{
   display:flex
 }
+.container{
+  height: 100vh;
+  display: grid;
+  grid-template-rows: max-content 50% 50%;
+}
+.landing-img{
+  display: block;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  z-index: -100;
+}
+.landing-grid-container{
+  position: relative;
+
+}
+.landing-link{
+  color: white;
+  text-decoration: none;
+  padding: 1em 4em;
+  background-color: #3F51B5;
+  position: absolute;
+  top:80%;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+.landing-link2{
+  color: white;
+  text-decoration: none;
+  padding: 1em 4em;
+  background-color: #3F51B5;
+  position: absolute;
+  top:90%;
+  left:50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}

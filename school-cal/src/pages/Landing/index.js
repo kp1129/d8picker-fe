@@ -1,27 +1,30 @@
-import React from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import { Link } from "react-router-dom";
-const Landing = () => {
-  return (
-    <>
-      <h1>Future Landing Page</h1>
-      <List>
-        <ListItem>
-          <Link to="/admin-signin">Admin Sign In</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/admin-register">Admin Register</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/student-register">Student Register</Link>
-        </ListItem>
-        <ListItem>
-          <Link to="/student-signin">Student Sign In</Link>
-        </ListItem>
-      </List>
-    </>
-  );
-};
+/* eslint-disable */
 
-export default Landing;
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import LandingNavbar from './LandingNavbar'
+import SignInNav from "../../components/Navbar/signinnav"
+import ReactGA from 'react-ga';
+import AppleCal from '../../assets/images/apple-cal.jpg'
+import '../../index.css'
+
+
+export default function Landing() {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+
+  return (
+     <div className='container'>
+     <SignInNav/>
+     <div className='landing-grid-container' style={{background:"#A35629"}}>
+       {/* <img
+            className='landing-img'
+            src={AppleCal}
+            alt={"desktopCalendar"}
+          /> */}
+          <Link className='landing-link' to='/sign-in' style={{background:"white", color:"#F5945B", border: "2px solid #F5945B", borderRadius:"5px"}}>Sign In</Link></div>
+           <div><Link className='landing-link2' to='/register' style={{background: "#F5945B", color:"#21242C", borderRadius:"5px"}}>Sign Up</Link></div>
+     </div>
+        
+
+  )
+}

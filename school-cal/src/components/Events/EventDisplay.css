@@ -1,0 +1,17 @@
+.event-display-container{
+    margin: 76px 0px 0px 11px;
+}
+.event-display-cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style-type: none;
+    width: 800px;
+}
+.event-display-card{
+    margin: 10px 0px;
+    color: white;
+    background: rgb(87, 12, 156);
+    width: 250px;
+    height: auto;
+}
