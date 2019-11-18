@@ -1,8 +1,8 @@
 /* eslint-disable */
 
-export const loadState = () => {
+export const loadState = state => {
   try {
-    const serializedState = localStorage.getItem("state")
+    const serializedState = localStorage.getItem(state)
     if (serializedState === null) {
       return undefined
     }
@@ -13,10 +13,10 @@ export const loadState = () => {
   }
 }
 
-export const saveState = state => {
+export const saveState = (stateName, stateDetail) => {
   try {
-    const serializedState = JSON.stringify(state)
-    localStorage.setItem("state", serializedState)
+    const serializedState = JSON.stringify(stateDetail)
+    localStorage.setItem(stateName, serializedState)
   } catch (error) {
     console.log(`Error occurs while saving state: ${error}`)
   }

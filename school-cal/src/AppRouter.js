@@ -1,12 +1,13 @@
 /* eslint-disable */
 
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { CalendarState } from "./contexts/calendar/calendarState"
 import Landing from "./pages/Landing"
 import SignIn from "./pages/SignIn"
 import Registration from "./pages/Registration"
 import StudentDashboard from "./pages/StudentDashboard"
-import AdminDashCal from './components/AdminDashboard/index'
+import AdminDashCal from "./components/AdminDashboard/index"
 
 import AdminDashboard from "./pages/AdminDashboard"
 import PrivateRoute from "./components/Routes/PrivateRoute"
@@ -18,9 +19,13 @@ const AppRouter = () => {
           <Route exact path="/" component={Landing} />
           <Route path="/sign-in" component={SignIn} />
           <Route path="/register" component={Registration} />
-          <Route path="/admin-dashboard/:id" component={AdminDashboard} />
-          <Route path="/student-dashboard" component={StudentDashboard} />
-          <Route path='/calendar/:id' component={AdminDashCal} /> 
+          <CalendarState>
+            <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
+            <PrivateRoute
+              path="/student-dashboard"
+              component={StudentDashboard}
+            />
+          </CalendarState>
         </Switch>
       </Router>
     </>

@@ -83,7 +83,6 @@ const RegistrationForm = ({
 }) => {
   const classes = useStyles()
 
-
   useEffect(() => {
     if (signUpError) {
       if (signUpError.code === "auth/email-already-in-use") {
@@ -109,25 +108,9 @@ const RegistrationForm = ({
           </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="user-role">I'm a ... </InputLabel>
-                  <Select
-                    inputProps={{ name: "userRole", id: "user-role" }}
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.userRole}>
-                    <MenuItem value={"student"}>Student</MenuItem>
-                    <MenuItem value={"teacher"}>Teacher</MenuItem>
-                  </Select>
-                  {touched.userRole && errors.userRole && (
-                    <FormHelperText error>{errors.userRole}</FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   autoComplete="firstName"
                   name="firstName"
                   variant="outlined"
@@ -145,7 +128,7 @@ const RegistrationForm = ({
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -163,7 +146,7 @@ const RegistrationForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -180,7 +163,7 @@ const RegistrationForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -198,7 +181,7 @@ const RegistrationForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -216,7 +199,7 @@ const RegistrationForm = ({
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -240,12 +223,11 @@ const RegistrationForm = ({
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-            </Grid>
+            <Grid item xs={12}></Grid>
 
             <Grid item xs={12}>
               <Button
-                style={{background: "#F5945B", color: "#21242C"}}
+                style={{ background: "#F5945B", color: "#21242C" }}
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -263,7 +245,7 @@ const RegistrationForm = ({
 
               <Divider />
               <Button
-                style={{background: "#F5945B", color: "#21242C"}}
+                style={{ background: "#F5945B", color: "#21242C" }}
                 className={classes.signInWithGoogle}
                 color="primary"
                 fullWidth

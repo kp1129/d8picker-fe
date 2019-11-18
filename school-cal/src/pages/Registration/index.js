@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { CssBaseline } from "@material-ui/core"
 import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 import SigninNavbar from "../../components/Navbar/signinnav"
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga"
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -22,9 +22,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Registration = ({ history }) => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview(window.location.pathname + window.location.search)
   const {
-    currentUser,
+    accessToken,
     isLoading,
     signUpError,
     signUpUser,
@@ -34,13 +34,12 @@ const Registration = ({ history }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (currentUser) {
+    if (accessToken) {
       history.push("/admin-dashboard")
     }
-  }, [currentUser])
+  }, [accessToken])
 
   const RegistrationSchema = Yup.object().shape({
-    userRole: Yup.string().required("Are you a teacher or a student?"),
     firstName: Yup.string()
       .min(2, "First name must be greater than 2 characters.")
       .max(50, "First name must be lesser 50 characters.")
@@ -68,11 +67,10 @@ const Registration = ({ history }) => {
   return (
     <>
       <div className={classes.root}>
-      <SigninNavbar />
+        <SigninNavbar />
         <CssBaseline />
         <Grid container>
-          
-          <Grid item md={6}  style={{background: "#A35629"}}>
+          <Grid item md={6} style={{ background: "#A35629" }}>
             {/* <img
               className={classes.image}
               src={desktopCalendarImg}
@@ -82,19 +80,18 @@ const Registration = ({ history }) => {
           <Grid item md={6}>
             <Formik
               initialValues={{
-                userRole: "",
-                firstName: "sam",
-                lastName: "r",
-                username: "samr",
-                email: "samr@email.dev",
+                firstName: "Thai",
+                lastName: "Nguyen",
+                username: "tnguyen",
+                email: "tnguyen@email.dev",
                 password: "password",
                 passwordConfirmation: "password",
               }}
               onSubmit={(values, actions) => {
-                  ReactGA.event({
-                  category: 'Register',
-                  action: 'New User Signed Up'
-                });
+                ReactGA.event({
+                  category: "Register",
+                  action: "New User Signed Up",
+                })
                 signUpUser(values)
                 actions.resetForm()
               }}

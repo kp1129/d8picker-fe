@@ -1,68 +1,67 @@
 /* eslint-disable */
 
-import React, { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../../contexts/auth/authState"
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/auth/authState";
+import axios from "axios";
 
 //adding components
-import Navbar from '../Navbar/index'
-import SideBar from '../sidebar/index'
+import Navbar from "../Navbar/index";
+import SideBar from "../sidebar/index";
 
 //fullcalendar
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
 
-// full calendar styles 
-import '@fullcalendar/core/main.css';
-import '@fullcalendar/daygrid/main.css';
-import '@fullcalendar/timegrid/main.css';
-import '@fullcalendar/list/main.css';
+// full calendar styles
+import "@fullcalendar/core/main.css";
+import "@fullcalendar/daygrid/main.css";
+import "@fullcalendar/timegrid/main.css";
+import "@fullcalendar/list/main.css";
 
 const AdminDashBoard = (props) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    const fetchCalendars = async() => {
-      try {
-        const id = props.match.params.id
-        const res = await axios.get(`http://localhost:4000/api/calendars/${id}/events`)
-        setData(res.data)
-        console.log('this is data', res.data)
-      }catch (e){
-        console.log('this error', e)
-      }
-    }
-    fetchCalendars()
-  },[]);
-  console.log('data',data)
-  
-  function displayEvent() { 
-    return data.map(event => (
-      {
-        title: event.eventName,
-        start: event.startDate
-      }
-      ))
-  } 
+	const [data, setData] = useState([]);
+	useEffect(() => {
+		const fetchCalendars = async () => {
+			try {
+				const id = props.match.params.id;
+				const res = await axios.get(
+					`http://localhost:4000/api/calendars/${id}/events`
+				);
+				setData(res.data);
+				console.log("this is data", res.data);
+			} catch (e) {
+				console.log("this error", e);
+			}
+		};
+		fetchCalendars();
+	}, []);
+	console.log("data", data);
 
-  return (
-    <div className="full-calendar">
-      <div>
-        <Navbar />
-          <div>
-            <SideBar />
-          </div>
-      </div>
-      <FullCalendar 
-        timeZone= 'local'
-        defaultView='dayGridMonth' 
-        plugins={[ dayGridPlugin, timeGridPlugin, listPlugin ]}
-        events= {displayEvent()}
-        />
-    </div>
-      
-  )
-}
+	function displayEvent() {
+		return data.map((event) => ({
+			title: event.eventName,
+			start: event.startDate,
+		}));
+	}
 
-export default AdminDashBoard
+	return (
+		<div className="full-calendar">
+			<div>
+				<Navbar />
+				<div>
+					<SideBar />
+				</div>
+			</div>
+			<FullCalendar
+				timeZone="local"
+				defaultView="dayGridMonth"
+				plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+				events={displayEvent()}
+			/>
+		</div>
+	);
+};
+
+export default AdminDashBoard;
