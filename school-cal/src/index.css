@@ -56,3 +56,9 @@ code {
   transform: translateX(-50%);
   z-index: 1000;
 }
+.market-card{
+  text-align: center;
+  font-size: 32px;
+  width:30%;
+  margin: 30px 30px;
+}
