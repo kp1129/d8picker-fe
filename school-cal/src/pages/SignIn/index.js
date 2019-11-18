@@ -1,5 +1,5 @@
 /* eslint-disable */
-import ReactGA from 'react-ga';
+import ReactGA from "react-ga"
 import React, { useContext, useState, useEffect } from "react"
 import { CssBaseline, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
@@ -21,9 +21,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SignIn = ({ history }) => {
-   ReactGA.pageview(window.location.pathname + window.location.search);
+  ReactGA.pageview(window.location.pathname + window.location.search)
   const {
-    currentUser,
+    accessToken,
     isLoading,
     signInError,
     signInWithUserIdAndPassword,
@@ -33,10 +33,10 @@ const SignIn = ({ history }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (currentUser) {
+    if (accessToken) {
       history.push("/admin-dashboard")
     }
-  }, [currentUser])
+  }, [accessToken])
 
   const AdminLoginSchema = Yup.object().shape({
     userId: Yup.string().required("User ID is required."),
@@ -49,7 +49,7 @@ const SignIn = ({ history }) => {
     <div className={classes.root}>
       <SignNavbar />
       <Grid container>
-        <Grid item md={6} style={{background: "#A35629"}}>
+        <Grid item md={6} style={{ background: "#A35629" }}>
           {/* <img
             className={classes.image}
             src={desktopCalendarImg}
@@ -57,13 +57,13 @@ const SignIn = ({ history }) => {
           /> */}
         </Grid>
         <Grid item md={6}>
-          <Formik 
+          <Formik
             initialValues={{ userId: "", password: "" }}
             onSubmit={(values, actions) => {
-                ReactGA.event({
-                  category: 'Sign In',
-                  action: 'Existing User Signed In'
-                });
+              ReactGA.event({
+                category: "Sign In",
+                action: "Existing User Signed In",
+              })
               signInWithUserIdAndPassword(values)
               actions.resetForm()
             }}

@@ -2,7 +2,7 @@
 
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
-import axios from 'axios';
+import axios from "axios"
 
 //css
 // import EventDisplay from "../Events/EventDisplay"
@@ -25,13 +25,13 @@ import axios from 'axios';
 // import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 //adding componets
-import './adminDash.css'
+import "./adminDash.css"
 
-import AddEvent from "../Events/AddEvent"
+import AddEvent from "../Events/CreateEvent"
 import EventDisplay from "../Events/EventDisplay"
 
-import clsx from 'clsx';
-import ReactGA from 'react-ga';
+import clsx from "clsx"
+import ReactGA from "react-ga"
 //setting styles
 // const drawerWidth = 240
 // const useStyles = makeStyles(theme => ({
@@ -90,17 +90,16 @@ import ReactGA from 'react-ga';
 //   },
 // }));
 
-const AdminDashBoard = ({props}) => {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+const AdminDashBoard = ({ props }) => {
+  ReactGA.pageview(window.location.pathname + window.location.search)
   // const { currentUser, signOut } = useContext(AuthContext)
   // const [ isAddEventOpen, setAddEvent ] = useState(false)
   // const [ open, setOpen ] = React.useState(false);
   // // const theme = useTheme();
-  
+
   // const [ userProfile, setUserProfile ] = useState(null);
   // const [data, setData] = useState([]);
   // console.log(props)
-
 
   // useEffect(() => {
   //   const fetchUsers = async() => {
@@ -147,8 +146,8 @@ const AdminDashBoard = ({props}) => {
   // const classes = useStyles()
   return (
     <div className="greeting">
-        {/* <h2>Hello welcome {`${props.calendars.username}`} </h2> */}
-        {/* {data.length > 0 && data.map(calendar => (
+      {/* <h2>Hello welcome {`${props.calendars.username}`} </h2> */}
+      {/* {data.length > 0 && data.map(calendar => (
           <div 
             className='calendars'
             key={calendar.id}
@@ -157,9 +156,7 @@ const AdminDashBoard = ({props}) => {
             <p>{calendar.calendarDescription}</p>
           </div>
         ))}      */}
-      <EventDisplay 
-
-      />
+      <EventDisplay />
     </div>
     // <div className={classes.root}>
     //   <AppBar
@@ -224,14 +221,13 @@ const AdminDashBoard = ({props}) => {
     //       </ListItem>
     //     </List>
     //     <Divider />
-        
+
     //   </Drawer>
     //   <main className="classes.content">
     //     <EventDisplay />
     //   </main>
     //   <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
     // </div>
-    
   )
 }
 
