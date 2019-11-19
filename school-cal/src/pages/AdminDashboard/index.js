@@ -53,13 +53,6 @@ const useStyles = makeStyles(theme => ({
 const AdminDashBoard = props => {
   ReactGA.pageview(window.location.pathname + window.location.search)
 
-  const { signOut } = useContext(AuthContext)
-  const [isAddEventOpen, setAddEvent] = useState(false)
-  const [calendar, setCalendar] = useState({ id: "" })
-  const [open, setOpen] = React.useState(false)
-
-  const [calendars, setCalendars] = useState([])
-
   const classes = useStyles()
   return (
     <div className={classes.root}>
