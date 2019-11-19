@@ -106,6 +106,8 @@ const Sidebar = props => {
         .slice(0, 5)
 
       setUpComingEvents(sorted)
+    } else {
+      setUpComingEvents([])
     }
   }, [userCalendarEvents])
   const handleCalendarChange = event => {

@@ -34,6 +34,20 @@ const Calendar = () => {
 
   const [events, setEvents] = useState([])
 
+  const initialCreateEventProperty = {
+    startTime: moment()
+      .hours(6)
+      .minutes(0)
+      .seconds(0),
+    endTime: moment()
+      .hours(7)
+      .minutes(0)
+      .seconds(0),
+    eventTitle: "",
+    eventLocation: "",
+    eventNote: "",
+    isAllDayEvent: false,
+  }
   useEffect(() => {
     if (userCalendarEvents.length > 0) {
       const formatted = userCalendarEvents.map(event => {
@@ -57,6 +71,7 @@ const Calendar = () => {
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
+
     setUserCalendarEvent({
       startTime: moment(start),
       endTime: moment(end),
@@ -77,9 +92,13 @@ const Calendar = () => {
       eventLocation: "",
       eventNote: "",
       isAllDayEvent: false,
-      uuid: "",
     })
     openCreateEvent(true)
+  }
+
+  const handleClosingCreateEvent = () => {
+    setUserCalendarEvent(initialCreateEventProperty)
+    openCreateEvent(false)
   }
 
   return (
@@ -102,10 +121,7 @@ const Calendar = () => {
         dateClick={handleDateClick}
         selectable={true}
       />
-      <CreateEvent
-        open={createEvent}
-        handleClose={() => openCreateEvent(false)}
-      />
+      <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
     </div>
   )

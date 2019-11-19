@@ -167,24 +167,6 @@ const RegistrationForm = ({
                   variant="outlined"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="current-password"
-                  helperText={touched.password ? errors.password : ""}
-                  error={touched.password && Boolean(errors.password)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  style={{ background: "#F2D2BF" }}
-                  variant="outlined"
-                  required
-                  fullWidth
                   name="username"
                   label="Username"
                   type="text"
@@ -195,6 +177,24 @@ const RegistrationForm = ({
                   autoComplete="current-username"
                   helperText={touched.username ? errors.username : ""}
                   error={touched.username && Boolean(errors.username)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ background: "#F2D2BF" }}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="current-password"
+                  helperText={touched.password ? errors.password : ""}
+                  error={touched.password && Boolean(errors.password)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -244,7 +244,7 @@ const RegistrationForm = ({
               </div>
 
               <Divider />
-              <Button
+              {/* <Button
                 style={{ background: "#F5945B", color: "#21242C" }}
                 className={classes.signInWithGoogle}
                 color="primary"
@@ -253,7 +253,7 @@ const RegistrationForm = ({
                 type="button"
                 variant="contained">
                 Sign In With Google
-              </Button>
+              </Button> */}
             </Grid>
           </form>
 

@@ -16,7 +16,7 @@ import {
 import calendarReducer from "./calendarReducer"
 import { clientWithAuth } from "../../utilities/api"
 import { loadState, saveState } from "../../utilities/localStorage"
-
+import moment from "moment"
 export const CalendarContext = createContext()
 
 export const CalendarState = props => {
@@ -27,8 +27,8 @@ export const CalendarState = props => {
     userCalendar: { uuid: "" },
     userCalendarEvents: [],
     userCalendarEvent: {
-      startTime: new Date(),
-      endTime: new Date(),
+      startTime: moment(),
+      endTime: moment(),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
