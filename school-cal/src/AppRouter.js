@@ -10,6 +10,7 @@ import Registration from "./pages/Registration"
 import Marketing from "./pages/marketing/index"
 
 import AdminDashboard from "./pages/AdminDashboard"
+
 import PrivateRoute from "./components/Routes/PrivateRoute"
 const AppRouter = () => {
   return (
@@ -21,10 +22,6 @@ const AppRouter = () => {
           <Route path="/register" component={Registration} />
           <CalendarState>
             <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
-            <PrivateRoute
-              path="/student-dashboard"
-              component={StudentDashboard}
-            />
           </CalendarState>
         </Switch>
       </Router>
