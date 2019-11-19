@@ -2,6 +2,7 @@
 
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { CalendarState } from "./contexts/calendar/calendarState"
 import Landing from "./pages/Landing"
 import SignIn from "./pages/SignIn"
 import Registration from "./pages/Registration"
@@ -18,9 +19,13 @@ const AppRouter = () => {
           <Route exact path="/" component={Marketing} />
           <Route path="/sign-in" component={SignIn} />
           <Route path="/register" component={Registration} />
-          <Route path="/admin-dashboard" component={AdminDashboard} />     
-          
-
+          <CalendarState>
+            <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
+            <PrivateRoute
+              path="/student-dashboard"
+              component={StudentDashboard}
+            />
+          </CalendarState>
         </Switch>
       </Router>
     </>

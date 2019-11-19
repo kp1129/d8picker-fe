@@ -9,13 +9,12 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
-  SET_CURRENT_USER,
   SIGNOUT_FAILURE,
 } from "./types"
 import authReducer from "./authReducer"
 
 import { client } from "../../utilities/api"
-import { loadState, saveState } from "../../utilities/localStorage"
+import { loadState, saveState, removeState } from "../../utilities/localStorage"
 
 export const AuthContext = createContext()
 
@@ -26,22 +25,23 @@ export const AuthState = props => {
     signUpError: null,
     signOutError: null,
     accessToken: null,
+    userProfile: null,
   }
 
-  const localState = loadState()
+  const localState = loadState("auth")
 
   const [state, dispatch] = useReducer(authReducer, localState || initialState)
 
   useEffect(() => {
-    saveState(state)
+    saveState("auth", state)
   }, [state])
 
   const signUpUser = async values => {
     //console.log(values)
     dispatch({ type: IS_LOADING, payload: true })
     try {
-      const response = await client.post("/users/register/owner", values)
-      console.log("WE ARE REGISTERING")
+      const response = await client.post("/auth/register", values)
+
       dispatch({ type: SIGNUP_SUCCESS, payload: response.data })
     } catch (error) {
       console.log(error)
@@ -52,7 +52,7 @@ export const AuthState = props => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
       const response = await client.post("/auth/login", credential)
-      console.log("WE ARE SIGNING IN")
+
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
@@ -69,6 +69,7 @@ export const AuthState = props => {
   const signOut = () => {
     try {
       dispatch({ type: SIGNOUT_SUCCESS })
+      removeState()
     } catch (error) {
       dispatch({ type: SIGNOUT_FAILURE, payload: error.message })
     }
@@ -77,10 +78,11 @@ export const AuthState = props => {
   return (
     <AuthContext.Provider
       value={{
+        accessToken: state.accessToken,
         isLoading: state.isLoading,
         signInError: state.signInError,
         signUpError: state.signUpError,
-        currentUser: state.currentUser,
+        userProfile: state.userProfile,
         signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,

@@ -1,13 +1,14 @@
 /* eslint-disable */
 
-import React, { useContext, useEffect, useState } from "react";
-import axios from 'axios'
+import React, { useContext, useEffect, useState } from "react"
+import { clientWithAuth } from "../../utilities/api"
 import { Link, Route } from "react-router-dom"
 
 //adding components
-import AddEvent from "../../components/Events/AddEvent";
+import AddEvent from "../../components/Events/CreateEvent"
 import Navbar from "../../components/Navbar"
-import AdminDashCal from '../../components/AdminDashboard/index'
+import Sidebar from "../../components/Sidebar"
+import Calendar from "../../components/Calendar"
 
 //setting auth
 import { AuthContext } from "../../contexts/auth/authState"
@@ -28,101 +29,44 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core"
-import AddIcon from "@material-ui/icons/Add"
 import { makeStyles } from "@material-ui/core/styles"
 import { useTheme } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
-import ChevronRightIcon from "@material-ui/icons/ChevronRight"
-import EmptyPerson from "../../assets/images/emptyperson.png"
-import SideBar from "../../components/sidebar/index"
-import '../../components/AdminDashboard/adminDash.css'
-import ReactGA from 'react-ga';
 
+import "../../components/AdminDashboard/adminDash.css"
+import ReactGA from "react-ga"
 
+// setting styles
+const drawerWidth = 240
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  toolbar: theme.mixins.toolbar,
+}))
 
+const AdminDashBoard = props => {
+  ReactGA.pageview(window.location.pathname + window.location.search)
 
-
-const AdminDashBoard = (props) => {
-   ReactGA.pageview(window.location.pathname + window.location.search);
-
-  const { currentUser, signOut } = useContext(AuthContext)
-  const [isAddEventOpen, setAddEvent] = useState(false)
-  const [calendar, setCalendar] = useState({ id: "" })
-  const [open, setOpen] = React.useState(false)
-
-      const [calendars, setCalendars] = useState([])
-
-  useEffect(() => {
-    const fetchUsers = async() => {
-      try {
-        const id = props.match.params.id
-        //get calendar id
-        // .get(`https://school-calendar-mataka.herokuapp.com/users/${id}/calendars`)
-        const res = await axios.get(`http://localhost:4000/users/${id}/calendar`)
-        setCalendars(res.data.calendars)
-      }catch (e){
-        console.log(e)
-      }
-    }
-    fetchUsers()
-  },[]);
-  console.log(calendars)
-
-
- 
+  const classes = useStyles()
   return (
-    <div>
-      <Navbar />
-      <div>
-        <SideBar />
-      <div>
-      {/* <h2 
-      className="greeting"
-      
-      >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
-      {calendars.length > 0 && calendars.map(calendar => (
-          <div 
-            className='calendars'
-            key={calendar.id}
-            >
-              <Link to ='/calendar/:id'>
-      <p>{calendar.username}</p>
-                <p>{calendar.calendarName}</p>
-                <p>{calendar.calendarDescription}</p>
-              </Link>
-          </div>
-      ))}     
-      <Route to path='/calendar/:id' />  */}
-
-      {/* <AdminDashCal
-        // props= {props}
-      /> */}
-
-          </div>
-        </div>
-      
-
-
-
-        <AdminDashCal />
-      
-      <AddEvent
-        handleClose={() => setAddEvent(false)}
-        open={isAddEventOpen}
-        calendar={calendar}
-      />
-   
-
+    <div className={classes.root}>
+      <CssBaseline />
+      <Grid container>
+        <Navbar />
+        <Grid item xs={3}>
+          <Sidebar />
+        </Grid>
+        <Grid item xs={9} className={classes.content}>
+          <div className={classes.toolbar} />
+          <Calendar />
+        </Grid>
+      </Grid>
     </div>
   )
-  
 }
 
 export default AdminDashBoard
-
-

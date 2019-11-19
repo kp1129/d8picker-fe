@@ -23,6 +23,7 @@ const setSignInSuccess = (state, action) => {
   return {
     ...state,
     accessToken: action.payload.accessToken,
+    userProfile: action.payload.profile,
     isLoading: false,
   }
 }
@@ -45,6 +46,7 @@ const setSignUpSuccess = (state, action) => {
   return {
     ...state,
     accessToken: action.payload.accessToken,
+    userProfile: action.payload.profile,
     isLoading: false,
   }
 }
@@ -60,7 +62,12 @@ const setSignUpFailure = (state, action) => {
 const setSignOutSuccess = (state, action) => {
   return {
     ...state,
+    isLoading: false,
+    signInError: null,
+    signUpError: null,
+    signOutError: null,
     accessToken: null,
+    userProfile: null,
   }
 }
 const setSignOutFailure = (state, action) => {

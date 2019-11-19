@@ -103,14 +103,15 @@ const SignInForm = ({
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
                   id="userId"
-                  label="Username"
+                  label="UserId"
                   name="userId"
                   autoComplete="userId"
+                  placeholder="Username or email"
                   value={values.userId}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -118,10 +119,9 @@ const SignInForm = ({
                   error={touched.userId && Boolean(errors.userId)}
                 />
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
-                  style={{background: "#F2D2BF"}}
+                  style={{ background: "#F2D2BF" }}
                   variant="outlined"
                   required
                   fullWidth
@@ -139,7 +139,7 @@ const SignInForm = ({
               </Grid>
             </Grid>
             <Button
-              style={{background: "#F5945B", color: "#21242C"}}
+              style={{ background: "#F5945B", color: "#21242C" }}
               type="submit"
               fullWidth
               variant="contained"
@@ -158,7 +158,7 @@ const SignInForm = ({
             </div>
 
             <Divider />
-            <Button
+            {/* <Button
               style={{background: "#F5945B", color: "#21242C"}}
               className={classes.signInWithGoogle}
               color="primary"
@@ -167,7 +167,7 @@ const SignInForm = ({
               type="button"
               variant="contained">
               Sign In With Google
-            </Button>
+            </Button> */}
           </form>
           <Box mt={5}>{copyRight}</Box>
         </Grid>
