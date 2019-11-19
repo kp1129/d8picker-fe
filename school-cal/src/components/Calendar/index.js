@@ -9,6 +9,7 @@ import AddIcon from "@material-ui/icons/Add"
 
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
+import AddSubscribers from '../Events/addSubscriber'
 import moment from "moment"
 
 const useStyles = makeStyles(theme => ({
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
   createButton: {
     backgroundColor: "#F5945B",
+    marginRight: theme.spacing(3),
   },
   buttonLabel: {
     textTransform: "none",
@@ -30,6 +32,7 @@ const Calendar = () => {
   )
 
   const [createEvent, openCreateEvent] = useState(false)
+  const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
   const [events, setEvents] = useState([])
@@ -111,7 +114,16 @@ const Calendar = () => {
             onClick={() => openCreateEvent(true)}>
             Create Event
           </Button>
+          <Button
+            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            startIcon={<AddIcon />}
+            onClick={() => setAddSubscribers(true)}>
+            Add Subscriber
+          </Button>
         </Grid>
+    
+        
+        
       </Grid>
       <FullCalendar
         defaultView="dayGridMonth"
@@ -123,6 +135,7 @@ const Calendar = () => {
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
+      <AddSubscribers open={isAddSubscriberOpen} handleClose={() => setAddSubscribers(false)}  />
     </div>
   )
 }
