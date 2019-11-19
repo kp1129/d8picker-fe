@@ -1,20 +1,13 @@
 /* eslint-disable */
-
-import React, { useContext, useEffect, useState } from "react"
-import { clientWithAuth } from "../../utilities/api"
-import { Link, Route } from "react-router-dom"
+import React from "react"
 
 //adding components
-import AddEvent from "../../components/Events/CreateEvent"
 import Navbar from "../../components/Navbar"
-import Sidebar from "../../components/Sidebar"
+import SideMenu from "../../components/SideMenu"
 import Calendar from "../../components/Calendar"
 
-//setting auth
-import { AuthContext } from "../../contexts/auth/authState"
-
 // styling/css
-import EventDisplay from "../../components/Events/EventDisplay"
+
 import {
   Button,
   Divider,
@@ -30,13 +23,12 @@ import {
   Select,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { useTheme } from "@material-ui/core/styles"
 
 import "../../components/AdminDashboard/adminDash.css"
 import ReactGA from "react-ga"
 
 // setting styles
-const drawerWidth = 240
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -58,7 +50,7 @@ const AdminDashBoard = props => {
       <Grid container>
         <Navbar />
         <Grid item xs={3}>
-          <Sidebar />
+          <SideMenu />
         </Grid>
         <Grid item xs={9} className={classes.content}>
           <div className={classes.toolbar} />
