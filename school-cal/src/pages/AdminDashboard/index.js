@@ -7,7 +7,7 @@ import { Link, Route } from "react-router-dom"
 //adding components
 import AddEvent from "../../components/Events/CreateEvent"
 import Navbar from "../../components/Navbar"
-import Sidebar from "../../components/sidebar"
+import Sidebar from "../../components/Sidebar"
 import Calendar from "../../components/Calendar"
 
 //setting auth
