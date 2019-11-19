@@ -21,3 +21,11 @@ export const saveState = (stateName, stateDetail) => {
     console.log(`Error occurs while saving state: ${error}`)
   }
 }
+
+export const removeState = () => {
+  try {
+    localStorage.clear()
+  } catch (error) {
+    console.log(`Error occurs while clearing state: ${error}`)
+  }
+}

@@ -8,7 +8,6 @@ import RegistrationForm from "./RegistrationForm"
 import * as Yup from "yup"
 import { makeStyles } from "@material-ui/core/styles"
 import { CssBaseline } from "@material-ui/core"
-import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
 import SigninNavbar from "../../components/Navbar/signinnav"
 import ReactGA from "react-ga"
 const useStyles = makeStyles(theme => ({
@@ -70,22 +69,16 @@ const Registration = ({ history }) => {
         <SigninNavbar />
         <CssBaseline />
         <Grid container>
-          <Grid item md={6} style={{ background: "#A35629" }}>
-            {/* <img
-              className={classes.image}
-              src={desktopCalendarImg}
-              alt={"desktopCalendar"}
-            /> */}
-          </Grid>
+          <Grid item md={6} style={{ background: "#A35629" }}></Grid>
           <Grid item md={6}>
             <Formik
               initialValues={{
-                firstName: "Thai",
-                lastName: "Nguyen",
-                username: "tnguyen",
-                email: "tnguyen@email.dev",
-                password: "password",
-                passwordConfirmation: "password",
+                firstName: "",
+                lastName: "",
+                username: "",
+                email: "",
+                password: "",
+                passwordConfirmation: "",
               }}
               onSubmit={(values, actions) => {
                 ReactGA.event({
@@ -103,7 +96,7 @@ const Registration = ({ history }) => {
                   signInWithGoogle={signInWithGoogle}
                 />
               )}
-              //validationSchema={RegistrationSchema}
+              validationSchema={RegistrationSchema}
             />
           </Grid>
         </Grid>
