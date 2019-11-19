@@ -18,18 +18,18 @@ function Marketing() {
          <MarketingNav />
          <div className="marketing-mid" style={{width:"100%", display:"flex", flexDirection:"row", alignItems:"center", marginBottom:"30px"}}>
              <div className="m-text" style={{width:"40%"}}>
-                <h1 style={{marginTop:"20%", color:"white", textAlign:"center", fontWeight:"400", fontSize:"3.5em" }}>Schedule all student events and inform students and parents automatically</h1>
-                <div style={{textAlign:"center", marginTop:"10%", height:"5%", width:"100%"}}>
-                    <Link to='/sign-in' style={{background:"white", color:"#F5945B", border: "2px solid #F5945B", borderRadius:"5px", padding:"15px 150px", fontSize:"1.5em", textDecoration:"none", fontWeight:"500"}}>Sign In</Link>
+                <h1 className="marketing-header">Schedule all student events and inform students and parents automatically</h1>
+                <div className="button-div">
+                    <Link to='/sign-in' className="button-style1" >Sign In</Link>
                 </div>
-                <div style={{textAlign:"center", marginTop:"10%", height:"5%", width:"100%"}}>
-                    <Link to='/register' style={{background: "#F5945B", color:"#21242C", borderRadius:"5px", padding:"15px 150px", textDecoration:"none", fontWeight:"500", fontSize:"1.5em"}}>Sign Up</Link>
+                <div className="button-div">
+                    <Link to='/register' className="button-style">Sign Up</Link>
                 </div>
                 
             </div>
 
             <div style={{marginLeft:"10%",marginTop:"20%", overflow:"hidden"}}>
-                <img src={CalPic} style={{width:"60vw", height:"auto"}}/>
+                <img src={CalPic} className="marketing-img"/>
             </div>
 
          
@@ -51,7 +51,7 @@ function Marketing() {
                  <h3 style={{fontWeight:"500"}}>With Mataka you can set up a day or a full academic year of practices and events.</h3>
              </div>
          </div>
-         <div className="footer" style={{ height:"4rem", background:"black", color:"white", marginTop:"20vw", width:"100%", textAlign:"center"}}><h3>Created By Lambda Students</h3></div>
+         <div className="footer-marketing" ><h3>Created By Lambda Students</h3></div>
 
          
      </div>
