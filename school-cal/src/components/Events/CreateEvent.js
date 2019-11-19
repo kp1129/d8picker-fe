@@ -25,22 +25,17 @@ import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
 
 const CreateEvent = ({ open, handleClose }) => {
-  const { isLoading, createUserCalendarEvent, userCalendar } = useContext(
-    CalendarContext,
-  )
+  const {
+    isLoading,
+    createUserCalendarEvent,
+    userCalendar,
+    userCalendarEvent,
+  } = useContext(CalendarContext)
   return (
     <>
       <Formik
-        initialValues={{
-          startTime: moment().format(),
-          endTime: moment()
-            .add(1, "hours")
-            .format(),
-          eventTitle: "",
-          isAllDayEvent: false,
-          eventNote: "",
-          eventLocation: "",
-        }}
+        enableReinitialize
+        initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
           values.startDate = moment(values.startTime).format("YYYY-MM-DD")
           values.endDate = moment(values.endTime).format("YYYY-MM-DD")

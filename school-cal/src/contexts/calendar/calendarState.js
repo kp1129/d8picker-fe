@@ -27,8 +27,8 @@ export const CalendarState = props => {
     userCalendar: { uuid: "" },
     userCalendarEvents: [],
     userCalendarEvent: {
-      startTime: "",
-      endTime: "",
+      startTime: new Date(),
+      endTime: new Date(),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
@@ -134,6 +134,7 @@ export const CalendarState = props => {
   }
 
   const setUserCalendarEvent = event => {
+    console.log("setting event ", event)
     dispatch({ type: SET_USER_CALENDAR_EVENT, payload: event })
   }
 
