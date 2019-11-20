@@ -1,17 +1,13 @@
 /* eslint-disable */
+import React from "react"
 
-import React, { useContext, useEffect, useState } from "react"
-import { clientWithAuth } from "../../utilities/api"
-import { Link, Route } from "react-router-dom"
-import { AuthContext } from "../../contexts/auth/authState"
 //adding components
-import AddEvent from "../../components/Events/CreateEvent"
 import Navbar from "../../components/Navbar"
-import Sidebar from "../../components/sidebar/index"
+import SideMenu from "../../components/SideMenu"
 import Calendar from "../../components/Calendar"
 
 // styling/css
-import EventDisplay from "../../components/Events/EventDisplay"
+
 import {
   Button,
   Divider,
@@ -27,16 +23,12 @@ import {
   Select,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { useTheme } from "@material-ui/core/styles"
 
 import "../../components/AdminDashboard/adminDash.css"
 import ReactGA from "react-ga"
 
-import { AppBar } from "@material-ui/core"
-import "../../components/AdminDashboard/adminDash.css"
-
 // setting styles
-const drawerWidth = 240
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -51,12 +43,6 @@ const useStyles = makeStyles(theme => ({
 const AdminDashBoard = props => {
   ReactGA.pageview(window.location.pathname + window.location.search)
 
-  const { signOut } = useContext(AuthContext)
-  const [isAddEventOpen, setAddEvent] = useState(false)
-  const [calendar, setCalendar] = useState({ id: "" })
-  const [open, setOpen] = React.useState(false)
-
-  const [calendars, setCalendars] = useState([])
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -64,7 +50,7 @@ const AdminDashBoard = props => {
       <Grid container>
         <Navbar />
         <Grid item xs={3}>
-          <Sidebar />
+          <SideMenu />
         </Grid>
         <Grid item xs={9} className={classes.content}>
           <div className={classes.toolbar} />

@@ -13,7 +13,7 @@ import {
   Select,
   Typography,
 } from "@material-ui/core"
-
+import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Sidebar = props => {
+const SideMenu = () => {
   const [upComingEvents, setUpComingEvents] = useState([])
   const { userProfile } = useContext(AuthContext)
   const {
@@ -105,6 +105,8 @@ const Sidebar = props => {
         .slice(0, 5)
 
       setUpComingEvents(sorted)
+    } else {
+      setUpComingEvents([])
     }
   }, [userCalendarEvents])
   const handleCalendarChange = event => {
@@ -161,4 +163,4 @@ const Sidebar = props => {
   )
 }
 
-export default Sidebar
+export default SideMenu

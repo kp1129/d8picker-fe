@@ -14,7 +14,7 @@ import {
 import authReducer from "./authReducer"
 
 import { client } from "../../utilities/api"
-import { loadState, saveState } from "../../utilities/localStorage"
+import { loadState, saveState, removeState } from "../../utilities/localStorage"
 
 export const AuthContext = createContext()
 
@@ -52,7 +52,7 @@ export const AuthState = props => {
     dispatch({ type: IS_LOADING, payload: true })
     try {
       const response = await client.post("/auth/login", credential)
-      console.log("WE ARE SIGNING IN")
+
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
       dispatch({ type: SIGNIN_FAILURE, payload: error })
@@ -69,6 +69,7 @@ export const AuthState = props => {
   const signOut = () => {
     try {
       dispatch({ type: SIGNOUT_SUCCESS })
+      removeState()
     } catch (error) {
       dispatch({ type: SIGNOUT_FAILURE, payload: error.message })
     }

@@ -67,7 +67,7 @@ const setSignOutSuccess = (state, action) => {
     signUpError: null,
     signOutError: null,
     accessToken: null,
-    profile: null,
+    userProfile: null,
   }
 }
 const setSignOutFailure = (state, action) => {

@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid"
+import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
 
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
+import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
 
 //fullcalendar
@@ -24,6 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   createButton: {
     backgroundColor: "#F5945B",
+    marginRight: theme.spacing(3),
   },
   buttonLabel: {
     textTransform: "none",
@@ -37,10 +42,25 @@ const Calendar = props => {
   )
 
   const [createEvent, openCreateEvent] = useState(false)
+  const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
   const [events, setEvents] = useState([])
 
+  const initialCreateEventProperty = {
+    startTime: moment()
+      .hours(6)
+      .minutes(0)
+      .seconds(0),
+    endTime: moment()
+      .hours(7)
+      .minutes(0)
+      .seconds(0),
+    eventTitle: "",
+    eventLocation: "",
+    eventNote: "",
+    isAllDayEvent: false,
+  }
   useEffect(() => {
     if (userCalendarEvents.length > 0) {
       const formatted = userCalendarEvents.map(event => {
@@ -56,21 +76,41 @@ const Calendar = props => {
         }
       })
       setEvents(formatted)
+    } else {
+      setEvents([])
     }
   }, [userCalendarEvents])
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-    openEditEvent(true)
+
     setUserCalendarEvent({
-      startTime: moment(start).toISOString(),
-      endTime: moment(end).toISOString(),
+      startTime: moment(start),
+      endTime: moment(end),
       eventTitle: title,
-      isAllDayEvent: allDay,
-      eventNote: extendedProps.note,
       eventLocation: extendedProps.location,
+      eventNote: extendedProps.note,
+      isAllDayEvent: allDay,
       uuid: id,
     })
+    openEditEvent(true)
+  }
+
+  const handleDateClick = info => {
+    setUserCalendarEvent({
+      startTime: moment(info.date).hours(6),
+      endTime: moment(info.date).hours(7),
+      eventTitle: "",
+      eventLocation: "",
+      eventNote: "",
+      isAllDayEvent: false,
+    })
+    openCreateEvent(true)
+  }
+
+  const handleClosingCreateEvent = () => {
+    setUserCalendarEvent(initialCreateEventProperty)
+    openCreateEvent(false)
   }
   function eventDrop(info) {
     const { id } = info.event
@@ -107,30 +147,29 @@ const Calendar = props => {
             onClick={() => openCreateEvent(true)}>
             Create Event
           </Button>
+          <Button
+            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            startIcon={<AddIcon />}
+            onClick={() => setAddSubscribers(true)}>
+            Add Subscriber
+          </Button>
         </Grid>
       </Grid>
       <FullCalendar
         defaultView="dayGridMonth"
-        header={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth, timeGridWeek, timeGridDay, listWeek",
-        }}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        editable={true}
-        droppable={true}
-        // drop={drop(title, date)} //fires function
-        eventDrop={eventDrop}
-        selectable={true}
+        plugins={[dayGridPlugin, interactionPlugin]}
         events={events}
         // eventReceive={receive()}
         eventClick={handleEventClick}
+        dateClick={handleDateClick}
+        selectable={true}
       />
-      <CreateEvent
-        open={createEvent}
-        handleClose={() => openCreateEvent(false)}
-      />
+      <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
+      <AddSubscribers
+        open={isAddSubscriberOpen}
+        handleClose={() => setAddSubscribers(false)}
+      />
     </div>
   )
 }

@@ -76,8 +76,9 @@ const EventDisplay = () => {
                         Time: {info.starts}
                       </Typography>
                     </CardContent>
-
+hello
                   </Card>
+                  
                 )}
 
                 )}
