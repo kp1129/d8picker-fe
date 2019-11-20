@@ -24,7 +24,7 @@ export const CalendarState = props => {
     isLoading: false,
     userCalendars: [],
     userCalendarsError: null,
-    userCalendar: { uuid: "" },
+    userCalendar: null,
     userCalendarEvents: [],
     userCalendarEvent: {
       startTime: moment(),

@@ -129,7 +129,7 @@ const SideMenu = () => {
               <Select
                 labelid="calendar-select-label"
                 onChange={handleCalendarChange}
-                value={userCalendar.uuid}>
+                value={userCalendar ? userCalendar.uuid : ""}>
                 {userCalendars.length > 0 &&
                   userCalendars.map(calendar => (
                     <MenuItem key={calendar.uuid} value={calendar.uuid}>
