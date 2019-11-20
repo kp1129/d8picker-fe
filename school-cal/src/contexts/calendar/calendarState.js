@@ -134,7 +134,6 @@ export const CalendarState = props => {
   }
 
   const setUserCalendarEvent = event => {
-    console.log("setting event ", event)
     dispatch({ type: SET_USER_CALENDAR_EVENT, payload: event })
   }
 
