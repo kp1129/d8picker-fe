@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react"
+import React, { useContext, useEffect } from "react"
 
 //adding components
 import Navbar from "../../components/Navbar"
@@ -8,24 +8,13 @@ import Calendar from "../../components/Calendar"
 
 // styling/css
 
-import {
-  Button,
-  Divider,
-  Drawer,
-  CssBaseline,
-  InputLabel,
-  Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Select,
-} from "@material-ui/core"
+import { CssBaseline, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import "../../components/AdminDashboard/adminDash.css"
 import ReactGA from "react-ga"
+
+import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 // setting styles
 
@@ -42,6 +31,13 @@ const useStyles = makeStyles(theme => ({
 
 const AdminDashBoard = props => {
   ReactGA.pageview(window.location.pathname + window.location.search)
+
+  const { getUserCalendars } = useContext(CalendarContext)
+
+  // get all user calendars
+  useEffect(() => {
+    getUserCalendars()
+  }, [])
 
   const classes = useStyles()
   return (

@@ -60,16 +60,10 @@ const SideMenu = () => {
   const {
     userCalendar,
     userCalendars,
-    getUserCalendars,
     getUserCalendarEvents,
     setUserCalendar,
     userCalendarEvents,
   } = useContext(CalendarContext)
-
-  // get all user calendars
-  useEffect(() => {
-    getUserCalendars()
-  }, [])
 
   // set user default calendar to the select list
 
