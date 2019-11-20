@@ -16,6 +16,7 @@ import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
+import axios from "axios"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Calendar = () => {
+const Calendar = props => {
   const classes = useStyles()
   const { userCalendarEvents, setUserCalendarEvent } = useContext(
     CalendarContext,
@@ -44,7 +45,7 @@ const Calendar = () => {
     if (userCalendarEvents.length > 0) {
       const formatted = userCalendarEvents.map(event => {
         return {
-          id: event.uuid,
+          id: event.id,
           start: event.startTime,
           end: event.endTime,
           title: event.eventTitle,
@@ -71,15 +72,37 @@ const Calendar = () => {
       uuid: id,
     })
   }
-
-  // new Draggable({})
-
+  function eventDrop(info) {
+    const { id } = info.event
+    const eventOject = {
+      startDate: info.event.start,
+      endDate: info.event.end,
+      startTime: info.event.start,
+      endTime: info.event.end,
+    }
+    axios
+      .put(`http://localhost:4000/api/calendars/events/${id}`, eventOject)
+      .then(res => {
+        console.log("put is being parsed", res.data)
+        setEvents({
+          ...userCalendarEvents,
+          startDate: res.data.start,
+          endDate: res.data.end,
+        })
+      })
+      .catch(err => {
+        console.log("unable to update", err)
+      })
+  }
   return (
     <div>
       <Grid container className={classes.headerContainer}>
         <Grid item xs={12}>
           <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            classes={{
+              root: classes.createButton,
+              label: classes.buttonLabel,
+            }}
             startIcon={<AddIcon />}
             onClick={() => openCreateEvent(true)}>
             Create Event
@@ -96,7 +119,11 @@ const Calendar = () => {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable={true}
         droppable={true}
+        // drop={drop(title, date)} //fires function
+        eventDrop={eventDrop}
+        selectable={true}
         events={events}
+        // eventReceive={receive()}
         eventClick={handleEventClick}
       />
       <CreateEvent
