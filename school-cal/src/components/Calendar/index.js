@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid"
-import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
@@ -37,9 +34,11 @@ const useStyles = makeStyles(theme => ({
 
 const Calendar = props => {
   const classes = useStyles()
-  const { userCalendarEvents, setUserCalendarEvent } = useContext(
-    CalendarContext,
-  )
+  const {
+    userCalendarEvents,
+    setUserCalendarEvent,
+    editUserCalendarEvent,
+  } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
@@ -65,7 +64,7 @@ const Calendar = props => {
     if (userCalendarEvents.length > 0) {
       const formatted = userCalendarEvents.map(event => {
         return {
-          id: event.id,
+          id: event.uuid,
           start: event.startTime,
           end: event.endTime,
           title: event.eventTitle,
@@ -113,26 +112,15 @@ const Calendar = props => {
     openCreateEvent(false)
   }
   function eventDrop(info) {
-    const { id } = info.event
+    const { id, start, end } = info.event
     const eventOject = {
-      startDate: info.event.start,
-      endDate: info.event.end,
-      startTime: info.event.start,
-      endTime: info.event.end,
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: moment(end).format("YYYY-MM-DD"),
+      startTime: moment(start).format(),
+      endTime: moment(end).format(),
     }
-    axios
-      .put(`http://localhost:4000/api/calendars/events/${id}`, eventOject)
-      .then(res => {
-        console.log("put is being parsed", res.data)
-        setEvents({
-          ...userCalendarEvents,
-          startDate: res.data.start,
-          endDate: res.data.end,
-        })
-      })
-      .catch(err => {
-        console.log("unable to update", err)
-      })
+
+    editUserCalendarEvent(id, eventOject)
   }
   return (
     <div>
@@ -163,6 +151,9 @@ const Calendar = props => {
         eventClick={handleEventClick}
         dateClick={handleDateClick}
         selectable={true}
+        droppable={true}
+        editable={true}
+        eventDrop={eventDrop}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
