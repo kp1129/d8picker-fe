@@ -79,9 +79,7 @@ const Calendar = () => {
 
     setUserCalendarEvent({
       startDate: moment(start).format("YYYY-MM-DD"),
-      endDate: allDay
-        ? moment(start).format("YYYY-MM-DD")
-        : moment(end).format("YYYY-MM-DD"),
+      endDate: moment(end).format("YYYY-MM-DD"),
       startTime: allDay
         ? moment(start)
             .hours(6)

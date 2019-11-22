@@ -42,14 +42,22 @@ const CreateEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
-          values.startDate = moment(values.startTime).format("YYYY-MM-DD")
-          values.endDate = moment(values.endTime).format("YYYY-MM-DD")
+          values.startDate = moment(values.startDate).format("YYYY-MM-DD")
+          values.endDate = moment(values.endDate).format("YYYY-MM-DD")
           values.startTime = values.isAllDayEvent
             ? null
-            : moment(values.startTime).toISOString(true)
+            : moment(values.startDate)
+                .hours(moment(values.startTime).hour())
+                .minutes(moment(values.startTime).minute())
+                .seconds(moment(values.startTime).second())
+                .toISOString(true)
           values.endTime = values.isAllDayEvent
             ? null
-            : moment(values.endTime).toISOString(true)
+            : moment(values.endDate)
+                .hours(moment(values.endTime).hour())
+                .minutes(moment(values.endTime).minute())
+                .seconds(moment(values.endTime).second())
+                .toISOString(true)
 
           createUserCalendarEvent(userCalendar.uuid, values)
           actions.resetForm()
