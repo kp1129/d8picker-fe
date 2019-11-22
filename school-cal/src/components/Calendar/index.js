@@ -79,17 +79,19 @@ const Calendar = () => {
 
     setUserCalendarEvent({
       startDate: moment(start).format("YYYY-MM-DD"),
-      endDate: moment(end).format("YYYY-MM-DD"),
+      endDate: allDay
+        ? moment(start).format("YYYY-MM-DD")
+        : moment(end).format("YYYY-MM-DD"),
       startTime: allDay
         ? moment(start)
             .hours(6)
             .toISOString()
-        : moment(start).toISOString(),
+        : moment(start).toISOString(true),
       endTime: allDay
         ? moment(start)
             .hours(7)
             .toISOString()
-        : moment(end).toISOString(),
+        : moment(end).toISOString(true),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
@@ -101,14 +103,14 @@ const Calendar = () => {
 
   const handleDateClick = info => {
     setUserCalendarEvent({
-      startDate: moment(info.date).toISOString(),
-      endDate: moment(info.date).toISOString(),
+      startDate: moment(info.date).format("YYYY-MM-DD"),
+      endDate: moment(info.date).format("YYYY-MM-DD"),
       startTime: moment(info.date)
         .hours(6)
-        .toISOString(),
+        .toISOString(true),
       endTime: moment(info.date)
         .hours(7)
-        .toISOString(),
+        .toISOString(true),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
