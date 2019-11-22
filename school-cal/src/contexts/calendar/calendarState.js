@@ -27,8 +27,10 @@ export const CalendarState = props => {
     userCalendar: null,
     userCalendarEvents: [],
     userCalendarEvent: {
-      startTime: moment(),
-      endTime: moment(),
+      startDate: "",
+      endDate: "",
+      startTime: "",
+      endTime: "",
       eventTitle: "",
       eventLocation: "",
       eventNote: "",

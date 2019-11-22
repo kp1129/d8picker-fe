@@ -19,17 +19,23 @@ import {
   FormControlLabel,
   Grid,
   TextField,
+  Typography,
 } from "@material-ui/core"
-import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers"
+import {
+  MuiPickersUtilsProvider,
+  DatePicker,
+  TimePicker,
+} from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
 
 const EditEvent = ({ open, handleClose }) => {
   const {
     isLoading,
+    userCalendarEvent,
+    setUserCalendarEvent,
     editUserCalendarEvent,
     deleteUserCalendarEvent,
-    userCalendarEvent,
   } = useContext(CalendarContext)
 
   const handleDeleteEvent = eventUuid => {
@@ -42,10 +48,24 @@ const EditEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
-          values.startDate = moment(values.startTime).format("YYYY-MM-DD")
-          values.endDate = moment(values.endTime).format("YYYY-MM-DD")
-          values.startTime = moment(values.startTime).toISOString()
-          values.endTime = moment(values.endTime).toISOString()
+          values.startDate = moment(values.startDate).format("YYYY-MM-DD")
+          values.endDate = moment(values.endDate).format("YYYY-MM-DD")
+
+          values.startTime = values.isAllDayEvent
+            ? null
+            : moment(values.startDate)
+                .hours(moment(values.startTime).hour())
+                .minutes(moment(values.startTime).minute())
+                .seconds(moment(values.startTime).second())
+                .toISOString(true)
+          values.endTime = values.isAllDayEvent
+            ? null
+            : moment(values.endDate)
+                .hours(moment(values.endTime).hour())
+                .minutes(moment(values.endTime).minute())
+                .seconds(moment(values.endTime).second())
+                .toISOString(true)
+
           editUserCalendarEvent(values.uuid, values)
           actions.resetForm()
           handleClose()
@@ -59,6 +79,9 @@ const EditEvent = ({ open, handleClose }) => {
             handleDeleteEvent={handleDeleteEvent}
           />
         )}
+        handleChange={() => {
+          console.log("Change")
+        }}
       />
     </>
   )
@@ -97,7 +120,7 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "5px",
   },
   allDayCheckBoxContainer: {
-    textAlign: "center",
+    textAlign: "left",
   },
   dialogActions: {
     justifyContent: "space-between",
@@ -106,14 +129,16 @@ const useStyles = makeStyles(theme => ({
 
 const EditEventForm = ({
   values,
+  open,
+  isLoading,
   handleChange,
   handleSubmit,
   handleBlur,
   handleClose,
   handleDeleteEvent,
-  open,
-  isLoading,
 }) => {
+  const isAllDayEvent = values.isAllDayEvent
+
   const classes = useStyles()
   return (
     <>
@@ -153,29 +178,48 @@ const EditEventForm = ({
               <Grid item xs={12}>
                 <Grid container spacing={1}>
                   <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Grid item xs={4}>
-                      <FormControl className={classes.dateTextField}>
-                        <Field
-                          name="startTime"
-                          component={StartDateTimePickerField}
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <FormControl className={classes.dateTextField}>
-                        <Field
-                          name="endTime"
-                          component={EndDateTimePickerField}
-                        />
-                      </FormControl>
-                    </Grid>
+                    <>
+                      <Grid item xs={3}>
+                        <FormControl className={classes.dateTextField}>
+                          <Field name="startDate" component={DatePickerField} />
+                        </FormControl>
+                      </Grid>
+                      {!isAllDayEvent && (
+                        <Grid item xs={2}>
+                          <FormControl className={classes.dateTextField}>
+                            <Field
+                              name="startTime"
+                              component={TimePickerField}
+                            />
+                          </FormControl>
+                        </Grid>
+                      )}
+                      <Grid item xs={1} style={{ textAlign: "center" }}>
+                        <Typography variant="h6">to</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <FormControl className={classes.dateTextField}>
+                          <Field name="endDate" component={DatePickerField} />
+                        </FormControl>
+                      </Grid>
+                      {!isAllDayEvent && (
+                        <Grid item xs={2}>
+                          <FormControl className={classes.dateTextField}>
+                            <Field name="endTime" component={TimePickerField} />
+                          </FormControl>
+                        </Grid>
+                      )}
+                    </>
                   </MuiPickersUtilsProvider>
-                  <Grid item xs={4} className={classes.allDayCheckBoxContainer}>
+                  <Grid
+                    item
+                    xs={12}
+                    className={classes.allDayCheckBoxContainer}>
                     <FormControlLabel
                       control={
                         <Checkbox
                           name="isAllDayEvent"
-                          checked={values.isAllDayEvent === 1 ? true : false}
+                          checked={values.isAllDayEvent}
                           onChange={handleChange}
                         />
                       }
@@ -243,32 +287,29 @@ const EditEventForm = ({
   )
 }
 
-const StartDateTimePickerField = ({ field, form }) => {
+const DatePickerField = ({ field, form }) => {
   return (
-    <DateTimePicker
-      label="Start Date and Time"
+    <DatePicker
       clearable
-      disablePast
       value={field.value}
       name={field.name}
-      format="MM/DD/YY      h:mma"
+      format="MM/DD/YYYY"
       onChange={selectedDate =>
         form.setFieldValue(field.name, selectedDate, false)
       }
     />
   )
 }
-const EndDateTimePickerField = ({ field, form }) => {
+
+const TimePickerField = ({ field, form }) => {
   return (
-    <DateTimePicker
-      label="End Date and Time"
+    <TimePicker
       clearable
-      disablePast
       value={field.value}
       name={field.name}
-      format="MM/DD/YY      h:mma"
-      onChange={selectedDate =>
-        form.setFieldValue(field.name, selectedDate, false)
+      format="h:mma"
+      onChange={selectedTime =>
+        form.setFieldValue(field.name, selectedTime, false)
       }
     />
   )

@@ -56,12 +56,12 @@ const Calendar = () => {
       const formatted = userCalendarEvents.map(event => {
         return {
           id: event.uuid,
-          start: event.startTime,
-          end: event.endTime,
+          start: event.isAllDayEvent ? event.startDate : event.startTime,
+          end: event.isAllDayEvent ? event.endDate : event.endTime,
           title: event.eventTitle,
           location: event.eventLocation,
           note: event.eventNote,
-          allDay: event.isAllDayEvent,
+          allDay: event.isAllDayEvent === 1 ? true : false,
           backgroundColor: event.eventColor,
         }
       })
@@ -72,12 +72,26 @@ const Calendar = () => {
     }
   }, [userCalendarEvents])
 
+  // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
+
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
 
     setUserCalendarEvent({
-      startTime: moment(start),
-      endTime: moment(end),
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: allDay
+        ? moment(start).format("YYYY-MM-DD")
+        : moment(end).format("YYYY-MM-DD"),
+      startTime: allDay
+        ? moment(start)
+            .hours(6)
+            .toISOString()
+        : moment(start).toISOString(),
+      endTime: allDay
+        ? moment(start)
+            .hours(7)
+            .toISOString()
+        : moment(end).toISOString(),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
@@ -89,8 +103,14 @@ const Calendar = () => {
 
   const handleDateClick = info => {
     setUserCalendarEvent({
-      startTime: moment(info.date).hours(6),
-      endTime: moment(info.date).hours(7),
+      startDate: moment(info.date).toISOString(),
+      endDate: moment(info.date).toISOString(),
+      startTime: moment(info.date)
+        .hours(6)
+        .toISOString(),
+      endTime: moment(info.date)
+        .hours(7)
+        .toISOString(),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
