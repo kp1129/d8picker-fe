@@ -2,6 +2,11 @@ import {
   IS_LOADING,
   GET_CALENDARS_SUCCESS,
   GET_CALENDARS_FAILURE,
+  EDIT_USER_CALENDAR_SUCCESS,
+  EDIT_USER_CALENDAR_FAILURE,
+  SET_CALENDAR_SUBSCRIPTION_ID,
+  SUBSCRIBE_TO_CALENDAR_SUCCESS,
+  SUBSCRIBE_TO_CALENDAR_FAILURE,
   GET_CALENDAR_EVENTS_SUCCESS,
   GET_CALENDAR_EVENTS_FAILURE,
   CREATE_CALENDAR_EVENT_SUCCESS,
@@ -22,7 +27,10 @@ const setUserCalendarsSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendars: action.payload,
+    userCalendars: action.payload.filter(calendar => calendar.isOwner === 1),
+    subscribedCalendars: action.payload.filter(
+      calendar => calendar.isOwner === 0,
+    ),
   }
 }
 
@@ -37,6 +45,38 @@ const setUserCalendar = (state, action) => {
   return {
     ...state,
     userCalendar: action.payload,
+  }
+}
+
+const setEditUserCalendarSuccess = (state, action) => {
+  return {
+    ...state,
+    isLoading: false,
+    userCalendar: action.payload,
+  }
+}
+
+const setCalendarSubscriptionId = (state, action) => {
+  return {
+    ...state,
+    calendarSubscriptionId: action.payload,
+  }
+}
+
+const setSubscribedCalendarsSuccess = (state, action) => {
+  return {
+    ...state,
+    isLoading: null,
+    calendarSubscriptionId: null,
+    subscribedCalendars: [...state.subscribedCalendars, action.payload],
+  }
+}
+
+const setSubscribedCalendarsFailure = (state, action) => {
+  return {
+    ...state,
+    isLoading: null,
+    subsrcribedCalendarsError: action.payload,
   }
 }
 const setUserCalendarEventsSuccess = (state, action) => {
@@ -106,6 +146,14 @@ const calendarReducer = (state, action) => {
       return setUserCalendarsSuccess(state, action)
     case GET_CALENDARS_FAILURE:
       return setUserCalendarsFailure(state, action)
+    case EDIT_USER_CALENDAR_SUCCESS:
+      return setEditUserCalendarSuccess(state, action)
+    case SET_CALENDAR_SUBSCRIPTION_ID:
+      return setCalendarSubscriptionId(state, action)
+    case SUBSCRIBE_TO_CALENDAR_SUCCESS:
+      return setSubscribedCalendarsSuccess(state, action)
+    case SUBSCRIBE_TO_CALENDAR_FAILURE:
+      return setSubscribedCalendarsFailure(state, action)
     case GET_CALENDAR_EVENTS_SUCCESS:
       return setUserCalendarEventsSuccess(state, action)
     case GET_CALENDAR_EVENTS_FAILURE:

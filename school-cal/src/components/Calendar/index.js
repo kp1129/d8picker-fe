@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
@@ -6,6 +7,7 @@ import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
+import SettingIcon from "@material-ui/icons/Settings"
 
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
@@ -13,8 +15,10 @@ import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
 
 const useStyles = makeStyles(theme => ({
-  headerContainer: {
+  calendarNav: {
     marginBottom: theme.spacing(3),
+    display: "flex",
+    justifyContent: "space-between",
   },
   createButton: {
     backgroundColor: "#F5945B",
@@ -138,19 +142,38 @@ const Calendar = () => {
 
   return (
     <div>
-      <Grid container className={classes.headerContainer}>
-        <Grid item xs={12}>
+      <Grid container>
+        <Grid item xs={12} className={classes.calendarNav}>
+          <div>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => openCreateEvent(true)}>
+              Create Event
+            </Button>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => setAddSubscribers(true)}>
+              Add Subscriber
+            </Button>
+          </div>
+
           <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
-            startIcon={<AddIcon />}
-            onClick={() => openCreateEvent(true)}>
-            Create Event
-          </Button>
-          <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
-            startIcon={<AddIcon />}
-            onClick={() => setAddSubscribers(true)}>
-            Add Subscriber
+            classes={{
+              root: classes.createButton,
+              label: classes.buttonLabel,
+            }}
+            startIcon={<SettingIcon />}
+            component={Link}
+            to="/calendar-settings">
+            Calendar Settings
           </Button>
         </Grid>
       </Grid>

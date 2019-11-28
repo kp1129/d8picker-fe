@@ -3,8 +3,12 @@ import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 import moment from "moment"
 import {
+  Checkbox,
+  Divider,
   Drawer,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   InputLabel,
   List,
   ListItem,
@@ -36,17 +40,23 @@ const useStyles = makeStyles(theme => ({
   },
   listItemContainer: {
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
   userProfileContainer: {
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
   },
+  subscribedCalendarsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
-    marginTop: theme.spacing(6),
+    marginTop: theme.spacing(4),
   },
   formControl: {
     margin: theme.spacing(1),
@@ -60,6 +70,7 @@ const SideMenu = () => {
   const {
     userCalendar,
     userCalendars,
+    subscribedCalendars,
     getUserCalendarEvents,
     setUserCalendar,
     userCalendarEvents,
@@ -75,7 +86,7 @@ const SideMenu = () => {
 
       const defaultCalendar = userCalendars[defaultCalendarIndex]
 
-      setUserCalendar({ uuid: defaultCalendar.uuid })
+      setUserCalendar(defaultCalendar)
     }
   }, [userCalendars])
 
@@ -104,9 +115,15 @@ const SideMenu = () => {
       setUpComingEvents([])
     }
   }, [userCalendarEvents])
+
   const handleCalendarChange = event => {
-    setUserCalendar({ uuid: event.target.value })
+    const calendarIndex = userCalendars.findIndex(
+      calendar => calendar.uuid === event.target.value,
+    )
+    setUserCalendar(userCalendars[calendarIndex])
   }
+
+  const handleSubscribedCalendarChange = event => {}
 
   const classes = useStyles()
   return (
@@ -124,8 +141,8 @@ const SideMenu = () => {
             <Typography variant="h6">{userProfile.email}</Typography>
           </ListItem>
           <ListItem className={classes.listItemContainer}>
+            <Typography variant="h6">My Calendars</Typography>
             <FormControl className={classes.formControl}>
-              <InputLabel id="calendar-select-label">Calendars</InputLabel>
               <Select
                 labelid="calendar-select-label"
                 onChange={handleCalendarChange}
@@ -139,6 +156,26 @@ const SideMenu = () => {
               </Select>
             </FormControl>
           </ListItem>
+          <Divider />
+          <ListItem className={classes.subscribedCalendarsContainer}>
+            <Typography variant="h6">Subscribed Calendars</Typography>
+            {subscribedCalendars.length > 0 ? (
+              <FormGroup>
+                {subscribedCalendars.map(calendar => (
+                  <FormControlLabel
+                    key={calendar.uuid}
+                    control={
+                      <Checkbox onChange={handleSubscribedCalendarChange} />
+                    }
+                    label={calendar.calendarName}
+                  />
+                ))}
+              </FormGroup>
+            ) : (
+              <Typography>There are no subscribed calendars</Typography>
+            )}
+          </ListItem>
+          <Divider />
           <ListItem>
             <ListItemText className={classes.upComingEventsContainer}>
               <Typography variant="h5">Upcoming Events</Typography>
