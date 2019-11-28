@@ -71,8 +71,11 @@ const SignInForm = ({
   signInError,
   errors,
   touched,
+  path,
 }) => {
   const classes = useStyles()
+
+  const currentPage = path.pathname
 
   useEffect(() => {
     if (signInError) {
@@ -90,7 +93,7 @@ const SignInForm = ({
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh" }}>
+        style={currentPage === "/sign-in" ? { minHeight: "100vh" } : null}>
         <Grid item xs={12} className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -151,11 +154,13 @@ const SignInForm = ({
                 <CircularProgress className={classes.progress} size={30} />
               )}
             </Button>
-            <div className={classes.link}>
-              <Link href="/register" variant="body2">
-                Don't have an account? Register
-              </Link>
-            </div>
+            {currentPage === "/sign-in" ? (
+              <div className={classes.link}>
+                <Link href="/register" variant="body2">
+                  Don't have an account? Register
+                </Link>
+              </div>
+            ) : null}
 
             <Divider />
             {/* <Button
@@ -169,7 +174,7 @@ const SignInForm = ({
               Sign In With Google
             </Button> */}
           </form>
-          <Box mt={5}>{copyRight}</Box>
+          {/* <Box mt={5}>{copyRight}</Box> */}
         </Grid>
       </Grid>
     </>
