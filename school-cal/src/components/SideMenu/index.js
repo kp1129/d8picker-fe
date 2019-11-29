@@ -2,14 +2,11 @@ import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 import moment from "moment"
+import SubscribedCalendars from "./SubscribedCalendars"
 import {
-  Checkbox,
   Divider,
   Drawer,
   FormControl,
-  FormControlLabel,
-  FormGroup,
-  InputLabel,
   List,
   ListItem,
   ListItemText,
@@ -17,6 +14,7 @@ import {
   Select,
   Typography,
 } from "@material-ui/core"
+
 import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
@@ -48,11 +46,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
   },
-  subscribedCalendarsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
+  subscribedCalendarsContainer: {},
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
@@ -72,8 +66,11 @@ const SideMenu = () => {
     userCalendars,
     subscribedCalendars,
     getUserCalendarEvents,
+    resetSubscribedCalendarEvents,
+    getSubscribedCalendarEvents,
     setUserCalendar,
     userCalendarEvents,
+    unSubscribeCalendar,
   } = useContext(CalendarContext)
 
   // set user default calendar to the select list
@@ -123,7 +120,23 @@ const SideMenu = () => {
     setUserCalendar(userCalendars[calendarIndex])
   }
 
-  const handleSubscribedCalendarChange = event => {}
+  const handleSubscribedCalendarChange = event => {
+    const calendarUuid = event.target.value
+
+    const subscribedCalendar = subscribedCalendars.find(
+      calendar => calendar.uuid === calendarUuid,
+    )
+
+    if (subscribedCalendar.hasOwnProperty("events")) {
+      resetSubscribedCalendarEvents(calendarUuid)
+    } else {
+      getSubscribedCalendarEvents(calendarUuid)
+    }
+  }
+
+  const handleUnsubscribeCalendar = calendarUuid => {
+    unSubscribeCalendar(calendarUuid)
+  }
 
   const classes = useStyles()
   return (
@@ -158,22 +171,11 @@ const SideMenu = () => {
           </ListItem>
           <Divider />
           <ListItem className={classes.subscribedCalendarsContainer}>
-            <Typography variant="h6">Subscribed Calendars</Typography>
-            {subscribedCalendars.length > 0 ? (
-              <FormGroup>
-                {subscribedCalendars.map(calendar => (
-                  <FormControlLabel
-                    key={calendar.uuid}
-                    control={
-                      <Checkbox onChange={handleSubscribedCalendarChange} />
-                    }
-                    label={calendar.calendarName}
-                  />
-                ))}
-              </FormGroup>
-            ) : (
-              <Typography>There are no subscribed calendars</Typography>
-            )}
+            <SubscribedCalendars
+              subscribedCalendars={subscribedCalendars}
+              onChange={handleSubscribedCalendarChange}
+              unsubscribeCalendar={handleUnsubscribeCalendar}
+            />
           </ListItem>
           <Divider />
           <ListItem>

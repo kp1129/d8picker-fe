@@ -31,15 +31,21 @@ const useStyles = makeStyles(theme => ({
 
 const Calendar = () => {
   const classes = useStyles()
-  const { userCalendarEvents, setUserCalendarEvent } = useContext(
-    CalendarContext,
-  )
+  const {
+    userCalendarEvents,
+    setUserCalendarEvent,
+    subscribedCalendars,
+  } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
-  const [events, setEvents] = useState([])
+  const [myCalendarEvents, setMyCalendarEvents] = useState({ events: [] })
+
+  const [subscribedCalendarEvents, setSubscribedCalendarEvents] = useState([
+    { events: [] },
+  ])
 
   const initialCreateEventProperty = {
     startTime: moment()
@@ -70,11 +76,42 @@ const Calendar = () => {
         }
       })
 
-      setEvents(formatted)
+      setMyCalendarEvents({ events: formatted })
     } else {
-      setEvents([])
+      setMyCalendarEvents({ events: [] })
     }
   }, [userCalendarEvents])
+
+  useEffect(() => {
+    if (subscribedCalendars.length > 0) {
+      const formatted = subscribedCalendars.map(calendar => {
+        if (calendar.events && calendar.events.length > 0) {
+          return {
+            events: calendar.events.map(event => {
+              return {
+                id: event.uuid,
+                start: event.isAllDayEvent ? event.startDate : event.startTime,
+                end: event.isAllDayEvent ? event.endDate : event.endTime,
+                title: event.eventTitle,
+                location: event.eventLocation,
+                note: event.eventNote,
+                allDay: event.isAllDayEvent === 1 ? true : false,
+                backgroundColor: event.eventColor,
+              }
+            }),
+          }
+        } else {
+          return { events: [] }
+        }
+      })
+      setSubscribedCalendarEvents(formatted)
+    } else {
+      setSubscribedCalendarEvents([{ events: [] }])
+    }
+  }, [subscribedCalendars])
+
+  console.log("My Calendar Events ", myCalendarEvents)
+  console.log("Subscribed Events ", subscribedCalendarEvents)
 
   // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
 
@@ -180,7 +217,7 @@ const Calendar = () => {
       <FullCalendar
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, interactionPlugin]}
-        events={events}
+        eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}
         eventClick={handleEventClick}
         dateClick={handleDateClick}
         selectable={true}
