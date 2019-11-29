@@ -8,8 +8,13 @@ import {
   SET_CALENDAR_SUBSCRIPTION_ID,
   SUBSCRIBE_TO_CALENDAR_SUCCESS,
   SUBSCRIBE_TO_CALENDAR_FAILURE,
+  UNSUBSCRIBE_CALENDAR_SUCCESS,
+  UNSUBSCRIBE_CALENDAR_FAILURE,
   GET_CALENDAR_EVENTS_SUCCESS,
   GET_CALENDAR_EVENTS_FAILURE,
+  GET_SUBSCRIBED_CALENDAR_EVENTS_SUCCESS,
+  GET_SUBSCRIBED_CALENDAR_EVENTS_FAILURE,
+  RESET_SUBSCRIBED_CALENDAR_EVENTS,
   CREATE_CALENDAR_EVENT_SUCCESS,
   EDIT_CALENDAR_EVENT_SUCCESS,
   DELETE_CALENDAR_EVENT_SUCCESS,
@@ -83,7 +88,7 @@ export const CalendarState = props => {
         `/api/calendars/${calendarUuid}`,
         changes,
       )
-      console.log("Edited ", calendar)
+
       dispatch({ type: EDIT_USER_CALENDAR_SUCCESS, payload: calendar.data })
     } catch (error) {
       console.log(error)
@@ -113,6 +118,23 @@ export const CalendarState = props => {
     }
   }
 
+  const unSubscribeCalendar = async calendarId => {
+    dispatch({ type: IS_LOADING, payload: true })
+
+    try {
+      const unsubscribed = await clientWithAuth.put(
+        `/api/calendars/${calendarId}/?subscribe=false`,
+      )
+
+      if (unsubscribed.data === 1) {
+        dispatch({ type: UNSUBSCRIBE_CALENDAR_SUCCESS, payload: calendarId })
+      }
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: UNSUBSCRIBE_CALENDAR_FAILURE, payload: error })
+    }
+  }
+
   const getUserCalendarEvents = async calendarUuid => {
     dispatch({ type: IS_LOADING, payload: true })
 
@@ -121,11 +143,33 @@ export const CalendarState = props => {
         `/api/calendars/${calendarUuid}/events`,
       )
 
-      dispatch({ type: GET_CALENDAR_EVENTS_SUCCESS, payload: events.data })
+      dispatch({
+        type: GET_CALENDAR_EVENTS_SUCCESS,
+        payload: events.data.events,
+      })
     } catch (error) {
       console.log(error)
       dispatch({ type: GET_CALENDAR_EVENTS_FAILURE, payload: error })
     }
+  }
+
+  const getSubscribedCalendarEvents = async calendarUuid => {
+    dispatch({ type: IS_LOADING, payload: true })
+    const events = await clientWithAuth(`/api/calendars/${calendarUuid}/events`)
+
+    dispatch({
+      type: GET_SUBSCRIBED_CALENDAR_EVENTS_SUCCESS,
+      payload: events.data,
+    })
+    try {
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: GET_SUBSCRIBED_CALENDAR_EVENTS_FAILURE, payload: error })
+    }
+  }
+
+  const resetSubscribedCalendarEvents = calendarUuid => {
+    dispatch({ type: RESET_SUBSCRIBED_CALENDAR_EVENTS, payload: calendarUuid })
   }
 
   const createUserCalendarEvent = async (calendarUuid, event) => {
@@ -201,7 +245,10 @@ export const CalendarState = props => {
         editUserCalendar,
         setCalendarSubscriptionId,
         subscribeToCalendar,
+        unSubscribeCalendar,
         getUserCalendarEvents,
+        getSubscribedCalendarEvents,
+        resetSubscribedCalendarEvents,
         createUserCalendarEvent,
         editUserCalendarEvent,
         deleteUserCalendarEvent,
