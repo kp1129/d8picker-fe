@@ -5,7 +5,6 @@ import moment from "moment"
 import { Formik, Field } from "formik"
 import * as Yup from "yup"
 import { AuthContext } from "../../contexts/auth/authState"
-
 import {
   Button,
   Dialog,
@@ -22,7 +21,6 @@ import {
 } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import Axios from "axios"
-
 const AddUsers = ({ calendar, open, handleClose }) => {
   const { currentUser } = useContext(AuthContext)
   return (
@@ -30,35 +28,32 @@ const AddUsers = ({ calendar, open, handleClose }) => {
       <Formik
         initialValues={{
           AdminId: "",
-          UserId: ""
+          UserId: "",
         }}
         onSubmit={async (values, actions) => {
-            console.log(values)
+          console.log(values)
           if (values.AdminId !== "") {
             try {
-                console.log("trying to post admin")
-                await Axios
-                .post("https://school-calendar-mataka.herokuapp.com/api/calendars/:id/admins", values.AdminId)
-                .then(actions.resetForm(),
-                handleClose())
+              console.log("trying to post admin")
+              await Axios.post(
+                "https://school-calendar-mataka.herokuapp.com/api/calendars/:id/admins",
+                values.AdminId,
+              ).then(actions.resetForm(), handleClose())
             } catch (error) {
-                console.log("Unable to add Admin.")
+              console.log("Unable to add Admin.")
             }
-            } else {
-                try {
-                    console.log("trying to post user")
-                    await Axios
-                    .post("https://school-calendar-mataka.herokuapp.com/api/calendars/:id/subscribers", values.UserId)
-                    .then(actions.resetForm(),
-                    handleClose())
-                } catch (error) {
-                    console.log("Unable to add user.")
-                } 
+          } else {
+            try {
+              console.log("trying to post user")
+              await Axios.post(
+                "https://school-calendar-mataka.herokuapp.com/api/calendars/:id/subscribers",
+                values.UserId,
+              ).then(actions.resetForm(), handleClose())
+            } catch (error) {
+              console.log("Unable to add user.")
             }
-        }
-
-            }
-        
+          }
+        }}
         render={formikProps => (
           <AddUsersForm
             open={open}
@@ -70,7 +65,6 @@ const AddUsers = ({ calendar, open, handleClose }) => {
     </>
   )
 }
-
 const AddUsersForm = ({
   values,
   handleChange,
@@ -83,11 +77,14 @@ const AddUsersForm = ({
     <>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle style={{background:"#21242C", color:"white"}}>Add Users</DialogTitle>
+          <DialogTitle style={{ background: "#21242C", color: "white" }}>
+            Add Users
+          </DialogTitle>
           <DialogContent>
             <Grid>
               <Grid item xs={12}>
-                <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
+                <TextField
+                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
                   fullWidth
                   id="AdminId"
                   label="Admin ID"
@@ -99,7 +96,8 @@ const AddUsersForm = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                  <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
+                <TextField
+                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
                   fullWidth
                   id="UserId"
                   label="User ID"
@@ -125,6 +123,4 @@ const AddUsersForm = ({
     </>
   )
 }
-
-
 export default AddUsers

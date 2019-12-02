@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid"
-import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
@@ -14,10 +11,15 @@ import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
 
-
+//fullcalendar
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
-
-
+import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import "@fullcalendar/core/main.css"
+import "@fullcalendar/daygrid/main.css"
+import "@fullcalendar/timegrid/main.css"
+import axios from "axios"
 
 const useStyles = makeStyles(theme => ({
   calendarNav: {
@@ -34,11 +36,12 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Calendar = () => {
+const Calendar = props => {
   const classes = useStyles()
   const {
     userCalendarEvents,
     setUserCalendarEvent,
+    editUserCalendarEvent,
     subscribedCalendars,
   } = useContext(CalendarContext)
 
@@ -181,7 +184,17 @@ const Calendar = () => {
     setUserCalendarEvent(initialCreateEventProperty)
     openCreateEvent(false)
   }
+  function eventDrop(info) {
+    const { id, start, end } = info.event
+    const eventOject = {
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: moment(end).format("YYYY-MM-DD"),
+      startTime: moment(start).format(),
+      endTime: moment(end).format(),
+    }
 
+    editUserCalendarEvent(id, eventOject)
+  }
   return (
     <div>
       <Grid container>
