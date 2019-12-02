@@ -7,6 +7,7 @@ import { Formik } from "formik"
 import RegistrationForm from "./RegistrationForm"
 import * as Yup from "yup"
 import { makeStyles } from "@material-ui/core/styles"
+import ReactGA from "react-ga"
 
 const Registration = ({ path }) => {
   const { isLoading, signUpError, signUpUser, signInWithGoogle } = useContext(

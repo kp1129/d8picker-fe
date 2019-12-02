@@ -40,7 +40,7 @@ const Registration = ({ history }) => {
         <Grid container>
           <Grid item md={6} style={{ background: "#A35629" }}></Grid>
           <Grid item md={6}>
-            <RegistrationForm />
+            <RegistrationForm path={history.location} />
           </Grid>
         </Grid>
       </div>
