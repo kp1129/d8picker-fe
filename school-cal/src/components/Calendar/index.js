@@ -14,6 +14,11 @@ import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
 
+
+import timeGridPlugin from "@fullcalendar/timegrid"
+
+
+
 const useStyles = makeStyles(theme => ({
   calendarNav: {
     marginBottom: theme.spacing(3),
@@ -215,8 +220,14 @@ const Calendar = () => {
         </Grid>
       </Grid>
       <FullCalendar
+        header={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
+        }}  
+        
         defaultView="dayGridMonth"
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}
         eventClick={handleEventClick}
         dateClick={handleDateClick}
