@@ -3,10 +3,12 @@ import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 import moment from "moment"
 import SubscribedCalendars from "./SubscribedCalendars"
+import CreateCalendar from "./CreateCalendar"
 import {
   Divider,
   Drawer,
   FormControl,
+  IconButton,
   List,
   ListItem,
   ListItemText,
@@ -14,7 +16,7 @@ import {
   Select,
   Typography,
 } from "@material-ui/core"
-
+import AddIcon from "@material-ui/icons/Add"
 import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
@@ -46,7 +48,12 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
   },
-  subscribedCalendarsContainer: {},
+  myCalendarsHeader: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
@@ -113,6 +120,8 @@ const SideMenu = () => {
     }
   }, [userCalendarEvents])
 
+  const [createCalendarDialog, openCreateCalendarDialog] = useState(false)
+
   const handleCalendarChange = event => {
     const calendarIndex = userCalendars.findIndex(
       calendar => calendar.uuid === event.target.value,
@@ -133,7 +142,7 @@ const SideMenu = () => {
       getSubscribedCalendarEvents(calendarUuid)
     }
   }
-
+  const handleMyCalendarChange = calendarUuid => {}
   const handleUnsubscribeCalendar = calendarUuid => {
     unSubscribeCalendar(calendarUuid)
   }
@@ -154,7 +163,15 @@ const SideMenu = () => {
             <Typography variant="h6">{userProfile.email}</Typography>
           </ListItem>
           <ListItem className={classes.listItemContainer}>
-            <Typography variant="h6">My Calendars</Typography>
+            <div className={classes.myCalendarsHeader}>
+              <Typography variant="h6">My Calendars</Typography>
+              <IconButton
+                aria-label="add"
+                onClick={() => openCreateCalendarDialog(true)}>
+                <AddIcon />
+              </IconButton>
+            </div>
+
             <FormControl className={classes.formControl}>
               <Select
                 labelid="calendar-select-label"
@@ -193,6 +210,10 @@ const SideMenu = () => {
           </ListItem>
         </List>
       </Drawer>
+      <CreateCalendar
+        open={createCalendarDialog}
+        handleClose={() => openCreateCalendarDialog(false)}
+      />
     </div>
   )
 }
