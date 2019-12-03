@@ -1,16 +1,22 @@
 import React, { useContext, useEffect, useState } from "react"
+import moment from "moment" //date formatter
+
 import { CalendarContext } from "../../contexts/calendar/calendarState"
+
+//full calendar
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
+
+//setting styles
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
 
+//adding components
 import CreateEvent from "../Events/CreateEvent"
-import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
-import moment from "moment"
+import ViewDialog from "../Events/ViewDialog"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
@@ -33,9 +39,10 @@ const Calendar = () => {
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
-  const [editEvent, openEditEvent] = useState(false)
-
   const [events, setEvents] = useState([])
+
+  const [viewDialog, setViewDialog] = useState([]) //onclick event view dialog share or edit
+  const [openModal, openViewModal] = useState(false) //trigger for dialog view
 
   const initialCreateEventProperty = {
     startTime: moment()
@@ -73,11 +80,9 @@ const Calendar = () => {
   }, [userCalendarEvents])
 
   // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
-
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-
-    setUserCalendarEvent({
+    setViewDialog({
       startDate: moment(start).format("YYYY-MM-DD"),
       endDate: allDay
         ? moment(start).format("YYYY-MM-DD")
@@ -98,7 +103,7 @@ const Calendar = () => {
       isAllDayEvent: allDay,
       uuid: id,
     })
-    openEditEvent(true)
+    openViewModal(true)
   }
 
   const handleDateClick = info => {
@@ -163,8 +168,13 @@ const Calendar = () => {
         selectable={true}
         select={handleDatesSelection}
       />
+
+      <ViewDialog
+        modalOpen={openModal} //passes true or false for triger
+        valueIntoModal={viewDialog} //passes stateData
+        handleClose={() => openViewModal(false)} //triggers on or off
+      />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
-      <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
       <AddSubscribers
         open={isAddSubscriberOpen}
         handleClose={() => setAddSubscribers(false)}
