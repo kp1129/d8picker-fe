@@ -178,23 +178,6 @@ const SideBar = (props) => {
             <List>
               <TwilioMessage/>
             </List>
-      {/* <h2 
-      className="greeting"
-      
-      >Hello welcome { calendars.length > 0 && `${calendars[0].username}`}</h2>
-      {calendars.length > 0 && calendars.map(calendar => (
-          <div 
-            className='calendars'
-            key={calendar.id}
-            >
-              <Link to ='/calendar/:id'>
-      <p>{calendar.username}</p>
-                <p>{calendar.calendarName}</p>
-                <p>{calendar.calendarDescription}</p>
-              </Link>
-          </div> */}
-      {/* ))}      */}
-      <Route to path='/calendar/:id' /> 
 
           </div>
         </div>
