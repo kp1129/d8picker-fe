@@ -3,6 +3,7 @@ import { CalendarContext } from "../../contexts/calendar/calendarState"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
+import SettingIcon from "@material-ui/icons/Settings"
 
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
@@ -20,8 +21,10 @@ import "@fullcalendar/timegrid/main.css"
 import axios from "axios"
 
 const useStyles = makeStyles(theme => ({
-  headerContainer: {
+  calendarNav: {
     marginBottom: theme.spacing(3),
+    display: "flex",
+    justifyContent: "space-between",
   },
   createButton: {
     backgroundColor: "#F5945B",
@@ -38,6 +41,7 @@ const Calendar = props => {
     userCalendarEvents,
     setUserCalendarEvent,
     editUserCalendarEvent,
+    subscribedCalendars,
   } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
@@ -65,18 +69,19 @@ const Calendar = props => {
       const formatted = userCalendarEvents.map(event => {
         return {
           id: event.uuid,
-          start: event.startTime,
-          end: event.endTime,
+          start: event.isAllDayEvent ? event.startDate : event.startTime,
+          end: event.isAllDayEvent ? event.endDate : event.endTime,
           title: event.eventTitle,
           location: event.eventLocation,
           note: event.eventNote,
-          allDay: event.isAllDayEvent,
+          allDay: event.isAllDayEvent === 1 ? true : false,
           backgroundColor: event.eventColor,
         }
       })
-      setEvents(formatted)
+
+      setMyCalendarEvents({ events: formatted })
     } else {
-      setEvents([])
+      setMyCalendarEvents({ events: [] })
     }
   }, [userCalendarEvents])
 
@@ -97,8 +102,26 @@ const Calendar = props => {
 
   const handleDateClick = info => {
     setUserCalendarEvent({
-      startTime: moment(info.date).hours(6),
-      endTime: moment(info.date).hours(7),
+      startDate: moment(info.date).format("YYYY-MM-DD"),
+      endDate: moment(info.date).format("YYYY-MM-DD"),
+      startTime: moment(info.date)
+        .hours(6)
+        .toISOString(true),
+      endTime: moment(info.date)
+        .hours(7)
+        .toISOString(true),
+      eventTitle: "",
+      eventLocation: "",
+      eventNote: "",
+      isAllDayEvent: false,
+    })
+    openCreateEvent(true)
+  }
+
+  const handleDatesSelection = info => {
+    setUserCalendarEvent({
+      startTime: moment(info.startStr).hours(0),
+      endTime: moment(info.endStr).hours(0),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
@@ -124,22 +147,38 @@ const Calendar = props => {
   }
   return (
     <div>
-      <Grid container className={classes.headerContainer}>
-        <Grid item xs={12}>
+      <Grid container>
+        <Grid item xs={12} className={classes.calendarNav}>
+          <div>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => openCreateEvent(true)}>
+              Create Event
+            </Button>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => setAddSubscribers(true)}>
+              Add Subscriber
+            </Button>
+          </div>
+
           <Button
             classes={{
               root: classes.createButton,
               label: classes.buttonLabel,
             }}
-            startIcon={<AddIcon />}
-            onClick={() => openCreateEvent(true)}>
-            Create Event
-          </Button>
-          <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
-            startIcon={<AddIcon />}
-            onClick={() => setAddSubscribers(true)}>
-            Add Subscriber
+            startIcon={<SettingIcon />}
+            component={Link}
+            to="/calendar-settings">
+            Calendar Settings
           </Button>
         </Grid>
       </Grid>
@@ -152,14 +191,11 @@ const Calendar = props => {
         
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        events={events}
-        // eventReceive={receive()}
+        eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}
         eventClick={handleEventClick}
         dateClick={handleDateClick}
         selectable={true}
-        droppable={true}
-        editable={true}
-        eventDrop={eventDrop}
+        select={handleDatesSelection}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
