@@ -13,20 +13,16 @@ import {
   Select,
   Typography,
 } from "@material-ui/core"
-import TwilioMessage from "../../components/addUserTwilioMessage/index"
+import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
-
 import { makeStyles } from "@material-ui/core/styles"
-
 // setting styles
 const drawerWidth = 300
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
   },
-
   toolbar: theme.mixins.toolbar,
-
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -53,67 +49,49 @@ const useStyles = makeStyles(theme => ({
     minWidth: 180,
   },
 }))
-
-const Sidebar = props => {
+const SideMenu = () => {
   const [upComingEvents, setUpComingEvents] = useState([])
   const { userProfile } = useContext(AuthContext)
   const {
     userCalendar,
     userCalendars,
-    getUserCalendars,
     getUserCalendarEvents,
     setUserCalendar,
     userCalendarEvents,
   } = useContext(CalendarContext)
-
-  // get all user calendars
-  useEffect(() => {
-    getUserCalendars()
-  }, [])
-
   // set user default calendar to the select list
-
   useEffect(() => {
     if (userCalendars.length > 0) {
       const defaultCalendarIndex = userCalendars.findIndex(
         calendar => calendar.isDefault,
       )
-
       const defaultCalendar = userCalendars[defaultCalendarIndex]
-
       setUserCalendar({ uuid: defaultCalendar.uuid })
     }
   }, [userCalendars])
-
   // get user calendar events
-
   useEffect(() => {
     if (userCalendar) {
       getUserCalendarEvents(userCalendar.uuid)
     }
   }, [userCalendar])
-
   // get user upcoming events
-
   useEffect(() => {
     if (userCalendarEvents.length > 0) {
       const events = userCalendarEvents.filter(event =>
         moment(event.startTime).isAfter(),
       )
-
       const sorted = events
         .sort((a, b) => moment(a.startTime) - moment(b.startTime))
         .slice(0, 5)
-
       setUpComingEvents(sorted)
     } else {
       setUpComingEvents([])
     }
   }, [userCalendarEvents])
   const handleCalendarChange = event => {
-    setUserCalendar({ uuid: event.target.value })
+    setUserCalendar({ id: event.target.value })
   }
-
   const classes = useStyles()
   return (
     <div className={classes.root}>
@@ -135,7 +113,7 @@ const Sidebar = props => {
               <Select
                 labelid="calendar-select-label"
                 onChange={handleCalendarChange}
-                value={userCalendar.uuid}>
+                value={userCalendar ? userCalendar.uuid : ""}>
                 {userCalendars.length > 0 &&
                   userCalendars.map(calendar => (
                     <MenuItem key={calendar.uuid} value={calendar.uuid}>
@@ -163,5 +141,4 @@ const Sidebar = props => {
     </div>
   )
 }
-
-export default Sidebar
+export default SideMenu

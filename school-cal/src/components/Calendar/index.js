@@ -1,15 +1,23 @@
 import React, { useContext, useEffect, useState } from "react"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid"
-import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
 
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
+import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
+
+//fullcalendar
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid"
+import timeGridPlugin from "@fullcalendar/timegrid"
+import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import "@fullcalendar/core/main.css"
+import "@fullcalendar/daygrid/main.css"
+import "@fullcalendar/timegrid/main.css"
+import axios from "axios"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
@@ -17,19 +25,23 @@ const useStyles = makeStyles(theme => ({
   },
   createButton: {
     backgroundColor: "#F5945B",
+    marginRight: theme.spacing(3),
   },
   buttonLabel: {
     textTransform: "none",
   },
 }))
 
-const Calendar = () => {
+const Calendar = props => {
   const classes = useStyles()
-  const { userCalendarEvents, setUserCalendarEvent } = useContext(
-    CalendarContext,
-  )
+  const {
+    userCalendarEvents,
+    setUserCalendarEvent,
+    editUserCalendarEvent,
+  } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
+  const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
   const [events, setEvents] = useState([])
@@ -62,7 +74,6 @@ const Calendar = () => {
           backgroundColor: event.eventColor,
         }
       })
-
       setEvents(formatted)
     } else {
       setEvents([])
@@ -100,29 +111,62 @@ const Calendar = () => {
     setUserCalendarEvent(initialCreateEventProperty)
     openCreateEvent(false)
   }
+  function eventDrop(info) {
+    const { id, start, end } = info.event
+    const eventOject = {
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: moment(end).format("YYYY-MM-DD"),
+      startTime: moment(start).format(),
+      endTime: moment(end).format(),
+    }
 
+    editUserCalendarEvent(id, eventOject)
+  }
   return (
     <div>
       <Grid container className={classes.headerContainer}>
         <Grid item xs={12}>
           <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            classes={{
+              root: classes.createButton,
+              label: classes.buttonLabel,
+            }}
             startIcon={<AddIcon />}
             onClick={() => openCreateEvent(true)}>
             Create Event
           </Button>
+          <Button
+            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            startIcon={<AddIcon />}
+            onClick={() => setAddSubscribers(true)}>
+            Add Subscriber
+          </Button>
         </Grid>
       </Grid>
       <FullCalendar
+        header={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
+        }}  
+        
         defaultView="dayGridMonth"
-        plugins={[dayGridPlugin, interactionPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         events={events}
+        // eventReceive={receive()}
         eventClick={handleEventClick}
         dateClick={handleDateClick}
         selectable={true}
+        droppable={true}
+        editable={true}
+        eventDrop={eventDrop}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
+      <AddSubscribers
+        open={isAddSubscriberOpen}
+        handleClose={() => setAddSubscribers(false)}
+      />
     </div>
   )
 }

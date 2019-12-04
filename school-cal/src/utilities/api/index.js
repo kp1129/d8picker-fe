@@ -5,7 +5,7 @@ import axios from "axios"
 import { loadState } from "../localStorage"
 
 const developmentBaseUrl = "http://localhost:4000"
-const productionBaseUrl = "https://lab17-makata.herokuapp.com/"
+const productionBaseUrl = "https://lab17-makata.herokuapp.com"
 
 export const client = axios.create({
   baseURL:
