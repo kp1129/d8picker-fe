@@ -1,75 +1,32 @@
-
-import React, { useContext, useEffect, useState } from "react";
-import axios from 'axios'
-import { Link, Route } from "react-router-dom"
-
-//adding components
-import AddEvent from "../../components/Events/AddEvent";
-import Navbar from "../../components/Navbar"
-import AdminDashCal from '../../components/AdminDashboard/index'
-import TwilioMessage from '../../components/addUserTwilioMessage/index'
-
-//setting auth
+import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
-
-// styling/css
-import EventDisplay from "../../components/Events/EventDisplay"
+import { CalendarContext } from "../../contexts/calendar/calendarState"
+import moment from "moment"
 import {
-  Button,
-  Divider,
   Drawer,
-  CssBaseline,
+  FormControl,
   InputLabel,
-  Grid,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   MenuItem,
   Select,
+  Typography,
 } from "@material-ui/core"
-import AddIcon from "@material-ui/icons/Add"
-import { makeStyles } from "@material-ui/core/styles"
-import { useTheme } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
-import ChevronRightIcon from "@material-ui/icons/ChevronRight"
-import EmptyPerson from "../../assets/images/emptyperson.png"
-import AddUsers from "../addUsers/AddUsers"
-import '../../components/AdminDashboard/adminDash.css'
+import TwilioMessage from "../../components/addUserTwilioMessage/index"
+import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
-import clsx from "clsx"
+import { makeStyles } from "@material-ui/core/styles"
 
 // setting styles
-const drawerWidth = 240
+const drawerWidth = 300
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
   },
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: "none",
-  },
+
+  toolbar: theme.mixins.toolbar,
+
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -77,118 +34,134 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  drawerHeader: {
+  listItemContainer: {
     display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
+  userProfileContainer: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
   },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
+  upComingEventsContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(6),
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 180,
   },
 }))
 
-const SideBar = (props) => {
-    const [isAddEventOpen, setAddEvent] = useState(false)
-    const [isAddUserOpen, setAddUsers] = useState(false)
-    const [calendar, setCalendar] = useState({ id: "" })
-    const [calendars, setCalendars] = useState([])
+const Sidebar = props => {
+  const [upComingEvents, setUpComingEvents] = useState([])
+  const { userProfile } = useContext(AuthContext)
+  const {
+    userCalendar,
+    userCalendars,
+    getUserCalendars,
+    getUserCalendarEvents,
+    setUserCalendar,
+    userCalendarEvents,
+  } = useContext(CalendarContext)
+
+  // get all user calendars
+  useEffect(() => {
+    getUserCalendars()
+  }, [])
+
+  // set user default calendar to the select list
 
   useEffect(() => {
-    const fetchUsers = async() => {
-      try {
-        const id = props.match.params.id
-        //get calendar id
-        // .get(`https://school-calendar-mataka.herokuapp.com/users/${id}/calendars`)
-        const res = await axios.get(`http://localhost:4000/users/${id}/calendar`)
-        setCalendars(res.data.calendars)
-      }catch (e){
-        console.log(e)
-      }
-    }
-    fetchUsers()
-  },[]);
-  console.log(calendars)
-    
-  
-  const handleChange = event => {
-    setCalendar({ id: event.target.value })
-  }
+    if (userCalendars.length > 0) {
+      const defaultCalendarIndex = userCalendars.findIndex(
+        calendar => calendar.isDefault,
+      )
 
+      const defaultCalendar = userCalendars[defaultCalendarIndex]
+
+      setUserCalendar({ uuid: defaultCalendar.uuid })
+    }
+  }, [userCalendars])
+
+  // get user calendar events
+
+  useEffect(() => {
+    if (userCalendar) {
+      getUserCalendarEvents(userCalendar.uuid)
+    }
+  }, [userCalendar])
+
+  // get user upcoming events
+
+  useEffect(() => {
+    if (userCalendarEvents.length > 0) {
+      const events = userCalendarEvents.filter(event =>
+        moment(event.startTime).isAfter(),
+      )
+
+      const sorted = events
+        .sort((a, b) => moment(a.startTime) - moment(b.startTime))
+        .slice(0, 5)
+
+      setUpComingEvents(sorted)
+    } else {
+      setUpComingEvents([])
+    }
+  }, [userCalendarEvents])
+  const handleCalendarChange = event => {
+    setUserCalendar({ uuid: event.target.value })
+  }
 
   const classes = useStyles()
   return (
-    <div> 
-      <div className="user-side-bar" style={{display:"flex",flexDirection:"row",background:"#F2D2BF", height:"48.75vw", width:"21.55%"}}>
-        <div><p style={{color:"white", background:"#F5945B", marginTop:"46vw", marginLeft:"30%", padding:"3px 8px"}}>+</p></div>
-        <div style={{borderRight:"1px solid #EAEAEA", marginLeft:"1.75vw", width:"500px", background:"white", display:"flex", alignItems:"center", flexDirection:"column", textAlign:"center"}}>
-          <div style={{marginTop:"20%"}}>
-            <img src={EmptyPerson} alt="empty person"/>
-          </div>
-          <div>
-            <h3>Pull Team Name From Backend</h3>
-            <h5>Pull Email Here</h5>
-          </div>
-          <div>
-            <Select onChange={handleChange} value={calendar.id} style={{background:"#F5945B"}}>
-              {calendars.map(calendar => (
-                <MenuItem key={calendar.id} value={calendar.id}>
-                  {calendar.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
-          <div>
-            <h3>UPCOMING EVENTS</h3>
-            <List>
-              <ListItem
-                button
-                className={classes.listItem}
-                onClick={() => setAddEvent(true)}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Add Event"} />
-              </ListItem>
-              <ListItem
-                button
-                className={classes.listItem}
-                onClick={() => setAddUsers(true)}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Add Users"} />
-              </ListItem>
-              
-            </List>
-            <List>
-              <TwilioMessage/>
-            </List>
-
-          </div>
-        </div>
-      </div>
-      <AddEvent handleClose={() => setAddEvent(false)} open={isAddEventOpen} />
-      <AddUsers handleClose={() => setAddUsers(false)} open={isAddUserOpen} />
+    <div className={classes.root}>
+      <Drawer
+        anchor="left"
+        className={classes.drawer}
+        variant="permanent"
+        classes={{ paper: classes.drawerPaper }}>
+        <div className={classes.toolbar} />
+        <List>
+          <ListItem className={classes.userProfileContainer}>
+            <img src={EmptyPersonAvatar} alt="image_placeholder" />
+            <Typography variant="h5">{`${userProfile.firstName} ${userProfile.lastName}`}</Typography>
+            <Typography variant="h6">{userProfile.email}</Typography>
+          </ListItem>
+          <ListItem className={classes.listItemContainer}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="calendar-select-label">Calendars</InputLabel>
+              <Select
+                labelid="calendar-select-label"
+                onChange={handleCalendarChange}
+                value={userCalendar.uuid}>
+                {userCalendars.length > 0 &&
+                  userCalendars.map(calendar => (
+                    <MenuItem key={calendar.uuid} value={calendar.uuid}>
+                      {calendar.calendarName}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </ListItem>
+          <ListItem>
+            <ListItemText className={classes.upComingEventsContainer}>
+              <Typography variant="h5">Upcoming Events</Typography>
+              <List dense>
+                {upComingEvents.length > 0 &&
+                  upComingEvents.map(event => (
+                    <ListItem key={event.uuid}>
+                      <ListItemText>{event.eventTitle}</ListItemText>
+                    </ListItem>
+                  ))}
+              </List>
+            </ListItemText>
+          </ListItem>
+        </List>
+      </Drawer>
     </div>
   )
-
 }
 
-export default SideBar
-
-
+export default Sidebar

@@ -12,60 +12,32 @@ import clsx from "clsx"
 import { AuthContext } from "../../contexts/auth/authState"
 
 const Navbar = ({ drawerWidth }) => {
-  const { currentUser, signOut } = useContext(AuthContext)
-  const [userProfile, setUserProfile] = useState(null)
+  const { signOut } = useContext(AuthContext)
 
   const useStyles = makeStyles(theme => ({
-    menuButton: {
-      marginRight: theme.spacing(2),
+    root: {
+      flexGrow: 1,
     },
-    greeting: {
-      marginRight: theme.spacing(2),
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+    },
+    toolBar: {
+      backgroundColor: "#21242C",
     },
     title: {
       flexGrow: 1,
     },
-    appBar: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
   }))
 
   const classes = useStyles()
-
-  useEffect(() => {
-    const getUserProfile = async () => {
-      try {
-        const profileRef = await db.collection("users").doc(currentUser.uid)
-
-        const profile = await profileRef.get()
-        setUserProfile(profile.data())
-
-        //setUserProfile(profileRef.get());
-      } catch (error) {
-        console.log("Unable to retrieve user profile.")
-      }
-    }
-
-    getUserProfile()
-  }, [])
-
   return (
-    <div>
-       <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}>
-        <Toolbar style={{background:"#21242C"}}>
-
-          <Typography variant="h6" className={classes.title}>
-            School Calendar
+    <div className={classes.root}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolBar}>
+          <Typography variant={"h6"} className={classes.title}>
+            Makata
           </Typography>
-          <Button
-            color="inherit"
-            
-            style={{ marginLeft: "80%" }}>
+          <Button color="inherit" onClick={signOut}>
             Sign Out
           </Button>
         </Toolbar>
