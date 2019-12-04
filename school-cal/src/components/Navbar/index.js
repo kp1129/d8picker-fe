@@ -15,9 +15,6 @@ const Navbar = ({ drawerWidth }) => {
   const { signOut } = useContext(AuthContext)
 
   const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
     },
@@ -31,7 +28,7 @@ const Navbar = ({ drawerWidth }) => {
 
   const classes = useStyles()
   return (
-    <div className={classes.root}>
+    <>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <Typography variant={"h6"} className={classes.title}>
@@ -42,7 +39,7 @@ const Navbar = ({ drawerWidth }) => {
           </Button>
         </Toolbar>
       </AppBar>
-    </div>
+    </>
   )
 }
 

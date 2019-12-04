@@ -32,12 +32,24 @@ const useStyles = makeStyles(theme => ({
 const AdminDashBoard = props => {
   ReactGA.pageview(window.location.pathname + window.location.search)
 
-  const { getUserCalendars } = useContext(CalendarContext)
+  const {
+    getUserCalendars,
+    calendarSubscriptionId,
+    subscribeToCalendar,
+  } = useContext(CalendarContext)
 
   // get all user calendars
   useEffect(() => {
     getUserCalendars()
   }, [])
+
+  // subscribe to calendar if subscribeCalendarId is not null
+
+  useEffect(() => {
+    if (calendarSubscriptionId) {
+      subscribeToCalendar(calendarSubscriptionId)
+    }
+  }, [calendarSubscriptionId])
 
   const classes = useStyles()
   return (

@@ -80,6 +80,7 @@ const RegistrationForm = ({
   signInWithGoogle,
   isLoading,
   signUpError,
+  path,
 }) => {
   const classes = useStyles()
 
@@ -90,6 +91,8 @@ const RegistrationForm = ({
     }
   }, [signUpError])
 
+  const currentPage = path.pathname
+
   return (
     <>
       <Grid
@@ -98,7 +101,7 @@ const RegistrationForm = ({
         direction="column"
         alignItems="center"
         justify="center"
-        style={{ minHeight: "100vh" }}>
+        style={currentPage === "/register" ? { minHeight: "100vh" } : null}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -239,9 +242,11 @@ const RegistrationForm = ({
                   <CircularProgress className={classes.progress} size={30} />
                 )}
               </Button>
-              <div className={classes.link}>
-                <Link href="/sign-in">Already has an account ? Sign In</Link>
-              </div>
+              {currentPage === "/register" ? (
+                <div className={classes.link}>
+                  <Link href="/sign-in">Already has an account ? Sign In</Link>
+                </div>
+              ) : null}
 
               <Divider />
               {/* <Button
@@ -257,7 +262,7 @@ const RegistrationForm = ({
             </Grid>
           </form>
 
-          <Box mt={5}>{copyRight}</Box>
+          {/* <Box mt={5}>{copyRight}</Box> */}
         </div>
       </Grid>
     </>

@@ -12,15 +12,28 @@ import interactionPlugin from "@fullcalendar/interaction"
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
+import SettingIcon from "@material-ui/icons/Settings"
 
 //adding components
 import CreateEvent from "../Events/CreateEvent"
 import AddSubscribers from "../Events/addSubscriber"
 import ViewDialog from "../Events/ViewDialog"
 
+//fullcalendar
+import FullCalendar from "@fullcalendar/react"
+import dayGridPlugin from "@fullcalendar/daygrid"
+import timeGridPlugin from "@fullcalendar/timegrid"
+import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import "@fullcalendar/core/main.css"
+import "@fullcalendar/daygrid/main.css"
+import "@fullcalendar/timegrid/main.css"
+import axios from "axios"
+
 const useStyles = makeStyles(theme => ({
-  headerContainer: {
+  calendarNav: {
     marginBottom: theme.spacing(3),
+    display: "flex",
+    justifyContent: "space-between",
   },
   createButton: {
     backgroundColor: "#F5945B",
@@ -31,11 +44,14 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Calendar = () => {
+const Calendar = props => {
   const classes = useStyles()
-  const { userCalendarEvents, setUserCalendarEvent } = useContext(
-    CalendarContext,
-  )
+  const {
+    userCalendarEvents,
+    setUserCalendarEvent,
+    editUserCalendarEvent,
+    subscribedCalendars,
+  } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
@@ -73,11 +89,42 @@ const Calendar = () => {
         }
       })
 
-      setEvents(formatted)
+      setMyCalendarEvents({ events: formatted })
     } else {
-      setEvents([])
+      setMyCalendarEvents({ events: [] })
     }
   }, [userCalendarEvents])
+
+  useEffect(() => {
+    if (subscribedCalendars.length > 0) {
+      const formatted = subscribedCalendars.map(calendar => {
+        if (calendar.events && calendar.events.length > 0) {
+          return {
+            events: calendar.events.map(event => {
+              return {
+                id: event.uuid,
+                start: event.isAllDayEvent ? event.startDate : event.startTime,
+                end: event.isAllDayEvent ? event.endDate : event.endTime,
+                title: event.eventTitle,
+                location: event.eventLocation,
+                note: event.eventNote,
+                allDay: event.isAllDayEvent === 1 ? true : false,
+                backgroundColor: event.eventColor,
+              }
+            }),
+          }
+        } else {
+          return { events: [] }
+        }
+      })
+      setSubscribedCalendarEvents(formatted)
+    } else {
+      setSubscribedCalendarEvents([{ events: [] }])
+    }
+  }, [subscribedCalendars])
+
+  console.log("My Calendar Events ", myCalendarEvents)
+  console.log("Subscribed Events ", subscribedCalendarEvents)
 
   // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
   const handleEventClick = info => {
@@ -136,29 +183,64 @@ const Calendar = () => {
     setUserCalendarEvent(initialCreateEventProperty)
     openCreateEvent(false)
   }
+  function eventDrop(info) {
+    const { id, start, end } = info.event
+    const eventOject = {
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: moment(end).format("YYYY-MM-DD"),
+      startTime: moment(start).format(),
+      endTime: moment(end).format(),
+    }
 
+    editUserCalendarEvent(id, eventOject)
+  }
   return (
     <div>
-      <Grid container className={classes.headerContainer}>
-        <Grid item xs={12}>
+      <Grid container>
+        <Grid item xs={12} className={classes.calendarNav}>
+          <div>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => openCreateEvent(true)}>
+              Create Event
+            </Button>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<AddIcon />}
+              onClick={() => setAddSubscribers(true)}>
+              Add Subscriber
+            </Button>
+          </div>
+
           <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
-            startIcon={<AddIcon />}
-            onClick={() => openCreateEvent(true)}>
-            Create Event
-          </Button>
-          <Button
-            classes={{ root: classes.createButton, label: classes.buttonLabel }}
-            startIcon={<AddIcon />}
-            onClick={() => setAddSubscribers(true)}>
-            Add Subscriber
+            classes={{
+              root: classes.createButton,
+              label: classes.buttonLabel,
+            }}
+            startIcon={<SettingIcon />}
+            component={Link}
+            to="/calendar-settings">
+            Calendar Settings
           </Button>
         </Grid>
       </Grid>
       <FullCalendar
+        header={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
+        }}  
+        
         defaultView="dayGridMonth"
-        plugins={[dayGridPlugin, interactionPlugin]}
-        events={events}
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}
         eventClick={handleEventClick}
         dateClick={handleDateClick}
         selectable={true}
