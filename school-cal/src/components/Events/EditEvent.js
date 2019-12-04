@@ -30,7 +30,7 @@ import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
 import { Modal } from "semantic-ui-react"
 
-const EditEvent = ({ openEdit, valueFromModal, handleClose }) => {
+const EditEvent = ({ openEdit, valueFromDialog, handleClose }) => {
   const {
     isLoading,
     userCalendarEvent,
@@ -45,10 +45,10 @@ const EditEvent = ({ openEdit, valueFromModal, handleClose }) => {
   }
   return (
     <>
-      <Modal open={openEdit}>
+      <Modal open={openEdit} size="small" closeOnEscape={true}>
         <Formik
           enableReinitialize
-          initialValues={userCalendarEvent}
+          initialValues={valueFromDialog}
           onSubmit={async (values, actions) => {
             values.startDate = moment(values.startDate).format("YYYY-MM-DD")
             values.endDate = moment(values.endDate).format("YYYY-MM-DD")

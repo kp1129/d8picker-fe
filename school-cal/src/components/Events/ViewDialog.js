@@ -9,6 +9,10 @@ import EditEvent from "../Events/EditEvent"
 const ViewDialog = ({ modalOpen, valueIntoModal, handleClose }) => {
   const [editEvent, openEditEvent] = useState(false)
 
+  const editButtonOnClick = () => {
+    openEditEvent(true)
+    handleClose()
+  }
   return (
     <div>
       <Modal open={modalOpen} size="small" closeOnEscape={true}>
@@ -53,10 +57,7 @@ const ViewDialog = ({ modalOpen, valueIntoModal, handleClose }) => {
               <Button inverted color="orange">
                 Share
               </Button>
-              <Button
-                inverted
-                color="orange"
-                onClick={() => openEditEvent(true)}>
+              <Button inverted color="orange" onClick={editButtonOnClick}>
                 Edit
               </Button>
             </div>
@@ -65,7 +66,7 @@ const ViewDialog = ({ modalOpen, valueIntoModal, handleClose }) => {
       </Modal>
       <EditEvent
         openEdit={editEvent} //passes true or false for trigger
-        valueFromModal={valueIntoModal} //passes state
+        valueFromDialog={valueIntoModal} //passes state
         handleClose={() => openEditEvent(false)} //trigger
       />
     </div>
