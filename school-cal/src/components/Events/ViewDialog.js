@@ -7,19 +7,8 @@ import { Modal, Button, Icon } from "semantic-ui-react"
 import EditEvent from "../Events/EditEvent"
 
 const ViewDialog = ({ modalOpen, valueIntoModal, handleClose }) => {
-  const [dialog, setDialog] = useState([])
   const [editEvent, openEditEvent] = useState(false)
-  console.log("value", valueIntoModal)
-  useEffect(() => {
-    const { startDate, startTime, endDate, endTime } = valueIntoModal
-    setDialog({
-      startDate: moment(startDate).format("MMMM DD, YYYY"),
-      endDate: moment(endDate).format("MMMM DD, YYYY"),
-      startTime: moment(startTime).format("h:mm A"),
-      endTime: moment(endTime).format("h:mm A"),
-    })
-  }, [setDialog])
-  console.log("dialog", dialog)
+
   return (
     <div>
       <Modal open={modalOpen} size="small" closeOnEscape={true}>
@@ -43,13 +32,13 @@ const ViewDialog = ({ modalOpen, valueIntoModal, handleClose }) => {
           <p>{valueIntoModal.eventLocation}</p>
           <h3>Date/Time</h3>
           <p>
-            {dialog.startDate +
+            {valueIntoModal.startDate +
               " - " +
-              dialog.endDate +
+              valueIntoModal.endDate +
               " at " +
-              dialog.startTime +
+              valueIntoModal.startTime +
               " - " +
-              dialog.endTime}
+              valueIntoModal.endTime}
           </p>
           <h3>Notes</h3>
           <p>{valueIntoModal.eventNote}</p>

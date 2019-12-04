@@ -83,20 +83,16 @@ const Calendar = () => {
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
     setViewDialog({
-      startDate: moment(start).format("YYYY-MM-DD"),
+      startDate: moment(start).format("MMMM DD, YYYY"),
       endDate: allDay
-        ? moment(start).format("YYYY-MM-DD")
-        : moment(end).format("YYYY-MM-DD"),
+        ? moment(start).format("MMMM DD, YYYY")
+        : moment(end).format("MMMM DD, YYYY"),
       startTime: allDay
-        ? moment(start)
-            .hours(6)
-            .toISOString()
-        : moment(start).toISOString(true),
+        ? moment(start).format("h:mm A")
+        : moment(start).format("h:mm A"),
       endTime: allDay
-        ? moment(start)
-            .hours(7)
-            .toISOString()
-        : moment(end).toISOString(true),
+        ? moment(start).format("h:mm A")
+        : moment(end).format("h:mm A"),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
