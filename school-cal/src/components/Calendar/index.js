@@ -1,23 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
-import moment from "moment" //date formatter
-
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-
-//full calendar
-import FullCalendar from "@fullcalendar/react"
-import dayGridPlugin from "@fullcalendar/daygrid"
-import interactionPlugin from "@fullcalendar/interaction"
-
-//setting styles
 import { Button, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import AddIcon from "@material-ui/icons/Add"
 import SettingIcon from "@material-ui/icons/Settings"
 
-//adding components
 import CreateEvent from "../Events/CreateEvent"
+import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
-import ViewDialog from "../Events/ViewDialog"
+import moment from "moment"
 
 //fullcalendar
 import FullCalendar from "@fullcalendar/react"
@@ -55,10 +46,9 @@ const Calendar = props => {
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
-  const [events, setEvents] = useState([])
+  const [editEvent, openEditEvent] = useState(false)
 
-  const [viewDialog, setViewDialog] = useState([]) //onclick event view dialog share or edit
-  const [openModal, openViewModal] = useState(false) //trigger for dialog view
+  const [events, setEvents] = useState([])
 
   const initialCreateEventProperty = {
     startTime: moment()
@@ -95,58 +85,19 @@ const Calendar = props => {
     }
   }, [userCalendarEvents])
 
-  useEffect(() => {
-    if (subscribedCalendars.length > 0) {
-      const formatted = subscribedCalendars.map(calendar => {
-        if (calendar.events && calendar.events.length > 0) {
-          return {
-            events: calendar.events.map(event => {
-              return {
-                id: event.uuid,
-                start: event.isAllDayEvent ? event.startDate : event.startTime,
-                end: event.isAllDayEvent ? event.endDate : event.endTime,
-                title: event.eventTitle,
-                location: event.eventLocation,
-                note: event.eventNote,
-                allDay: event.isAllDayEvent === 1 ? true : false,
-                backgroundColor: event.eventColor,
-              }
-            }),
-          }
-        } else {
-          return { events: [] }
-        }
-      })
-      setSubscribedCalendarEvents(formatted)
-    } else {
-      setSubscribedCalendarEvents([{ events: [] }])
-    }
-  }, [subscribedCalendars])
-
-  console.log("My Calendar Events ", myCalendarEvents)
-  console.log("Subscribed Events ", subscribedCalendarEvents)
-
-  // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-    setViewDialog({
-      startDate: moment(start).format("MMMM DD, YYYY"),
-      endDate: allDay
-        ? moment(start).format("MMMM DD, YYYY")
-        : moment(end).format("MMMM DD, YYYY"),
-      startTime: allDay
-        ? moment(start).format("h:mm A")
-        : moment(start).format("h:mm A"),
-      endTime: allDay
-        ? moment(start).format("h:mm A")
-        : moment(end).format("h:mm A"),
+
+    setUserCalendarEvent({
+      startTime: moment(start),
+      endTime: moment(end),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
       isAllDayEvent: allDay,
       uuid: id,
     })
-    openViewModal(true)
+    openEditEvent(true)
   }
 
   const handleDateClick = info => {
@@ -235,8 +186,9 @@ const Calendar = props => {
         header={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay",
-        }}
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
+        }}  
+        
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}
@@ -245,13 +197,8 @@ const Calendar = props => {
         selectable={true}
         select={handleDatesSelection}
       />
-
-      <ViewDialog
-        modalOpen={openModal} //passes true or false for triger
-        valueIntoModal={viewDialog} //passes stateData
-        handleClose={() => openViewModal(false)} //triggers on or off
-      />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
+      <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
       <AddSubscribers
         open={isAddSubscriberOpen}
         handleClose={() => setAddSubscribers(false)}
