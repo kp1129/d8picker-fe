@@ -19,6 +19,7 @@ import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
 import { makeStyles } from "@material-ui/core/styles"
+
 // setting styles
 const drawerWidth = 300
 const useStyles = makeStyles(theme => ({
