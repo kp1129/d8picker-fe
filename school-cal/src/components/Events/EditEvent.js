@@ -28,9 +28,8 @@ import {
 } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
-import { Modal } from "semantic-ui-react"
 
-const EditEvent = ({ openEdit, valueFromDialog, handleClose }) => {
+const EditEvent = ({ open, handleClose }) => {
   const {
     isLoading,
     userCalendarEvent,
@@ -45,47 +44,45 @@ const EditEvent = ({ openEdit, valueFromDialog, handleClose }) => {
   }
   return (
     <>
-      <Modal open={openEdit} size="small" closeOnEscape={true}>
-        <Formik
-          enableReinitialize
-          initialValues={valueFromDialog}
-          onSubmit={async (values, actions) => {
-            values.startDate = moment(values.startDate).format("YYYY-MM-DD")
-            values.endDate = moment(values.endDate).format("YYYY-MM-DD")
+      <Formik
+        enableReinitialize
+        initialValues={userCalendarEvent}
+        onSubmit={async (values, actions) => {
+          values.startDate = moment(values.startDate).format("YYYY-MM-DD")
+          values.endDate = moment(values.endDate).format("YYYY-MM-DD")
 
-            values.startTime = values.isAllDayEvent
-              ? null
-              : moment(values.startDate)
-                  .hours(moment(values.startTime).hour())
-                  .minutes(moment(values.startTime).minute())
-                  .seconds(moment(values.startTime).second())
-                  .toISOString(true)
-            values.endTime = values.isAllDayEvent
-              ? null
-              : moment(values.endDate)
-                  .hours(moment(values.endTime).hour())
-                  .minutes(moment(values.endTime).minute())
-                  .seconds(moment(values.endTime).second())
-                  .toISOString(true)
+          values.startTime = values.isAllDayEvent
+            ? null
+            : moment(values.startDate)
+                .hours(moment(values.startTime).hour())
+                .minutes(moment(values.startTime).minute())
+                .seconds(moment(values.startTime).second())
+                .toISOString(true)
+          values.endTime = values.isAllDayEvent
+            ? null
+            : moment(values.endDate)
+                .hours(moment(values.endTime).hour())
+                .minutes(moment(values.endTime).minute())
+                .seconds(moment(values.endTime).second())
+                .toISOString(true)
 
-            editUserCalendarEvent(values.uuid, values)
-            actions.resetForm()
-            handleClose()
-          }}
-          render={formikProps => (
-            <EditEventForm
-              isLoading={isLoading}
-              open={open}
-              {...formikProps}
-              handleClose={handleClose}
-              handleDeleteEvent={handleDeleteEvent}
-            />
-          )}
-          handleChange={() => {
-            console.log("Change")
-          }}
-        />
-      </Modal>
+          editUserCalendarEvent(values.uuid, values)
+          actions.resetForm()
+          handleClose()
+        }}
+        render={formikProps => (
+          <EditEventForm
+            isLoading={isLoading}
+            open={open}
+            {...formikProps}
+            handleClose={handleClose}
+            handleDeleteEvent={handleDeleteEvent}
+          />
+        )}
+        handleChange={() => {
+          console.log("Change")
+        }}
+      />
     </>
   )
 }
