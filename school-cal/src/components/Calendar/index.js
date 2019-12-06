@@ -17,7 +17,6 @@ import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
-import axios from "axios"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
@@ -147,9 +146,8 @@ const Calendar = props => {
         header={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay"
-        }}  
-        
+          right: "dayGridMonth,dayGridWeek,dayGridDay",
+        }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         events={events}
