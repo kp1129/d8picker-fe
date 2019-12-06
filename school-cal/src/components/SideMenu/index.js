@@ -73,7 +73,6 @@ const SideMenu = () => {
     unSubscribeCalendar,
   } = useContext(CalendarContext)
 
-  console.log(userCalendars)
   // set user default calendar to the select list
 
   useEffect(() => {

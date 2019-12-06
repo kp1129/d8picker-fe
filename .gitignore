@@ -63,5 +63,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
-school-cal/yarn.lock
-school-cal/package-lock.json
