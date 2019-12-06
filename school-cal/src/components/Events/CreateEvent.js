@@ -1,11 +1,13 @@
 /* eslint-disable */
-
 import React, { useContext, useState } from "react"
-import moment from "moment"
 import { Formik, Field } from "formik"
+import moment from "moment"
 import * as Yup from "yup"
+
 import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
+
+import CancelDialog from "./CancelDialog"
 
 import {
   Button,
@@ -36,6 +38,7 @@ const CreateEvent = ({ open, handleClose }) => {
     userCalendar,
     userCalendarEvent,
   } = useContext(CalendarContext)
+
   return (
     <>
       <Formik
@@ -58,8 +61,7 @@ const CreateEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
-
-          createUserCalendarEvent(userCalendar.uuid, values)
+          createUserCalendarEvent(userCalendar.Uuid, values)
           actions.resetForm()
           handleClose()
         }}
@@ -75,7 +77,6 @@ const CreateEvent = ({ open, handleClose }) => {
     </>
   )
 }
-
 const useStyles = makeStyles(theme => ({
   createButton: {
     backgroundColor: "#F5945B",
@@ -98,7 +99,6 @@ const useStyles = makeStyles(theme => ({
     background: "#F2D2BF",
     borderRadius: "5px",
   },
-
   dateTextField: {
     background: "#F2D2BF",
     borderRadius: "5px",
@@ -107,7 +107,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: "left",
   },
 }))
-
 const CreateEventForm = ({
   values,
   handleChange,
@@ -118,11 +117,18 @@ const CreateEventForm = ({
   isLoading,
 }) => {
   const isAllDayEvent = values.isAllDayEvent
-
   const classes = useStyles()
+
+  const [openModal, openCancelModal] = useState(false)
+
+  const createClose = handleClose
+
+  const cancelClick = () => {
+    openCancelModal(true)
+  }
   return (
-    <>
-      <Dialog open={open} onClose={handleClose} fullWidth>
+    <div>
+      <Dialog open={open} fullWidth>
         <form onSubmit={handleSubmit}>
           <DialogTitle style={{ background: "#21242C", color: "white" }}>
             Create New Event
@@ -208,7 +214,6 @@ const CreateEventForm = ({
                   </Grid>
                 </Grid>
               </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   className={classes.noteTextField}
@@ -243,17 +248,21 @@ const CreateEventForm = ({
                 root: classes.cancelButton,
                 label: classes.buttonLabel,
               }}
-              onClick={handleClose}
+              onClick={cancelClick}
               type="button">
               Cancel
             </Button>
           </DialogActions>
         </form>
       </Dialog>
-    </>
+      <CancelDialog
+        modalOpen={openModal}
+        handleClose={() => openCancelModal(false)}
+        createClose={createClose}
+      />
+    </div>
   )
 }
-
 const DatePickerField = ({ field, form }) => {
   return (
     <DatePicker
@@ -267,7 +276,6 @@ const DatePickerField = ({ field, form }) => {
     />
   )
 }
-
 const TimePickerField = ({ field, form }) => {
   return (
     <TimePicker
@@ -281,5 +289,4 @@ const TimePickerField = ({ field, form }) => {
     />
   )
 }
-
 export default CreateEvent
