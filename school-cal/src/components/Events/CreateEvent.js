@@ -42,6 +42,7 @@ const CreateEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
+          console.log(values)
           values.startDate = moment(values.startDate).format("YYYY-MM-DD")
           values.endDate = moment(values.endDate).format("YYYY-MM-DD")
           values.startTime = values.isAllDayEvent
@@ -58,7 +59,7 @@ const CreateEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
-          createUserCalendarEvent(userCalendar.Uuid, values)
+          createUserCalendarEvent(userCalendar.uuid, values)
           actions.resetForm()
           handleClose()
         }}
@@ -126,7 +127,7 @@ const CreateEventForm = ({
   return (
     <div>
       <Modal open={open}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id="theform">
           <Modal.Header
             style={{
               background: "#21242C",
@@ -249,7 +250,9 @@ const CreateEventForm = ({
                     root: classes.createButton,
                     label: classes.buttonLabel,
                   }}
-                  type="submit">
+                  type="submit"
+                  form="theform"
+                  value="submit">
                   {!isLoading ? (
                     "Create Event"
                   ) : (

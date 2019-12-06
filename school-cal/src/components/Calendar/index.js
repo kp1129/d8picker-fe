@@ -146,8 +146,9 @@ const Calendar = props => {
         header={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay",
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
         }}
+        
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         events={events}
