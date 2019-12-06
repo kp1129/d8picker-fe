@@ -70,4 +70,5 @@ const SubscribedCalendars = ({
     </div>
   )
 }
+
 export default SubscribedCalendars
