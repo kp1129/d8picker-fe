@@ -13,10 +13,6 @@ import {
   Button,
   CircularProgress,
   Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
   FormControlLabel,
   Grid,
@@ -30,6 +26,7 @@ import {
 } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
+import { Modal } from "semantic-ui-react"
 
 const CreateEvent = ({ open, handleClose }) => {
   const {
@@ -119,142 +116,160 @@ const CreateEventForm = ({
   const isAllDayEvent = values.isAllDayEvent
   const classes = useStyles()
 
-  const [openModal, openCancelModal] = useState(false)
-
   const createClose = handleClose
+
+  const [openModal, openCancelModal] = useState(false)
 
   const cancelClick = () => {
     openCancelModal(true)
   }
   return (
     <div>
-      <Dialog open={open} fullWidth>
+      <Modal open={open}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle style={{ background: "#21242C", color: "white" }}>
-            Create New Event
-          </DialogTitle>
-          <DialogContent>
-            <Grid>
-              <Grid item xs={12}>
-                <TextField
-                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
-                  fullWidth
-                  id="event-title"
-                  label="Event Title"
-                  margin="normal"
-                  name="eventTitle"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.eventTitle}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
-                  fullWidth
-                  id="event-location"
-                  label="Location"
-                  margin="normal"
-                  name="eventLocation"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.eventLocation}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={1}>
-                  <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <>
-                      <Grid item xs={3}>
-                        <FormControl className={classes.dateTextField}>
-                          <Field name="startDate" component={DatePickerField} />
-                        </FormControl>
-                      </Grid>
-                      {!isAllDayEvent && (
-                        <Grid item xs={2}>
+          <Modal.Header
+            style={{
+              background: "#21242C",
+              color: "white",
+              height: "75px",
+              display: "flex",
+              alignItems: "center",
+            }}>
+            <h1>Create New Event</h1>
+          </Modal.Header>
+          <div style={{ margin: "3%" }}>
+            <Modal.Content>
+              <Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ background: "#F2D2BF", borderRadius: "5px" }}
+                    fullWidth
+                    id="event-title"
+                    label="Event Title"
+                    margin="normal"
+                    name="eventTitle"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.eventTitle}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    style={{ background: "#F2D2BF", borderRadius: "5px" }}
+                    fullWidth
+                    id="event-location"
+                    label="Location"
+                    margin="normal"
+                    name="eventLocation"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.eventLocation}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container spacing={1}>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                      <>
+                        <Grid item xs={3}>
                           <FormControl className={classes.dateTextField}>
                             <Field
-                              name="startTime"
-                              component={TimePickerField}
+                              name="startDate"
+                              component={DatePickerField}
                             />
                           </FormControl>
                         </Grid>
-                      )}
-                      <Grid item xs={1} style={{ textAlign: "center" }}>
-                        <Typography variant="h6">to</Typography>
-                      </Grid>
-                      <Grid item xs={3}>
-                        <FormControl className={classes.dateTextField}>
-                          <Field name="endDate" component={DatePickerField} />
-                        </FormControl>
-                      </Grid>
-                      {!isAllDayEvent && (
-                        <Grid item xs={2}>
+                        {!isAllDayEvent && (
+                          <Grid item xs={2}>
+                            <FormControl className={classes.dateTextField}>
+                              <Field
+                                name="startTime"
+                                component={TimePickerField}
+                              />
+                            </FormControl>
+                          </Grid>
+                        )}
+                        <Grid item xs={1} style={{ textAlign: "center" }}>
+                          <Typography variant="h6">to</Typography>
+                        </Grid>
+                        <Grid item xs={3}>
                           <FormControl className={classes.dateTextField}>
-                            <Field name="endTime" component={TimePickerField} />
+                            <Field name="endDate" component={DatePickerField} />
                           </FormControl>
                         </Grid>
-                      )}
-                    </>
-                  </MuiPickersUtilsProvider>
-                  <Grid
-                    item
-                    xs={12}
-                    className={classes.allDayCheckBoxContainer}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          name="isAllDayEvent"
-                          checked={values.isAllDayEvent}
-                          onChange={handleChange}
-                        />
-                      }
-                      label="All Day"
-                    />
+                        {!isAllDayEvent && (
+                          <Grid item xs={2}>
+                            <FormControl className={classes.dateTextField}>
+                              <Field
+                                name="endTime"
+                                component={TimePickerField}
+                              />
+                            </FormControl>
+                          </Grid>
+                        )}
+                      </>
+                    </MuiPickersUtilsProvider>
+                    <Grid
+                      item
+                      xs={12}
+                      className={classes.allDayCheckBoxContainer}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="isAllDayEvent"
+                            checked={values.isAllDayEvent}
+                            onChange={handleChange}
+                          />
+                        }
+                        label="All Day"
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.noteTextField}
+                    fullWidth
+                    multiline
+                    rows="4"
+                    id="event-note"
+                    label="Note"
+                    margin="normal"
+                    name="eventNote"
+                    onChange={handleChange}
+                    value={values.eventNote}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  className={classes.noteTextField}
-                  fullWidth
-                  multiline
-                  rows="4"
-                  id="event-note"
-                  label="Note"
-                  margin="normal"
-                  name="eventNote"
-                  onChange={handleChange}
-                  value={values.eventNote}
-                />
-              </Grid>
-            </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              classes={{
-                root: classes.createButton,
-                label: classes.buttonLabel,
-              }}
-              type="submit">
-              {!isLoading ? (
-                "Create Event"
-              ) : (
-                <CircularProgress className={classes.progress} size={30} />
-              )}
-            </Button>
-            <Button
-              classes={{
-                root: classes.cancelButton,
-                label: classes.buttonLabel,
-              }}
-              onClick={cancelClick}
-              type="button">
-              Cancel
-            </Button>
-          </DialogActions>
+            </Modal.Content>
+            <Modal.Actions>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  style={{ marginRight: "2%" }}
+                  classes={{
+                    root: classes.createButton,
+                    label: classes.buttonLabel,
+                  }}
+                  type="submit">
+                  {!isLoading ? (
+                    "Create Event"
+                  ) : (
+                    <CircularProgress className={classes.progress} size={30} />
+                  )}
+                </Button>
+                <Button
+                  classes={{
+                    root: classes.cancelButton,
+                    label: classes.buttonLabel,
+                  }}
+                  onClick={cancelClick}
+                  type="button">
+                  Cancel
+                </Button>
+              </div>
+            </Modal.Actions>
+          </div>
         </form>
-      </Dialog>
+      </Modal>
       <CancelDialog
         modalOpen={openModal}
         handleClose={() => openCancelModal(false)}
