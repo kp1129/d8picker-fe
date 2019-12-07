@@ -84,15 +84,17 @@ const SideMenu = () => {
 
   useEffect(() => {
     if (userCalendars.length > 0) {
-      const defaultCalendarIndex = userCalendars.findIndex(
-        calendar => calendar.isDefault,
-      )
+      if (userCalendar) {
+        setUserCalendar(userCalendar)
+      } else {
+        const defaultCalendar = userCalendars.find(
+          calendar => calendar.isDefault,
+        )
 
-      const defaultCalendar = userCalendars[defaultCalendarIndex]
-
-      setUserCalendar(defaultCalendar)
+        setUserCalendar(defaultCalendar)
+      }
     }
-  }, [userCalendars])
+  }, [userCalendars, userCalendar])
 
   // get user calendar events
 
@@ -142,7 +144,7 @@ const SideMenu = () => {
       getSubscribedCalendarEvents(calendarUuid)
     }
   }
-  const handleMyCalendarChange = calendarUuid => {}
+
   const handleUnsubscribeCalendar = calendarUuid => {
     unSubscribeCalendar(calendarUuid)
   }
@@ -172,7 +174,7 @@ const SideMenu = () => {
               </IconButton>
             </div>
 
-            <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl} fullWidth>
               <Select
                 labelid="calendar-select-label"
                 onChange={handleCalendarChange}

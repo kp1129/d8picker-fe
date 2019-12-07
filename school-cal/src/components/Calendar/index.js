@@ -14,10 +14,7 @@ import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
 import moment from "moment"
 
-
 import timeGridPlugin from "@fullcalendar/timegrid"
-
-
 
 const useStyles = makeStyles(theme => ({
   calendarNav: {
@@ -40,6 +37,7 @@ const Calendar = () => {
     userCalendarEvents,
     setUserCalendarEvent,
     subscribedCalendars,
+    userCalendar,
   } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
@@ -114,9 +112,6 @@ const Calendar = () => {
       setSubscribedCalendarEvents([{ events: [] }])
     }
   }, [subscribedCalendars])
-
-  console.log("My Calendar Events ", myCalendarEvents)
-  console.log("Subscribed Events ", subscribedCalendarEvents)
 
   // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
 
@@ -207,25 +202,26 @@ const Calendar = () => {
             </Button>
           </div>
 
-          <Button
-            classes={{
-              root: classes.createButton,
-              label: classes.buttonLabel,
-            }}
-            startIcon={<SettingIcon />}
-            component={Link}
-            to="/calendar-settings">
-            Calendar Settings
-          </Button>
+          {userCalendar && (
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              startIcon={<SettingIcon />}
+              component={Link}
+              to={`/calendar-settings/${userCalendar.uuid}`}>
+              Calendar Settings
+            </Button>
+          )}
         </Grid>
       </Grid>
       <FullCalendar
         header={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay"
-        }}  
-        
+          right: "dayGridMonth,dayGridWeek,dayGridDay",
+        }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         eventSources={[myCalendarEvents, ...subscribedCalendarEvents]}

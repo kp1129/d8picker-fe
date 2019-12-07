@@ -1,9 +1,10 @@
 import {
   IS_LOADING,
   GET_CALENDARS_SUCCESS,
-  GET_CALENDARS_FAILURE,
+  SET_USER_CALENDAR_FAILURE,
+  CREATE_USER_CALENDAR_SUCCESS,
   EDIT_USER_CALENDAR_SUCCESS,
-  EDIT_USER_CALENDAR_FAILURE,
+  DELETE_USER_CALENDAR_SUCCESS,
   SET_CALENDAR_SUBSCRIPTION_ID,
   SUBSCRIBE_TO_CALENDAR_SUCCESS,
   SUBSCRIBE_TO_CALENDAR_FAILURE,
@@ -52,12 +53,32 @@ const setUserCalendar = (state, action) => {
     userCalendar: action.payload,
   }
 }
-
+const setCreateUserCalendarSuccess = (state, action) => {
+  return {
+    ...state,
+    isLoading: false,
+    userCalendars: [...state.userCalendars, action.payload],
+    userCalendar: action.payload,
+  }
+}
 const setEditUserCalendarSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
     userCalendar: action.payload,
+  }
+}
+
+const setDeleteUserCalendarSuccess = (state, action) => {
+  return {
+    ...state,
+    isLoading: false,
+    userCalendars: state.userCalendars.filter(
+      calendar => calendar.uuid !== action.payload,
+    ),
+    userCalendar: state.userCalendars.find(
+      calendar => calendar.isDefault === 1,
+    ),
   }
 }
 
@@ -201,10 +222,14 @@ const calendarReducer = (state, action) => {
       return setIsLoading(state, action)
     case GET_CALENDARS_SUCCESS:
       return setUserCalendarsSuccess(state, action)
-    case GET_CALENDARS_FAILURE:
+    case SET_USER_CALENDAR_FAILURE:
       return setUserCalendarsFailure(state, action)
+    case CREATE_USER_CALENDAR_SUCCESS:
+      return setCreateUserCalendarSuccess(state, action)
     case EDIT_USER_CALENDAR_SUCCESS:
       return setEditUserCalendarSuccess(state, action)
+    case DELETE_USER_CALENDAR_SUCCESS:
+      return setDeleteUserCalendarSuccess(state, action)
     case SET_CALENDAR_SUBSCRIPTION_ID:
       return setCalendarSubscriptionId(state, action)
     case SUBSCRIBE_TO_CALENDAR_SUCCESS:

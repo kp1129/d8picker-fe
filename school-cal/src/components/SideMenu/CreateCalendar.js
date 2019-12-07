@@ -19,7 +19,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 
 const CreateCalendar = ({ open, handleClose }) => {
-  const { isLoading } = useContext(CalendarContext)
+  const { isLoading, createUserCalendar } = useContext(CalendarContext)
   return (
     <div>
       <Formik
@@ -28,7 +28,11 @@ const CreateCalendar = ({ open, handleClose }) => {
           calendarDescription: "",
           isPrivate: true,
         }}
-        onSubmit={(values, actions) => {}}
+        onSubmit={(values, actions) => {
+          createUserCalendar(values)
+          actions.resetForm()
+          handleClose()
+        }}
         render={formikProps => (
           <CreateCalendarForm
             isLoading={isLoading}

@@ -2,9 +2,10 @@ import React, { createContext, useEffect, useReducer } from "react"
 import {
   IS_LOADING,
   GET_CALENDARS_SUCCESS,
-  GET_CALENDARS_FAILURE,
+  SET_USER_CALENDAR_FAILURE,
+  CREATE_USER_CALENDAR_SUCCESS,
   EDIT_USER_CALENDAR_SUCCESS,
-  EDIT_USER_CALENDAR_FAILURE,
+  DELETE_USER_CALENDAR_SUCCESS,
   SET_CALENDAR_SUBSCRIPTION_ID,
   SUBSCRIBE_TO_CALENDAR_SUCCESS,
   SUBSCRIBE_TO_CALENDAR_FAILURE,
@@ -26,7 +27,6 @@ import {
 import calendarReducer from "./calendarReducer"
 import { clientWithAuth } from "../../utilities/api"
 import { loadState, saveState } from "../../utilities/localStorage"
-import moment from "moment"
 export const CalendarContext = createContext()
 
 export const CalendarState = props => {
@@ -76,10 +76,23 @@ export const CalendarState = props => {
       })
     } catch (error) {
       console.log(error)
-      dispatch({ type: GET_CALENDARS_FAILURE, payload: error })
+      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
     }
   }
+  const createUserCalendar = async calendar => {
+    dispatch({ type: IS_LOADING, payload: true })
+    try {
+      const newCalendar = await clientWithAuth.post("/api/calendars", calendar)
 
+      dispatch({
+        type: CREATE_USER_CALENDAR_SUCCESS,
+        payload: newCalendar.data,
+      })
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
+    }
+  }
   const editUserCalendar = async (calendarUuid, changes) => {
     dispatch({ type: IS_LOADING, payload: true })
 
@@ -92,7 +105,38 @@ export const CalendarState = props => {
       dispatch({ type: EDIT_USER_CALENDAR_SUCCESS, payload: calendar.data })
     } catch (error) {
       console.log(error)
-      dispatch({ type: EDIT_USER_CALENDAR_FAILURE, payload: error })
+      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
+    }
+  }
+
+  const editUserCalendarPrivacySuccess = async (calendarUuid, isPrivate) => {
+    dispatch({ type: IS_LOADING, payload: true })
+    try {
+      const calendar = await clientWithAuth.put(
+        `/api/calendars/${calendarUuid}/privacy`,
+        isPrivate,
+      )
+
+      dispatch({ type: EDIT_USER_CALENDAR_SUCCESS, payload: calendar.data })
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
+    }
+  }
+  const deleteUserCalendar = async calendarUuid => {
+    dispatch({ type: IS_LOADING, payload: true })
+
+    try {
+      const calendar = await clientWithAuth.delete(
+        `/api/calendars/${calendarUuid}`,
+      )
+
+      if (calendar.data === 1) {
+        dispatch({ type: DELETE_USER_CALENDAR_SUCCESS, payload: calendarUuid })
+      }
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
     }
   }
 
@@ -105,7 +149,7 @@ export const CalendarState = props => {
 
     try {
       const subscribedCalendar = await clientWithAuth.put(
-        `/api/calendars/${calendarId}/?subscribe=true`,
+        `/api/calendars/${calendarId}/subscriptions/?subscribe=true`,
       )
 
       dispatch({
@@ -123,7 +167,7 @@ export const CalendarState = props => {
 
     try {
       const unsubscribed = await clientWithAuth.put(
-        `/api/calendars/${calendarId}/?subscribe=false`,
+        `/api/calendars/${calendarId}/subscriptions/?subscribe=false`,
       )
 
       if (unsubscribed.data === 1) {
@@ -242,7 +286,10 @@ export const CalendarState = props => {
         subscribedCalendars: state.subscribedCalendars,
         subscribedCalendarsError: state.subscribedCalendarsError,
         getUserCalendars,
+        createUserCalendar,
         editUserCalendar,
+        editUserCalendarPrivacySuccess,
+        deleteUserCalendar,
         setCalendarSubscriptionId,
         subscribeToCalendar,
         unSubscribeCalendar,
