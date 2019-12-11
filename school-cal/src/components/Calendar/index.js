@@ -91,14 +91,27 @@ const Calendar = props => {
     const { id, start, end, title, allDay, extendedProps } = info.event
 
     setUserCalendarEvent({
-      startTime: moment(start),
-      endTime: moment(end),
+      startDate: moment(start).format("YYYY-MM-DD"),
+      endDate: allDay
+        ? moment(start).format("YYYY-MM-DD")
+        : moment(end).format("YYYY-MM-DD"),
+      startTime: allDay
+        ? moment(start)
+            .hours(6)
+            .toISOString()
+        : moment(start).toISOString(true),
+      endTime: allDay
+        ? moment(start)
+            .hours(7)
+            .toISOString()
+        : moment(end).toISOString(true),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
       isAllDayEvent: allDay,
       uuid: id,
     })
+
     openEditEvent(true)
   }
 
