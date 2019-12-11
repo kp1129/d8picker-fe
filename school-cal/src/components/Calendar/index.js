@@ -116,8 +116,10 @@ const Calendar = props => {
   }
 
   const handleDateClick = info => {
+    const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
+
     setUserCalendarEvent({
-      calendarUuid: userCalendars.find(calendar => calendar.isDefault).uuid,
+      calendarUuid: primaryCalendar.uuid,
       startDate: moment(info.date).format("YYYY-MM-DD"),
       endDate: moment(info.date).format("YYYY-MM-DD"),
       startTime: moment(info.date)
