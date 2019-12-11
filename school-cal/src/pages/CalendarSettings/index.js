@@ -1,25 +1,15 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import { clientWithAuth } from "../../utilities/api"
+
 import {
-  Button,
-  CssBaseline,
-  Card,
-  CardActions,
-  CardHeader,
-  CardContent,
   Divider,
   Drawer,
-  FormControlLabel,
   Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Switch,
-  TextField,
-  Typography,
 } from "@material-ui/core"
 import ShareIcon from "@material-ui/icons/Share"
 import SettingsIcon from "@material-ui/icons/Settings"
@@ -27,7 +17,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Navbar from "../../components/Navbar"
-import SubcribableLink from "../../components/Dialogs/SubscribableLink"
+
 import General from "../../components/CalendarSettings/General"
 import Privacy from "../../components/CalendarSettings/Privacy"
 import Delete from "../../components/CalendarSettings/Delete"
@@ -58,18 +48,21 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const CalendarSettings = ({ history, match }) => {
-  const classes = useStyles()
   const {
     userCalendar,
-    editUserCalendarPrivacySuccess,
+    userCalendarsError,
+    editUserCalendarPrivacy,
     deleteUserCalendar,
   } = useContext(CalendarContext)
 
+  const classes = useStyles()
+  const { cal_uuid } = match.params
+
   useEffect(() => {
-    if (userCalendar.uuid !== match.params.cal_uuid) {
+    if (!cal_uuid) {
       history.push("/admin-dashboard")
     }
-  }, [userCalendar])
+  }, [cal_uuid])
 
   return (
     <div className={classes.root}>
@@ -108,12 +101,12 @@ const CalendarSettings = ({ history, match }) => {
           <div className={classes.toolbar} />
           <Grid>
             <Grid item xs={6} className={classes.settingContainer}>
-              <General />
+              <General calendar={userCalendar} />
             </Grid>
             <Grid item xs={6}>
               <Privacy
-                userCalendar={userCalendar}
-                editUserCalendarPrivacy={editUserCalendarPrivacySuccess}
+                calendar={userCalendar}
+                editUserCalendarPrivacy={editUserCalendarPrivacy}
               />
             </Grid>
             <Grid item xs={6} className={classes.settingContainer}>

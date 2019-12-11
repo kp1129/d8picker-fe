@@ -18,19 +18,18 @@ const EditCalendarSchema = Yup.object().shape({
     .required("Calendar name is required.")
     .min(3, "Calendar name must be greater than 3 characters."),
 })
-const General = () => {
-  const { isLoading, userCalendar, editUserCalendar } = useContext(
-    CalendarContext,
-  )
+const General = ({ calendar }) => {
+  const { isLoading, editUserCalendar } = useContext(CalendarContext)
   return (
     <>
       <Formik
+        enableReinitialize
         initialValues={{
-          calendarName: userCalendar.calendarName,
-          calendarDescription: userCalendar.calendarDescription,
+          calendarName: calendar.calendarName,
+          calendarDescription: calendar.calendarDescription,
         }}
         onSubmit={(values, actions) => {
-          editUserCalendar(userCalendar.uuid, values)
+          editUserCalendar(calendar.uuid, values)
         }}
         render={formikProps => (
           <EditCalendarForm isLoading={isLoading} {...formikProps} />

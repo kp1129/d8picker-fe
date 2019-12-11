@@ -8,7 +8,7 @@ import {
   DialogContentText,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { number } from "prop-types"
+
 const useStyles = makeStyles(theme => ({
   changeButton: {
     backgroundColor: "#F5945B",
