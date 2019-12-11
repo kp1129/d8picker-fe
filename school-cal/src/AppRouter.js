@@ -21,11 +21,6 @@ const AppRouter = () => {
           <Route exact path="/" component={Marketing} />
           <Route path="/sign-in" component={SignIn} />
           <Route path="/register" component={Registration} />
-          <Route path="/admin-dashboard" component={AdminDashboard} />
-
-          <Route exact path="/" component={Marketing} />
-          <Route path="/sign-in" component={SignIn} />
-          <Route path="/register" component={Registration} />
           <CalendarState>
             <Route path="/subscribe" component={Subscribe} />
             <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
