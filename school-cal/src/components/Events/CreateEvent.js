@@ -1,10 +1,10 @@
 /* eslint-disable */
-import React, { useContext, useState } from "react"
-import { Formik, Field } from "formik"
-import moment from "moment"
-import * as Yup from "yup"
 
-import { AuthContext } from "../../contexts/auth/authState"
+import React, { useContext, useEffect, useState } from "react"
+import moment from "moment"
+import { Formik, Field } from "formik"
+
+import * as Yup from "yup"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 import {
@@ -14,6 +14,8 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@material-ui/core"
@@ -29,9 +31,18 @@ const CreateEvent = ({ open, handleClose }) => {
   const {
     isLoading,
     createUserCalendarEvent,
-    userCalendar,
     userCalendarEvent,
+    userCalendars,
   } = useContext(CalendarContext)
+
+  const [calendars, setCalendars] = useState([])
+  useEffect(() => {
+    if (userCalendars.length > 0) {
+      const myCalendars = userCalendars.filter(calendar => calendar.isOwner)
+
+      setCalendars(myCalendars)
+    }
+  }, [userCalendars])
 
   return (
     <>
@@ -56,7 +67,10 @@ const CreateEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
-          createUserCalendarEvent(userCalendar.uuid, values)
+
+          const calendarUuid = values.calendarUuid
+          delete values.calendarUuid
+          createUserCalendarEvent(calendarUuid, values)
           actions.resetForm()
           handleClose()
         }}
@@ -66,6 +80,7 @@ const CreateEvent = ({ open, handleClose }) => {
             open={open}
             {...formikProps}
             handleClose={handleClose}
+            calendars={calendars}
           />
         )}
       />
@@ -100,6 +115,13 @@ const useStyles = makeStyles(theme => ({
   },
   allDayCheckBoxContainer: {
     textAlign: "left",
+    margin: theme.spacing(1),
+  },
+  calendarSelection: {
+    width: "100%",
+  },
+  calendarSelectionContainer: {
+    margin: theme.spacing(1),
   },
 }))
 const CreateEventForm = ({
@@ -110,171 +132,171 @@ const CreateEventForm = ({
   handleClose,
   open,
   isLoading,
+  calendars,
 }) => {
+  const [primaryCalendar, setPrimaryCalendar] = useState("")
   const isAllDayEvent = values.isAllDayEvent
+
+  useEffect(() => {
+    if (calendars.length > 0) {
+      const primary = calendars.find(calendar => calendar.isDefault)
+      setPrimaryCalendar(primary)
+    }
+  }, [calendars])
   const classes = useStyles()
 
-  const createClose = handleClose
-
-  const [openModal, openCancelModal] = useState(false)
-
-  const cancelClick = () => {
-    openCancelModal(true)
-  }
   return (
     <div>
-      <Modal open={open}>
-        <form onSubmit={handleSubmit} id="theform">
-          <Modal.Header
-            style={{
-              background: "#21242C",
-              color: "white",
-              height: "75px",
-              display: "flex",
-              alignItems: "center",
-            }}>
-            <h1>Create New Event</h1>
-          </Modal.Header>
-          <div style={{ margin: "3%" }}>
-            <Modal.Content>
-              <Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    style={{ background: "#F2D2BF", borderRadius: "5px" }}
-                    fullWidth
-                    id="event-title"
-                    label="Event Title"
-                    margin="normal"
-                    name="eventTitle"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.eventTitle}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    style={{ background: "#F2D2BF", borderRadius: "5px" }}
-                    fullWidth
-                    id="event-location"
-                    label="Location"
-                    margin="normal"
-                    name="eventLocation"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.eventLocation}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container spacing={1}>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                      <>
-                        <Grid item xs={3}>
+      <Dialog open={open} onClose={handleClose} fullWidth>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle style={{ background: "#21242C", color: "white" }}>
+            Create New Event
+          </DialogTitle>
+          <DialogContent>
+            <Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
+                  fullWidth
+                  id="event-title"
+                  label="Event Title"
+                  margin="normal"
+                  name="eventTitle"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.eventTitle}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  style={{ background: "#F2D2BF", borderRadius: "5px" }}
+                  fullWidth
+                  id="event-location"
+                  label="Location"
+                  margin="normal"
+                  name="eventLocation"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.eventLocation}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={1}>
+                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <>
+                      <Grid item xs={3}>
+                        <FormControl className={classes.dateTextField}>
+                          <Field name="startDate" component={DatePickerField} />
+                        </FormControl>
+                      </Grid>
+                      {!isAllDayEvent && (
+                        <Grid item xs={2}>
                           <FormControl className={classes.dateTextField}>
                             <Field
-                              name="startDate"
-                              component={DatePickerField}
+                              name="startTime"
+                              component={TimePickerField}
                             />
                           </FormControl>
                         </Grid>
-                        {!isAllDayEvent && (
-                          <Grid item xs={2}>
-                            <FormControl className={classes.dateTextField}>
-                              <Field
-                                name="startTime"
-                                component={TimePickerField}
-                              />
-                            </FormControl>
-                          </Grid>
-                        )}
-                        <Grid item xs={1} style={{ textAlign: "center" }}>
-                          <Typography variant="h6">to</Typography>
-                        </Grid>
-                        <Grid item xs={3}>
+                      )}
+                      <Grid item xs={1} style={{ textAlign: "center" }}>
+                        <Typography variant="h6">to</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <FormControl className={classes.dateTextField}>
+                          <Field name="endDate" component={DatePickerField} />
+                        </FormControl>
+                      </Grid>
+                      {!isAllDayEvent && (
+                        <Grid item xs={2}>
                           <FormControl className={classes.dateTextField}>
-                            <Field name="endDate" component={DatePickerField} />
+                            <Field name="endTime" component={TimePickerField} />
                           </FormControl>
                         </Grid>
-                        {!isAllDayEvent && (
-                          <Grid item xs={2}>
-                            <FormControl className={classes.dateTextField}>
-                              <Field
-                                name="endTime"
-                                component={TimePickerField}
-                              />
-                            </FormControl>
-                          </Grid>
-                        )}
-                      </>
-                    </MuiPickersUtilsProvider>
-                    <Grid
-                      item
-                      xs={12}
-                      className={classes.allDayCheckBoxContainer}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            name="isAllDayEvent"
-                            checked={values.isAllDayEvent}
-                            onChange={handleChange}
-                          />
-                        }
-                        label="All Day"
-                      />
-                    </Grid>
+                      )}
+                    </>
+                  </MuiPickersUtilsProvider>
+                  <Grid
+                    item
+                    xs={12}
+                    className={classes.allDayCheckBoxContainer}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          name="isAllDayEvent"
+                          checked={values.isAllDayEvent}
+                          onChange={handleChange}
+                        />
+                      }
+                      label="All Day Event"
+                    />
                   </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className={classes.noteTextField}
-                    fullWidth
-                    multiline
-                    rows="4"
-                    id="event-note"
-                    label="Note"
-                    margin="normal"
-                    name="eventNote"
-                    onChange={handleChange}
-                    value={values.eventNote}
-                  />
-                </Grid>
               </Grid>
-            </Modal.Content>
-            <Modal.Actions>
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button
-                  style={{ marginRight: "2%" }}
-                  classes={{
-                    root: classes.createButton,
-                    label: classes.buttonLabel,
-                  }}
-                  type="submit"
-                  form="theform"
-                  value="submit">
-                  {!isLoading ? (
-                    "Create Event"
-                  ) : (
-                    <CircularProgress className={classes.progress} size={30} />
-                  )}
-                </Button>
-                <Button
-                  classes={{
-                    root: classes.cancelButton,
-                    label: classes.buttonLabel,
-                  }}
-                  onClick={cancelClick}
-                  type="button">
-                  Cancel
-                </Button>
-              </div>
-            </Modal.Actions>
-          </div>
+              <Grid item xs={12} className={classes.calendarSelectionContainer}>
+                <Typography>Calendars</Typography>
+                <FormControl className={classes.calendarSelection}>
+                  <Select
+                    name="calendarUuid"
+                    onChange={handleChange}
+                    value={
+                      values.calendarUuid
+                        ? values.calendarUuid
+                        : primaryCalendar.uuid
+                    }>
+                    {calendars.length > 0 &&
+                      calendars.map(calendar => (
+                        <MenuItem
+                          value={calendar.uuid}
+                          key={calendar.uuid}
+                          style={{ color: calendar.calendarColor }}>
+                          {calendar.calendarName}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.noteTextField}
+                  fullWidth
+                  multiline
+                  rows="4"
+                  id="event-note"
+                  label="Note"
+                  margin="normal"
+                  name="eventNote"
+                  onChange={handleChange}
+                  value={values.eventNote}
+                />
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              classes={{
+                root: classes.createButton,
+                label: classes.buttonLabel,
+              }}
+              type="submit">
+              {!isLoading ? (
+                "Create Event"
+              ) : (
+                <CircularProgress className={classes.progress} size={30} />
+              )}
+            </Button>
+            <Button
+              classes={{
+                root: classes.cancelButton,
+                label: classes.buttonLabel,
+              }}
+              onClick={handleClose}
+              type="button">
+              Cancel
+            </Button>
+          </DialogActions>
         </form>
-      </Modal>
-      <CancelDialog
-        modalOpen={openModal}
-        handleClose={() => openCancelModal(false)}
-        createClose={createClose}
-      />
+      </Dialog>
     </div>
   )
 }

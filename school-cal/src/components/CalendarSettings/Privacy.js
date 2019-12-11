@@ -37,28 +37,31 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
 }))
-const Privacy = ({ userCalendar, editUserCalendarPrivacy }) => {
+const Privacy = ({ calendar, editUserCalendarPrivacy }) => {
   const [subscribableLink, setSubscribableLink] = useState(null)
   const [subscribableLinkDialog, openSubscribableLinkDialog] = useState(false)
   const [calendarPrivacyAlert, openCalendarPrivacyAlert] = useState(false)
   const [subscribers, setSubscribers] = useState([])
+
   const classes = useStyles()
 
   useEffect(() => {
-    const getSubscribers = async () => {
-      const subscribers = await clientWithAuth(
-        `/api/calendars/${userCalendar.uuid}/subscribers`,
-      )
-      setSubscribers(subscribers.data)
+    if (calendar) {
+      const getSubscribers = async () => {
+        const subscribers = await clientWithAuth(
+          `/api/calendars/${calendar.uuid}/subscribers`,
+        )
+        setSubscribers(subscribers.data)
+      }
+      if (!calendar.isPrivate) {
+        getSubscribers()
+      }
     }
-    if (userCalendar.isPrivate === 0) {
-      getSubscribers()
-    }
-  }, [userCalendar])
+  }, [calendar])
 
   const getSubcribableLink = async () => {
     const link = await clientWithAuth(
-      `/api/calendars/${userCalendar.uuid}/?subscribableLink=true`,
+      `/api/calendars/${calendar.uuid}/?subscribableLink=true`,
     )
 
     setSubscribableLink(link.data)
@@ -66,14 +69,16 @@ const Privacy = ({ userCalendar, editUserCalendarPrivacy }) => {
   }
 
   const handleCalendarPrivacy = async () => {
-    if (userCalendar.isPrivate === 0) {
+    if (!calendar.isPrivate) {
       const users = await clientWithAuth(
-        `/api/calendars/${userCalendar.uuid}/subscribers`,
+        `/api/calendars/${calendar.uuid}/subscribers`,
       )
 
       setSubscribers(users.data)
       if (subscribers.length > 0) {
         openCalendarPrivacyAlert(true)
+      } else {
+        performEditUserCalendar()
       }
     } else {
       performEditUserCalendar()
@@ -81,8 +86,8 @@ const Privacy = ({ userCalendar, editUserCalendarPrivacy }) => {
   }
 
   const performEditUserCalendar = () => {
-    editUserCalendarPrivacy(userCalendar.uuid, {
-      isPrivate: !userCalendar.isPrivate,
+    editUserCalendarPrivacy(calendar.uuid, {
+      isPrivate: !calendar.isPrivate,
     })
 
     openCalendarPrivacyAlert(false)
@@ -96,18 +101,18 @@ const Privacy = ({ userCalendar, editUserCalendarPrivacy }) => {
           <FormControlLabel
             control={
               <Switch
-                checked={!!+userCalendar.isPrivate}
+                checked={calendar.isPrivate}
                 onChange={handleCalendarPrivacy}
               />
             }
             label={
-              !!+userCalendar.isPrivate
+              calendar.isPrivate
                 ? "The calendar is private"
                 : "The calendar is public"
             }
           />
           <div>
-            {!!+userCalendar.isPrivate ? (
+            {calendar.isPrivate ? (
               <Typography>
                 Turn off private calendar to make it subscribable to other
                 users.

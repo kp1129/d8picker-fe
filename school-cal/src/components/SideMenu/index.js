@@ -1,22 +1,19 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import moment from "moment"
+
+import MyCalendars from "./MyCalendars"
 import SubscribedCalendars from "./SubscribedCalendars"
-import CreateCalendar from "./CreateCalendar"
+
 import {
   Divider,
   Drawer,
-  FormControl,
-  IconButton,
   List,
   ListItem,
   ListItemText,
-  MenuItem,
-  Select,
   Typography,
 } from "@material-ui/core"
-import AddIcon from "@material-ui/icons/Add"
+
 import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
@@ -48,12 +45,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
   },
-  myCalendarsHeader: {
-    display: "flex",
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
+
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
@@ -67,17 +59,13 @@ const useStyles = makeStyles(theme => ({
 
 const SideMenu = () => {
   const [upComingEvents, setUpComingEvents] = useState([])
+  const [userCalendar, setUserCalendar] = useState(null)
   const { userProfile } = useContext(AuthContext)
   const {
-    userCalendar,
     userCalendars,
-    subscribedCalendars,
-    getUserCalendarEvents,
-    resetSubscribedCalendarEvents,
-    getSubscribedCalendarEvents,
-    setUserCalendar,
-    userCalendarEvents,
+    getMyCalendarEvents,
     unSubscribeCalendar,
+    setShowEvents,
   } = useContext(CalendarContext)
 
   console.log(userCalendars)
@@ -85,64 +73,45 @@ const SideMenu = () => {
 
   useEffect(() => {
     if (userCalendars.length > 0) {
-      if (userCalendar) {
-        setUserCalendar(userCalendar)
-      } else {
-        const defaultCalendar = userCalendars.find(
-          calendar => calendar.isDefault,
-        )
-
-        setUserCalendar(defaultCalendar)
-      }
+      const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
+      setUserCalendar(primaryCalendar)
     }
-  }, [userCalendars, userCalendar])
-
-  // get user calendar events
+  }, [userCalendars])
 
   useEffect(() => {
     if (userCalendar) {
-      getUserCalendarEvents(userCalendar.uuid)
+      getMyCalendarEvents(userCalendar.uuid)
     }
   }, [userCalendar])
 
   // get user upcoming events
 
-  useEffect(() => {
-    if (userCalendarEvents.length > 0) {
-      const events = userCalendarEvents.filter(event =>
-        moment(event.startTime).isAfter(),
-      )
+  // useEffect(() => {
+  //   if (userCalendarEvents.length > 0) {
+  //     const events = userCalendarEvents.filter(event =>
+  //       moment(event.startTime).isAfter(),
+  //     )
 
-      const sorted = events
-        .sort((a, b) => moment(a.startTime) - moment(b.startTime))
-        .slice(0, 5)
+  //     const sorted = events
+  //       .sort((a, b) => moment(a.startTime) - moment(b.startTime))
+  //       .slice(0, 5)
 
-      setUpComingEvents(sorted)
-    } else {
-      setUpComingEvents([])
-    }
-  }, [userCalendarEvents])
+  //     setUpComingEvents(sorted)
+  //   } else {
+  //     setUpComingEvents([])
+  //   }
+  // }, [userCalendarEvents])
 
-  const [createCalendarDialog, openCreateCalendarDialog] = useState(false)
-
-  const handleCalendarChange = event => {
-    const calendarIndex = userCalendars.findIndex(
-      calendar => calendar.uuid === event.target.value,
-    )
-    setUserCalendar(userCalendars[calendarIndex])
-  }
-
-  const handleSubscribedCalendarChange = event => {
-    const calendarUuid = event.target.value
-
-    const subscribedCalendar = subscribedCalendars.find(
+  const handleCalendarChange = calendarUuid => {
+    const myCalendar = userCalendars.find(
       calendar => calendar.uuid === calendarUuid,
     )
 
-    if (subscribedCalendar.hasOwnProperty("events")) {
-      resetSubscribedCalendarEvents(calendarUuid)
+    if (myCalendar.showEvents) {
+      setShowEvents(myCalendar.uuid, false)
     } else {
-      getSubscribedCalendarEvents(calendarUuid)
+      getMyCalendarEvents(calendarUuid)
+      setShowEvents(myCalendar.uuid, true)
     }
   }
 
@@ -166,34 +135,16 @@ const SideMenu = () => {
             <Typography variant="h6">{userProfile.email}</Typography>
           </ListItem>
           <ListItem className={classes.listItemContainer}>
-            <div className={classes.myCalendarsHeader}>
-              <Typography variant="h6">My Calendars</Typography>
-              <IconButton
-                aria-label="add"
-                onClick={() => openCreateCalendarDialog(true)}>
-                <AddIcon />
-              </IconButton>
-            </div>
-
-            <FormControl className={classes.formControl} fullWidth>
-              <Select
-                labelid="calendar-select-label"
-                onChange={handleCalendarChange}
-                value={userCalendar ? userCalendar.uuid : ""}>
-                {userCalendars.length > 0 &&
-                  userCalendars.map(calendar => (
-                    <MenuItem key={calendar.uuid} value={calendar.uuid}>
-                      {calendar.calendarName}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+            <MyCalendars
+              userCalendars={userCalendars}
+              onChange={handleCalendarChange}
+            />
           </ListItem>
           <Divider />
           <ListItem className={classes.subscribedCalendarsContainer}>
             <SubscribedCalendars
-              subscribedCalendars={subscribedCalendars}
-              onChange={handleSubscribedCalendarChange}
+              userCalendars={userCalendars}
+              onChange={handleCalendarChange}
               unsubscribeCalendar={handleUnsubscribeCalendar}
             />
           </ListItem>
@@ -213,10 +164,6 @@ const SideMenu = () => {
           </ListItem>
         </List>
       </Drawer>
-      <CreateCalendar
-        open={createCalendarDialog}
-        handleClose={() => openCreateCalendarDialog(false)}
-      />
     </div>
   )
 }

@@ -33,17 +33,15 @@ const useStyles = makeStyles(theme => ({
 
 const Calendar = props => {
   const classes = useStyles()
-  const {
-    userCalendarEvents,
-    setUserCalendarEvent,
-    editUserCalendarEvent,
-  } = useContext(CalendarContext)
+  const { setUserCalendarEvent, userCalendar, userCalendars } = useContext(
+    CalendarContext,
+  )
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
-  const [events, setEvents] = useState([])
+  const [userCalendarEvents, setUserCalendarEvents] = useState([{ events: [] }])
 
   const initialCreateEventProperty = {
     startTime: moment()
@@ -60,24 +58,34 @@ const Calendar = props => {
     isAllDayEvent: false,
   }
   useEffect(() => {
-    if (userCalendarEvents.length > 0) {
-      const formatted = userCalendarEvents.map(event => {
-        return {
-          id: event.uuid,
-          start: event.startTime,
-          end: event.endTime,
-          title: event.eventTitle,
-          location: event.eventLocation,
-          note: event.eventNote,
-          allDay: event.isAllDayEvent,
-          backgroundColor: event.eventColor,
+    if (userCalendars.length > 0) {
+      const formatted = userCalendars.map(calendar => {
+        if (calendar.showEvents && calendar.events.length > 0) {
+          return {
+            events: calendar.events.map(event => {
+              return {
+                id: event.uuid,
+                start: event.isAllDayEvent ? event.startDate : event.startTime,
+                end: event.isAllDayEvent ? event.endDate : event.endTime,
+                title: event.eventTitle,
+                location: event.eventLocation,
+                note: event.eventNote,
+                allDay: event.isAllDayEvent === 1 ? true : false,
+              }
+            }),
+            color: calendar.calendarColor,
+          }
+        } else {
+          return { events: [] }
         }
       })
-      setEvents(formatted)
+      setUserCalendarEvents(formatted)
     } else {
-      setEvents([])
+      setUserCalendarEvents([{ events: [] }])
     }
-  }, [userCalendarEvents])
+  }, [userCalendars])
+
+  // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
@@ -96,8 +104,27 @@ const Calendar = props => {
 
   const handleDateClick = info => {
     setUserCalendarEvent({
-      startTime: moment(info.date).hours(6),
-      endTime: moment(info.date).hours(7),
+      calendarUuid: userCalendars.find(calendar => calendar.isDefault).uuid,
+      startDate: moment(info.date).format("YYYY-MM-DD"),
+      endDate: moment(info.date).format("YYYY-MM-DD"),
+      startTime: moment(info.date)
+        .hours(6)
+        .toISOString(true),
+      endTime: moment(info.date)
+        .hours(7)
+        .toISOString(true),
+      eventTitle: "",
+      eventLocation: "",
+      eventNote: "",
+      isAllDayEvent: false,
+    })
+    openCreateEvent(true)
+  }
+
+  const handleDatesSelection = info => {
+    setUserCalendarEvent({
+      startTime: moment(info.startStr).hours(0),
+      endTime: moment(info.endStr).hours(0),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
@@ -110,17 +137,7 @@ const Calendar = props => {
     setUserCalendarEvent(initialCreateEventProperty)
     openCreateEvent(false)
   }
-  function eventDrop(info) {
-    const { id, start, end } = info.event
-    const eventOject = {
-      startDate: moment(start).format("YYYY-MM-DD"),
-      endDate: moment(end).format("YYYY-MM-DD"),
-      startTime: moment(start).format(),
-      endTime: moment(end).format(),
-    }
 
-    editUserCalendarEvent(id, eventOject)
-  }
   return (
     <div>
       <Grid container className={classes.headerContainer}>
@@ -150,14 +167,12 @@ const Calendar = props => {
         }}
         defaultView="dayGridMonth"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        events={events}
-        // eventReceive={receive()}
         eventClick={handleEventClick}
+        eventSources={[...userCalendarEvents]}
         dateClick={handleDateClick}
         selectable={true}
         droppable={true}
         editable={true}
-        eventDrop={eventDrop}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />

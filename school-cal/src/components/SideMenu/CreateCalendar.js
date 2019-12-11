@@ -1,5 +1,5 @@
-import React, { useContext } from "react"
-import { Formik, Field } from "formik"
+import React, { useEffect, useContext } from "react"
+import { Formik } from "formik"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 import * as Yup from "yup"
 import {
@@ -10,22 +10,34 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormControlLabel,
   Grid,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
 } from "@material-ui/core"
+
 import { makeStyles } from "@material-ui/core/styles"
 
 const CreateCalendar = ({ open, handleClose }) => {
-  const { isLoading, createUserCalendar } = useContext(CalendarContext)
+  const {
+    isLoading,
+    calendarColors,
+    getCalendarColors,
+    createUserCalendar,
+  } = useContext(CalendarContext)
+
+  useEffect(() => {
+    getCalendarColors()
+  }, [])
   return (
     <div>
       <Formik
         initialValues={{
           calendarName: "",
           calendarDescription: "",
+          calendarColor: "",
           isPrivate: true,
         }}
         onSubmit={(values, actions) => {
@@ -37,6 +49,7 @@ const CreateCalendar = ({ open, handleClose }) => {
           <CreateCalendarForm
             isLoading={isLoading}
             open={open}
+            colors={calendarColors}
             {...formikProps}
             handleClose={handleClose}
           />
@@ -67,6 +80,9 @@ const useStyles = makeStyles(theme => ({
     borderRadius: "5px",
     color: "#F5945B",
   },
+  colors: {
+    margin: theme.spacing(0.5),
+  },
 }))
 
 const CreateCalendarForm = ({
@@ -77,8 +93,10 @@ const CreateCalendarForm = ({
   handleClose,
   open,
   isLoading,
+  colors,
 }) => {
   const classes = useStyles()
+
   return (
     <>
       <Dialog open={open} onClose={handleClose} fullWidth>
@@ -131,6 +149,24 @@ const CreateCalendarForm = ({
                   }
                   label="Public Calendar"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>Colors</Typography>
+                <RadioGroup
+                  name="calendarColor"
+                  value={values.calendarColor}
+                  onChange={handleChange}>
+                  {colors.length > 0 &&
+                    colors.map(color => (
+                      <FormControlLabel
+                        className={classes.colors}
+                        value={color.color}
+                        control={<Radio style={{ color: "white" }} />}
+                        key={color.uuid}
+                        style={{ backgroundColor: color.color }}
+                      />
+                    ))}
+                </RadioGroup>
               </Grid>
             </Grid>
           </DialogContent>
