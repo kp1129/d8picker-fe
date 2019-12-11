@@ -1,7 +1,7 @@
 
 # 1️⃣ School Calendar
 
-1️⃣ You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+1️⃣ You can find the deployed project at https://nervous-leakey-68fd24.netlify.com/.
 
 ## 4️⃣ Contributors
 
@@ -22,7 +22,7 @@
 
 1️⃣ [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
 
-1️⃣ [UX Design files](🚫add link to design files here) - 🚫 delete if not applicable
+1️⃣ [UX Design files]https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0
 
 School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
@@ -54,22 +54,20 @@ Along with these things notifying changes to a schedule the coach would like to 
 
 
 
-#### Front end deployed to `🚫insert service here`
+#### Front end deployed to `Netlify`
 
-#### [Back end](https://firebase.google.com/) built using:
+#### [Back end]Heroku built using:
 
-#### FireBase
+#### Node.JS
 
--    Easier Set Up
--    Easier Third Party Integration
--    Less Information to manage
+-    Physical Backend
+-    Easy Setup
+-    Using twilio
 
 
 
 # APIs
 
-## 2️⃣ FireBase Authentication
-Using FireBase authentication, Firebase handles most of the information for us while giving us multiple options with which we can log in. The two forms of authentication we are using is email and password, and google login.
 
 
 ## 3️⃣ Environment Variables
@@ -77,18 +75,7 @@ Using FireBase authentication, Firebase handles most of the information for us w
 In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following: (I can update to the actual .env code)
 
 
-```
-export const config = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
-```
+
 # 5️⃣ Content Licenses
 
 
@@ -152,4 +139,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation]https://github.com/Lambda-School-Labs/school-calendar-be for details on the backend of our project.
