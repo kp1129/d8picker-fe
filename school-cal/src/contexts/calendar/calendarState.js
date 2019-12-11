@@ -33,7 +33,17 @@ export const CalendarState = props => {
     isLoading: false,
     userCalendars: [],
     userCalendarsError: null,
-    userCalendar: null,
+    userCalendar: {
+      calendarColor: "",
+      calendarDescription: "",
+      calendarName: "",
+      events: [],
+      isDefault: false,
+      isOwner: false,
+      isPrivare: true,
+      showEvents: false,
+      uuid: "",
+    },
     userCalendarEvents: [],
     userCalendarEvent: {
       calendarUuid: "",

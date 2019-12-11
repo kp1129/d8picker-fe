@@ -50,7 +50,6 @@ const useStyles = makeStyles(theme => ({
 const CalendarSettings = ({ history, match }) => {
   const {
     userCalendar,
-    userCalendarsError,
     editUserCalendarPrivacy,
     deleteUserCalendar,
   } = useContext(CalendarContext)
@@ -59,10 +58,10 @@ const CalendarSettings = ({ history, match }) => {
   const { cal_uuid } = match.params
 
   useEffect(() => {
-    if (!cal_uuid) {
+    if (!cal_uuid || cal_uuid !== userCalendar.uuid) {
       history.push("/admin-dashboard")
     }
-  }, [cal_uuid])
+  }, [cal_uuid, userCalendar])
 
   return (
     <div className={classes.root}>
