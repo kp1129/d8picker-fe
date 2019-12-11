@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Checkbox,
   IconButton,
@@ -13,12 +13,19 @@ import {
 } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 const SubscribedCalendars = ({
-  subscribedCalendars,
+  userCalendars,
   onChange,
   unsubscribeCalendar,
 }) => {
   const [menu, openMenu] = useState(null)
+  const [subscribedCalendars, setSubscribedCalendars] = useState([])
 
+  useEffect(() => {
+    if (userCalendars.length > 0) {
+      const calendars = userCalendars.filter(calendar => !calendar.isOwner)
+      setSubscribedCalendars(calendars)
+    }
+  }, [userCalendars])
   const handleClick = event => {
     openMenu(event.currentTarget)
   }
@@ -35,7 +42,7 @@ const SubscribedCalendars = ({
     <div style={{ width: "100%" }}>
       <Typography variant="h6">Subscribed Calendars</Typography>
       {subscribedCalendars.length > 0 ? (
-        <List>
+        <List dense>
           {subscribedCalendars.map(calendar => (
             <ListItem key={calendar.uuid}>
               <Menu
@@ -50,7 +57,7 @@ const SubscribedCalendars = ({
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  onChange={onChange}
+                  onChange={() => onChange(calendar.uuid)}
                   value={calendar.uuid}
                 />
               </ListItemIcon>
@@ -70,5 +77,4 @@ const SubscribedCalendars = ({
     </div>
   )
 }
-
 export default SubscribedCalendars

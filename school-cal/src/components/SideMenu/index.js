@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import moment from "moment"
+
+import MyCalendars from "./MyCalendars"
 import SubscribedCalendars from "./SubscribedCalendars"
+
 import {
   Divider,
   Drawer,
-  FormControl,
   List,
   ListItem,
   ListItemText,
-  MenuItem,
-  Select,
   Typography,
 } from "@material-ui/core"
 
@@ -46,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
   },
-  subscribedCalendarsContainer: {},
+
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
@@ -60,77 +59,58 @@ const useStyles = makeStyles(theme => ({
 
 const SideMenu = () => {
   const [upComingEvents, setUpComingEvents] = useState([])
+  const [userCalendar, setUserCalendar] = useState(null)
   const { userProfile } = useContext(AuthContext)
   const {
-    userCalendar,
     userCalendars,
-    subscribedCalendars,
-    getUserCalendarEvents,
-    resetSubscribedCalendarEvents,
-    getSubscribedCalendarEvents,
-    setUserCalendar,
-    userCalendarEvents,
+    getMyCalendarEvents,
     unSubscribeCalendar,
+    setShowEvents,
   } = useContext(CalendarContext)
 
   // set user default calendar to the select list
 
   useEffect(() => {
     if (userCalendars.length > 0) {
-      const defaultCalendarIndex = userCalendars.findIndex(
-        calendar => calendar.isDefault,
-      )
-
-      const defaultCalendar = userCalendars[defaultCalendarIndex]
-
-      setUserCalendar(defaultCalendar)
+      const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
+      setUserCalendar(primaryCalendar)
     }
   }, [userCalendars])
 
-  // get user calendar events
-
   useEffect(() => {
     if (userCalendar) {
-      getUserCalendarEvents(userCalendar.uuid)
+      getMyCalendarEvents(userCalendar.uuid)
     }
   }, [userCalendar])
 
   // get user upcoming events
 
-  useEffect(() => {
-    if (userCalendarEvents.length > 0) {
-      const events = userCalendarEvents.filter(event =>
-        moment(event.startTime).isAfter(),
-      )
+  // useEffect(() => {
+  //   if (userCalendarEvents.length > 0) {
+  //     const events = userCalendarEvents.filter(event =>
+  //       moment(event.startTime).isAfter(),
+  //     )
 
-      const sorted = events
-        .sort((a, b) => moment(a.startTime) - moment(b.startTime))
-        .slice(0, 5)
+  //     const sorted = events
+  //       .sort((a, b) => moment(a.startTime) - moment(b.startTime))
+  //       .slice(0, 5)
 
-      setUpComingEvents(sorted)
-    } else {
-      setUpComingEvents([])
-    }
-  }, [userCalendarEvents])
+  //     setUpComingEvents(sorted)
+  //   } else {
+  //     setUpComingEvents([])
+  //   }
+  // }, [userCalendarEvents])
 
-  const handleCalendarChange = event => {
-    const calendarIndex = userCalendars.findIndex(
-      calendar => calendar.uuid === event.target.value,
-    )
-    setUserCalendar(userCalendars[calendarIndex])
-  }
-
-  const handleSubscribedCalendarChange = event => {
-    const calendarUuid = event.target.value
-
-    const subscribedCalendar = subscribedCalendars.find(
+  const handleCalendarChange = calendarUuid => {
+    const myCalendar = userCalendars.find(
       calendar => calendar.uuid === calendarUuid,
     )
 
-    if (subscribedCalendar.hasOwnProperty("events")) {
-      resetSubscribedCalendarEvents(calendarUuid)
+    if (myCalendar.showEvents) {
+      setShowEvents(myCalendar.uuid, false)
     } else {
-      getSubscribedCalendarEvents(calendarUuid)
+      getMyCalendarEvents(calendarUuid)
+      setShowEvents(myCalendar.uuid, true)
     }
   }
 
@@ -154,26 +134,16 @@ const SideMenu = () => {
             <Typography variant="h6">{userProfile.email}</Typography>
           </ListItem>
           <ListItem className={classes.listItemContainer}>
-            <Typography variant="h6">My Calendars</Typography>
-            <FormControl className={classes.formControl}>
-              <Select
-                labelid="calendar-select-label"
-                onChange={handleCalendarChange}
-                value={userCalendar ? userCalendar.uuid : ""}>
-                {userCalendars.length > 0 &&
-                  userCalendars.map(calendar => (
-                    <MenuItem key={calendar.uuid} value={calendar.uuid}>
-                      {calendar.calendarName}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
+            <MyCalendars
+              userCalendars={userCalendars}
+              onChange={handleCalendarChange}
+            />
           </ListItem>
           <Divider />
           <ListItem className={classes.subscribedCalendarsContainer}>
             <SubscribedCalendars
-              subscribedCalendars={subscribedCalendars}
-              onChange={handleSubscribedCalendarChange}
+              userCalendars={userCalendars}
+              onChange={handleCalendarChange}
               unsubscribeCalendar={handleUnsubscribeCalendar}
             />
           </ListItem>

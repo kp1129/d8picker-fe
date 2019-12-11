@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import moment from "moment"
 import { Formik, Field } from "formik"
+
 import * as Yup from "yup"
-import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 import {
@@ -18,6 +18,8 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@material-ui/core"
@@ -33,15 +35,26 @@ const CreateEvent = ({ open, handleClose }) => {
   const {
     isLoading,
     createUserCalendarEvent,
-    userCalendar,
     userCalendarEvent,
+    userCalendars,
   } = useContext(CalendarContext)
+
+  const [calendars, setCalendars] = useState([])
+  useEffect(() => {
+    if (userCalendars.length > 0) {
+      const myCalendars = userCalendars.filter(calendar => calendar.isOwner)
+
+      setCalendars(myCalendars)
+    }
+  }, [userCalendars])
+
   return (
     <>
       <Formik
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
+          console.log(values)
           values.startDate = moment(values.startDate).format("YYYY-MM-DD")
           values.endDate = moment(values.endDate).format("YYYY-MM-DD")
           values.startTime = values.isAllDayEvent
@@ -59,7 +72,9 @@ const CreateEvent = ({ open, handleClose }) => {
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
 
-          createUserCalendarEvent(userCalendar.uuid, values)
+          const calendarUuid = values.calendarUuid
+          delete values.calendarUuid
+          createUserCalendarEvent(calendarUuid, values)
           actions.resetForm()
           handleClose()
         }}
@@ -69,13 +84,13 @@ const CreateEvent = ({ open, handleClose }) => {
             open={open}
             {...formikProps}
             handleClose={handleClose}
+            calendars={calendars}
           />
         )}
       />
     </>
   )
 }
-
 const useStyles = makeStyles(theme => ({
   createButton: {
     backgroundColor: "#F5945B",
@@ -98,16 +113,21 @@ const useStyles = makeStyles(theme => ({
     background: "#F2D2BF",
     borderRadius: "5px",
   },
-
   dateTextField: {
     background: "#F2D2BF",
     borderRadius: "5px",
   },
   allDayCheckBoxContainer: {
     textAlign: "left",
+    margin: theme.spacing(1),
+  },
+  calendarSelection: {
+    width: "100%",
+  },
+  calendarSelectionContainer: {
+    margin: theme.spacing(1),
   },
 }))
-
 const CreateEventForm = ({
   values,
   handleChange,
@@ -116,12 +136,21 @@ const CreateEventForm = ({
   handleClose,
   open,
   isLoading,
+  calendars,
 }) => {
+  const [primaryCalendar, setPrimaryCalendar] = useState("")
   const isAllDayEvent = values.isAllDayEvent
 
+  useEffect(() => {
+    if (calendars.length > 0) {
+      const primary = calendars.find(calendar => calendar.isDefault)
+      setPrimaryCalendar(primary)
+    }
+  }, [calendars])
   const classes = useStyles()
+
   return (
-    <>
+    <div>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <form onSubmit={handleSubmit}>
           <DialogTitle style={{ background: "#21242C", color: "white" }}>
@@ -203,12 +232,34 @@ const CreateEventForm = ({
                           onChange={handleChange}
                         />
                       }
-                      label="All Day"
+                      label="All Day Event"
                     />
                   </Grid>
                 </Grid>
               </Grid>
-
+              <Grid item xs={12} className={classes.calendarSelectionContainer}>
+                <Typography>Calendars</Typography>
+                <FormControl className={classes.calendarSelection}>
+                  <Select
+                    name="calendarUuid"
+                    onChange={handleChange}
+                    value={
+                      values.calendarUuid
+                        ? values.calendarUuid
+                        : primaryCalendar.uuid
+                    }>
+                    {calendars.length > 0 &&
+                      calendars.map(calendar => (
+                        <MenuItem
+                          value={calendar.uuid}
+                          key={calendar.uuid}
+                          style={{ color: calendar.calendarColor }}>
+                          {calendar.calendarName}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   className={classes.noteTextField}
@@ -250,10 +301,9 @@ const CreateEventForm = ({
           </DialogActions>
         </form>
       </Dialog>
-    </>
+    </div>
   )
 }
-
 const DatePickerField = ({ field, form }) => {
   return (
     <DatePicker
@@ -267,7 +317,6 @@ const DatePickerField = ({ field, form }) => {
     />
   )
 }
-
 const TimePickerField = ({ field, form }) => {
   return (
     <TimePicker
@@ -281,5 +330,4 @@ const TimePickerField = ({ field, form }) => {
     />
   )
 }
-
 export default CreateEvent

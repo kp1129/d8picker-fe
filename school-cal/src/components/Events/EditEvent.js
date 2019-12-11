@@ -4,7 +4,6 @@ import React, { useContext } from "react"
 import moment from "moment"
 import { Formik, Field } from "formik"
 import * as Yup from "yup"
-import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 import {
@@ -223,7 +222,7 @@ const EditEventForm = ({
                           onChange={handleChange}
                         />
                       }
-                      label="All Day"
+                      label="All Day Event"
                     />
                   </Grid>
                 </Grid>

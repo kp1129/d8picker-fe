@@ -30,7 +30,7 @@ const AppRouter = () => {
             <Route path="/subscribe" component={Subscribe} />
             <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
             <PrivateRoute
-              path="/calendar-settings"
+              path="/calendar-settings/:cal_uuid"
               component={CalendarSettings}
             />
           </CalendarState>
