@@ -2,9 +2,19 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import CalPic from "../../assets/images/calendar.jpg"
-import Phone from "../../assets/images/phone.png"
-import Pencil from "../../assets/images/pencil.png"
-import Robot from "../../assets/images/robot.png"
+// import Phone from "../../assets/images/phone.png"
+// import Pencil from "../../assets/images/pencil.png"
+// import Robot from "../../assets/images/robot.png"  
+
+// import robo from "../../assets/images/robo.svg"
+// import pencil from "../../assets/images/pencil.svg"
+// import cellphone from "../../assets/images/cellphone.svg" 
+
+import SmartphoneIcon from '@material-ui/icons/Smartphone';
+import CreateIcon from '@material-ui/icons/Create';
+import BuildIcon from '@material-ui/icons/Build';
+
+
 import ReactGA from 'react-ga';
 import MarketingNav from "./marketingnav"
 import '../../index.css'
@@ -29,24 +39,24 @@ function Marketing() {
             </div>
 
             <div style={{marginLeft:"10%",marginTop:"20%", overflow:"hidden"}}>
-                <img src={CalPic} className="marketing-img"/>
+                <img src={CalPic}  className="marketing-img"/>
             </div>
 
          
          </div>
          <div className="market-card-cont" style={{background:"white", marginTop:"80px", display:"flex", flexDirection:"row", height:"40rem"}}>
              <div className="market-card">
-                 <img src={Phone}/>
+                 <SmartphoneIcon style = {{width:"80px" , height:"80px"}}/>
                  <h3>Schedule Events Fast</h3>
                  <h3 style={{fontWeight:"500"}}>At Mataka we respect your time. Our design is conduvtive to the fastest way of scheduling events in masse.</h3>
              </div>
              <div className="market-card">
-                 <img src={Pencil}/>
+             <CreateIcon style = {{width:"80px" , height:"80px"}}/>
                  <h3>Inform Students Automatically</h3>
                  <h3 style={{fontWeight:"500"}}>Mataka will send an automated message of your preference 48 hours before all events. Also, gets pushed to the student's calendar.</h3>
              </div>
              <div className="market-card">
-                 <img src={Robot}/>
+             <BuildIcon style = {{width:"80px" , height:"80px"}}/>
                  <h3>Automate the Year</h3>
                  <h3 style={{fontWeight:"500"}}>With Mataka you can set up a day or a full academic year of practices and events.</h3>
              </div>
