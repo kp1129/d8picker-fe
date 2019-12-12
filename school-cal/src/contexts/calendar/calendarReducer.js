@@ -1,3 +1,4 @@
+import moment from "moment"
 import {
   IS_LOADING,
   SET_CALENDARS_SUCCESS,
@@ -36,6 +37,12 @@ const calendarFormat = calendar => {
 const eventFormat = event => {
   return {
     ...event,
+    startDate: moment(event.startDate).format("YYYY-MM-DD"),
+    endDate: Boolean(event.isAllDayEvent)
+      ? moment(event.endDate)
+          .add(1, "days")
+          .format("YYYY-MM-DD")
+      : moment(event.endDate).format("YYYY-MM-DD"),
     isAllDayEvent: Boolean(event.isAllDayEvent),
     isPrivate: Boolean(event.isPrivate),
     isRepeatingEvent: Boolean(event.isRepeatingEvent),
