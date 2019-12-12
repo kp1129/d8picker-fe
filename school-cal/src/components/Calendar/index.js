@@ -70,7 +70,7 @@ const Calendar = props => {
                 title: event.eventTitle,
                 location: event.eventLocation,
                 note: event.eventNote,
-                allDay: event.isAllDayEvent === 1 ? true : false,
+                allDay: event.isAllDayEvent,
               }
             }),
             color: calendar.calendarColor,
@@ -89,7 +89,7 @@ const Calendar = props => {
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-
+    console.log(info.event)
     setUserCalendarEvent({
       startDate: moment(start).format("YYYY-MM-DD"),
       endDate: allDay
