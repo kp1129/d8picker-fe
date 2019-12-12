@@ -33,6 +33,15 @@ const calendarFormat = calendar => {
   }
 }
 
+const eventFormat = event => {
+  return {
+    ...event,
+    isAllDayEvent: Boolean(event.isAllDayEvent),
+    isPrivate: Boolean(event.isPrivate),
+    isRepeatingEvent: Boolean(event.isRepeatingEvent),
+  }
+}
+
 const setIsLoading = (state, action) => {
   return {
     ...state,
@@ -140,7 +149,7 @@ const setMyCalendarEventsSuccess = (state, action) => {
     userCalendars: [
       ...state.userCalendars.map(calendar => {
         if (calendar.uuid === action.payload.calendarUuid) {
-          calendar.events = action.payload.events
+          calendar.events = action.payload.events.map(eventFormat)
 
           return calendar
         } else {
@@ -166,7 +175,10 @@ const setCreateUserCalendarEventSuccess = (state, action) => {
     userCalendars: [
       ...state.userCalendars.map(calendar => {
         if (calendar.uuid === action.payload.calendarUuid) {
-          calendar.events = [...calendar.events, action.payload.event]
+          calendar.events = [
+            ...calendar.events,
+            eventFormat(action.payload.event),
+          ]
         }
         return calendar
       }),
@@ -181,7 +193,9 @@ const setEditUserCalendarEventSuccess = (state, action) => {
     userCalendars: [
       ...state.userCalendars.map(calendar => {
         calendar.events = calendar.events.map(event =>
-          event.uuid === action.payload.uuid ? action.payload : event,
+          event.uuid === action.payload.uuid
+            ? eventFormat(action.payload)
+            : event,
         )
 
         return calendar
