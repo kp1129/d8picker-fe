@@ -79,11 +79,8 @@ const setUserCalendarSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendar: calendarFormat(action.payload),
-    userCalendars: state.userCalendars.map(calendar =>
-      calendar.uuid === action.payload.uuid
-        ? calendarFormat(action.payload)
-        : calendar,
+    userCalendar: state.userCalendars.find(
+      calendar => calendar.uuid === action.payload,
     ),
   }
 }

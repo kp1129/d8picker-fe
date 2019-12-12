@@ -52,28 +52,17 @@ const CalendarSettings = ({ history, match }) => {
     userCalendar,
     editUserCalendarPrivacy,
     deleteUserCalendar,
-    getUserCalendar,
   } = useContext(CalendarContext)
 
   const classes = useStyles()
+
   const { cal_uuid } = match.params
-  useEffect(() => {
-    if (cal_uuid) {
-      getUserCalendar(cal_uuid)
-    }
-  }, [cal_uuid])
 
   useEffect(() => {
-    if (!cal_uuid) {
+    if (!cal_uuid || cal_uuid !== userCalendar.uuid) {
       history.push("/admin-dashboard")
     }
-  }, [cal_uuid])
-
-  useEffect(() => {
-    if (userCalendar.uuid === "") {
-      history.push("/admin-dashboard")
-    }
-  }, [userCalendar])
+  }, [cal_uuid, userCalendar])
 
   return (
     <div className={classes.root}>
