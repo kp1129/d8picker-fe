@@ -69,7 +69,9 @@ const Calendar = props => {
                   ? moment(event.startDate).format("YYYY-MM-DD")
                   : event.startTime,
                 end: event.isAllDayEvent
-                  ? moment(event.endDate).format("YYYY-MM-DD")
+                  ? moment(event.endDate)
+                      .add(1, "days")
+                      .format("YYYY-MM-DD")
                   : event.endTime,
                 title: event.eventTitle,
                 location: event.eventLocation,
