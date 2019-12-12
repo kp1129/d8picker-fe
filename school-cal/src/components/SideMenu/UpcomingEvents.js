@@ -49,9 +49,6 @@ const UpcomingEvents = () => {
     getUpcomingEvents()
   }, [])
 
-  const handleClick = () => {
-    console.log("click")
-  }
   return (
     <div style={{ width: "100%" }}>
       <Badge
@@ -74,12 +71,14 @@ const UpcomingEvents = () => {
                   style={{
                     backgroundColor: event.calendarColor,
                   }}>
-                  <Typography align="center">
-                    {moment(event.startDate).format("ddd")}
-                  </Typography>
-                  <Typography align="center" style={{ fontWeight: "bold" }}>
-                    {moment(event.startDate).format("MM/DD")}
-                  </Typography>
+                  <>
+                    <Typography align="center">
+                      {moment(event.startDate).format("ddd")}
+                    </Typography>
+                    <Typography align="center" style={{ fontWeight: "bold" }}>
+                      {moment(event.startDate).format("MM/DD")}
+                    </Typography>
+                  </>
                 </ListItemAvatar>
                 <ListItemText primaryTypographyProps={{ variant: "body2" }}>
                   {event.eventTitle}

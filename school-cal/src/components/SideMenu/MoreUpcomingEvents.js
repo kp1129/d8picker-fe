@@ -43,13 +43,18 @@ const MoreUpcomingEvents = ({ events, open, handleClose }) => {
                       style={{
                         backgroundColor: event.calendarColor,
                       }}>
-                      <Typography align="center">
-                        {moment(event.startDate).format("ddd")}
-                      </Typography>
-                      <Typography align="center" style={{ fontWeight: "bold" }}>
-                        {moment(event.startDate).format("MM/DD")}
-                      </Typography>
+                      <>
+                        <Typography align="center">
+                          {moment(event.startDate).format("ddd")}
+                        </Typography>
+                        <Typography
+                          align="center"
+                          style={{ fontWeight: "bold" }}>
+                          {moment(event.startDate).format("MM/DD")}
+                        </Typography>
+                      </>
                     </ListItemAvatar>
+
                     <ListItemText primaryTypographyProps={{ variant: "body2" }}>
                       {event.eventTitle}
                     </ListItemText>
