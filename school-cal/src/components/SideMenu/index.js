@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SideMenu = () => {
+const SideMenu = ({ history }) => {
   const [userCalendar, setUserCalendar] = useState(null)
   const { userProfile } = useContext(AuthContext)
   const {
@@ -118,6 +118,7 @@ const SideMenu = () => {
             <MyCalendars
               userCalendars={userCalendars}
               onChange={handleCalendarChange}
+              history={history}
             />
           </ListItem>
           <Divider />

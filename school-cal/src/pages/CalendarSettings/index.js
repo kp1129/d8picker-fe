@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-
+import { clientWithAuth } from "../../utilities/api"
 import {
   Divider,
   Drawer,
@@ -52,16 +52,28 @@ const CalendarSettings = ({ history, match }) => {
     userCalendar,
     editUserCalendarPrivacy,
     deleteUserCalendar,
+    getUserCalendar,
   } = useContext(CalendarContext)
 
   const classes = useStyles()
   const { cal_uuid } = match.params
+  useEffect(() => {
+    if (cal_uuid) {
+      getUserCalendar(cal_uuid)
+    }
+  }, [cal_uuid])
 
   useEffect(() => {
-    if (!cal_uuid || cal_uuid !== userCalendar.uuid) {
+    if (!cal_uuid) {
       history.push("/admin-dashboard")
     }
-  }, [cal_uuid, userCalendar])
+  }, [cal_uuid])
+
+  useEffect(() => {
+    if (userCalendar.uuid === "") {
+      history.push("/admin-dashboard")
+    }
+  }, [userCalendar])
 
   return (
     <div className={classes.root}>
