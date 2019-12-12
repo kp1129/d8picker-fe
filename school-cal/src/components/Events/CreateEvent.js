@@ -54,7 +54,6 @@ const CreateEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
-          console.log(values)
           values.startDate = moment(values.startDate).format("YYYY-MM-DD")
           values.endDate = moment(values.endDate).format("YYYY-MM-DD")
           values.startTime = values.isAllDayEvent
