@@ -58,13 +58,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SideMenu = ({ history }) => {
-  const [userCalendar, setUserCalendar] = useState(null)
+  //const [userCalendar, setUserCalendar] = useState(null)
   const { userProfile } = useContext(AuthContext)
   const {
     userCalendars,
+    userCalendar,
     getMyCalendarEvents,
     unSubscribeCalendar,
     setShowEvents,
+    setUserCalendar,
   } = useContext(CalendarContext)
 
   // set user default calendar to the select list
@@ -72,15 +74,21 @@ const SideMenu = ({ history }) => {
   useEffect(() => {
     if (userCalendars.length > 0) {
       const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
-      setUserCalendar(primaryCalendar)
+      setUserCalendar(primaryCalendar.uuid)
     }
   }, [userCalendars])
 
   useEffect(() => {
-    if (userCalendar) {
+    if (userCalendar.uuid) {
       getMyCalendarEvents(userCalendar.uuid)
     }
   }, [userCalendar])
+
+  // useEffect(() => {
+  //   if (userCalendar) {
+  //     setUserCalendar(userCalendar.uuid)
+  //   }
+  // }, [userCalendar])
 
   const handleCalendarChange = calendarUuid => {
     const myCalendar = userCalendars.find(

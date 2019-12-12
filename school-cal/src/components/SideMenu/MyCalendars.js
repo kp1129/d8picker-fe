@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }))
 const MyCalendars = ({ userCalendars, onChange, history }) => {
   const classes = useStyles()
-  const { getUserCalendar } = useContext(CalendarContext)
+  const { setUserCalendar } = useContext(CalendarContext)
   const [anchorEl, setAnchorEl] = useState(null)
   const [menus, setMenus] = useState([])
   const [createCalendar, openCreateCalendar] = useState(false)
@@ -42,6 +42,7 @@ const MyCalendars = ({ userCalendars, onChange, history }) => {
   }, [userCalendars])
 
   const handleCalendarSettings = calendarUuid => {
+    setUserCalendar(calendarUuid)
     history.push(`/calendar-settings/${calendarUuid}`)
   }
 

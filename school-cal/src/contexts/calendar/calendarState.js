@@ -259,17 +259,8 @@ export const CalendarState = props => {
     }
   }
 
-  const getUserCalendar = async calendarUuid => {
-    dispatch({ type: IS_LOADING, payload: true })
-
-    try {
-      const calendar = await clientWithAuth(`/api/calendars/${calendarUuid}`)
-
-      dispatch({ type: SET_USER_CALENDAR_SUCCESS, payload: calendar.data })
-    } catch (error) {
-      console.log(error)
-      dispatch({ type: SET_USER_CALENDAR_FAILURE, payload: error })
-    }
+  const setUserCalendar = async calendarUuid => {
+    dispatch({ type: SET_USER_CALENDAR_SUCCESS, payload: calendarUuid })
   }
 
   const setUserCalendarEvent = event => {
@@ -314,7 +305,7 @@ export const CalendarState = props => {
         createUserCalendarEvent,
         editUserCalendarEvent,
         deleteUserCalendarEvent,
-        getUserCalendar,
+        setUserCalendar,
         setUserCalendarEvent,
         setShowEvents,
         getCalendarColors,
