@@ -26,10 +26,10 @@ const calendarFormat = calendar => {
   return {
     ...calendar,
     events: [],
-    showEvents: calendar.isDefault === 1 ? true : false,
-    isDefault: calendar.isDefault === 1 ? true : false,
-    isOwner: calendar.isOwner === 1 ? true : false,
-    isPrivate: calendar.isPrivate === 1 ? true : false,
+    showEvents: Boolean(calendar.isDefault),
+    isDefault: Boolean(calendar.isDefault),
+    isOwner: Boolean(calendar.isOwner),
+    isPrivate: Boolean(calendar.isPrivate),
   }
 }
 
