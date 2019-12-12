@@ -37,7 +37,11 @@ const calendarFormat = calendar => {
 const eventFormat = event => {
   return {
     ...event,
-    startDate: moment(event.startDate).format("YYYY-MM-DD"),
+    startDate: Boolean(event.isAllDayEvent)
+      ? moment(event.startDate)
+          .add(1, "days")
+          .format("YYYY-MM-DD")
+      : moment(event.endDate).format("YYYY-MM-DD"),
     endDate: Boolean(event.isAllDayEvent)
       ? moment(event.endDate)
           .add(1, "days")
