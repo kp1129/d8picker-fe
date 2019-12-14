@@ -41,8 +41,6 @@ const Subscribe = props => {
     }
   }, [props.location.search])
 
-  console.log("Location ", props.location.search)
-
   const [signIn, showSignIn] = useState(true)
 
   const handleFormChange = event => {

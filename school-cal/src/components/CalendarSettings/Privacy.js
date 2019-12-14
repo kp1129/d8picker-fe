@@ -61,7 +61,7 @@ const Privacy = ({ calendar, editUserCalendarPrivacy }) => {
 
   const getSubcribableLink = async () => {
     const link = await clientWithAuth(
-      `/api/calendars/${calendar.uuid}/?subscribableLink=true`,
+      `/api/calendars/${calendar.uuid}/subscribableLink/?subscribableLink=true`,
     )
 
     setSubscribableLink(link.data)
