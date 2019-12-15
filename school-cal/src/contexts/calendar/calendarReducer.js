@@ -41,7 +41,7 @@ const eventFormat = event => {
       ? moment(event.startDate)
           .add(1, "days")
           .format("YYYY-MM-DD")
-      : moment(event.endDate).format("YYYY-MM-DD"),
+      : moment(event.startDate).format("YYYY-MM-DD"),
     endDate: Boolean(event.isAllDayEvent)
       ? moment(event.endDate)
           .add(1, "days")
@@ -50,6 +50,7 @@ const eventFormat = event => {
     isAllDayEvent: Boolean(event.isAllDayEvent),
     isPrivate: Boolean(event.isPrivate),
     isRepeatingEvent: Boolean(event.isRepeatingEvent),
+    rrule: event.rrule,
   }
 }
 
