@@ -56,6 +56,7 @@ export const CalendarState = props => {
       eventNote: "",
       isAllDayEvent: false,
       uuid: "",
+      rrule: "",
     },
     userCalendarEventsError: null,
     calendarSubscriptionErrors: null,
