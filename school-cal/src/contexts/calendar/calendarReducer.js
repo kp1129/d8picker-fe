@@ -39,6 +39,8 @@ const eventFormat = event => {
     ...event,
     startDate: moment(event.startDate).format("YYYY-MM-DD"),
     endDate: moment(event.endDate).format("YYYY-MM-DD"),
+    startTime: moment(event.startTime).format(),
+    endTime: moment(event.endTime).format(),
     isAllDayEvent: Boolean(event.isAllDayEvent),
     isPrivate: Boolean(event.isPrivate),
     isRepeatingEvent: Boolean(event.isRepeatingEvent),
