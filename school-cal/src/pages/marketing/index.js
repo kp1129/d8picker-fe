@@ -23,7 +23,8 @@ import '../../index.css'
 function Marketing() {
     ReactGA.pageview(window.location.pathname + window.location.search);
 
-  return (
+  return ( 
+      <div>
      <div className='container' style={{background:"black"}}>
          <MarketingNav />
          <div className="marketing-mid" style={{width:"100%", display:"flex", flexDirection:"row", alignItems:"center", marginBottom:"30px"}}>
@@ -44,26 +45,27 @@ function Marketing() {
 
          
          </div>
-         <div className="market-card-cont" style={{background:"white", marginTop:"80px", display:"flex", flexDirection:"row", height:"40rem"}}>
-             <div className="market-card">
+         <div className="market-card-cont" style={{background:"white", marginTop:"80px", display:"flex", flexDirection: "column", flexWrap:"wrap" ,height:"40rem"}}>
+             <div className="market-card" style= {{marginLeft: "10px"}}>
                  <SmartphoneIcon style = {{width:"100px" , height:"100px" , borderRadius: "50%" , border: "2px solid black" , padding: "40px"}}/>
-                 <h3>Schedule Events Fast</h3>
-                 <h3 style={{fontWeight:"500"}}>At Mataka we respect your time. Our design is conduvtive to the fastest way of scheduling events in masse.</h3>
-             </div>
-             <div className="market-card" >
-             <CreateIcon style = {{width:"100px" , height:"100px" , borderRadius: "50%" , border: "2px solid black" , padding: "40px"}}/>
-                 <h3>Inform Students Automatically</h3>
-                 <h3 style={{fontWeight:"500"}}>Mataka will send an automated message of your preference 48 hours before all events. Also, gets pushed to the student's calendar.</h3>
+                 <h2>Schedule Events Fast</h2>
+                 <p style={{fontWeight:"500"}}>At Mataka we respect your time. Our design is conduvtive to the fastest way of scheduling events in masse.</p>
              </div>
              <div className="market-card">
+             <CreateIcon style = {{width:"100px" , height:"100px" , borderRadius: "50%" , border: "2px solid black" , padding: "40px"}}/>
+                 <h2>Inform Students Automatically</h2>
+                 <p style={{fontWeight:"500"}}>Mataka will send an automated message of your preference 48 hours before all events. Also, gets pushed to the student's calendar.</p>
+             </div>
+             <div className="market-card" style= {{marginRight: "20px"}}>
              <BuildIcon style = {{width:"100px" , height:"100px" , borderRadius: "50%" , border: "2px solid black" , padding: "40px"}}/>
-                 <h3>Automate the Year</h3>
-                 <h3 style={{fontWeight:"500"}}>With Mataka you can set up a day or a full academic year of practices and events.</h3>
+                 <h2> Automate the Year </h2>
+                 <p style={{fontWeight:"500"}}>With Mataka you can set up a day or a full academic year of practices and events.</p>
              </div>
          </div>
          <div className="footer-marketing" ><h3>Created By Lambda Students</h3></div>
 
          
+     </div> 
      </div>
         
 
