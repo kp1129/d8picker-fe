@@ -67,10 +67,14 @@ const Calendar = props => {
               return {
                 id: event.uuid,
                 start: event.isAllDayEvent
-                  ? moment(event.startDate).format("YYYY-MM-DD")
+                  ? moment(event.startDate)
+                      .local()
+                      .format("YYYY-MM-DD")
                   : event.startTime,
                 end: event.isAllDayEvent
-                  ? moment(event.endDate).format("YYYY-MM-DD")
+                  ? moment(event.endDate)
+                      .local()
+                      .format("YYYY-MM-DD")
                   : event.endTime,
                 title: event.eventTitle,
                 location: event.eventLocation,
