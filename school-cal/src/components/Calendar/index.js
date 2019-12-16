@@ -94,10 +94,12 @@ const Calendar = props => {
     const { id, start, end, title, allDay, extendedProps } = info.event
 
     setUserCalendarEvent({
-      startDate: moment(start).format("YYYY-MM-DD"),
-      endDate: end
-        ? moment(end).format("YYYY-MM-DD")
-        : moment(start).format("YYYY-MM-DD"),
+      startDate: moment(start).format(),
+      endDate: allDay
+        ? moment(end)
+            .subtract(1, "days")
+            .format()
+        : moment(end).format(),
 
       startTime: allDay
         ? moment(start)
@@ -131,8 +133,8 @@ const Calendar = props => {
 
     setUserCalendarEvent({
       calendarUuid: primaryCalendar.uuid,
-      startDate: moment(info.date).format("YYYY-MM-DD"),
-      endDate: moment(info.date).format("YYYY-MM-DD"),
+      startDate: moment(info.date).format(),
+      endDate: moment(info.date).format(),
       startTime: moment(info.date)
         .hours(moment().hours())
         .toISOString(true),
@@ -152,9 +154,13 @@ const Calendar = props => {
   }
 
   const handleDatesSelection = info => {
+    const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
     setUserCalendarEvent({
-      startDate: moment(info.startStr).format("YYYY-MM-DD"),
-      endDate: moment(info.endStr).format("YYYY-MM-DD"),
+      calendarUuid: primaryCalendar.uuid,
+      startDate: moment(info.startStr).format(),
+      endDate: moment(info.endStr)
+        .subtract(1, "days")
+        .format(),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
@@ -209,6 +215,14 @@ const Calendar = props => {
         droppable={true}
         editable={true}
         select={handleDatesSelection}
+        eventDataTransform={event => {
+          event.end = event.allDay
+            ? moment(event.end)
+                .add(1, "days")
+                .format()
+            : moment(event.end).format()
+          return event
+        }}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
