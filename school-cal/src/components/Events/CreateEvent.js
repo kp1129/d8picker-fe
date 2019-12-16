@@ -21,12 +21,12 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import {
   MuiPickersUtilsProvider,
   DatePicker,
-  TimePicker,
+  TimePicker
 } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
@@ -36,7 +36,7 @@ const CreateEvent = ({ open, handleClose }) => {
     isLoading,
     createUserCalendarEvent,
     userCalendarEvent,
-    userCalendars,
+    userCalendars
   } = useContext(CalendarContext)
 
   const [calendars, setCalendars] = useState([])
@@ -54,8 +54,8 @@ const CreateEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
-          values.startDate = moment(values.startDate).format("YYYY-MM-DD")
-          values.endDate = moment(values.endDate).format("YYYY-MM-DD")
+          values.startDate = moment(values.startDate).format()
+          values.endDate = moment(values.endDate).format()
           values.startTime = values.isAllDayEvent
             ? null
             : moment(values.startDate)
@@ -95,10 +95,10 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "#F5945B",
     padding: theme.spacing(1, 3),
     borderRadius: "5px",
-    border: "2px solid #F5945B",
+    border: "2px solid #F5945B"
   },
   buttonLabel: {
-    textTransform: "none",
+    textTransform: "none"
   },
   cancelButton: {
     backgroundColor: "#FFFFFF",
@@ -106,26 +106,26 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #F5945B",
     boxSizing: "border-box",
     borderRadius: "5px",
-    color: "#F5945B",
+    color: "#F5945B"
   },
   noteTextField: {
     background: "#F2D2BF",
-    borderRadius: "5px",
+    borderRadius: "5px"
   },
   dateTextField: {
     background: "#F2D2BF",
-    borderRadius: "5px",
+    borderRadius: "5px"
   },
   allDayCheckBoxContainer: {
     textAlign: "left",
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   calendarSelection: {
-    width: "100%",
+    width: "100%"
   },
   calendarSelectionContainer: {
-    margin: theme.spacing(1),
-  },
+    margin: theme.spacing(1)
+  }
 }))
 const CreateEventForm = ({
   values,
@@ -135,7 +135,7 @@ const CreateEventForm = ({
   handleClose,
   open,
   isLoading,
-  calendars,
+  calendars
 }) => {
   const [primaryCalendar, setPrimaryCalendar] = useState("")
   const isAllDayEvent = values.isAllDayEvent
@@ -279,7 +279,7 @@ const CreateEventForm = ({
             <Button
               classes={{
                 root: classes.createButton,
-                label: classes.buttonLabel,
+                label: classes.buttonLabel
               }}
               type="submit">
               {!isLoading ? (
@@ -291,7 +291,7 @@ const CreateEventForm = ({
             <Button
               classes={{
                 root: classes.cancelButton,
-                label: classes.buttonLabel,
+                label: classes.buttonLabel
               }}
               onClick={handleClose}
               type="button">
