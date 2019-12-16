@@ -50,7 +50,7 @@ function Marketing() {
                  <h3>Schedule Events Fast</h3>
                  <h3 style={{fontWeight:"500"}}>At Mataka we respect your time. Our design is conduvtive to the fastest way of scheduling events in masse.</h3>
              </div>
-             <div className="market-card">
+             <div className="market-card" >
              <CreateIcon style = {{width:"100px" , height:"100px" , borderRadius: "50%" , border: "2px solid black" , padding: "40px"}}/>
                  <h3>Inform Students Automatically</h3>
                  <h3 style={{fontWeight:"500"}}>Mataka will send an automated message of your preference 48 hours before all events. Also, gets pushed to the student's calendar.</h3>
