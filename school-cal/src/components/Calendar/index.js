@@ -73,7 +73,14 @@ const Calendar = props => {
                 note: event.eventNote,
                 allDay: event.isAllDayEvent,
                 rrule: event.rrule,
-                isRepeatingEvent: event.isRepeatingEvent
+                isRepeatingEvent: event.isRepeatingEvent,
+                duration: Boolean(event.rrule)
+                  ? moment
+                      .duration(
+                        moment(event.endTime).diff(moment(event.startTime))
+                      )
+                      .asMilliseconds()
+                  : ""
               }
             }),
             color: calendar.calendarColor
@@ -215,13 +222,12 @@ const Calendar = props => {
         droppable={true}
         editable={true}
         select={handleDatesSelection}
-        eventDataTransform={event => {
-          event.end = event.allDay
-            ? moment(event.end)
-                .add(1, "days")
-                .format()
-            : moment(event.end).format()
-          return event
+        eventAllow={(dropInfo, draggedEvent) => {
+          if (!draggedEvent.extendedProps.isRepeatingEvent) {
+            return true
+          } else {
+            return false
+          }
         }}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
