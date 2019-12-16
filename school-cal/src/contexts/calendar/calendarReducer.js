@@ -20,7 +20,7 @@ import {
   SET_USER_CALENDAR_EVENT,
   SET_SHOW_EVENTS,
   SET_CALENDAR_COLORS_SUCCESS,
-  SET_CALENDAR_UTILITIES_FAILURE,
+  SET_CALENDAR_UTILITIES_FAILURE
 } from "./types"
 
 const calendarFormat = calendar => {
@@ -30,34 +30,26 @@ const calendarFormat = calendar => {
     showEvents: Boolean(calendar.isDefault),
     isDefault: Boolean(calendar.isDefault),
     isOwner: Boolean(calendar.isOwner),
-    isPrivate: Boolean(calendar.isPrivate),
+    isPrivate: Boolean(calendar.isPrivate)
   }
 }
 
 const eventFormat = event => {
   return {
     ...event,
-    startDate: Boolean(event.isAllDayEvent)
-      ? moment(event.startDate)
-          .add(1, "days")
-          .format("YYYY-MM-DD")
-      : moment(event.startDate).format("YYYY-MM-DD"),
-    endDate: Boolean(event.isAllDayEvent)
-      ? moment(event.endDate)
-          .add(1, "days")
-          .format("YYYY-MM-DD")
-      : moment(event.endDate).format("YYYY-MM-DD"),
+    startDate: moment(event.startDate).format(),
+    endDate: moment(event.endDate).format(),
     isAllDayEvent: Boolean(event.isAllDayEvent),
     isPrivate: Boolean(event.isPrivate),
     isRepeatingEvent: Boolean(event.isRepeatingEvent),
-    rrule: event.rrule,
+    rrule: event.rrule
   }
 }
 
 const setIsLoading = (state, action) => {
   return {
     ...state,
-    isLoading: action.payload,
+    isLoading: action.payload
   }
 }
 
@@ -65,7 +57,7 @@ const setUserCalendarsSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendars: action.payload.map(calendarFormat),
+    userCalendars: action.payload.map(calendarFormat)
   }
 }
 
@@ -73,7 +65,7 @@ const setUserCalendarsFailure = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendarsError: action.payload,
+    userCalendarsError: action.payload
   }
 }
 const setUserCalendarSuccess = (state, action) => {
@@ -81,8 +73,8 @@ const setUserCalendarSuccess = (state, action) => {
     ...state,
     isLoading: false,
     userCalendar: state.userCalendars.find(
-      calendar => calendar.uuid === action.payload,
-    ),
+      calendar => calendar.uuid === action.payload
+    )
   }
 }
 const setCreateUserCalendarSuccess = (state, action) => {
@@ -92,7 +84,7 @@ const setCreateUserCalendarSuccess = (state, action) => {
     ...state,
     isLoading: false,
     userCalendars: [...state.userCalendars, calendar],
-    userCalendar: calendar,
+    userCalendar: calendar
   }
 }
 const setEditUserCalendarSuccess = (state, action) => {
@@ -103,8 +95,8 @@ const setEditUserCalendarSuccess = (state, action) => {
     userCalendars: state.userCalendars.map(calendar =>
       calendar.uuid === action.payload.uuid
         ? calendarFormat(action.payload)
-        : calendar,
-    ),
+        : calendar
+    )
   }
 }
 
@@ -113,16 +105,16 @@ const setDeleteUserCalendarSuccess = (state, action) => {
     ...state,
     isLoading: false,
     userCalendars: state.userCalendars.filter(
-      calendar => calendar.uuid !== action.payload,
+      calendar => calendar.uuid !== action.payload
     ),
-    userCalendar: state.userCalendars.find(calendar => calendar.isDefault),
+    userCalendar: state.userCalendars.find(calendar => calendar.isDefault)
   }
 }
 
 const setCalendarSubscriptionId = (state, action) => {
   return {
     ...state,
-    calendarSubscriptionId: action.payload,
+    calendarSubscriptionId: action.payload
   }
 }
 const setSubscribedCalendarsSuccess = (state, action) => {
@@ -130,7 +122,7 @@ const setSubscribedCalendarsSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendars: [...state.userCalendars, calendar],
+    userCalendars: [...state.userCalendars, calendar]
   }
 }
 const setUnsubscribeCalendarSuccess = (state, action) => {
@@ -138,8 +130,8 @@ const setUnsubscribeCalendarSuccess = (state, action) => {
     ...state,
     isLoading: false,
     subscribedCalendars: state.subscribedCalendars.filter(
-      calendar => calendar.uuid !== action.payload,
-    ),
+      calendar => calendar.uuid !== action.payload
+    )
   }
 }
 
@@ -147,7 +139,7 @@ const setCalendarSubscriptionFailure = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    calendarSubscriptionErrors: action.payload,
+    calendarSubscriptionErrors: action.payload
   }
 }
 
@@ -164,8 +156,8 @@ const setMyCalendarEventsSuccess = (state, action) => {
         } else {
           return calendar
         }
-      }),
-    ],
+      })
+    ]
   }
 }
 
@@ -173,7 +165,7 @@ const setMyCalendarEventsFailure = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendarEventsError: action.payload,
+    userCalendarEventsError: action.payload
   }
 }
 
@@ -186,12 +178,12 @@ const setCreateUserCalendarEventSuccess = (state, action) => {
         if (calendar.uuid === action.payload.calendarUuid) {
           calendar.events = [
             ...calendar.events,
-            eventFormat(action.payload.event),
+            eventFormat(action.payload.event)
           ]
         }
         return calendar
-      }),
-    ],
+      })
+    ]
   }
 }
 
@@ -204,12 +196,12 @@ const setEditUserCalendarEventSuccess = (state, action) => {
         calendar.events = calendar.events.map(event =>
           event.uuid === action.payload.uuid
             ? eventFormat(action.payload)
-            : event,
+            : event
         )
 
         return calendar
-      }),
-    ],
+      })
+    ]
   }
 }
 
@@ -220,11 +212,11 @@ const setDeleteUserCalendarEventSuccess = (state, action) => {
     userCalendars: [
       ...state.userCalendars.map(calendar => {
         calendar.events = calendar.events.filter(
-          event => event.uuid !== action.payload,
+          event => event.uuid !== action.payload
         )
         return calendar
-      }),
-    ],
+      })
+    ]
   }
 }
 
@@ -232,14 +224,14 @@ const setCrudOpsCalendarEventFailure = (state, action) => {
   return {
     ...state,
     isLoading: false,
-    userCalendarEventsError: action.payload,
+    userCalendarEventsError: action.payload
   }
 }
 
 const setUserCalendarEvent = (state, action) => {
   return {
     ...state,
-    userCalendarEvent: action.payload,
+    userCalendarEvent: action.payload
   }
 }
 
@@ -254,15 +246,15 @@ const setShowEvents = (state, action) => {
         } else {
           return calendar
         }
-      }),
-    ],
+      })
+    ]
   }
 }
 
 const setCalendarColorsSuccess = (state, action) => {
   return {
     ...state,
-    calendarColors: action.payload,
+    calendarColors: action.payload
   }
 }
 
