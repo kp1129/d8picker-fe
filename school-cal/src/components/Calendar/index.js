@@ -66,8 +66,12 @@ const Calendar = props => {
             events: calendar.events.map(event => {
               return {
                 id: event.uuid,
-                start: event.isAllDayEvent ? event.startDate : event.startTime,
-                end: event.isAllDayEvent ? event.endDate : event.endTime,
+                start: event.isAllDayEvent
+                  ? moment(event.startDate).format("YYYY-MM-DD")
+                  : event.startTime,
+                end: event.isAllDayEvent
+                  ? moment(event.endDate).format("YYYY-MM-DD")
+                  : event.endTime,
                 title: event.eventTitle,
                 location: event.eventLocation,
                 note: event.eventNote,
