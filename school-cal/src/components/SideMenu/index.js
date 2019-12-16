@@ -4,7 +4,7 @@ import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 import MyCalendars from "./MyCalendars"
 import SubscribedCalendars from "./SubscribedCalendars"
-
+import UpcomingEvents from "./UpcomingEvents"
 import {
   Divider,
   Drawer,
@@ -57,15 +57,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const SideMenu = () => {
-  const [upComingEvents, setUpComingEvents] = useState([])
-  const [userCalendar, setUserCalendar] = useState(null)
+const SideMenu = ({ history }) => {
+  //const [userCalendar, setUserCalendar] = useState(null)
   const { userProfile } = useContext(AuthContext)
   const {
     userCalendars,
+    userCalendar,
     getMyCalendarEvents,
     unSubscribeCalendar,
     setShowEvents,
+    setUserCalendar,
   } = useContext(CalendarContext)
 
   // set user default calendar to the select list
@@ -73,33 +74,21 @@ const SideMenu = () => {
   useEffect(() => {
     if (userCalendars.length > 0) {
       const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
-      setUserCalendar(primaryCalendar)
+      setUserCalendar(primaryCalendar.uuid)
     }
   }, [userCalendars])
 
   useEffect(() => {
-    if (userCalendar) {
+    if (userCalendar.uuid) {
       getMyCalendarEvents(userCalendar.uuid)
     }
   }, [userCalendar])
 
-  // get user upcoming events
-
   // useEffect(() => {
-  //   if (userCalendarEvents.length > 0) {
-  //     const events = userCalendarEvents.filter(event =>
-  //       moment(event.startTime).isAfter(),
-  //     )
-
-  //     const sorted = events
-  //       .sort((a, b) => moment(a.startTime) - moment(b.startTime))
-  //       .slice(0, 5)
-
-  //     setUpComingEvents(sorted)
-  //   } else {
-  //     setUpComingEvents([])
+  //   if (userCalendar) {
+  //     setUserCalendar(userCalendar.uuid)
   //   }
-  // }, [userCalendarEvents])
+  // }, [userCalendar])
 
   const handleCalendarChange = calendarUuid => {
     const myCalendar = userCalendars.find(
@@ -137,6 +126,7 @@ const SideMenu = () => {
             <MyCalendars
               userCalendars={userCalendars}
               onChange={handleCalendarChange}
+              history={history}
             />
           </ListItem>
           <Divider />
@@ -149,17 +139,7 @@ const SideMenu = () => {
           </ListItem>
           <Divider />
           <ListItem>
-            <ListItemText className={classes.upComingEventsContainer}>
-              <Typography variant="h5">Upcoming Events</Typography>
-              <List dense>
-                {upComingEvents.length > 0 &&
-                  upComingEvents.map(event => (
-                    <ListItem key={event.uuid}>
-                      <ListItemText>{event.eventTitle}</ListItemText>
-                    </ListItem>
-                  ))}
-              </List>
-            </ListItemText>
+            <UpcomingEvents />
           </ListItem>
         </List>
       </Drawer>

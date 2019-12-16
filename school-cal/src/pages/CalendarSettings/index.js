@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-
+import { clientWithAuth } from "../../utilities/api"
 import {
   Divider,
   Drawer,
@@ -55,6 +55,7 @@ const CalendarSettings = ({ history, match }) => {
   } = useContext(CalendarContext)
 
   const classes = useStyles()
+
   const { cal_uuid } = match.params
 
   useEffect(() => {

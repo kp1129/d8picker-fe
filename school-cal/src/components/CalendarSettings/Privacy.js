@@ -46,7 +46,7 @@ const Privacy = ({ calendar, editUserCalendarPrivacy }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (calendar) {
+    if (calendar && calendar.uuid) {
       const getSubscribers = async () => {
         const subscribers = await clientWithAuth(
           `/api/calendars/${calendar.uuid}/subscribers`,
@@ -61,7 +61,7 @@ const Privacy = ({ calendar, editUserCalendarPrivacy }) => {
 
   const getSubcribableLink = async () => {
     const link = await clientWithAuth(
-      `/api/calendars/${calendar.uuid}/?subscribableLink=true`,
+      `/api/calendars/${calendar.uuid}/subscribableLink/?subscribableLink=true`,
     )
 
     setSubscribableLink(link.data)

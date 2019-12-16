@@ -58,7 +58,7 @@ const AdminDashBoard = props => {
       <Grid container>
         <Navbar />
         <Grid item xs={3}>
-          <SideMenu />
+          <SideMenu history={props.history} />
         </Grid>
         <Grid item xs={9} className={classes.content}>
           <div className={classes.toolbar} />

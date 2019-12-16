@@ -25,9 +25,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
   },
 }))
-const MyCalendars = ({ userCalendars, onChange }) => {
+const MyCalendars = ({ userCalendars, onChange, history }) => {
   const classes = useStyles()
-  const { getUserCalendar } = useContext(CalendarContext)
+  const { setUserCalendar } = useContext(CalendarContext)
   const [anchorEl, setAnchorEl] = useState(null)
   const [menus, setMenus] = useState([])
   const [createCalendar, openCreateCalendar] = useState(false)
@@ -42,7 +42,8 @@ const MyCalendars = ({ userCalendars, onChange }) => {
   }, [userCalendars])
 
   const handleCalendarSettings = calendarUuid => {
-    getUserCalendar(calendarUuid)
+    setUserCalendar(calendarUuid)
+    history.push(`/calendar-settings/${calendarUuid}`)
   }
 
   const handleClose = index => () => {
@@ -76,10 +77,7 @@ const MyCalendars = ({ userCalendars, onChange }) => {
                 open={menus[index]}
                 keepMounted
                 onClose={handleClose(index)}>
-                <MenuItem
-                  component={Link}
-                  to={`/calendar-settings/${calendar.uuid}`}
-                  onClick={() => handleCalendarSettings(calendar.uuid)}>
+                <MenuItem onClick={() => handleCalendarSettings(calendar.uuid)}>
                   Settings
                 </MenuItem>
               </Menu>

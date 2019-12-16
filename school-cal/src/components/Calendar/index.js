@@ -14,27 +14,28 @@ import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import rrulePlugin from "@fullcalendar/rrule"
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
 import "@fullcalendar/timegrid/main.css"
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(3)
   },
   createButton: {
     backgroundColor: "#F5945B",
-    marginRight: theme.spacing(3),
+    marginRight: theme.spacing(3)
   },
   buttonLabel: {
-    textTransform: "none",
-  },
+    textTransform: "none"
+  }
 }))
 
 const Calendar = props => {
   const classes = useStyles()
   const { setUserCalendarEvent, userCalendar, userCalendars } = useContext(
-    CalendarContext,
+    CalendarContext
   )
 
   const [createEvent, openCreateEvent] = useState(false)
@@ -55,7 +56,7 @@ const Calendar = props => {
     eventTitle: "",
     eventLocation: "",
     eventNote: "",
-    isAllDayEvent: false,
+    isAllDayEvent: false
   }
   useEffect(() => {
     if (userCalendars.length > 0) {
@@ -70,10 +71,19 @@ const Calendar = props => {
                 title: event.eventTitle,
                 location: event.eventLocation,
                 note: event.eventNote,
-                allDay: event.isAllDayEvent === 1 ? true : false,
+                allDay: event.isAllDayEvent,
+                rrule: event.rrule,
+                isRepeatingEvent: event.isRepeatingEvent,
+                duration: Boolean(event.rrule)
+                  ? moment
+                      .duration(
+                        moment(event.endTime).diff(moment(event.startTime))
+                      )
+                      .asMilliseconds()
+                  : ""
               }
             }),
-            color: calendar.calendarColor,
+            color: calendar.calendarColor
           }
         } else {
           return { events: [] }
@@ -91,57 +101,77 @@ const Calendar = props => {
     const { id, start, end, title, allDay, extendedProps } = info.event
 
     setUserCalendarEvent({
-      startDate: moment(start).format("YYYY-MM-DD"),
+      startDate: moment(start).format(),
       endDate: allDay
-        ? moment(start).format("YYYY-MM-DD")
-        : moment(end).format("YYYY-MM-DD"),
+        ? moment(end)
+            .subtract(1, "days")
+            .format()
+        : moment(end).format(),
+
       startTime: allDay
         ? moment(start)
-            .hours(6)
+            .hours(moment().hours())
             .toISOString()
         : moment(start).toISOString(true),
       endTime: allDay
         ? moment(start)
-            .hours(7)
+            .hours(
+              moment()
+                .add(1, "hours")
+                .hours()
+            )
             .toISOString()
+        : extendedProps.isRepeatingEvent
+        ? moment(extendedProps.end).toISOString()
         : moment(end).toISOString(true),
       eventTitle: title,
       eventLocation: extendedProps.location,
       eventNote: extendedProps.note,
+      isRepeatingEvent: extendedProps.isRepeatingEvent,
       isAllDayEvent: allDay,
-      uuid: id,
+      uuid: id
     })
 
     openEditEvent(true)
   }
 
   const handleDateClick = info => {
+    const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
+
     setUserCalendarEvent({
-      calendarUuid: userCalendars.find(calendar => calendar.isDefault).uuid,
-      startDate: moment(info.date).format("YYYY-MM-DD"),
-      endDate: moment(info.date).format("YYYY-MM-DD"),
+      calendarUuid: primaryCalendar.uuid,
+      startDate: moment(info.date).format(),
+      endDate: moment(info.date).format(),
       startTime: moment(info.date)
-        .hours(6)
+        .hours(moment().hours())
         .toISOString(true),
       endTime: moment(info.date)
-        .hours(7)
+        .hours(
+          moment()
+            .add(1, "hours")
+            .hours()
+        )
         .toISOString(true),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
-      isAllDayEvent: false,
+      isAllDayEvent: false
     })
     openCreateEvent(true)
   }
 
   const handleDatesSelection = info => {
+    const primaryCalendar = userCalendars.find(calendar => calendar.isDefault)
     setUserCalendarEvent({
-      startTime: moment(info.startStr).hours(0),
-      endTime: moment(info.endStr).hours(0),
+      calendarUuid: primaryCalendar.uuid,
+      startDate: moment(info.startStr).format(),
+      endDate: moment(info.endStr)
+        .subtract(1, "days")
+        .format(),
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
-      isAllDayEvent: false,
+      isAllDayEvent: true
     })
     openCreateEvent(true)
   }
@@ -158,7 +188,7 @@ const Calendar = props => {
           <Button
             classes={{
               root: classes.createButton,
-              label: classes.buttonLabel,
+              label: classes.buttonLabel
             }}
             startIcon={<AddIcon />}
             onClick={() => openCreateEvent(true)}>
@@ -176,16 +206,29 @@ const Calendar = props => {
         header={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay",
+          right: "dayGridMonth,dayGridWeek,dayGridDay"
         }}
         defaultView="dayGridMonth"
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        plugins={[
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin,
+          rrulePlugin
+        ]}
         eventClick={handleEventClick}
         eventSources={[...userCalendarEvents]}
         dateClick={handleDateClick}
         selectable={true}
         droppable={true}
         editable={true}
+        select={handleDatesSelection}
+        eventAllow={(dropInfo, draggedEvent) => {
+          if (!draggedEvent.extendedProps.isRepeatingEvent) {
+            return true
+          } else {
+            return false
+          }
+        }}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
