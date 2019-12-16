@@ -37,10 +37,8 @@ const calendarFormat = calendar => {
 const eventFormat = event => {
   return {
     ...event,
-    startDate: moment(event.startDate).format("YYYY-MM-DD"),
-    endDate: moment(event.endDate).format("YYYY-MM-DD"),
-    startTime: moment(event.startTime).format(),
-    endTime: moment(event.endTime).format(),
+    startDate: moment(event.startDate).format(),
+    endDate: moment(event.endDate).format(),
     isAllDayEvent: Boolean(event.isAllDayEvent),
     isPrivate: Boolean(event.isPrivate),
     isRepeatingEvent: Boolean(event.isRepeatingEvent),
