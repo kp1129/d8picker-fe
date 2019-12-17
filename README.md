@@ -1,92 +1,78 @@
 
-# 1️⃣ School Calendar
+# School Calendar
 
-1️⃣ You can find the deployed project at https://nervous-leakey-68fd24.netlify.com/.
+You can find the deployed project at https://labs17-school-calendar-dev.netlify.com/
 
-## 4️⃣ Contributors
+## :one:  Developers and Designers
 
+![contributors](school-cal/src/assets/images/Contributors.png)
 
-
-|                                       [Maksim Vakarchuk](https://github.com/maks112v)                                        |                                       [Thai Nguyen](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/)                                        |                                       [Landry Irakoze](https://github.com/LandryIrakoze)                                        |
-| [Fnu Bharti](https://github.com/bharti3bk) 
-|                                       [Aaryn](https://github.com/)                                        |                                       [Carlos Hernandez](https://github.com/)                                        |  
+## :two: Contact Information
+|                                                                                                                      [Thai Nguyen](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/)                                        |                                       [Landry Irakoze](https://github.com/LandryIrakoze)                                        |
+ [Fnu Bharti](https://github.com/bharti3bk) 
+|                                       [Aaryn McDade](https://github.com/)                                        |
+                                       [Carlos Hernandez](https://github.com/)                                        |  
 
 <br>
-<br>
 
+## :three: Project Overview
 
+:memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
 
-## Project Overview
+:memo: [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
 
-1️⃣ [Trello Board](https://trello.com/b/pLW0q0PL/main)
+:memo: [UX Design files](https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0)
 
-1️⃣ [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
-
-1️⃣ [UX Design files]https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0
+:memo: [API Documentations](https://lab17-makata.herokuapp.com/api-docs/)
 
 School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
 Along with these things notifying changes to a schedule the coach would like to update things inside the events such as time and location. The last key feature would be event templates that can be placed in bulk across unrelated days.
 
 
-
-
 ### 4️⃣ Key Features
 
--    Event template creation
--    Re-Occuring Events
+-    Users authentication
+-    Create, Edit, and Delete calendars
+-    Create, Edit, and Delete simple events
+-    Display upcoming events
+-    Handle Re-Occuring Events
 -    Interactive Visual Calendar
--    Third Party Calendar Integration
--    Notifications 
-
-## 1️⃣ Tech Stack
-
-### Front end built using:
-
-#### React Hooks
 
 
+## :five: Tech Stack
+
+### Front End built using:
+
+#### React
 
 -    Provides good code bases for things like calendars.
 -    Group knowledge of it.
--    hooks makes things more simple
+-    Hooks makes things more simple.
+-    Context API provides state-management and seemlessly intergrates with browser's local storage
 
+### Material-UI
 
-
+-   Integrates seemlessly with React
+-   Provides custom and overiding styles to match the design color pallete
 
 #### Front end deployed to `Netlify`
 
-#### [Back end]Heroku built using:
+-   Makes it easy to rapidly deploy code by connection Netlify and Github
+
+### Back End build using
 
 #### Node.JS
 
--    Physical Backend
--    Easy Setup
--    Using twilio
-
-
-
-# APIs
-
+-   Provides an easy way to implement code following MVC model
+-   Knex JS allows simple and flexible query-building
+-   API routes are implemented using Express.
+  
 
 
 ## 3️⃣ Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following: (I can update to the actual .env code)
-
-
-
-# 5️⃣ Content Licenses
-
-
-
-| Image Filename | Source / Creator | License                                                                      |
-| -------------- | ---------------- | ---------------------------------------------------------------------------- |
-|    |    |  |
-|    |    |  |
-
-# 4️⃣ Testing
-
 
 
 # 4️⃣ Installation Instructions
