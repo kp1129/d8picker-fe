@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-import { clientWithAuth } from "../../utilities/api"
 import {
   Divider,
   Drawer,
@@ -9,7 +8,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from "@material-ui/core"
 import ShareIcon from "@material-ui/icons/Share"
 import SettingsIcon from "@material-ui/icons/Settings"
@@ -26,32 +25,32 @@ const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(3)
   },
 
   toolbar: theme.mixins.toolbar,
 
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   settingContainer: {
-    margin: theme.spacing(3, 0),
-  },
+    margin: theme.spacing(3, 0)
+  }
 }))
 
 const CalendarSettings = ({ history, match }) => {
   const {
     userCalendar,
     editUserCalendarPrivacy,
-    deleteUserCalendar,
+    deleteUserCalendar
   } = useContext(CalendarContext)
 
   const classes = useStyles()

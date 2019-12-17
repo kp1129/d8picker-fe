@@ -1,20 +1,13 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect } from "react"
 import { AuthContext } from "../../contexts/auth/authState"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 
 import MyCalendars from "./MyCalendars"
 import SubscribedCalendars from "./SubscribedCalendars"
 import UpcomingEvents from "./UpcomingEvents"
-import {
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@material-ui/core"
+import { Divider, Drawer, List, ListItem, Typography } from "@material-ui/core"
 
-import TwilioMessage from "../addUserTwilioMessage/index"
+//import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -23,38 +16,38 @@ import { makeStyles } from "@material-ui/core/styles"
 const drawerWidth = 300
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
+    display: "flex"
   },
 
   toolbar: theme.mixins.toolbar,
 
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   listItemContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "flex-start"
   },
   userProfileContainer: {
     display: "flex",
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: "column"
   },
 
   upComingEventsContainer: {
     display: "flex",
     justifyContent: "center",
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4)
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 180,
-  },
+    minWidth: 180
+  }
 }))
 
 const SideMenu = ({ history }) => {
@@ -66,7 +59,7 @@ const SideMenu = ({ history }) => {
     getMyCalendarEvents,
     unSubscribeCalendar,
     setShowEvents,
-    setUserCalendar,
+    setUserCalendar
   } = useContext(CalendarContext)
 
   // set user default calendar to the select list
@@ -84,15 +77,9 @@ const SideMenu = ({ history }) => {
     }
   }, [userCalendar])
 
-  // useEffect(() => {
-  //   if (userCalendar) {
-  //     setUserCalendar(userCalendar.uuid)
-  //   }
-  // }, [userCalendar])
-
   const handleCalendarChange = calendarUuid => {
     const myCalendar = userCalendars.find(
-      calendar => calendar.uuid === calendarUuid,
+      calendar => calendar.uuid === calendarUuid
     )
 
     if (myCalendar.showEvents) {

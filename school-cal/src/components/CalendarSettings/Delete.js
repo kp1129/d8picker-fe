@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import {
   Button,
-  CircularProgress,
   Card,
   CardActions,
   CardHeader,
@@ -11,8 +10,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -22,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1, 3),
     borderRadius: "5px",
     border: "2px solid #F5945B",
-    marginLeft: "8px",
+    marginLeft: "8px"
   },
   cancelButton: {
     backgroundColor: "#FFFFFF",
@@ -30,11 +28,11 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #F5945B",
     boxSizing: "border-box",
     borderRadius: "5px",
-    color: "#F5945B",
+    color: "#F5945B"
   },
   buttonLabel: {
-    textTransform: "none",
-  },
+    textTransform: "none"
+  }
 }))
 const DeleteCalendar = ({ calendar, deleteUserCalendar }) => {
   const classes = useStyles()
@@ -80,7 +78,7 @@ const DeleteCalendar = ({ calendar, deleteUserCalendar }) => {
                 size="small"
                 classes={{
                   root: classes.deleteButton,
-                  label: classes.buttonLabel,
+                  label: classes.buttonLabel
                 }}
                 onClick={() => openConfirmationDialog(true)}>
                 Delete Calendar
@@ -103,7 +101,7 @@ const ConfirmationDialog = ({
   open,
   calendar,
   handleClose,
-  deleteCalendar,
+  deleteCalendar
 }) => {
   const classes = useStyles()
   return (
@@ -121,7 +119,7 @@ const ConfirmationDialog = ({
             onClick={deleteCalendar}
             classes={{
               root: classes.deleteButton,
-              label: classes.buttonLabel,
+              label: classes.buttonLabel
             }}>
             Delete
           </Button>
@@ -129,7 +127,7 @@ const ConfirmationDialog = ({
             onClick={handleClose}
             classes={{
               root: classes.cancelButton,
-              label: classes.buttonLabel,
+              label: classes.buttonLabel
             }}>
             Cancel
           </Button>

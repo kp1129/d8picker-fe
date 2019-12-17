@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+
 import {
   Checkbox,
   IconButton,
@@ -10,7 +10,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import AddIcon from "@material-ui/icons/Add"
@@ -22,8 +22,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     width: "100%",
     alignItems: "center",
-    justifyContent: "space-between",
-  },
+    justifyContent: "space-between"
+  }
 }))
 const MyCalendars = ({ userCalendars, onChange, history }) => {
   const classes = useStyles()
