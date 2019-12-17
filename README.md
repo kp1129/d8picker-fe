@@ -8,10 +8,11 @@ You can find the deployed project at https://labs17-school-calendar-dev.netlify.
 ![contributors](school-cal/src/assets/images/Contributors.png)
 
 ## :two: Contact Information
-|                                                                                                                      [Thai Nguyen](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/)                                        |                                       [Landry Irakoze](https://github.com/LandryIrakoze)                                        |
- [Fnu Bharti](https://github.com/bharti3bk) 
-|                                       [Aaryn McDade](https://github.com/)                                        |
-                                       [Carlos Hernandez](https://github.com/)                                        |  
+|                                                                                                                      [Thai Nguyen (Developer)](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez (Developer)](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/)                                        |                                       [Landry Irakoze (Developer)](https://github.com/LandryIrakoze)                                        |
+ [Fnu Bharti (Developer)](https://github.com/bharti3bk) 
+|                                       [Aaryn McDade (UX Designer)](https://github.com/)                                        |
+                                       [Carlos Hernandez (Developer)](https://github.com/)                                        |  
+                                       [Victor Soto (UX Designer)]()
 
 <br>
 
@@ -24,6 +25,8 @@ You can find the deployed project at https://labs17-school-calendar-dev.netlify.
 :memo: [UX Design files](https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0)
 
 :memo: [API Documentations](https://lab17-makata.herokuapp.com/api-docs/)
+
+:memo: [Database schemas](https://dbdesigner.page.link/SgFU)
 
 School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
@@ -69,10 +72,30 @@ Along with these things notifying changes to a schedule the coach would like to 
 -   API routes are implemented using Express.
   
 
+## :six: Environment Variables
 
-## 3️⃣ Environment Variables
+In order for the app to function correctly, the user must set up their own environment variables. These variables are stored securely on Heroku.
 
-In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following: (I can update to the actual .env code)
+-   DATABASE_URL
+-   JWT_SECRET
+-   SEED_PASSWORD
+-   TWILIO_ACCOUNT_SID
+-   TWILIO_AUTH_TOKEN
+
+## :seven: Credentials
+
+The database is seeded with two user accounts. Users may use them to test or demo the function of the application.
+
+-   tnguyen/makata17
+-   bsmith/makata17
+
+## :eight: Open Questions ❓
+
+-   What if a users want to use their Google credential to log into the application?
+-   Can the application push existing calendars and/or events to a user's Google calendar or Apple Calendar?
+-   How can an calendar creator restrict access to the calendar subscribers.  For example, a subscriber may view the event but can not edit or delete the event.
+-   What are some ways for a user to get notify of a new events?
+-   Imagine a calendar is full of events, how to can a user search for an interested event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia.
 
 
 # 4️⃣ Installation Instructions
