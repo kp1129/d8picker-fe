@@ -3,41 +3,40 @@ import moment from "moment"
 import { clientWithAuth } from "../../utilities/api"
 import {
   Badge,
-  Button,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   Paper,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import MoreUpcomingEvents from "./MoreUpcomingEvents"
 const useStyles = makeStyles(theme => ({
   badge: {
     margin: theme.spacing(1, 0),
-    padding: theme.spacing(0.5, 0),
+    padding: theme.spacing(0.5, 0)
   },
   header: {
-    padding: theme.spacing(0, 2, 0, 0),
+    padding: theme.spacing(0, 2, 0, 0)
   },
   paper: {
     width: "100%",
-    display: "flex",
+    display: "flex"
   },
 
   dateContainer: {
     padding: theme.spacing(1, 2),
     marginRight: theme.spacing(2),
-    color: "white",
-  },
+    color: "white"
+  }
 }))
 const UpcomingEvents = () => {
   const classes = useStyles()
 
   const [upcomingEvents, setUpComingEvents] = useState([])
   const [moreUpcomingEventsDialog, openMoreUpcomingEventsDialog] = useState(
-    false,
+    false
   )
   useEffect(() => {
     const getUpcomingEvents = async () => {
@@ -69,7 +68,7 @@ const UpcomingEvents = () => {
                 <ListItemAvatar
                   className={classes.dateContainer}
                   style={{
-                    backgroundColor: event.calendarColor,
+                    backgroundColor: event.calendarColor
                   }}>
                   <>
                     <Typography align="center">

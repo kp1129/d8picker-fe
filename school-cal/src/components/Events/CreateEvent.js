@@ -73,6 +73,7 @@ const CreateEvent = ({ open, handleClose }) => {
 
           const calendarUuid = values.calendarUuid
           delete values.calendarUuid
+
           createUserCalendarEvent(calendarUuid, values)
           actions.resetForm()
           handleClose()

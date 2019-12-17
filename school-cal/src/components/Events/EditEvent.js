@@ -18,12 +18,12 @@ import {
   FormControlLabel,
   Grid,
   TextField,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import {
   MuiPickersUtilsProvider,
   DatePicker,
-  TimePicker,
+  TimePicker
 } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
 import { makeStyles } from "@material-ui/core/styles"
@@ -32,9 +32,8 @@ const EditEvent = ({ open, handleClose }) => {
   const {
     isLoading,
     userCalendarEvent,
-    setUserCalendarEvent,
     editUserCalendarEvent,
-    deleteUserCalendarEvent,
+    deleteUserCalendarEvent
   } = useContext(CalendarContext)
 
   const handleDeleteEvent = eventUuid => {
@@ -47,8 +46,8 @@ const EditEvent = ({ open, handleClose }) => {
         enableReinitialize
         initialValues={userCalendarEvent}
         onSubmit={async (values, actions) => {
-          values.startDate = moment(values.startDate).format("YYYY-MM-DD")
-          values.endDate = moment(values.endDate).format("YYYY-MM-DD")
+          values.startDate = moment(values.startDate).format()
+          values.endDate = moment(values.endDate).format()
 
           values.startTime = values.isAllDayEvent
             ? null
@@ -92,10 +91,10 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1, 3),
     borderRadius: "5px",
     border: "2px solid #F5945B",
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   buttonLabel: {
-    textTransform: "none",
+    textTransform: "none"
   },
   cancelButton: {
     backgroundColor: "#FFFFFF",
@@ -103,27 +102,27 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #F5945B",
     boxSizing: "border-box",
     borderRadius: "5px",
-    color: "#F5945B",
+    color: "#F5945B"
   },
   deleteButton: {
     border: "2px solid black",
-    borderRadius: "5px",
+    borderRadius: "5px"
   },
   noteTextField: {
     background: "#F2D2BF",
-    borderRadius: "5px",
+    borderRadius: "5px"
   },
 
   dateTextField: {
     background: "#F2D2BF",
-    borderRadius: "5px",
+    borderRadius: "5px"
   },
   allDayCheckBoxContainer: {
-    textAlign: "left",
+    textAlign: "left"
   },
   dialogActions: {
-    justifyContent: "space-between",
-  },
+    justifyContent: "space-between"
+  }
 }))
 
 const EditEventForm = ({
@@ -134,7 +133,7 @@ const EditEventForm = ({
   handleSubmit,
   handleBlur,
   handleClose,
-  handleDeleteEvent,
+  handleDeleteEvent
 }) => {
   const isAllDayEvent = values.isAllDayEvent
 
@@ -250,7 +249,7 @@ const EditEventForm = ({
                 type="button"
                 classes={{
                   root: classes.deleteButton,
-                  label: classes.buttonLabel,
+                  label: classes.buttonLabel
                 }}
                 onClick={() => handleDeleteEvent(values.uuid)}>
                 Delete Event
@@ -260,7 +259,7 @@ const EditEventForm = ({
               <Button
                 classes={{
                   root: classes.createButton,
-                  label: classes.buttonLabel,
+                  label: classes.buttonLabel
                 }}
                 type="submit">
                 {!isLoading ? (
@@ -272,7 +271,7 @@ const EditEventForm = ({
               <Button
                 classes={{
                   root: classes.cancelButton,
-                  label: classes.buttonLabel,
+                  label: classes.buttonLabel
                 }}
                 onClick={handleClose}
                 type="button">

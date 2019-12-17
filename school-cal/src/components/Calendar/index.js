@@ -13,7 +13,7 @@ import moment from "moment"
 import FullCalendar from "@fullcalendar/react"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import timeGridPlugin from "@fullcalendar/timegrid"
-import interactionPlugin, { Draggable } from "@fullcalendar/interaction"
+import interactionPlugin from "@fullcalendar/interaction"
 import rrulePlugin from "@fullcalendar/rrule"
 import "@fullcalendar/core/main.css"
 import "@fullcalendar/daygrid/main.css"
@@ -34,9 +34,11 @@ const useStyles = makeStyles(theme => ({
 
 const Calendar = props => {
   const classes = useStyles()
-  const { setUserCalendarEvent, userCalendar, userCalendars } = useContext(
-    CalendarContext
-  )
+  const {
+    setUserCalendarEvent,
+    userCalendars,
+    editUserCalendarEvent
+  } = useContext(CalendarContext)
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
@@ -181,6 +183,29 @@ const Calendar = props => {
     openCreateEvent(false)
   }
 
+  const handleEventTimeEdit = edit => {
+    const { event } = edit
+    const changes = {
+      startDate: moment(event.start).format("YYYY-MM-DD"),
+      endDate: moment(event.end).format("YYYY-MM-DD"),
+      startTime: event.allDay
+        ? null
+        : moment(event.start)
+            .hours(moment(event.start).hour())
+            .minutes(moment(event.start).minute())
+            .seconds(moment(event.start).second())
+            .toISOString(true),
+      endTime: event.allDay
+        ? null
+        : moment(event.end)
+            .hours(moment(event.end).hour())
+            .minutes(moment(event.end).minute())
+            .seconds(moment(event.end).second())
+            .toISOString(true)
+    }
+    editUserCalendarEvent(event.id, changes)
+  }
+
   return (
     <div>
       <Grid container className={classes.headerContainer}>
@@ -229,6 +254,7 @@ const Calendar = props => {
             return false
           }
         }}
+        eventDrop={handleEventTimeEdit}
       />
       <CreateEvent open={createEvent} handleClose={handleClosingCreateEvent} />
       <EditEvent open={editEvent} handleClose={() => openEditEvent(false)} />
