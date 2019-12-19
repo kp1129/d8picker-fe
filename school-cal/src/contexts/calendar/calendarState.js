@@ -26,6 +26,7 @@ import {
 import calendarReducer from "./calendarReducer"
 import { clientWithAuth } from "../../utilities/api"
 import { loadState, saveState } from "../../utilities/localStorage"
+
 export const CalendarContext = createContext()
 
 export const CalendarState = props => {
@@ -44,7 +45,6 @@ export const CalendarState = props => {
       showEvents: false,
       uuid: ""
     },
-    userCalendarEvents: [],
     userCalendarEvent: {
       calendarUuid: "",
       startDate: "",
@@ -55,8 +55,9 @@ export const CalendarState = props => {
       eventLocation: "",
       eventNote: "",
       isAllDayEvent: false,
+      isRepeatingEvent: false,
       uuid: "",
-      rrule: ""
+      rrule: null
     },
     userCalendarEventsError: null,
     calendarSubscriptionErrors: null,
@@ -289,7 +290,6 @@ export const CalendarState = props => {
         userCalendar: state.userCalendar,
         userCalendars: state.userCalendars,
         userCalendarsError: state.userCalendarsError,
-        userCalendarEvents: state.userCalendarEvents,
         userCalendarEvent: state.userCalendarEvent,
         calendarSubscriptionId: state.calendarSubscriptionId,
         calendarSubscriptionErrors: state.calendarSubscriptionErrors,
