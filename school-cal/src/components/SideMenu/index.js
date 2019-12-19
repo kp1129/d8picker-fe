@@ -5,7 +5,15 @@ import { CalendarContext } from "../../contexts/calendar/calendarState"
 import MyCalendars from "./MyCalendars"
 import SubscribedCalendars from "./SubscribedCalendars"
 import UpcomingEvents from "./UpcomingEvents"
-import { Divider, Drawer, List, ListItem, Typography } from "@material-ui/core"
+import {
+  Avatar,
+  Divider,
+  Drawer,
+  Grid,
+  List,
+  ListItem,
+  Typography
+} from "@material-ui/core"
 
 //import TwilioMessage from "../addUserTwilioMessage/index"
 import EmptyPersonAvatar from "../../assets/images/emptyperson.png"
@@ -21,6 +29,17 @@ const useStyles = makeStyles(theme => ({
 
   toolbar: theme.mixins.toolbar,
 
+  miniBar: {
+    backgroundColor: "#F2D2BF",
+    height: "100vh"
+  },
+  avatar: {
+    width: theme.spacing(12),
+    height: theme.spacing(12),
+    margin: theme.spacing(2, 0),
+    backgroundColor: "#F5945B",
+    fontSize: theme.spacing(4)
+  },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
@@ -103,32 +122,39 @@ const SideMenu = ({ history }) => {
         variant="permanent"
         classes={{ paper: classes.drawerPaper }}>
         <div className={classes.toolbar} />
-        <List>
-          <ListItem className={classes.userProfileContainer}>
-            <img src={EmptyPersonAvatar} alt="image_placeholder" />
-            <Typography variant="h5">{`${userProfile.firstName} ${userProfile.lastName}`}</Typography>
-            <Typography variant="h6">{userProfile.email}</Typography>
-          </ListItem>
-          <ListItem className={classes.listItemContainer}>
-            <MyCalendars
-              userCalendars={userCalendars}
-              onChange={handleCalendarChange}
-              history={history}
-            />
-          </ListItem>
-          <Divider />
-          <ListItem className={classes.subscribedCalendarsContainer}>
-            <SubscribedCalendars
-              userCalendars={userCalendars}
-              onChange={handleCalendarChange}
-              unsubscribeCalendar={handleUnsubscribeCalendar}
-            />
-          </ListItem>
-          <Divider />
-          <ListItem>
-            <UpcomingEvents />
-          </ListItem>
-        </List>
+        <Grid container>
+          <Grid item xs={2} className={classes.miniBar}></Grid>
+          <Grid item xs={10}>
+            <List>
+              <ListItem className={classes.userProfileContainer}>
+                <Avatar className={classes.avatar}>
+                  {userProfile.firstName.charAt(0).toUpperCase() +
+                    userProfile.lastName.charAt(0).toUpperCase()}
+                </Avatar>
+                <Typography variant="h5">{`${userProfile.firstName} ${userProfile.lastName}`}</Typography>
+              </ListItem>
+              <ListItem className={classes.listItemContainer}>
+                <MyCalendars
+                  userCalendars={userCalendars}
+                  onChange={handleCalendarChange}
+                  history={history}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem className={classes.subscribedCalendarsContainer}>
+                <SubscribedCalendars
+                  userCalendars={userCalendars}
+                  onChange={handleCalendarChange}
+                  unsubscribeCalendar={handleUnsubscribeCalendar}
+                />
+              </ListItem>
+              <Divider />
+              <ListItem>
+                <UpcomingEvents />
+              </ListItem>
+            </List>
+          </Grid>
+        </Grid>
       </Drawer>
     </div>
   )
