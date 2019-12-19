@@ -58,7 +58,8 @@ const Calendar = props => {
     eventTitle: "",
     eventLocation: "",
     eventNote: "",
-    isAllDayEvent: false
+    isAllDayEvent: false,
+    repeatSelection: { id: 1, name: "Never" }
   }
   useEffect(() => {
     if (userCalendars.length > 0) {
@@ -76,13 +77,18 @@ const Calendar = props => {
                 allDay: event.isAllDayEvent,
                 rrule: event.rrule,
                 isRepeatingEvent: event.isRepeatingEvent,
+
                 duration: Boolean(event.rrule)
-                  ? moment
-                      .duration(
-                        moment(event.endTime).diff(moment(event.startTime))
-                      )
-                      .asMilliseconds()
-                  : ""
+                  ? Boolean(event.isAllDayEvent)
+                    ? moment
+                        .duration(moment(event.endDate).diff(event.startDate))
+                        .asMilliseconds()
+                    : moment
+                        .duration(
+                          moment(event.endTime).diff(moment(event.startTime))
+                        )
+                        .asMilliseconds()
+                  : 0
               }
             }),
             color: calendar.calendarColor
@@ -101,7 +107,7 @@ const Calendar = props => {
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-
+    console.log("Info ", info.event)
     setUserCalendarEvent({
       startDate: moment(start).format(),
       endDate: allDay
@@ -157,7 +163,9 @@ const Calendar = props => {
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
-      isAllDayEvent: false
+      isAllDayEvent: false,
+      isRepeatingEvent: false,
+      rrule: null
     })
     openCreateEvent(true)
   }
@@ -170,10 +178,13 @@ const Calendar = props => {
       endDate: moment(info.endStr)
         .subtract(1, "days")
         .format(),
+
       eventTitle: "",
       eventLocation: "",
       eventNote: "",
-      isAllDayEvent: true
+      isAllDayEvent: false,
+      isRepeatingEvent: false,
+      rrule: null
     })
     openCreateEvent(true)
   }

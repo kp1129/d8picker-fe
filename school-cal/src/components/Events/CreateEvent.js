@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import moment from "moment"
 import { Formik, Field } from "formik"
-
+import RepeatEvent from "./RepeatEvent"
 import * as Yup from "yup"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
 
@@ -70,10 +70,11 @@ const CreateEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
+          values.isRepeatingEvent = Boolean(values.rrule)
 
           const calendarUuid = values.calendarUuid
           delete values.calendarUuid
-
+          console.log("Values ", values)
           createUserCalendarEvent(calendarUuid, values)
           actions.resetForm()
           handleClose()
@@ -126,6 +127,12 @@ const useStyles = makeStyles(theme => ({
   },
   calendarSelectionContainer: {
     margin: theme.spacing(1)
+  },
+  repeatEventSelectionContainer: {
+    margin: theme.spacing(2, 1)
+  },
+  repeatEventSelection: {
+    width: "100%"
   }
 }))
 const CreateEventForm = ({
@@ -258,6 +265,22 @@ const CreateEventForm = ({
                         </MenuItem>
                       ))}
                   </Select>
+                </FormControl>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                className={classes.repeatEventSelectionContainer}>
+                <Typography>Repeat Settings</Typography>
+                <FormControl className={classes.repeatEventSelection}>
+                  <Field
+                    name="rrule"
+                    component={RepeatEvent}
+                    startTime={values.startTime}
+                    until={moment()
+                      .add(6, "months")
+                      .format()}
+                  />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
