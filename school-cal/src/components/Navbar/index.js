@@ -1,75 +1,46 @@
 /* eslint-disable */
 
-import React, { useContext, useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-
-import { AuthContext } from "../../contexts/auth/authState";
-import { db } from "../../firebase";
+import React, { useContext, useEffect, useState } from "react"
+import { makeStyles } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
+import Button from "@material-ui/core/Button"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import clsx from "clsx"
+import { AuthContext } from "../../contexts/auth/authState"
 
 const Navbar = ({ drawerWidth }) => {
-  const { currentUser, signOut } = useContext(AuthContext);
-  const [userProfile, setUserProfile] = useState(null);
+  const { signOut } = useContext(AuthContext)
 
   const useStyles = makeStyles(theme => ({
-    menuButton: {
-      marginRight: theme.spacing(2)
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1
     },
-    greeting: {
-      marginRight: theme.spacing(2)
+    toolBar: {
+      backgroundColor: "#21242C"
     },
     title: {
       flexGrow: 1
-    },
-    appBar: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
     }
-  }));
+  }))
 
-  const classes = useStyles();
-
-  useEffect(() => {
-    const getUserProfile = async () => {
-      try {
-        const profileRef = await db.collection("users").doc(currentUser.uid);
-
-        const profile = await profileRef.get();
-        setUserProfile(profile.data());
-
-        //setUserProfile(profileRef.get());
-      } catch (error) {
-        console.log("Unable to retrieve user profile.");
-      }
-    };
-
-    getUserProfile();
-  }, []);
-
+  const classes = useStyles()
   return (
-    <div>
+    <>
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            School Calendar
+        <Toolbar className={classes.toolBar}>
+          <Typography variant={"h6"} className={classes.title}>
+            Makata
           </Typography>
-          {userProfile && (
-            <Typography className={classes.greeting}>
-              Hello, {userProfile.firstName}
-            </Typography>
-          )}
           <Button color="inherit" onClick={signOut}>
             Sign Out
           </Button>
         </Toolbar>
       </AppBar>
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default Navbar;
+export default Navbar

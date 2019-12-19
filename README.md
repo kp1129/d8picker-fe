@@ -1,168 +1,122 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline, feel free to add your own flare to it.
 
-🚫 The numbers 1️⃣ through 5️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
+# School Calendar
 
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
+You can find the deployed project at https://labs17-school-calendar-dev.netlify.com/
 
-# 1️⃣ Title of project goes here
+## :one:  Developers and Designers
 
-1️⃣ You can find the deployed project at [🚫URL NAME GOES HERE](🚫copy and paste URL here).
+![contributors](school-cal/src/assets/images/Contributors.png)
 
-## 4️⃣ Contributors
-
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
-
-|                                       [Student 1](https://github.com/)                                        |                                       [Student 2](https://github.com/)                                        |                                       [Student 3](https://github.com/)                                        |                                       [Student 4](https://github.com/)                                        |                                       [Student 5](https://github.com/)                                        |
-| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
-|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
+## :two: Contact Information
+|                                                                                                                      [Thai Nguyen (Developer)](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez (Developer)](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/)                                        |                                       [Landry Irakoze (Developer)](https://github.com/LandryIrakoze)                                        |
+ [Fnu Bharti (Developer)](https://github.com/bharti3bk) 
+|                                       [Aaryn McDade (UX Designer)](https://github.com/)                                        |
+                                       [Carlos Hernandez (Developer)](https://github.com/)                                        |  
+                                       [Victor Soto (UX Designer)]()
 
 <br>
-<br>
 
-🚫 4️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
+## :three: Project Overview
 
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+:memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
 
-🚫 more info on using badges [here](https://github.com/badges/shields)
+:memo: [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
 
-## Project Overview
+:memo: [UX Design files](https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0)
 
-1️⃣ [Trello Board](🚫add link to trello board here)
+:memo: [API Documentations](https://lab17-makata.herokuapp.com/api-docs/)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+:memo: [Database schema](https://dbdesigner.page.link/SgFU)
 
-1️⃣ [UX Design files](🚫add link to design files here) - 🚫 delete if not applicable
+School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
-🚫 Replace lorem ipsum with a description of your project
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Along with these things notifying changes to a schedule the coach would like to update things inside the events such as time and location. The last key feature would be event templates that can be placed in bulk across unrelated days.
 
 
-### 4️⃣ Key Features
+## 4️⃣ Key Features
 
--    feature one
--    feature two
--    feature three
--    feature four
--    feature five
+-    Users authentication
+-    Create, Edit, and Delete calendars
+-    Create, Edit, and Delete simple events
+-    Display upcoming events
+-    Handle Re-Occuring Events
+-    Interactive Visual Calendar
 
-## 1️⃣ Tech Stack
 
-### Front end built using:
+## :five: Tech Stack
 
-#### _Front end framework goes here_
+### Front End built using:
 
-🚫 Why did you choose this framework?
+#### React
 
--    point one
--    point two
--    point three
--    point four
+-    Provides good code bases for things like calendars.
+-    Group knowledge of it.
+-    Hooks makes things more simple.
+-    Context API provides state-management and seemlessly intergrates with browser's local storage
 
-🚫List the rest of the front end features and libraries in the same format as the framework above.
+### Material-UI
 
-#### Front end deployed to `🚫insert service here`
+-   Integrates seemlessly with React
+-   Provides custom and overiding styles to match the design color pallete
 
-#### [Back end](🚫link to back end repo here) built using:
+#### Front end deployed to `Netlify`
 
-#### 🚫 back end framework goes here
+-   Makes it easy to rapidly deploy code by connection Netlify and Github
 
--    point one
--    point two
--    point three
+### Back End build using
 
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
+#### Node.JS
 
-# APIs
+-   Provides an easy way to implement code following MVC model
+-   Knex JS allows simple and flexible query-building
+-   API routes are implemented using Express.
+  
 
-## 2️⃣ Authentication API here
+## :six: Environment Variables
 
-🚫Replace text below with a description of the API
+In order for the app to function correctly, the user must set up their own environment variables. These variables are stored securely on Heroku.
 
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
+-   DATABASE_URL
+-   JWT_SECRET
+-   SEED_PASSWORD
+-   TWILIO_ACCOUNT_SID
+-   TWILIO_AUTH_TOKEN
 
-## 2️⃣ Payment API here
+## :seven: Credentials
 
-🚫Replace text below with a description of the API
+The database is seeded with two user accounts. Users may use them to test or demo the function of the application.
 
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
+-   tnguyen/makata17
+-   bsmith/makata17
 
-## 3️⃣ Misc API here
+## :eight: Open Questions ❓
 
-🚫Replace text below with a description of the API
+-   What if a users want to use their Google credential to log into the application?
+-   Can the application push existing calendars and/or events to a user's Google calendar or Apple Calendar?
+-   How can an calendar creator restrict access to the calendar subscribers.  For example, a subscriber may view the event but can not edit or delete the event.
+-   What are some ways for a user to get notify of a new events?
+-   Imagine a calendar is full of events, how to can a user search for an interested event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia.
 
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
 
-## 3️⃣ Misc API here
+## :nine: Installation Instructions
 
-🚫Replace text below with a description of the API
-
-When you do it your way you can go anywhere you choose. Let your heart take you to wherever you want to be. If I paint something, I don't want to have to explain what it is. A tree needs to be your friend if you're going to paint him. That's a son of a gun of a cloud. Even the worst thing we can do here is good.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-Volunteering your time; it pays you and your whole community fantastic dividends. Maybe there's a happy little waterfall happening over here. You can spend all day playing with mountains. We don't have to be committed. We are just playing here. You have freedom here. The only guide is your heart. It's cold, but it's beautiful.
-
-# 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following:
-
-🚫These are just examples, replace them with the specifics for your app
-
-    *  REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
-    *  REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
-    *  REACT_APP_databaseURL - in the Firebase dashboard
-    *  REACT_APP_projectID - in the Firebase dashboard
-    *  REACT_APP_storageBucket - in the Firebase dashboard
-    *  REACT_APP_messagingSenderId - in the Firebase dashboard
-    *  REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
-    *  REACT_APP_backendURL - optional for your local development server
-    *  REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
-    *  REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
-
-# 5️⃣ Content Licenses
-
-🚫For all content - images, icons, etc, use this table to document permission of use. Remove the two placeholders and add you content to this table
-
-| Image Filename | Source / Creator | License                                                                      |
-| -------------- | ---------------- | ---------------------------------------------------------------------------- |
-| doodles.png    | Nicole Bennett   | [Creative Commons](https://www.toptal.com/designers/subtlepatterns/doodles/) |
-| rings.svg      | Sam Herbert      | [MIT](https://github.com/SamHerbert/SVG-Loaders)                             |
-
-# 4️⃣ Testing
-
-🚫Document what you used for testing and why
-
-# 4️⃣ Installation Instructions
-
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+With this project NPM was used. The Dependancies are as followed; ```"@date-io/moment": "^1.3.11", "@fullcalendar/core": "^4.3.1", "@fullcalendar/daygrid": "^4.3.0", "@fullcalendar/interaction": "^4.3.0", "@fullcalendar/react": "^4.3.0", "@fullcalendar/timegrid": "^4.3.0", "@material-ui/core": "^4.5.1", "@material-ui/icons": "^4.5.1", "@material-ui/pickers": "^3.2.7", "@material/snackbar": "^3.2.0", "firebase": "^7.2.0", "formik": "^1.5.8", "fullcalendar-reactwrapper": "^1.0.7", "moment": "^2.24.0", "node-sass": "^4.12.0", "react": "^16.10.2", "react-dom": "^16.10.2", "react-router": "^5.1.2", "react-router-dom": "^5.1.2", "react-scripts": "3.2.0", "yup": "^0.27.0"```
 
 ## Other Scripts
 
-🚫replace these examples with your own
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
 
-    * typecheck - runs the TypeScript compiler
-    * build - creates a build of the application
-    * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
 
-# Contributing
+## :one: :zero: Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
 Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
 
-## Issue/Bug Request
+## :one: :one: Issue/Bug Request
    
  **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
  - Check first to see if your issue has already been reported.
@@ -170,17 +124,17 @@ Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it 
  - Create a live example of the problem.
  - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes,  where you believe the issue is originating from, and any potential solutions you have considered.
 
-### Feature Requests
+## :one: :two: Feature Requests
 
 We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
 
-### Pull Requests
+## :one: :three: Pull Requests
 
 If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
 
 Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
 
-#### Pull Request Guidelines
+## :one: :four: Pull Request Guidelines
 
 - Ensure any install or build dependencies are removed before the end of the layer when doing a build.
 - Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
@@ -188,10 +142,10 @@ Remember that this project is licensed under the MIT license, and by submitting 
 - Include the relevant issue number, if applicable.
 - You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
 
-### Attribution
+## :one: :five: Attribution
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 
-## Documentation
+## :one: :six: Documentation
 
-See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
+See [Backend Documentation]https://github.com/Lambda-School-Labs/school-calendar-be for details on the backend of our project.

@@ -1,76 +1,41 @@
 /* eslint-disable */
-
-import React, { useContext, useState, useEffect } from "react"
-import { CssBaseline, Grid } from "@material-ui/core"
+import ReactGA from "react-ga"
+import React, { useContext, useEffect } from "react"
+import { Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core"
-import AdminLoginForm from "./SignInForm"
+import SignInForm from "../../components/SignIn"
 import { AuthContext } from "../../contexts/auth/authState"
-import { Formik } from "formik"
-import * as Yup from "yup"
-import desktopCalendarImg from "../../assets/images/desktop_calendar.jpg"
+import SignNavbar from "../../components/Navbar/signinnav"
+
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   image: {
     width: "100%",
-    height: "100%",
-  },
+    height: "100%"
+  }
 }))
 
 const SignIn = ({ history }) => {
-  const {
-    currentUser,
-    isLoading,
-    signInError,
-    signInWithEmailAndPassword,
-    signInWithGoogle,
-  } = useContext(AuthContext)
+  ReactGA.pageview(window.location.pathname + window.location.search)
+  const { accessToken } = useContext(AuthContext)
 
   const classes = useStyles()
 
   useEffect(() => {
-    if (currentUser) {
+    if (accessToken) {
       history.push("/admin-dashboard")
     }
-  }, [currentUser])
-
-  const AdminLoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email.")
-      .required("Email is required."),
-    password: Yup.string()
-      .min(6, "Password must be greater 6 characters.")
-      .required("Password is required."),
-  })
+  }, [accessToken])
 
   return (
     <div className={classes.root}>
+      <SignNavbar />
       <Grid container>
+        <Grid item md={6} style={{ background: "#A35629" }}></Grid>
         <Grid item md={6}>
-          <img
-            className={classes.image}
-            src={desktopCalendarImg}
-            alt={"desktopCalendar"}
-          />
-        </Grid>
-        <Grid item md={6}>
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            onSubmit={(values, actions) => {
-              signInWithEmailAndPassword(values)
-              actions.resetForm()
-            }}
-            render={formikProps => (
-              <AdminLoginForm
-                {...formikProps}
-                isLoading={isLoading}
-                signInError={signInError}
-                signInWithGoogle={signInWithGoogle}
-              />
-            )}
-            validationSchema={AdminLoginSchema}
-          />
+          <SignInForm path={history.location} />
         </Grid>
       </Grid>
     </div>

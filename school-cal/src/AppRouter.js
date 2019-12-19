@@ -2,27 +2,33 @@
 
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { CalendarState } from "./contexts/calendar/calendarState"
 import Landing from "./pages/Landing"
 import SignIn from "./pages/SignIn"
-import StudentRegister from "./components/StudentRegister"
-import StudentLogin from "./components/StudentLogin"
 import Registration from "./pages/Registration"
-import StudentDashboard from "./components/StudentDashboard"
-import AdminDashboard from "./components/AdminDashboard";
+import CalendarSettings from "./pages/CalendarSettings"
+import Subscribe from "./pages/Subscribe"
+import Marketing from "./pages/marketing/index"
 
+import AdminDashboard from "./pages/AdminDashboard"
 
+import PrivateRoute from "./components/Routes/PrivateRoute"
 const AppRouter = () => {
   return (
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={Landing} />
+          <Route exact path="/" component={Marketing} />
           <Route path="/sign-in" component={SignIn} />
-          <Route path="/student-register" component={StudentRegister} />
-          <Route path="/student-signin" component={StudentLogin} />
-          <Route path="/registration" component={Registration} />
-          <Route path="/admin-dashboard" component={AdminDashboard} />
-          <Route path="/student-dashboard" component={StudentDashboard} />
+          <Route path="/register" component={Registration} />
+          <CalendarState>
+            <Route path="/subscribe" component={Subscribe} />
+            <PrivateRoute path="/admin-dashboard" component={AdminDashboard} />
+            <PrivateRoute
+              path="/calendar-settings/:cal_uuid"
+              component={CalendarSettings}
+            />
+          </CalendarState>
         </Switch>
       </Router>
     </>
