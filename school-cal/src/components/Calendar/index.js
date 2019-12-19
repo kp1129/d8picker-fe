@@ -107,7 +107,7 @@ const Calendar = props => {
 
   const handleEventClick = info => {
     const { id, start, end, title, allDay, extendedProps } = info.event
-    console.log("Info ", info.event)
+
     setUserCalendarEvent({
       startDate: moment(start).format(),
       endDate: allDay
