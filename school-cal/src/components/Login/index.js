@@ -1,25 +1,23 @@
 /* eslint-disable */
 
-import React, { useContext,useState, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import React, { useContext, useState, useEffect } from "react"
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import TextField from "@material-ui/core/TextField"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import Link from "@material-ui/core/Link"
+import Grid from "@material-ui/core/Grid"
+import Box from "@material-ui/core/Box"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/core/styles"
+import Container from "@material-ui/core/Container"
 
-import { Redirect } from 'react-router-dom'
-import { AuthContext } from "../../contexts/auth/authState";
-import {emailLoginHandler, useSession} from '../../utilities/useAuth';
-
-import firebase, { db } from "../../firebase/index";
+import { Redirect } from "react-router-dom"
+import { AuthContext } from "../../contexts/auth/authState"
+import { emailLoginHandler, useSession } from "../../utilities/useAuth"
 
 function Copyright() {
   return (
@@ -31,7 +29,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
+  )
 }
 
 const useStyles = makeStyles(theme => ({
@@ -57,23 +55,23 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   }
-}));
+}))
 
 export default function Login() {
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [credentials, setCredentials] = useState({ email: "", password: "password" });
-  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext);
-
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "password"
+  })
+  const { signInWithEmailAndPassword, isLoading } = useContext(AuthContext)
 
   const handleChange = event => {
-    setCredentials({ ...credentials, [event.target.name]: event.target.value });
-  };
+    setCredentials({ ...credentials, [event.target.name]: event.target.value })
+  }
 
- 
-  
   if (isLoading) {
-    return <Redirect to="/studentdashboard" />;
+    return <Redirect to="/studentdashboard" />
   }
 
   return (
@@ -86,9 +84,14 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate onSubmit={event => {event.preventDefault(); signInWithEmailAndPassword(credentials.email, credentials.password)}}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={event => {
+            event.preventDefault()
+            signInWithEmailAndPassword(credentials.email, credentials.password)
+          }}>
           <Grid container spacing={2}>
-
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -103,7 +106,6 @@ export default function Login() {
               />
             </Grid>
             <Grid item xs={12}>
-
               <TextField
                 variant="outlined"
                 required
@@ -129,8 +131,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
-          >
+            className={classes.submit}>
             Log In
           </Button>
           <Grid container justify="flex-end">
@@ -146,5 +147,5 @@ export default function Login() {
         <Copyright />
       </Box>
     </Container>
-  );
+  )
 }
