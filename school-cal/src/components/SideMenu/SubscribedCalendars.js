@@ -9,13 +9,13 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 const SubscribedCalendars = ({
   userCalendars,
   onChange,
-  unsubscribeCalendar,
+  unsubscribeCalendar
 }) => {
   const [menu, openMenu] = useState(null)
   const [subscribedCalendars, setSubscribedCalendars] = useState([])
@@ -59,6 +59,7 @@ const SubscribedCalendars = ({
                   edge="start"
                   onChange={() => onChange(calendar.uuid)}
                   value={calendar.uuid}
+                  style={{ color: calendar.calendarColor }}
                 />
               </ListItemIcon>
               <ListItemText>{calendar.calendarName}</ListItemText>
