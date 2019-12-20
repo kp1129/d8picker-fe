@@ -122,14 +122,16 @@ const setSubscribedCalendarsSuccess = (state, action) => {
   return {
     ...state,
     isLoading: false,
+    calendarSubscriptionId: null,
     userCalendars: [...state.userCalendars, calendar]
   }
 }
 const setUnsubscribeCalendarSuccess = (state, action) => {
+  console.log("Unsubscribe ", action.payload)
   return {
     ...state,
     isLoading: false,
-    subscribedCalendars: state.subscribedCalendars.filter(
+    userCalendars: state.userCalendars.filter(
       calendar => calendar.uuid !== action.payload
     )
   }
