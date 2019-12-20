@@ -77,7 +77,7 @@ function Marketing() {
             />
             <h2>Schedule Events Fast</h2>
             <p style={{ fontWeight: "500" }}>
-              At Mataka we respect your time. Our design is conduvtive to the
+              At Mataka we respect your time. Our design is conductive to the
               fastest way of scheduling events in masse.
             </p>
           </div>
