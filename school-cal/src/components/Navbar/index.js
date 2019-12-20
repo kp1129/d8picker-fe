@@ -16,14 +16,14 @@ const Navbar = ({ drawerWidth }) => {
 
   const useStyles = makeStyles(theme => ({
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
+      zIndex: theme.zIndex.drawer + 1
     },
     toolBar: {
-      backgroundColor: "#21242C",
+      backgroundColor: "#21242C"
     },
     title: {
-      flexGrow: 1,
-    },
+      flexGrow: 1
+    }
   }))
 
   const classes = useStyles()

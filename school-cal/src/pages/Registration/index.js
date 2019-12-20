@@ -12,12 +12,12 @@ import SigninNavbar from "../../components/Navbar/signinnav"
 import ReactGA from "react-ga"
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   image: {
     width: "100%",
-    height: "100%",
-  },
+    height: "100%"
+  }
 }))
 
 const Registration = ({ history }) => {

@@ -24,7 +24,8 @@ import { makeStyles } from "@material-ui/core/styles"
 const drawerWidth = 300
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    fontFamily: "Cabin !important"
   },
 
   toolbar: theme.mixins.toolbar,

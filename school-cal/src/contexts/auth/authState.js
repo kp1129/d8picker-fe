@@ -9,7 +9,7 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
-  SIGNOUT_FAILURE,
+  SIGNOUT_FAILURE
 } from "./types"
 import authReducer from "./authReducer"
 
@@ -25,7 +25,7 @@ export const AuthState = props => {
     signUpError: null,
     signOutError: null,
     accessToken: null,
-    userProfile: null,
+    userProfile: null
   }
 
   const localState = loadState("auth")
@@ -86,7 +86,7 @@ export const AuthState = props => {
         signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,
-        signOut,
+        signOut
       }}>
       {props.children}
     </AuthContext.Provider>

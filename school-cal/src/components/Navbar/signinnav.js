@@ -10,18 +10,18 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: "0",
-    zIndex: 100,
+    zIndex: 100
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   link: {
     color: "#fff",
-    textDecoration: "none",
-  },
+    textDecoration: "none"
+  }
 }))
 
 export default function SignNavbar() {
@@ -32,7 +32,7 @@ export default function SignNavbar() {
       <AppBar position="static" style={{ background: "#21242C" }}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            School Calendar
+            Mataka
           </Typography>
           <Button>
             <RouterLink className={classes.link} to="/">
