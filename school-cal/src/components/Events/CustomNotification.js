@@ -23,18 +23,19 @@ import {
 import MomentUtils from "@date-io/moment"
 import axios from "axios"
 
-const AddSubscribers = ({ calendar, open, handleClose }) => {
+const CustomNotification = ({ calendar, open, handleClose }) => {
   const { currentUser } = useContext(AuthContext)
   return (
     <>
       <Formik
         initialValues={{
-          phone: "",
-          link:"future google cal link"
+          phone:"3164694365",
+          link:"future google cal link",
+          message: ""
         }}
         onSubmit={async (values, actions) => {
             console.log(values)
-            axios.post(`https://school-calendar-mataka.herokuapp.com/api/twilio/newSub`,{phone:values.phone, link:values.link})
+            axios.post(`https://school-calendar-mataka.herokuapp.com/api/twilio/customNotification`,{message:values.message, link:values.link, phone:values.phone})
             .then(res =>{
                 console.log(res);
             })
@@ -67,19 +68,19 @@ const AddSubscribersForm = ({
     <>
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle style={{background:"#21242C", color:"white"}}>Add Subscribers</DialogTitle>
+          <DialogTitle style={{background:"#21242C", color:"white"}}>Send Notification To Calendar Subscribers</DialogTitle>
           <DialogContent>
             <Grid>
               <Grid item xs={12}>
                 <TextField style={{background:"#F2D2BF", borderRadius:"5px"}}
                   fullWidth
-                  id="phone"
-                  label="Phone Number"
+                  id="message"
+                  label="Message"
                   margin="normal"
-                  name="phone"
+                  name="message"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.phone}
+                  value={values.message}
                 />
               </Grid>
             
@@ -90,7 +91,7 @@ const AddSubscribersForm = ({
               Cancel
             </Button>
             <Button color="primary" type="submit">
-              Add
+              Send
             </Button>
           </DialogActions>
         </form>
@@ -100,4 +101,4 @@ const AddSubscribersForm = ({
 }
 
 
-export default AddSubscribers
+export default CustomNotification;

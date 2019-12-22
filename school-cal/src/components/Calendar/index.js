@@ -7,6 +7,7 @@ import AddIcon from "@material-ui/icons/Add"
 import CreateEvent from "../Events/CreateEvent"
 import EditEvent from "../Events/EditEvent"
 import AddSubscribers from "../Events/addSubscriber"
+import CustomNotification from "../Events/CustomNotification"
 import moment from "moment"
 
 //fullcalendar
@@ -42,6 +43,7 @@ const Calendar = props => {
 
   const [createEvent, openCreateEvent] = useState(false)
   const [isAddSubscriberOpen, setAddSubscribers] = useState(false)
+  const [isCustomNotificationOpen, setCustomNotification] = useState(false)
   const [editEvent, openEditEvent] = useState(false)
 
   const [userCalendarEvents, setUserCalendarEvents] = useState([{ events: [] }])
@@ -236,6 +238,12 @@ const Calendar = props => {
             onClick={() => setAddSubscribers(true)}>
             Add Subscriber
           </Button>
+          <Button
+            classes={{ root: classes.createButton, label: classes.buttonLabel }}
+            startIcon={<AddIcon />}
+            onClick={() => setCustomNotification(true)}>
+            Send Notification
+          </Button>
         </Grid>
       </Grid>
       <FullCalendar
@@ -272,6 +280,10 @@ const Calendar = props => {
       <AddSubscribers
         open={isAddSubscriberOpen}
         handleClose={() => setAddSubscribers(false)}
+      />
+       <CustomNotification
+        open={isCustomNotificationOpen}
+        handleClose={() => setCustomNotification(false)}
       />
     </div>
   )
