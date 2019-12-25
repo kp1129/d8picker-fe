@@ -79,6 +79,7 @@ const Calendar = props => {
                 allDay: event.isAllDayEvent,
                 rrule: event.rrule,
                 isRepeatingEvent: event.isRepeatingEvent,
+                calendarUuid: calendar.uuid,
 
                 duration: Boolean(event.rrule)
                   ? Boolean(event.isAllDayEvent)
@@ -108,8 +109,8 @@ const Calendar = props => {
   // when a user clicks on am event, FullCalendar will invokes this function to initiate the selected event
 
   const handleEventClick = info => {
-    const { id, start, end, title, allDay, extendedProps } = info.event
-
+    const { id, start, end, title, allDay, extendedProps, _def } = info.event
+    console.log("Info ", info.event)
     setUserCalendarEvent({
       startDate: moment(start).format(),
       endDate: allDay
@@ -139,6 +140,10 @@ const Calendar = props => {
       eventNote: extendedProps.note,
       isRepeatingEvent: extendedProps.isRepeatingEvent,
       isAllDayEvent: allDay,
+      calendarUuid: extendedProps.calendarUuid,
+      existingRrule: extendedProps.isRepeatingEvent
+        ? _def.recurringDef.typeData.options
+        : null,
       uuid: id
     })
 

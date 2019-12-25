@@ -17,22 +17,24 @@ import { makeStyles } from "@material-ui/core/styles"
 import { RRule } from "rrule"
 
 const repeats = [
-  { id: 1, name: "Never" },
-  { id: 2, name: "Daily" },
-  { id: 3, name: "Every Week" },
-  { id: 4, name: "Every Month" },
-  { id: 5, name: "Every Year" },
-  { id: 6, name: "Every Weekday" },
-  { id: 7, name: "Custom..." }
+  { id: 0, name: "Never" },
+  { id: 1, name: "Daily" },
+  { id: 2, name: "Every Week" },
+  { id: 3, name: "Every Month" },
+  { id: 4, name: "Every Year" },
+  { id: 5, name: "Every Weekday" },
+  { id: 6, name: "Custom..." }
 ]
 
-const RepeatEvent = ({ field, form, startTime, until }) => {
+const RepeatEvent = ({ field, form, startTime, until, existingRrule }) => {
   const update = new Date(startTime)
 
   const [repeatSelection, setRepeatSelection] = useState({
-    id: 1,
+    id: 0,
     name: "Never"
   })
+
+  const [existingCustomRrule, setExistingCustomRrule] = useState(null)
 
   const [rule, setRule] = useState({
     freq: RRule.DAILY,
@@ -41,6 +43,51 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
     until: until,
     wkst: RRule.SU
   })
+
+  useEffect(() => {
+    if (existingRrule) {
+      if (existingRrule.byweekday && isEveryWeekDay(existingRrule.byweekday)) {
+        setRepeatSelection(repeats.find(repeat => repeat.id === 5))
+      } else if (existingRrule.byweekday && isWeekly(existingRrule)) {
+        setRepeatSelection(repeats.find(repeat => repeat.id === 2))
+      } else if (isMonthly(existingRrule.freq)) {
+        setRepeatSelection(repeats.find(repeat => repeat.id === 3))
+      } else if (isYearly(existingRrule.freq)) {
+        setRepeatSelection(repeats.find(repeat => repeat.id === 4))
+      } else if (isDaily(existingRrule)) {
+        setRepeatSelection(repeats.find(repeat => repeat.id === 1))
+      } else {
+        setExistingCustomRrule(existingRrule)
+        setRepeatSelection(repeats.find(repeat => repeat.id === 6))
+      }
+    }
+  }, [existingRrule])
+  const isDaily = rule => {
+    return rule.freq === 3 && !rule.byweekday
+  }
+
+  const isWeekly = rule => {
+    return rule.freq === 2 && rule.byweekday.length === 1
+  }
+
+  const isMonthly = frequency => {
+    return frequency === 1
+  }
+
+  const isYearly = frequency => {
+    return frequency === 0
+  }
+
+  const isEveryWeekDay = weekdays => {
+    const everyWeekdays = [0, 1, 2, 3, 4]
+    const isSame =
+      everyWeekdays.length === weekdays.length &&
+      everyWeekdays.every((day, index) => {
+        return day === weekdays[index]
+      })
+
+    return isSame
+  }
 
   const [customRule, showCustomRule] = useState(false)
 
@@ -65,7 +112,7 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
 
     const selection = e.target.value
 
-    if (selection === 2) {
+    if (selection === 1) {
       setRule({
         ...rule,
         freq: RRule.DAILY,
@@ -79,7 +126,7 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
           )
         )
       })
-    } else if (selection === 3) {
+    } else if (selection === 2) {
       setRule({
         ...rule,
         freq: RRule.WEEKLY,
@@ -93,7 +140,7 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
           )
         )
       })
-    } else if (selection === 4) {
+    } else if (selection === 3) {
       setRule({
         ...rule,
         freq: RRule.MONTHLY,
@@ -107,7 +154,7 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
           )
         )
       })
-    } else if (selection === 5) {
+    } else if (selection === 4) {
       setRule({
         ...rule,
         freq: RRule.YEARLY,
@@ -121,7 +168,7 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
           )
         )
       })
-    } else if (selection === 6) {
+    } else if (selection === 5) {
       setRule({
         ...rule,
         freq: RRule.DAILY,
@@ -170,7 +217,12 @@ const RepeatEvent = ({ field, form, startTime, until }) => {
             </MenuItem>
           ))}
       </Select>
-      {customRule && <CustomRule handleChange={handleCustomRuleChange} />}
+      {customRule && (
+        <CustomRule
+          handleChange={handleCustomRuleChange}
+          existingCustomRrule={existingCustomRrule}
+        />
+      )}
     </>
   )
 }
@@ -187,23 +239,23 @@ const useCustomRuleStyles = makeStyles(theme => ({
   }
 }))
 
-const CustomRule = ({ handleChange }) => {
+const CustomRule = ({ existingCustomRrule, handleChange }) => {
   const classes = useCustomRuleStyles()
   const frequencies = [
-    { freq: RRule.DAILY, name: "Daily" },
-    { freq: RRule.WEEKLY, name: "Weekly" },
-    { freq: RRule.MONTHLY, name: "Monthly" },
-    { freq: RRule.YEARLY, name: "Yearly" }
+    { id: 3, freq: RRule.DAILY, name: "Daily" },
+    { id: 2, freq: RRule.WEEKLY, name: "Weekly" },
+    { id: 1, freq: RRule.MONTHLY, name: "Monthly" },
+    { id: 0, freq: RRule.YEARLY, name: "Yearly" }
   ]
 
   const initialDaysOfWeek = [
-    { name: "Sun", value: RRule.SU, checked: false },
-    { name: "Mon", value: RRule.MO, checked: false },
-    { name: "Tue", value: RRule.TU, checked: false },
-    { name: "Wed", value: RRule.WE, checked: false },
-    { name: "Thu", value: RRule.TH, checked: false },
-    { name: "Fri", value: RRule.FR, checked: false },
-    { name: "Sat", value: RRule.SA, checked: false }
+    { id: 6, name: "Sun", value: RRule.SU, checked: false },
+    { id: 0, name: "Mon", value: RRule.MO, checked: false },
+    { id: 1, name: "Tue", value: RRule.TU, checked: false },
+    { id: 2, name: "Wed", value: RRule.WE, checked: false },
+    { id: 3, name: "Thu", value: RRule.TH, checked: false },
+    { id: 4, name: "Fri", value: RRule.FR, checked: false },
+    { id: 5, name: "Sat", value: RRule.SA, checked: false }
   ]
   const [frequency, setFrequency] = useState({
     freq: RRule.DAILY,
@@ -219,6 +271,29 @@ const CustomRule = ({ handleChange }) => {
     frequencyIntervalDescription,
     setFrequencyIntervalDescription
   ] = useState("day")
+
+  useEffect(() => {
+    if (existingCustomRrule) {
+      setFrequency(
+        frequencies.find(frequency => frequency.id === existingCustomRrule.freq)
+      )
+
+      setFrequencyInterval(existingCustomRrule.interval)
+
+      const existingCheckedDays = initialDaysOfWeek.map(weekday => {
+        const target = existingCustomRrule.byweekday.find(
+          day => day === weekday.id
+        )
+        if (target) {
+          weekday.checked = true
+        }
+
+        return weekday
+      })
+
+      setDayOfWeek(existingCheckedDays)
+    }
+  }, [existingCustomRrule])
 
   useEffect(() => {
     handleChange({ freqRule: frequency.freq, frequencyInterval, checkedDays })
