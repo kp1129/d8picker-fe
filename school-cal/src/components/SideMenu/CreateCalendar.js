@@ -15,7 +15,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography,
+  Typography
 } from "@material-ui/core"
 
 import { makeStyles } from "@material-ui/core/styles"
@@ -25,7 +25,7 @@ const CreateCalendar = ({ open, handleClose }) => {
     isLoading,
     calendarColors,
     getCalendarColors,
-    createUserCalendar,
+    createUserCalendar
   } = useContext(CalendarContext)
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const CreateCalendar = ({ open, handleClose }) => {
           calendarName: "",
           calendarDescription: "",
           calendarColor: "",
-          isPrivate: true,
+          isPrivate: true
         }}
         onSubmit={(values, actions) => {
           createUserCalendar(values)
@@ -61,16 +61,16 @@ const CreateCalendar = ({ open, handleClose }) => {
 
 const useStyles = makeStyles(theme => ({
   inputLabel: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   },
   createButton: {
     backgroundColor: "#F5945B",
     padding: theme.spacing(1, 3),
     borderRadius: "5px",
-    border: "2px solid #F5945B",
+    border: "2px solid #F5945B"
   },
   buttonLabel: {
-    textTransform: "none",
+    textTransform: "none"
   },
   cancelButton: {
     backgroundColor: "#FFFFFF",
@@ -78,11 +78,11 @@ const useStyles = makeStyles(theme => ({
     border: "2px solid #F5945B",
     boxSizing: "border-box",
     borderRadius: "5px",
-    color: "#F5945B",
+    color: "#F5945B"
   },
   colors: {
-    margin: theme.spacing(0.5),
-  },
+    margin: theme.spacing(0.5)
+  }
 }))
 
 const CreateCalendarForm = ({
@@ -93,7 +93,7 @@ const CreateCalendarForm = ({
   handleClose,
   open,
   isLoading,
-  colors,
+  colors
 }) => {
   const classes = useStyles()
 
@@ -143,11 +143,14 @@ const CreateCalendarForm = ({
                   control={
                     <Checkbox
                       name="isPrivate"
-                      checked={!values.isPrivate}
+                      checked={values.isPrivate}
                       onChange={handleChange}
+                      value={values.isPrivate}
                     />
                   }
-                  label="Public Calendar"
+                  label={
+                    values.isPrivate ? "Private Calendar" : "Public Calendar"
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -174,7 +177,7 @@ const CreateCalendarForm = ({
             <Button
               classes={{
                 root: classes.createButton,
-                label: classes.buttonLabel,
+                label: classes.buttonLabel
               }}
               type="submit">
               {!isLoading ? (
@@ -186,7 +189,7 @@ const CreateCalendarForm = ({
             <Button
               classes={{
                 root: classes.cancelButton,
-                label: classes.buttonLabel,
+                label: classes.buttonLabel
               }}
               onClick={handleClose}
               type="button">
