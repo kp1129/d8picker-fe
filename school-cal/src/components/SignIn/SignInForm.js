@@ -8,9 +8,8 @@ import {
   Divider,
   TextField,
   Link,
-  Box,
   Grid,
-  Typography,
+  Typography
 } from "@material-ui/core"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import { makeStyles } from "@material-ui/core/styles"
@@ -30,35 +29,35 @@ const copyRight = () => {
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
-      backgroundColor: theme.palette.common.white,
-    },
+      backgroundColor: theme.palette.common.white
+    }
   },
   paper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 2)
   },
   signInWithGoogle: {
-    margin: theme.spacing(2, 0, 2),
+    margin: theme.spacing(2, 0, 2)
   },
   progress: {
     margin: theme.spacing(1),
-    color: "white",
+    color: "white"
   },
   link: {
-    textAlign: "center",
-  },
+    textAlign: "center"
+  }
 }))
 
 const SignInForm = ({
@@ -68,23 +67,14 @@ const SignInForm = ({
   handleBlur,
   signInWithGoogle,
   isLoading,
-  signInError,
   errors,
   touched,
-  path,
+  path
 }) => {
   const classes = useStyles()
 
   const currentPage = path.pathname
 
-  useEffect(() => {
-    if (signInError) {
-      if (signInError.code === "auth/invalid-email") {
-      } else if (signInError.code === "auth/user-not-found") {
-      } else if (signInError.code === "auth/wrong-password") {
-      }
-    }
-  }, [signInError])
   return (
     <>
       <Grid

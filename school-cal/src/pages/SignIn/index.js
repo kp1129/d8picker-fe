@@ -1,7 +1,8 @@
 /* eslint-disable */
 import ReactGA from "react-ga"
-import React, { useContext, useEffect } from "react"
-import { Grid } from "@material-ui/core"
+import React, { useContext, useEffect, useState } from "react"
+import { Grid, IconButton, Snackbar, SnackbarContent } from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
 import { makeStyles } from "@material-ui/core"
 import SignInForm from "../../components/SignIn"
 import { AuthContext } from "../../contexts/auth/authState"
@@ -14,13 +15,20 @@ const useStyles = makeStyles(theme => ({
   image: {
     width: "100%",
     height: "100%"
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark
+  },
+  closeIcon: {
+    color: "white",
+    fontSize: 20
   }
 }))
 
 const SignIn = ({ history }) => {
   ReactGA.pageview(window.location.pathname + window.location.search)
-  const { accessToken } = useContext(AuthContext)
-
+  const { accessToken, signInError, resetSignInError } = useContext(AuthContext)
+  const [signInErrorDisplay, openSignInErrorDisplay] = useState(false)
   const classes = useStyles()
 
   useEffect(() => {
@@ -28,6 +36,18 @@ const SignIn = ({ history }) => {
       history.push("/admin-dashboard")
     }
   }, [accessToken])
+
+  useEffect(() => {
+    if (signInError) {
+      openSignInErrorDisplay(true)
+    } else {
+      openSignInErrorDisplay(false)
+    }
+  }, [signInError])
+
+  const handleSignInErrorDisplayClose = () => {
+    resetSignInError()
+  }
 
   return (
     <div className={classes.root}>
@@ -38,6 +58,21 @@ const SignIn = ({ history }) => {
           <SignInForm path={history.location} />
         </Grid>
       </Grid>
+      <Snackbar
+        open={signInErrorDisplay}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={handleSignInErrorDisplayClose}>
+        <SnackbarContent
+          className={classes.error}
+          message={"invalid credential"}
+          action={
+            <IconButton onClick={handleSignInErrorDisplayClose}>
+              <CloseIcon className={classes.closeIcon} />
+            </IconButton>
+          }
+        />
+      </Snackbar>
     </div>
   )
 }
