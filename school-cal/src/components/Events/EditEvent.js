@@ -73,6 +73,7 @@ const EditEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
+          values.isRepeatingEvent = Boolean(values.rrule)
 
           delete values.existingRrule
           editUserCalendarEvent(values.uuid, values)
