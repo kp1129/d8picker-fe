@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import moment from "moment"
 import { clientWithAuth } from "../../utilities/api"
+import { CalendarContext } from "../../contexts/calendar/calendarState"
 import {
   Badge,
   List,
@@ -33,26 +34,23 @@ const useStyles = makeStyles(theme => ({
 }))
 const UpcomingEvents = () => {
   const classes = useStyles()
-
-  const [upcomingEvents, setUpComingEvents] = useState([])
+  const {
+    getUserUpcomingCalendarEvents,
+    userUpcomingCalendarEvents
+  } = useContext(CalendarContext)
+  //const [upcomingEvents, setUpComingEvents] = useState([])
   const [moreUpcomingEventsDialog, openMoreUpcomingEventsDialog] = useState(
     false
   )
   useEffect(() => {
-    const getUpcomingEvents = async () => {
-      const events = await clientWithAuth("/api/events/upcoming")
-
-      setUpComingEvents(events.data)
-    }
-
-    getUpcomingEvents()
+    getUserUpcomingCalendarEvents()
   }, [])
 
   return (
     <div style={{ width: "100%" }}>
       <Badge
         color="secondary"
-        badgeContent={upcomingEvents.length}
+        badgeContent={userUpcomingCalendarEvents.length}
         showZero
         className={classes.badge}>
         <Typography variant="h6" className={classes.header}>
@@ -60,9 +58,9 @@ const UpcomingEvents = () => {
         </Typography>
       </Badge>
 
-      {upcomingEvents.length > 0 && (
+      {userUpcomingCalendarEvents.length > 0 && (
         <List dense>
-          {upcomingEvents.slice(0, 3).map(event => (
+          {userUpcomingCalendarEvents.slice(0, 3).map(event => (
             <ListItem key={event.uuid}>
               <Paper className={classes.paper}>
                 <ListItemAvatar
@@ -85,7 +83,7 @@ const UpcomingEvents = () => {
               </Paper>
             </ListItem>
           ))}
-          {upcomingEvents.length > 3 && (
+          {userUpcomingCalendarEvents.length > 3 && (
             <ListItem button onClick={() => openMoreUpcomingEventsDialog(true)}>
               More Events
             </ListItem>
@@ -94,7 +92,7 @@ const UpcomingEvents = () => {
       )}
       <MoreUpcomingEvents
         open={moreUpcomingEventsDialog}
-        events={upcomingEvents}
+        events={userUpcomingCalendarEvents}
         handleClose={() => openMoreUpcomingEventsDialog(false)}
       />
     </div>
