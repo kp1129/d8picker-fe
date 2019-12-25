@@ -9,7 +9,8 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
-  SIGNOUT_FAILURE
+  SIGNOUT_FAILURE,
+  RESET_SIGNIN_ERROR
 } from "./types"
 import authReducer from "./authReducer"
 
@@ -55,7 +56,7 @@ export const AuthState = props => {
 
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error })
+      dispatch({ type: SIGNIN_FAILURE, payload: error.response })
     }
   }
 
@@ -75,6 +76,10 @@ export const AuthState = props => {
     }
   }
 
+  const resetSignInError = () => {
+    dispatch({ type: RESET_SIGNIN_ERROR })
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -86,7 +91,8 @@ export const AuthState = props => {
         signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,
-        signOut
+        signOut,
+        resetSignInError
       }}>
       {props.children}
     </AuthContext.Provider>

@@ -7,25 +7,38 @@ import { CalendarContext } from "../../contexts/calendar/calendarState"
 import {
   Dialog,
   DialogContent,
+  DialogActions,
+  IconButton,
   Link,
   Typography,
-  DialogActions,
+  Snackbar,
+  SnackbarContent
 } from "@material-ui/core"
+import CloseIcon from "@material-ui/icons/Close"
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles(theme => ({
   actions: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   button: {
-    textTransform: "none",
+    textTransform: "none"
   },
+  error: {
+    backgroundColor: theme.palette.error.dark
+  },
+  closeIcon: {
+    color: "white",
+    fontSize: 20
+  }
 }))
+
 const Subscribe = props => {
   const classes = useStyles()
 
-  const { accessToken } = useContext(AuthContext)
+  const { accessToken, signInError, resetSignInError } = useContext(AuthContext)
+  const [signInErrorDisplay, openSignInErrorDisplay] = useState(false)
   const { setCalendarSubscriptionId } = useContext(CalendarContext)
 
   useEffect(() => {
@@ -41,11 +54,23 @@ const Subscribe = props => {
     }
   }, [props.location.search])
 
+  useEffect(() => {
+    if (signInError) {
+      openSignInErrorDisplay(true)
+    } else {
+      openSignInErrorDisplay(false)
+    }
+  }, [signInError])
+
   const [signIn, showSignIn] = useState(true)
 
   const handleFormChange = event => {
     event.preventDefault()
     showSignIn(!signIn)
+  }
+
+  const handleSignInErrorDisplayClose = () => {
+    resetSignInError()
   }
 
   return (
@@ -76,6 +101,21 @@ const Subscribe = props => {
           )}
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={signInErrorDisplay}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        onClose={handleSignInErrorDisplayClose}>
+        <SnackbarContent
+          className={classes.error}
+          message={"invalid credential"}
+          action={
+            <IconButton onClick={handleSignInErrorDisplayClose}>
+              <CloseIcon className={classes.closeIcon} />
+            </IconButton>
+          }
+        />
+      </Snackbar>
     </div>
   )
 }

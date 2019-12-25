@@ -11,12 +11,13 @@ import {
   SIGNOUT_FAILURE,
   SET_CURRENT_USER,
   SIGNIN_WITH_GOOGLE_FAILURE,
+  RESET_SIGNIN_ERROR
 } from "./types"
 
 const setIsLoading = (state, action) => {
   return {
     ...state,
-    isLoading: action.payload,
+    isLoading: action.payload
   }
 }
 const setSignInSuccess = (state, action) => {
@@ -24,7 +25,7 @@ const setSignInSuccess = (state, action) => {
     ...state,
     accessToken: action.payload.accessToken,
     userProfile: action.payload.profile,
-    isLoading: false,
+    isLoading: false
   }
 }
 
@@ -33,13 +34,13 @@ const setSignInFailure = (state, action) => {
     ...state,
 
     signInError: action.payload,
-    isLoading: false,
+    isLoading: false
   }
 }
 const setSignInWithGoogleSuccess = (state, action) => {
   return {
     ...state,
-    isLoading: false,
+    isLoading: false
   }
 }
 const setSignUpSuccess = (state, action) => {
@@ -47,7 +48,7 @@ const setSignUpSuccess = (state, action) => {
     ...state,
     accessToken: action.payload.accessToken,
     userProfile: action.payload.profile,
-    isLoading: false,
+    isLoading: false
   }
 }
 
@@ -55,7 +56,7 @@ const setSignUpFailure = (state, action) => {
   return {
     ...state,
     signUpError: action.payload,
-    isLoading: false,
+    isLoading: false
   }
 }
 
@@ -67,19 +68,26 @@ const setSignOutSuccess = (state, action) => {
     signUpError: null,
     signOutError: null,
     accessToken: null,
-    userProfile: null,
+    userProfile: null
   }
 }
 const setSignOutFailure = (state, action) => {
   return {
     ...state,
-    signOutError: action.payload,
+    signOutError: action.payload
   }
 }
 const setCurrentUser = (state, action) => {
   return {
     ...state,
-    currentUser: action.payload,
+    currentUser: action.payload
+  }
+}
+
+const resetSignInError = (state, action) => {
+  return {
+    ...state,
+    signInError: null
   }
 }
 const authReducer = (state, action) => {
@@ -102,6 +110,8 @@ const authReducer = (state, action) => {
       return setSignOutFailure(state, action)
     case SET_CURRENT_USER:
       return setCurrentUser(state, action)
+    case RESET_SIGNIN_ERROR:
+      return resetSignInError(state, action)
     default:
       return state
   }
