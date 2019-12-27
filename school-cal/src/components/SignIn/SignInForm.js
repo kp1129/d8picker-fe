@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import { makeStyles } from "@material-ui/core/styles"
+import signInWithGoogleBtn from "../../assets/images/btn_google_signin_dark_focus_web.png"
 
 const copyRight = () => {
   return (
@@ -48,8 +49,11 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   },
-  signInWithGoogle: {
-    margin: theme.spacing(2, 0, 2)
+  signInWithGoogleBtnContainer: {
+    margin: theme.spacing(2, 0, 2),
+    display: "flex",
+    width: "100%",
+    justifyContent: "center"
   },
   progress: {
     margin: theme.spacing(1),
@@ -153,16 +157,11 @@ const SignInForm = ({
             ) : null}
 
             <Divider />
-            {/* <Button
-              style={{background: "#F5945B", color: "#21242C"}}
-              className={classes.signInWithGoogle}
-              color="primary"
-              fullWidth
-              onClick={signInWithGoogle}
-              type="button"
-              variant="contained">
-              Sign In With Google
-            </Button> */}
+            <div className={classes.signInWithGoogleBtnContainer}>
+              <Button onClick={signInWithGoogle} type="button">
+                <img src={signInWithGoogleBtn} className={classes.imageSrc} />
+              </Button>
+            </div>
           </form>
           {/* <Box mt={5}>{copyRight}</Box> */}
         </Grid>
