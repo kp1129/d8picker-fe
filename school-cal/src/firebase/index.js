@@ -1,9 +1,7 @@
 /* eslint-disable */
 
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/functions";
+import firebase from "firebase/app"
+import "firebase/auth"
 
 export const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -14,10 +12,8 @@ export const config = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
-};
+}
 
-export const googleProvider = new firebase.auth.GoogleAuthProvider();
-export const app = firebase.initializeApp(config);
-export const db = firebase.firestore();
-export const functions = firebase.functions();
-export default firebase;
+export const googleProvider = new firebase.auth.GoogleAuthProvider()
+export const app = firebase.initializeApp(config)
+export default firebase

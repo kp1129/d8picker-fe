@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 import React, { createContext, useReducer, useEffect } from "react"
+import firebase from "../../firebase"
+import { googleProvider } from "../../firebase"
 
 import {
   IS_LOADING,
@@ -62,12 +64,24 @@ export const AuthState = props => {
 
   const signInWithGoogle = async () => {
     try {
-      dispatch({ type: SIGNIN_SUCCESS, payload: true })
+      const result = await firebase.auth().signInWithPopup(googleProvider)
+
+      const response = await client.post("/auth/google-log-in", {
+        idToken: result.credential.idToken,
+        displayName: result.user.displayName
+      })
+
+      dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error })
+      if (error.code !== "auth/popup-closed-by-user") {
+        dispatch({ type: SIGNIN_FAILURE, payload: error })
+      }
     }
   }
-  const signOut = () => {
+  const signOut = async externalType => {
+    if (externalType === "google") {
+      const response = await firebase.auth().signOut()
+    }
     try {
       dispatch({ type: SIGNOUT_SUCCESS })
       removeState()
