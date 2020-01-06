@@ -1,18 +1,16 @@
 /* eslint-disable */
 
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import clsx from "clsx"
+
 import { AuthContext } from "../../contexts/auth/authState"
 
 const Navbar = ({ drawerWidth }) => {
-  const { signOut } = useContext(AuthContext)
+  const { userProfile, signOut } = useContext(AuthContext)
 
   const useStyles = makeStyles(theme => ({
     appBar: {
@@ -34,7 +32,9 @@ const Navbar = ({ drawerWidth }) => {
           <Typography variant={"h6"} className={classes.title}>
             Makata
           </Typography>
-          <Button color="inherit" onClick={signOut}>
+          <Button
+            color="inherit"
+            onClick={() => signOut(userProfile.externalType)}>
             Sign Out
           </Button>
         </Toolbar>

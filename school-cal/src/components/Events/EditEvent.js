@@ -1,11 +1,11 @@
 /* eslint-disable */
 
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import moment from "moment"
 import { Formik, Field } from "formik"
 import * as Yup from "yup"
 import { CalendarContext } from "../../contexts/calendar/calendarState"
-
+import RepeatEvent from "./RepeatEvent"
 import {
   Button,
   CircularProgress,
@@ -17,6 +17,8 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
+  MenuItem,
+  Select,
   TextField,
   Typography
 } from "@material-ui/core"
@@ -33,9 +35,17 @@ const EditEvent = ({ open, handleClose }) => {
     isLoading,
     userCalendarEvent,
     editUserCalendarEvent,
-    deleteUserCalendarEvent
+    deleteUserCalendarEvent,
+    userCalendars
   } = useContext(CalendarContext)
+  const [calendars, setCalendars] = useState([])
+  useEffect(() => {
+    if (userCalendars.length > 0) {
+      const myCalendars = userCalendars.filter(calendar => calendar.isOwner)
 
+      setCalendars(myCalendars)
+    }
+  }, [userCalendars])
   const handleDeleteEvent = eventUuid => {
     deleteUserCalendarEvent(eventUuid)
     handleClose()
@@ -63,7 +73,9 @@ const EditEvent = ({ open, handleClose }) => {
                 .minutes(moment(values.endTime).minute())
                 .seconds(moment(values.endTime).second())
                 .toISOString(true)
+          values.isRepeatingEvent = Boolean(values.rrule)
 
+          delete values.existingRrule
           editUserCalendarEvent(values.uuid, values)
           actions.resetForm()
           handleClose()
@@ -75,6 +87,7 @@ const EditEvent = ({ open, handleClose }) => {
             {...formikProps}
             handleClose={handleClose}
             handleDeleteEvent={handleDeleteEvent}
+            calendars={calendars}
           />
         )}
         handleChange={() => {
@@ -120,6 +133,18 @@ const useStyles = makeStyles(theme => ({
   allDayCheckBoxContainer: {
     textAlign: "left"
   },
+  calendarSelection: {
+    width: "100%"
+  },
+  calendarSelectionContainer: {
+    margin: theme.spacing(1)
+  },
+  repeatEventSelectionContainer: {
+    margin: theme.spacing(2, 1)
+  },
+  repeatEventSelection: {
+    width: "100%"
+  },
   dialogActions: {
     justifyContent: "space-between"
   }
@@ -129,14 +154,22 @@ const EditEventForm = ({
   values,
   open,
   isLoading,
+  calendars,
   handleChange,
   handleSubmit,
   handleBlur,
   handleClose,
   handleDeleteEvent
 }) => {
+  const [primaryCalendar, setPrimaryCalendar] = useState("")
   const isAllDayEvent = values.isAllDayEvent
 
+  useEffect(() => {
+    if (calendars.length > 0) {
+      const primary = calendars.find(calendar => calendar.isDefault)
+      setPrimaryCalendar(primary)
+    }
+  }, [calendars])
   const classes = useStyles()
   return (
     <>
@@ -226,7 +259,23 @@ const EditEventForm = ({
                   </Grid>
                 </Grid>
               </Grid>
-
+              <Grid
+                item
+                xs={12}
+                className={classes.repeatEventSelectionContainer}>
+                <Typography>Repeat Settings</Typography>
+                <FormControl className={classes.repeatEventSelection}>
+                  <Field
+                    name="rrule"
+                    component={RepeatEvent}
+                    startTime={values.startTime}
+                    until={moment()
+                      .add(6, "months")
+                      .format()}
+                    existingRrule={values.existingRrule}
+                  />
+                </FormControl>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   className={classes.noteTextField}

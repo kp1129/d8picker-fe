@@ -19,6 +19,7 @@ import {
   SET_USER_CALENDAR_SUCCESS,
   SET_USER_CALENDAR_EVENT,
   SET_SHOW_EVENTS,
+  SET_UPCOMING_EVENTS,
   SET_CALENDAR_COLORS_SUCCESS,
   SET_CALENDAR_UTILITIES_FAILURE
 } from "./types"
@@ -59,6 +60,7 @@ export const CalendarState = props => {
       uuid: "",
       rrule: null
     },
+    userUpcomingCalendarEvents: [],
     userCalendarEventsError: null,
     calendarSubscriptionErrors: null,
     calendarSubscriptionId: null,
@@ -273,6 +275,17 @@ export const CalendarState = props => {
     dispatch({ type: SET_SHOW_EVENTS, payload: { calendarUuid, show } })
   }
 
+  const getUserUpcomingCalendarEvents = async () => {
+    try {
+      const events = await clientWithAuth("/api/events/upcoming")
+
+      dispatch({ type: SET_UPCOMING_EVENTS, payload: events.data })
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: CRUD_OPS_CALENDAR_EVENT_FAILURE, payload: error })
+    }
+  }
+
   const getCalendarColors = async () => {
     try {
       const colors = await clientWithAuth("/api/colors")
@@ -294,7 +307,9 @@ export const CalendarState = props => {
         calendarSubscriptionId: state.calendarSubscriptionId,
         calendarSubscriptionErrors: state.calendarSubscriptionErrors,
         calendarColors: state.calendarColors,
+        userUpcomingCalendarEvents: state.userUpcomingCalendarEvents,
         getUserCalendars,
+        getUserUpcomingCalendarEvents,
         createUserCalendar,
         editUserCalendar,
         editUserCalendarPrivacy,

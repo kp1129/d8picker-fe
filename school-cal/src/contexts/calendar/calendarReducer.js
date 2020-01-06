@@ -19,6 +19,7 @@ import {
   CRUD_OPS_CALENDAR_EVENT_FAILURE,
   SET_USER_CALENDAR_EVENT,
   SET_SHOW_EVENTS,
+  SET_UPCOMING_EVENTS,
   SET_CALENDAR_COLORS_SUCCESS,
   SET_CALENDAR_UTILITIES_FAILURE
 } from "./types"
@@ -127,7 +128,6 @@ const setSubscribedCalendarsSuccess = (state, action) => {
   }
 }
 const setUnsubscribeCalendarSuccess = (state, action) => {
-  console.log("Unsubscribe ", action.payload)
   return {
     ...state,
     isLoading: false,
@@ -153,11 +153,8 @@ const setMyCalendarEventsSuccess = (state, action) => {
       ...state.userCalendars.map(calendar => {
         if (calendar.uuid === action.payload.calendarUuid) {
           calendar.events = action.payload.events.map(eventFormat)
-
-          return calendar
-        } else {
-          return calendar
         }
+        return calendar
       })
     ]
   }
@@ -190,6 +187,7 @@ const setCreateUserCalendarEventSuccess = (state, action) => {
 }
 
 const setEditUserCalendarEventSuccess = (state, action) => {
+  console.log("Edit Event ", action.payload)
   return {
     ...state,
     isLoading: false,
@@ -203,7 +201,10 @@ const setEditUserCalendarEventSuccess = (state, action) => {
 
         return calendar
       })
-    ]
+    ],
+    userUpcomingCalendarEvents: state.userUpcomingCalendarEvents.map(event =>
+      event.uuid === action.payload.uuid ? eventFormat(action.payload) : event
+    )
   }
 }
 
@@ -218,6 +219,11 @@ const setDeleteUserCalendarEventSuccess = (state, action) => {
         )
         return calendar
       })
+    ],
+    userUpcomingCalendarEvents: [
+      ...state.userUpcomingCalendarEvents.filter(
+        event => event.uuid !== action.payload
+      )
     ]
   }
 }
@@ -250,6 +256,13 @@ const setShowEvents = (state, action) => {
         }
       })
     ]
+  }
+}
+
+const setUserUpcomingCalendarEvents = (state, action) => {
+  return {
+    ...state,
+    userUpcomingCalendarEvents: action.payload
   }
 }
 
@@ -288,7 +301,6 @@ const calendarReducer = (state, action) => {
       return setMyCalendarEventsSuccess(state, action)
     case SET_MY_CALENDAR_EVENTS_FAILURE:
       return setMyCalendarEventsFailure(state, action)
-
     case CREATE_CALENDAR_EVENT_SUCCESS:
       return setCreateUserCalendarEventSuccess(state, action)
     case EDIT_CALENDAR_EVENT_SUCCESS:
@@ -301,6 +313,8 @@ const calendarReducer = (state, action) => {
       return setUserCalendarEvent(state, action)
     case SET_SHOW_EVENTS:
       return setShowEvents(state, action)
+    case SET_UPCOMING_EVENTS:
+      return setUserUpcomingCalendarEvents(state, action)
     case SET_CALENDAR_COLORS_SUCCESS:
       return setCalendarColorsSuccess(state, action)
     default:

@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 import React, { createContext, useReducer, useEffect } from "react"
+import firebase from "../../firebase"
+import { googleProvider } from "../../firebase"
 
 import {
   IS_LOADING,
@@ -9,7 +11,8 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
   SIGNOUT_SUCCESS,
-  SIGNOUT_FAILURE
+  SIGNOUT_FAILURE,
+  RESET_SIGNIN_ERROR
 } from "./types"
 import authReducer from "./authReducer"
 
@@ -55,24 +58,40 @@ export const AuthState = props => {
 
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error })
+      dispatch({ type: SIGNIN_FAILURE, payload: error.response })
     }
   }
 
   const signInWithGoogle = async () => {
     try {
-      dispatch({ type: SIGNIN_SUCCESS, payload: true })
+      const result = await firebase.auth().signInWithPopup(googleProvider)
+
+      const response = await client.post("/auth/google-log-in", {
+        idToken: result.credential.idToken,
+        displayName: result.user.displayName
+      })
+
+      dispatch({ type: SIGNIN_SUCCESS, payload: response.data })
     } catch (error) {
-      dispatch({ type: SIGNIN_FAILURE, payload: error })
+      if (error.code !== "auth/popup-closed-by-user") {
+        dispatch({ type: SIGNIN_FAILURE, payload: error })
+      }
     }
   }
-  const signOut = () => {
+  const signOut = async externalType => {
+    if (externalType === "google") {
+      const response = await firebase.auth().signOut()
+    }
     try {
       dispatch({ type: SIGNOUT_SUCCESS })
       removeState()
     } catch (error) {
       dispatch({ type: SIGNOUT_FAILURE, payload: error.message })
     }
+  }
+
+  const resetSignInError = () => {
+    dispatch({ type: RESET_SIGNIN_ERROR })
   }
 
   return (
@@ -86,7 +105,8 @@ export const AuthState = props => {
         signInWithUserIdAndPassword,
         signInWithGoogle,
         signUpUser,
-        signOut
+        signOut,
+        resetSignInError
       }}>
       {props.children}
     </AuthContext.Provider>
