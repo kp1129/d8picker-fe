@@ -29,9 +29,16 @@ const useStyles = makeStyles(theme => ({
 
 export default function SimpleModal() {
 	const classes = useStyles();
-	// getModalStyle is not a pure function, we roll the style only on the first render
-	const [modalStyle] = React.useState(getModalStyle);
-	const [open, setOpen] = React.useState(false);
+	
+	const [user, setUser] = useState({
+		username: '',
+		email: '',
+		password: ''
+  });
+  
+  // getModalStyle is not a pure function, we roll the style only on the first render
+	const [modalStyle] = useState(getModalStyle);
+	const [open, setOpen] = useState(false);
 
 	const handleOpen = () => {
 		setOpen(true);
