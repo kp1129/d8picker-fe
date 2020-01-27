@@ -37,10 +37,12 @@ function Login() {
 	});
 
 	const handleChanges = e => {
-		setUser({ ...user, [e.target.name]: e.target.value });
+        setUser({ ...user, [e.target.name]: e.target.value });
+        console.log('handleChanges Login', user)
 	};
 
 	const handleSubmit = e => {
+        console.log('handleSubmit Login', user)
 		e.preventDefault();
 		console.log(user);
 		axios
