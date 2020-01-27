@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 
+import Modal from './Modal'
 
 import { TextField, Button, makeStyles } from '@material-ui/core';
 
@@ -56,7 +57,7 @@ function Login() {
 	return (
 		
 			<div className='navbar' >
-			
+			<Modal />
 				<form onSubmit={handleSubmit} className={classes.form}>
 					<TextField
 						id='outlined-basic'
