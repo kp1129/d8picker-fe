@@ -1,18 +1,10 @@
 
 # School Calendar
 
-You can find the deployed project at https://labs17-school-calendar-dev.netlify.com/
+
 
 ## :one:  Developers and Designers
 
-![contributors](school-cal/src/assets/images/Contributors.png)
-
-## :two: Contact Information
-|                                                                                                                      [Thai Nguyen (Developer)](https://github.com/thaiq8nguyen)                                        |                                       [Augustine Rodriguez (Developer)](https://github.com/arodri04)                                        |                                       [Zach Young](https://github.com/zachtyoung)                                        |                                       [Landry Irakoze (Developer)](https://github.com/LandryIrakoze)                                        |
- [Fnu Bharti (Developer)](https://github.com/bharti3bk) 
-|                                       [Aaryn McDade (UX Designer)](https://github.com/)                                        |
-                                       [Carlos Hernandez (Developer)](https://github.com/ch04937)                                        |  
-                                       [Victor Soto (UX Designer)]() | [Pedro Montesinos (Team Lead)](https://github.com/pedrolmr)
 
 <br>
 
