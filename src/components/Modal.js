@@ -35,11 +35,15 @@ export default function SimpleModal() {
 		email: '',
 		password: ''
   });
-  
+
   // getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = useState(getModalStyle);
 	const [open, setOpen] = useState(false);
 
+  const handleChanges = e => {
+		setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  
 	const handleOpen = () => {
 		setOpen(true);
 	};
