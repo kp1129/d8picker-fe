@@ -71,7 +71,7 @@ export default function SimpleModal() {
 	return (
 		<div>
 			<button type='button' onClick={handleOpen}>
-				Open Modal
+				Register
 			</button>
 			<Modal
 				aria-labelledby='simple-modal-title'
