@@ -10,7 +10,7 @@ const Home = () => {
     <div>
       <Sidebar />
       <Navbarhome />
-      <calenar
+      <Calendar />
     </div>
   )
 }

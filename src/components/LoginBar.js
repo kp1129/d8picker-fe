@@ -44,7 +44,7 @@ function Login() {
 		e.preventDefault();
 		console.log(user);
 		axios
-			.post('localhost:5000/api/login', user)
+			.post('', user)
 			.then(res => {
 				console.log('Post', res);
 			})
