@@ -44,6 +44,20 @@ export default function SimpleModal() {
 		setUser({ ...user, [e.target.name]: e.target.value });
   };
   
+  const handleSubmit = e => {
+		e.preventDefault();
+		console.log(user);
+		axios
+			.post('', user)
+			.then(res => {
+				console.log('Post', res);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		setUser({ username: '', password: '' });
+  };
+  
 	const handleOpen = () => {
 		setOpen(true);
 	};
