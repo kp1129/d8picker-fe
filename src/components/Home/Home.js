@@ -8,9 +8,7 @@ const Home = () => {
 
   return (
     <div>
-      <Sidebar />
-      <Navbarhome />
-      <Calendar />
+      Home
     </div>
   )
 }
