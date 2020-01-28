@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // Pull in Modal component (register form)
-import Modal from './Modal';
+import RegisterModal from './RegisterModal';
 
 import { TextField, Button, makeStyles } from '@material-ui/core';
 
@@ -62,7 +62,7 @@ function Login() {
 
 	return (
 		<div className='navbar'>
-			<Modal />
+			<RegisterModal />
 			<form onSubmit={handleSubmit} className={classes.form}>
 				<TextField
 					type='email'
