@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import Template from './Template'
+import TemplateList from './TemplateList'
 import axios from 'axios'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 
@@ -37,7 +37,7 @@ const Sidebar = () => {
           {user.name} is number {user.id} in my book
         </Typography>
       </Paper>
-      {/*<Template/> */}
+      <TemplateList/>
     </div>
     )
 }
