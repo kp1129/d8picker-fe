@@ -39,7 +39,6 @@ function Login() {
 
 	const handleChanges = e => {
         setUser({ ...user, [e.target.name]: e.target.value });
-       
 	};
 
 	const handleSubmit = e => {

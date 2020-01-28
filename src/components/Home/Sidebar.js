@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+// import Template from './Template'
 import axios from 'axios'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 
@@ -13,6 +14,8 @@ const Sidebar = () => {
   const classes = styles()
   const [user, setUser] = useState('Bob')
 
+
+  //load user name into state
   useEffect(() => {
     axios.get('')
     .then( res => {  
@@ -22,6 +25,8 @@ const Sidebar = () => {
     .catch( err =>{console.log(err)})
   },[])
 
+
+  //publish 
   return (
     <div>
       <Paper className={{classes.paper}}>
@@ -29,6 +34,7 @@ const Sidebar = () => {
           {user.username}
         </Typography>
       </Paper>
+      {/*<Template/> */}
     </div>
     )
 }
