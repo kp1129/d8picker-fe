@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import axios from 'axios';
+// import axios from 'axios';
 
 import {
 	makeStyles,
@@ -52,7 +52,8 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: 10
 	}
 }));
-function createEventModal() {
+
+function CreateEventModal() {
 	const classes = useStyles();
 
 	const [event, setEvent] = useState({
@@ -88,19 +89,19 @@ function createEventModal() {
 			>
 				<div style={modalStyle} className={classes.paper}>
 					<Typography>Create Event</Typography>
-					<form onSubmit={handleSubmit} className={classes.form}>
+					<form  className={classes.form}>
 						<TextField
 							id='outlined-basic'
 							label='title'
 							name='title'
 							margin='normal'
 							variant='outlined'
-							value={user.title}
+							value={event.title}
 							onChange={handleChanges}
 							className={classes.input}
 							required
 						/>
-						
+
 						<Button type='submit' className={classes.button}>
 							submit
 						</Button>
@@ -111,4 +112,4 @@ function createEventModal() {
 	);
 }
 
-export default createEventModal;
+export default CreateEventModal;
