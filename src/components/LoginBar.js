@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	form: {
 		display: 'flex',
-		width: '60%'
+        width: '60%'
 	},
 	input: {
 		background: 'white',
@@ -22,10 +22,11 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: 5
 	},
 	button: {
-		background: '#eef9bf',
-		fontSize: '1rem',
-		
-	}
+		background: '#caad0fd4',
+        fontSize: '1rem',
+        padding: 10
+    },
+
 }));
 
 function Login() {
@@ -38,13 +39,12 @@ function Login() {
 
 	const handleChanges = e => {
         setUser({ ...user, [e.target.name]: e.target.value });
-        console.log('handleChanges Login', user)
+       
 	};
 
 	const handleSubmit = e => {
-        console.log('handleSubmit Login', user)
 		e.preventDefault();
-		console.log(user);
+		console.log('Login',user);
 		axios
 			.post('', user)
 			.then(res => {
@@ -84,7 +84,7 @@ function Login() {
 						required
 					/>
 					<Button type='submit' className={classes.button}>
-						submit
+						sign in
 					</Button>
 				</form>
 			</div>
