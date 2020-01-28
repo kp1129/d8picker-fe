@@ -14,6 +14,8 @@ const addTemplate = () => {
 
 //grabs users list of existing templates, and populated the field. 
 const TemplateList = () => {
+
+  //place holder list to be replaced by axios call
   const [list, setList] = useState([
     {
       id:1,
@@ -28,10 +30,11 @@ const TemplateList = () => {
       name:'beer drinking'
     }
   ])
+
+
   return (
     <div>
       {list.map(temp => {
-        console.log(temp)
         return( <Template
           key={temp.id}
           thing={temp.name}

@@ -9,7 +9,6 @@ const applyTemplate = () => {
 
 
 const Template = props => {
-  console.log(props.thing)
   return (
     <div>
       {props.thing}
