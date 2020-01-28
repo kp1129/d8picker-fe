@@ -8,7 +8,7 @@ import RegisterModal from './RegisterModal';
 
 import { TextField, Button, makeStyles } from '@material-ui/core';
 
-import '../App.css';
+import '../../App.css';
 
 // Styling for material-ui
 const useStyles = makeStyles(theme => ({
