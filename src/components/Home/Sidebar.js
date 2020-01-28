@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Typography, Paper } from '@material-ui/core'
 
 
 const Sidebar = () => {
@@ -16,11 +17,11 @@ const Sidebar = () => {
 
   return (
     <div>
-      {user.map(person =>{
-        <h1>
-          {person.username}
-        </h1>
-      })} 
+      <Paper>
+        <Typography variant='h1'>
+          {user.username}
+        </Typography>
+      </Paper>
     </div>
     )
 }
