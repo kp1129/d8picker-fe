@@ -12,7 +12,10 @@ const styles = makeStyles(theme => ({
 
 const Sidebar = () => {
   const classes = styles()
-  const [user, setUser] = useState('Bob')
+  const [user, setUser] = useState({
+      name: 'Bob',
+      id:1,
+    })
 
 
   //load user name into state
@@ -22,16 +25,16 @@ const Sidebar = () => {
       console.log('res.data:', res.data)
       //setUser(res.data)
     })
-    .catch( err =>{console.log(err)})
+    .catch(err =>{console.log(err)})
   },[])
 
 
   //publish 
   return (
     <div>
-      <Paper className={{classes.paper}}>
+      <Paper className={{classes}}>
         <Typography variant='h1'>
-          {user.username}
+          {user.name} is number {user.id} in my book
         </Typography>
       </Paper>
       {/*<Template/> */}
