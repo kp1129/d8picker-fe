@@ -3,7 +3,7 @@ import LoginBar from './LoginBar'
 
 export default function Splash() {
     return (
-        <div>
+        <div className="splash">
             <LoginBar />
         </div>
     )
