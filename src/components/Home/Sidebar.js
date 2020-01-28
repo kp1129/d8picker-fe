@@ -4,7 +4,8 @@ import { Typography, makeStyles } from '@material-ui/core'
 
 const useStyles =makeStyles(theme => ({
 profile: {
-  color: '#fcfcac'
+  color: '#fcfcac',
+  fontSize: '1.3rem'
 }
 }))
 
@@ -24,7 +25,7 @@ const Sidebar = () => {
   return (
     <div>
         <Typography variant='h3'className={classes.profile} >
-          {user.username}
+          {user}
           </Typography>
         
     </div>

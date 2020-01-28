@@ -9,12 +9,25 @@ const useStyles = makeStyles(theme => ({
 		// width: '100%',
 		background: '#2a303d',
 		height: '100vh'
-	},
+  },
+  center: {
+    display: 'flex'
+  },
 	sidebar: {
-		border: '1px solid #fcfcac'
+    border: '1px solid #fcfcac',
+    background: '#a6a6a6',
+    margin: 5,
+    width: '20%',
+    height: '75vh',
 	},
 	calendar: {
-		border: '1px solid #fcfcac'
+    border: '1px solid #fcfcac',
+    border: '1px solid #fcfcac',
+    background: '#1a1a1a',
+    color: 'white',
+    margin: 5,
+    width: '80%',
+    height: '75vh',
 	}
 }));
 
@@ -24,12 +37,16 @@ const Home = () => {
 		<div>
 			<Container className={classes.container}>
 				<NavBarHome />
-				<Typography variant='h3'>Home</Typography>
-
-				<Paper className={classes.sidebar}>
-					<Sidebar />
-				</Paper>
-				<Paper className={classes.calendar}></Paper>
+				
+				<div className={classes.center} >
+					<Paper className={classes.sidebar}>
+          <Typography variant='h6'>Sidebar</Typography>
+						<Sidebar />
+					</Paper>
+					<Paper className={classes.calendar}>
+          <Typography variant='h6'>Calendar</Typography>
+          </Paper>
+				</div>
 			</Container>
 		</div>
 	);
