@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { makeStyles, Modal, TextField, Typography, Button } from '@material-ui/core';
 
+// modal logic
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
 }
@@ -18,6 +19,7 @@ function getModalStyle() {
 	};
 }
 
+// material-ui styles
 const useStyles = makeStyles(theme => ({
 	paper: {
     position: 'absolute',
@@ -48,7 +50,7 @@ export default function SimpleModal() {
 	const classes = useStyles();
 	
 	const [user, setUser] = useState({
-		username: '',
+    name: '',
 		email: '',
 		password: ''
   });
@@ -65,14 +67,15 @@ export default function SimpleModal() {
 		e.preventDefault();
 		console.log('register',user);
 		axios
-			.post('', user)
+			.post('https://d8picker.herokuapp.com/api/user/register', user)
 			.then(res => {
-				console.log('Post', res);
+        console.log('Post', res);
+        localStorage.setItem('token', res.data.token)
 			})
 			.catch(err => {
 				console.log(err);
 			});
-		setUser({ username: '', email: '', password: '' });
+		setUser({ name: '', email: '', password: '' });
   };
   
 	const handleOpen = () => {
@@ -88,6 +91,7 @@ export default function SimpleModal() {
 			<button type='button' onClick={handleOpen} className={classes.mButton}>
 				Register
 			</button>
+      {/* Modal drops down register form */}
 			<Modal
 				aria-labelledby='simple-modal-title'
 				aria-describedby='simple-modal-description'
@@ -97,18 +101,19 @@ export default function SimpleModal() {
 				<div style={modalStyle} className={classes.paper}>
 					<Typography>Register</Typography>
 					<form onSubmit={handleSubmit} className={classes.form}>
-						<TextField
+          <TextField
 							id='outlined-basic'
-							label='username'
-							name='username'
+							label='name'
+							name='name'
 							margin='normal'
 							variant='outlined'
-							value={user.username}
+							value={user.name}
 							onChange={handleChanges}
 							className={classes.input}
 							required
 						/>
 						<TextField
+            type='email'
 							id='outlined-basic'
 							label='email'
 							name='email'
@@ -120,6 +125,7 @@ export default function SimpleModal() {
 							required
 						/>
 						<TextField
+            type='password'
 							id='outlined-basic'
 							label='password'
 							name='password'
@@ -134,7 +140,7 @@ export default function SimpleModal() {
 							submit
 						</Button>
 					</form>
-					{/* <SimpleModal /> */}
+				
 				</div>
 			</Modal>
 		</div>
