@@ -29,6 +29,14 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     background: '#6a8caf'
+  },
+  mButton: {
+    background: '#2a303d',
+    fontSize: '1.3rem',
+    padding: 10,
+    border: '1px solid #caad0fd4',
+    color: '#caad0fd4',
+    borderRadius: 10
   }
 }));
 
@@ -73,7 +81,7 @@ export default function SimpleModal() {
 
 	return (
 		<div>
-			<button type='button' onClick={handleOpen}>
+			<button type='button' onClick={handleOpen} className={classes.mButton}>
 				Register
 			</button>
 			<Modal
