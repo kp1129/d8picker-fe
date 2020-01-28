@@ -20,15 +20,19 @@ function getModalStyle() {
 
 const useStyles = makeStyles(theme => ({
 	paper: {
-		position: 'absolute',
-		width: 400,
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+		width: 200,
 		backgroundColor: theme.palette.background.paper,
-		border: '2px solid #000',
+		border: '10px solid #cbaa0d',
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3)
   },
   button: {
-    background: '#6a8caf'
+    background: '#cbaa0d'
   },
   mButton: {
     background: '#2a303d',
@@ -59,7 +63,7 @@ export default function SimpleModal() {
   
   const handleSubmit = e => {
 		e.preventDefault();
-		console.log(user);
+		console.log('register',user);
 		axios
 			.post('', user)
 			.then(res => {
@@ -68,7 +72,7 @@ export default function SimpleModal() {
 			.catch(err => {
 				console.log(err);
 			});
-		setUser({ username: '', password: '' });
+		setUser({ username: '', email: '', password: '' });
   };
   
 	const handleOpen = () => {
