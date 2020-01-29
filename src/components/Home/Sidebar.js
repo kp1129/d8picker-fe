@@ -3,6 +3,12 @@ import TemplateList from './TemplateList'
 import axios from 'axios'
 import { Typography, Paper, makeStyles } from '@material-ui/core'
 
+const useStyles =makeStyles(theme => ({
+profile: {
+  color: '#fcfcac',
+  fontSize: '1.3rem'
+}
+}))
 
 const styles = makeStyles(theme => ({
   paper: {
