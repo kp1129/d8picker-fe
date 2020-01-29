@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { Typography, makeStyles } from '@material-ui/core'
 
+const useStyles =makeStyles(theme => ({
+profile: {
+  color: '#fcfcac',
+  fontSize: '1.3rem'
+}
+}))
 
 const Sidebar = () => {
+  const classes = useStyles()
   const [user, setUser] = useState('Bob')
 
   useEffect(() => {
@@ -16,11 +24,10 @@ const Sidebar = () => {
 
   return (
     <div>
-      {user.map(person =>{
-        <h1>
-          {person.username}
-        </h1>
-      })} 
+        <Typography variant='h3'className={classes.profile} >
+          {user}
+          </Typography>
+        
     </div>
     )
 }

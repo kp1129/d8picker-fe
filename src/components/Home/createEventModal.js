@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 		alignItems: 'center',
 		width: 200,
 		backgroundColor: theme.palette.background.paper,
-		border: '10px solid #cbaa0d',
+		border: '10px solid #fcfcac',
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3)
 	},
@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 		fontSize: '1.3rem',
 		padding: 10,
 		border: '1px solid #caad0fd4',
-		color: '#caad0fd4',
+		color: '#fcfcac',
 		borderRadius: 10
 	}
 }));
