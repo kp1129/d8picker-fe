@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
     try {
       // Test endpoint
       const response = await axios.post(
-        "https://d8picker.herokuapp.com/api/user/login",
+        "https://d8picker.herokuapp.com/api/auth/login",
         values
       );
 
@@ -72,7 +72,7 @@ const AuthProvider = ({ children }) => {
     try {
       // Test endpoint
       const response = await axios.post(
-        "https://d8picker.herokuapp.com/api/user/register",
+        "https://d8picker.herokuapp.com/api/auth/register",
         values
       );
       console.log(response.data);
