@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import NavBarHome from './NavbarHome';
+import NavBar from './NavBar';
 import Sidebar from './Sidebar';
 import { Container, Paper, Typography, makeStyles } from '@material-ui/core';
 
@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	calendar: {
     border: '1px solid #fcfcac',
-    border: '1px solid #fcfcac',
     background: '#1a1a1a',
     color: 'white',
     margin: 5,
@@ -36,7 +35,7 @@ const Home = () => {
 	return (
 		<div>
 			<Container className={classes.container}>
-				<NavBarHome />
+				<NavBar />
 				
 				<div className={classes.center} >
 					<Paper className={classes.sidebar}>

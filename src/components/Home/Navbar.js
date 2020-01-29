@@ -10,7 +10,7 @@ nav: {
 }
 }))
 
-function NavbarHome() {
+function NavBar() {
     const classes = useStyles();
     return (
         <div className={classes.nav}>
@@ -19,5 +19,5 @@ function NavbarHome() {
     )
 }
 
-export default NavbarHome
+export default NavBar
 

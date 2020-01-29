@@ -6,10 +6,7 @@ const AuthContext = React.createContext();
 export const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER_SUCCESS":
-      localStorage.setItem(
-        "token",
-        JSON.stringify(action.payload.access_token)
-      );
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
       state.registered = true;
       state.isAuthenticated = state.registered;
       return {
@@ -17,10 +14,7 @@ export const reducer = (state, action) => {
         ...action.payload
       };
     case "LOGIN_SUCCESS":
-      localStorage.setItem(
-        "token",
-        JSON.stringify(action.payload.access_token)
-      );
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
       localStorage.setItem("user", JSON.stringify(action.payload.user));
       state.isAuthenticated = true;
       return {
@@ -55,7 +49,10 @@ const AuthProvider = ({ children }) => {
   const handleLogin = async values => {
     try {
       // Test endpoint
-      const response = await axios.post("https://reqres.in/api/login", values);
+      const response = await axios.post(
+        "https://d8picker.herokuapp.com/api/user/login",
+        values
+      );
 
       console.log("login", response.data);
       dispatch({
@@ -75,7 +72,7 @@ const AuthProvider = ({ children }) => {
     try {
       // Test endpoint
       const response = await axios.post(
-        "https://reqres.in/api/register",
+        "https://d8picker.herokuapp.com/api/user/register",
         values
       );
       console.log(response.data);
