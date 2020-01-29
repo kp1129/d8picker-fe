@@ -5,12 +5,12 @@ import { render } from '@testing-library/react';
 import Register from '../components/Splash/RegisterModal';
 
 
-describe('Register Modal', () => {
+describe ('Register Modal', () => {
 	it('does not show the password', () => {
        
-		const { getByPlaceholderText } = render(<Register />);
+		const { getByLabelText } = render(<Register />);
 
-		const password = getByPlaceholderText('password');
+		const password = getByLabelText('password');
 		expect(password.type).toMatch(password);
 	});
 });
