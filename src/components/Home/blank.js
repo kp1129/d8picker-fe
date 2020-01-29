@@ -1,10 +1,11 @@
 import React from 'react'
 import { gapi } from 'gapi-script'
+import 'dotenv'
+
+
 
 
 const authenticate = () => {
-  console.log('authenticate!')
-
   return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"})
     .then(function() { console.log("Sign-in successful"); },
@@ -12,16 +13,16 @@ const authenticate = () => {
 }
 
 function loadClient() {
-  gapi.client.setApiKey("YOUR_API_KEY");
+  gapi.client.setApiKey(API_KEY);
   return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest")
     .then(function() { console.log("GAPI client loaded for API"); },
       function(err) { console.error("Error loading GAPI client for API", err); });
 }
 
+// Make sure the client is loaded and sign-in is complete before calling this method.
 function execute() {
-  console.log('execute!')
   return gapi.client.calendar.events.insert({
-    "calendarId": "danstad2012@gmail.com",
+    "calendarId": "funnyusernamego@gmail.com",
     "resource": {
       "start": {
         "dateTime": "2020-01-29T15:00:00-07:00"
@@ -40,19 +41,22 @@ function execute() {
     function(err) { console.error("Execute error", err); });
 }
 
+gapi.load("client:auth2", function() {
+  gapi.auth2.init({client_id: client_id});
+});
+const boop = () => {
+  console.log(gapi.client)
+}
 const Blank = () => {
 
-  // Make sure the client is loaded and sign-in is complete before calling this method.
 
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
-  });
 
     
   return (
     <div>
       <button onClick={() => authenticate().then(loadClient)}>authorize and load</button>
       <button onClick={() => execute()}>execute</button>
+      <button onClick={() => boop()}>boop</button>
     </div>
   )
 }

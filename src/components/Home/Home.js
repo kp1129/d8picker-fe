@@ -17,7 +17,7 @@ const Home = () => {
       <h1>Home</h1>
       <Sidebar />
       <Blank/>
-      <iframe src="https://calendar.google.com/calendar/embed?src=danstad2012%40gmail.com&ctz=America%2FLos_Angeles" style={style}></iframe>
+      <iframe src="https://calendar.google.com/calendar/embed?src=funnyusernamego%40gmail.com&ctz=America%2FLos_Angeles" style={style}></iframe>
     </div>
   )
 }
