@@ -94,7 +94,7 @@ export default function SimpleModal() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen} className={classes.mButton}>
+      <button type="button" onClick={handleOpen} className={classes.mButton} data-testid="regModalBtn" >
         Register
       </button>
       {/* Modal drops down register form */}
@@ -103,6 +103,7 @@ export default function SimpleModal() {
         aria-describedby="simple-modal-description"
         open={open}
         onClose={handleClose}
+        data-testid="DeAndre"
       >
         <div style={modalStyle} className={classes.paper}>
           <Typography>Register</Typography>
@@ -132,6 +133,7 @@ export default function SimpleModal() {
             />
             <TextField
               type="password"
+              data-testid="registerPassword"
               id="outlined-basic"
               label="password"
               name="password"
