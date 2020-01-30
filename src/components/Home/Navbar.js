@@ -1,10 +1,10 @@
 import React from "react";
-import CreateEventModal from "./CreateEventModal";
+//import CreateEventModal from "./CreateEventModal";
 
 function Navbar() {
   return (
     <div>
-      <CreateEventModal />
+      {/*} <CreateEventModal /> */}
     </div>
   );
 }

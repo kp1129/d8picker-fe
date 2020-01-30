@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import Splash from "./components/Splash/Splash";
-import Home from "./components/Home/Home";
+import Home from "./components/Home/";
 import PrivateRoute from "./components/PrivateRoute";
 
 import "./App.css";

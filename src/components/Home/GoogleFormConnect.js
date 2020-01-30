@@ -1,9 +1,13 @@
 import React from 'react'
 import { gapi } from 'gapi-script'
 import { web } from '../../credentials.json'
+import { useForm } from 'react-hook-form';
+
 
 const {API_KEY, client_id} = web
 
+
+  
 
 const authenticate = () => {
   return gapi.auth2.getAuthInstance()
@@ -25,10 +29,10 @@ function execute() {
     "calendarId": "funnyusernamego@gmail.com",
     "resource": {
       "start": {
-        "dateTime": "2020-01-29T15:00:00-07:00"
+        "dateTime": "2020-01-30T15:00:00-08:00" 
       },
       "end": {
-        "dateTime": "2020-01-29T16:00:00-07:00"
+        "dateTime": "2020-01-30T16:00:00-08:00"
       },
       "description": "Doing Shit",
       "summary": "bestlife"
@@ -44,19 +48,33 @@ function execute() {
 gapi.load("client:auth2", function() {
   gapi.auth2.init({client_id: client_id});
 });
-const boop = () => {
-  console.log(gapi.client)
-}
-const Blank = () => {
 
+const Blank = () => {
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = data => console.log(data);
+  console.log(errors);
 
 
     
   return (
     <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="date" placeholder="Start Date" name="Start Date" ref={register({required: true, maxLength: 80})} />
+        <input type="time" placeholder="Start Time" name="Start Time" ref={register({required: true, maxLength: 80})} />
+        <input type="date" placeholder="End Date" name="End Date" ref={register({required: true, maxLength: 80})} />
+        <input type="time" placeholder="End Time" name="End Time" ref={register({required: true, maxLength: 80})} />
+        <input type="text" placeholder="Summary" name="Summary" ref={register} />
+        <textarea name="Description" ref={register} />
+
+        <input type="submit" />
+      </form>
+
+
+
+
+
       <button onClick={() => authenticate().then(loadClient)}>authorize and load</button>
       <button onClick={() => execute()}>execute</button>
-      <button onClick={() => boop()}>boop</button>
     </div>
   )
 }
