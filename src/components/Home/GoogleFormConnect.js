@@ -23,27 +23,7 @@ function loadClient() {
       function(err) { console.error("Error loading GAPI client for API", err); });
 }
 
-// Make sure the client is loaded and sign-in is complete before calling this method.
-function execute() {
-  return gapi.client.calendar.events.insert({
-    "calendarId": "funnyusernamego@gmail.com",
-    "resource": {
-      "start": {
-        "dateTime": "2020-01-30T15:00:00-08:00" 
-      },
-      "end": {
-        "dateTime": "2020-01-30T16:00:00-08:00"
-      },
-      "description": "Doing Shit",
-      "summary": "bestlife"
-    }
-  })
-    .then(function(response) {
-      // Handle the results here (response.result has the parsed body).
-      console.log("Response", response);
-    },
-    function(err) { console.error("Execute error", err); });
-}
+
 
 gapi.load("client:auth2", function() {
   gapi.auth2.init({client_id: client_id});
@@ -68,25 +48,47 @@ const Blank = () => {
   }
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = data => {
-
+    console.log(data)
     const start =  dateTime(data.startDate, data.startTime) 
     const end = dateTime(data.endDate, data.endTime) 
-    console.log(start,end)
     setResource({
       "start": {
-        "dateTime": 'start'
+        "dateTime": start
       },
       "end": {
-        "dateTime": 'end'
+        "dateTime": end
       },
       "description": data.description,
       "summary": data.summary
     })
     console.log(resource)
-
   }
+
   console.log(errors);
 
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+function execute(resource) {
+  console.log(resource)
+  return gapi.client.calendar.events.insert({
+    "calendarId": "funnyusernamego@gmail.com",
+    "resource": resource
+    // "resource": {
+    //   "start": {
+    //     "dateTime": "2020-01-30T15:00:00-08:00" 
+    //   },
+    //   "end": {
+    //     "dateTime": "2020-01-30T16:00:00-08:00"
+    //   },
+    //   "description": "Doing Shit",
+    //   "summary": "bestlife"
+    // }
+  })
+    .then(function(response) {
+      // Handle the results here (response.result has the parsed body).
+      console.log("Response", response);
+    },
+    function(err) { console.error("Execute error", err); });
+}
 
 
     
@@ -108,7 +110,7 @@ const Blank = () => {
 
 
       <button onClick={() => authenticate().then(loadClient)}>authorize and load</button>
-      <button onClick={() => execute()}>execute</button>
+      <button onClick={() => execute(resource)}>execute</button>
     </div>
   )
 }
