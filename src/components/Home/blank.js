@@ -1,8 +1,8 @@
 import React from 'react'
 import { gapi } from 'gapi-script'
-import 'dotenv'
+import { web } from '../../credentials.json'
 
-
+const {API_KEY, client_id} = web
 
 
 const authenticate = () => {
