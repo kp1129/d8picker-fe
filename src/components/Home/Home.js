@@ -1,14 +1,54 @@
 import React from "react";
 
-import NavBar from "./Navbar";
+import NavBar from './NavBar';
+import Sidebar from './Sidebar';
+import { Container, Paper, Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+	container: {
+		// width: '100%',
+		background: '#2a303d',
+		height: '100vh'
+  },
+  center: {
+    display: 'flex'
+  },
+	sidebar: {
+    border: '1px solid #fcfcac',
+    background: '#a6a6a6',
+    margin: 5,
+    width: '20%',
+    height: '75vh',
+	},
+	calendar: {
+    border: '1px solid #fcfcac',
+    background: '#1a1a1a',
+    color: 'white',
+    margin: 5,
+    width: '80%',
+    height: '75vh',
+	}
+}));
 
 const Home = () => {
-  return (
-    <div>
-      <NavBar />
-      <h1>Home</h1>
-    </div>
-  );
+	const classes = useStyles();
+	return (
+		<div>
+			<Container className={classes.container}>
+				<NavBar />
+				
+				<div className={classes.center} >
+					<Paper className={classes.sidebar}>
+          <Typography variant='h6'>Sidebar</Typography>
+						<Sidebar />
+					</Paper>
+					<Paper className={classes.calendar}>
+          <Typography variant='h6'>Calendar</Typography>
+          </Paper>
+				</div>
+			</Container>
+		</div>
+	);
 };
 
 export default Home;
