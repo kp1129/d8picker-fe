@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateEventModal from './createEventModal'
+// import CreateEventModal from './createEventModal'
 import {makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -14,7 +14,7 @@ function NavBar() {
     const classes = useStyles();
     return (
         <div className={classes.nav}>
-            <CreateEventModal />
+            {/* <CreateEventModal /> */}
         </div>
     )
 }
