@@ -39,7 +39,8 @@ const Sidebar = () => {
   return (
     <div>
       <Paper className={{classes}}>
-       {/*} <Typography variant='h1'>
+      {user.name}
+      {/*} <Typography variant='h1'>
           {user.name} is number {user.id} in my book
   </Typography> */}
       </Paper>

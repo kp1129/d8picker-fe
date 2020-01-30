@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { gapi } from 'gapi-script'
 import { web } from '../../credentials.json'
 import { useForm } from 'react-hook-form';
@@ -50,21 +50,55 @@ gapi.load("client:auth2", function() {
 });
 
 const Blank = () => {
+  const [resource, setResource] = useState({
+    "start": {
+      "dateTime": "" 
+    },
+    "end": {
+      "dateTime": ""
+    },
+    "description": "",
+    "summary": ""
+  })
+
+  const dateTime = (date, time) => {
+    const DT =  date + 'T' + time + ':00-08:00'+ ''
+    console.log(DT)
+    return DT
+  }
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+
+    const start =  dateTime(data.startDate, data.startTime) 
+    const end = dateTime(data.endDate, data.endTime) 
+    console.log(start,end)
+    setResource({
+      "start": {
+        "dateTime": 'start'
+      },
+      "end": {
+        "dateTime": 'end'
+      },
+      "description": data.description,
+      "summary": data.summary
+    })
+    console.log(resource)
+
+  }
   console.log(errors);
+
 
 
     
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="date" placeholder="Start Date" name="Start Date" ref={register({required: true, maxLength: 80})} />
-        <input type="time" placeholder="Start Time" name="Start Time" ref={register({required: true, maxLength: 80})} />
-        <input type="date" placeholder="End Date" name="End Date" ref={register({required: true, maxLength: 80})} />
-        <input type="time" placeholder="End Time" name="End Time" ref={register({required: true, maxLength: 80})} />
-        <input type="text" placeholder="Summary" name="Summary" ref={register} />
-        <textarea name="Description" ref={register} />
+        <input type="date" placeholder="Start Date" name="startDate" ref={register({required: true, maxLength: 80})} />
+        <input type="time" placeholder="Start Time" name="startTime" ref={register({required: true, maxLength: 80})} />
+        <input type="date" placeholder="End Date" name="endDate" ref={register({required: true, maxLength: 80})} />
+        <input type="time" placeholder="End Time" name="endTime" ref={register({required: true, maxLength: 80})} />
+        <input type="text" placeholder="Summary" name="summary" ref={register} />
+        <textarea name="description" ref={register} />
 
         <input type="submit" />
       </form>
