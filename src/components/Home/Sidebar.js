@@ -39,11 +39,11 @@ const Sidebar = () => {
   return (
     <div>
       <Paper className={{classes}}>
-        <Typography variant='h1'>
+       {/*} <Typography variant='h1'>
           {user.name} is number {user.id} in my book
-        </Typography>
+  </Typography> */}
       </Paper>
-      <TemplateList/>
+      {/* <TemplateList/> */}
     </div>
     )
 }
