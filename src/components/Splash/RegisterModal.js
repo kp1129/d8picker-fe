@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useAuth } from "../../hooks/useAuth";
+
 import {
   makeStyles,
   Modal,
@@ -7,7 +9,7 @@ import {
   Typography,
   Button
 } from "@material-ui/core";
-import { useAuth } from "../../hooks/useAuth";
+
 
 // modal logic
 function rand() {
