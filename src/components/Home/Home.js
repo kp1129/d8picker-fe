@@ -1,6 +1,6 @@
 import React from "react";
 
-import NavBar from './NavBar';
+import NavBar from './Navbar';
 import Sidebar from './Sidebar';
 import { Container, Paper, Typography, makeStyles } from '@material-ui/core';
 
