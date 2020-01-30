@@ -72,6 +72,7 @@ function Login() {
         />
         <TextField
           type="password"
+          data-testid="loginPassword"
           id="outlined-basic"
           label="password"
           name="password"
