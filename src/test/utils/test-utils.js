@@ -1,12 +1,12 @@
 import { render } from '@testing-library/react'
 import { AuthProvider } from '../../contexts/AuthContext'
 
-import defaultStrings from 'i18n/en-x-default'
+
 
 const AllTheProviders = ({ children }) => {
   return (
     
-      <AuthProvider messages={defaultStrings}>
+      <AuthProvider >
         {children}
       </AuthProvider>
     
