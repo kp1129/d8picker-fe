@@ -8,7 +8,7 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "gapi-script": "^1.0.1",
-    "googleapis": "39",
+    "googleapis": "47.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.7.2",
