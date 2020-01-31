@@ -83,7 +83,7 @@ function Login() {
           className={classes.input}
           required
         />
-        <Button type="submit" className={classes.button}>
+        <Button type="submit" data-testid='signBtn' className={classes.button}>
           sign in
         </Button>
       </form>

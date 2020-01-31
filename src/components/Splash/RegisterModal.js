@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleModal() {
+export default function RegisterModal() {
   const classes = useStyles();
 
   const [user, setUser] = useState({
@@ -94,7 +94,7 @@ export default function SimpleModal() {
 
   return (
     <div>
-      <button type="button" onClick={handleOpen} className={classes.mButton} data-testid="regModalBtn" >
+      <button type="button" onClick={handleOpen} className={classes.mButton} data-testid="registerBtn" >
         Register
       </button>
       {/* Modal drops down register form */}
