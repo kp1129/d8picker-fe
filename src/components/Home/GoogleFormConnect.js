@@ -6,9 +6,6 @@ import { useForm } from 'react-hook-form';
 
 const {API_KEY, client_id} = web
 
-
-  
-
 const authenticate = () => {
   return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"})
@@ -72,16 +69,7 @@ function execute(resource) {
   return gapi.client.calendar.events.insert({
     "calendarId": "funnyusernamego@gmail.com",
     "resource": resource
-    // "resource": {
-    //   "start": {
-    //     "dateTime": "2020-01-30T15:00:00-08:00" 
-    //   },
-    //   "end": {
-    //     "dateTime": "2020-01-30T16:00:00-08:00"
-    //   },
-    //   "description": "Doing Shit",
-    //   "summary": "bestlife"
-    // }
+   
   })
     .then(function(response) {
       // Handle the results here (response.result has the parsed body).
