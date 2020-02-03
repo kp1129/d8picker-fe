@@ -23,7 +23,7 @@ describe('testing for state in Login', () => {
 		expect(button).toHaveTextContent('sign in');
 	});
 
-	it('should have required password input', () => {
+	it.skip('should have required password input', () => {
 		const password = findByTestId('loginPassword');
 		expect(password).toBeRequired();
 	});
