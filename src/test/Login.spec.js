@@ -4,13 +4,13 @@ import { render, cleanup } from '@testing-library/react';
 
 import { AuthProvider } from '../contexts/AuthContext';
 import { BrowserRouter as Router } from 'react-router-dom';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import Login from '../components/Splash/LoginBar';
 
 afterEach(cleanup);
 
 describe('testing for state in Login', () => {
-	const { getByTestId } = render(
+	const { getByTestId, findByTestId } = render(
 		<AuthProvider>
 			<Router>
 				<Login />
@@ -21,5 +21,10 @@ describe('testing for state in Login', () => {
 	it('shows sign in text', () => {
 		const button = getByTestId('signBtn');
 		expect(button).toHaveTextContent('sign in');
+	});
+
+	it('should have required password input', () => {
+		const password = findByTestId('loginPassword');
+		expect(password).toBeRequired();
 	});
 });

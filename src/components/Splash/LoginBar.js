@@ -60,6 +60,7 @@ function Login() {
       <form onSubmit={handleSubmit} className={classes.form}>
         <TextField
           type="email"
+          data-testid="emailInput"
           id="outlined-basic"
           label="email"
           name="email"
