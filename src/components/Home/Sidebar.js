@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from 'react'
+// import TemplateList from './TemplateList'
 import axios from 'axios'
+import { Typography, Paper, makeStyles } from '@material-ui/core'
 
+const useStyles =makeStyles(theme => ({
+profile: {
+  color: '#fcfcac',
+  fontSize: '1.3rem'
+}
+}))
+
+const styles = makeStyles(theme => ({
+  paper: {
+    background: '#caad0fd4'
+  }
+}))
 
 const Sidebar = () => {
-  const [user, setUser] = useState('Bob')
+  const classes = styles()
+  // FE fix for USER GETbyID also include DELETE by id 
+  // const user = localStorage.getItem('user')
+  // const person = JSON.parse(user)
+// console.log(person.name)
 
-  useEffect(() => {
-    axios.get('')
-    .then( res => {  
-      console.log('res.data:', res.data)
-      //setUser(res.data)
-    })
-    .catch( err =>{console.log(err)})
-  },[])
-
+  //publish 
   return (
     <div>
-      {user.map(person =>{
-        <h1>
-          {person.username}
-        </h1>
-      })} 
+      <Paper className={{classes}}>
+      
+       {/* <Typography variant='h4'>
+      
+          {person.name}'s Calendar 
+        
+  </Typography> */}
+      </Paper>
+      {/* <TemplateList/> */}
     </div>
     )
 }

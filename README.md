@@ -1,3 +1,5 @@
+## Code Climate
+[![Maintainability](https://api.codeclimate.com/v1/badges/3d26f594475564dc6550/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/school-calendar-fe/maintainability)
 
 # School Calendar
 d8picker.com
