@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 import Splash from "./components/Splash/";
 import Home from "./components/Home/";
-import PrivateRoute from "./components/PrivateRoute";
+// import PrivateRoute from "./components/PrivateRoute";
 
 import "./App.css";
 
@@ -13,9 +13,13 @@ function App() {
       <Route exact path="/">
         <Splash />
       </Route>
-      <PrivateRoute path="/home">
+      {/* Remember to change back to private */}
+      {/* <PrivateRoute path="/home">
         <Home />
-      </PrivateRoute>
+      </PrivateRoute> */}
+      <Route>
+        <Home />
+      </Route>
     </div>
   );
 }

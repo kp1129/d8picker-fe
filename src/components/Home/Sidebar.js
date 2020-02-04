@@ -18,20 +18,21 @@ const styles = makeStyles(theme => ({
 
 const Sidebar = () => {
   const classes = styles()
-  const user = localStorage.getItem('user')
-  const person = JSON.parse(user)
-console.log(person.name)
+  // FE fix for USER GETbyID also include DELETE by id 
+  // const user = localStorage.getItem('user')
+  // const person = JSON.parse(user)
+// console.log(person.name)
 
   //publish 
   return (
     <div>
       <Paper className={{classes}}>
       
-       <Typography variant='h4'>
+       {/* <Typography variant='h4'>
       
           {person.name}'s Calendar 
         
-  </Typography>
+  </Typography> */}
       </Paper>
       {/* <TemplateList/> */}
     </div>
