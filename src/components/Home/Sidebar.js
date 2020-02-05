@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-
+import React  from 'react'
+// import TemplateList from './TemplateList'
+// import axios from 'axios'
 
 const Sidebar = () => {
-  const [user, setUser] = useState('Bob')
+  
+  // FE fix for USER GETbyID also include DELETE by id 
+  // const user = localStorage.getItem('user')
+  // const person = JSON.parse(user)
+// console.log(person.name)
 
-  useEffect(() => {
-    axios.get('')
-    .then( res => {  
-      console.log('res.data:', res.data)
-      //setUser(res.data)
-    })
-    .catch( err =>{console.log(err)})
-  },[])
-
+  //publish 
   return (
     <div>
-      {user.map(person =>{
-        <h1>
-          {person.username}
-        </h1>
-      })} 
+      {/* <TemplateList/> */}
     </div>
     )
 }
