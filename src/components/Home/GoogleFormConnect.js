@@ -6,14 +6,17 @@ import { useForm } from 'react-hook-form';
 
 const {API_KEY, client_id} = web
 
-const authenticate = () => {
+export const authenticate = () => {
   return gapi.auth2.getAuthInstance()
-    .signIn({scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"})
-    .then(function() { console.log("Sign-in successful"); },
+    .signIn({
+      scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events"})
+    .then( res => 
+     // function() 
+      { console.log("Sign-in successful", res); },
       function(err) { console.error("Error signing in", err); });
 }
 
-function loadClient() {
+export function loadClient() {
   gapi.client.setApiKey(API_KEY);
   return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/calendar/v3/rest")
     .then(function() { console.log("GAPI client loaded for API"); },
@@ -23,6 +26,8 @@ function loadClient() {
 
 
 gapi.load("client:auth2", function() {
+  console.log('load GAPI', client_id)
+
   gapi.auth2.init({client_id: client_id});
 });
 
@@ -69,7 +74,7 @@ function execute(resource) {
   return gapi.client.calendar.events.insert({
     "calendarId": "funnyusernamego@gmail.com",
     "resource": resource
-   
+  
   })
     .then(function(response) {
       // Handle the results here (response.result has the parsed body).
@@ -83,10 +88,10 @@ function execute(resource) {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="date" placeholder="Start Date" name="startDate" ref={register({required: true, maxLength: 80})} />
-        <input type="time" placeholder="Start Time" name="startTime" ref={register({required: true, maxLength: 80})} />
-        <input type="date" placeholder="End Date" name="endDate" ref={register({required: true, maxLength: 80})} />
-        <input type="time" placeholder="End Time" name="endTime" ref={register({required: true, maxLength: 80})} />
+        <input type="date" name="startDate" ref={register({required: true, maxLength: 80})} />
+        <input type="time" name="startTime" ref={register({required: true, maxLength: 80})} />
+        <input type="date" name="endDate" ref={register({required: true, maxLength: 80})} />
+        <input type="time" name="endTime" ref={register({required: true, maxLength: 80})} />
         <input type="text" placeholder="Summary" name="summary" ref={register} />
         <textarea name="description" ref={register} />
 
