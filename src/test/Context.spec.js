@@ -1,6 +1,6 @@
-import {testHook, cleanup} from 'react-testing-library'
+import {testHook, cleanup} from '@testing-library/react'
 
-import {AuthContext, handleRegister} from '../react-context-hook'
+import {AuthContext, handleRegister} from '.'
 
 afterEach(cleanup)
 
