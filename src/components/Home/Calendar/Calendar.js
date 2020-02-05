@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import DaysOfWeek from "./DaysOfWeek";
 import Cells from './Cells'
-import "./calendar.css";
+import "./Calendar.css";
 
 const Calendar = props => {
   const [currentDate, setCurrentDate] = useState(new Date());
