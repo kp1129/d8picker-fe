@@ -17,7 +17,7 @@ function App() {
       {/* <PrivateRoute path="/home">
         <Home />
       </PrivateRoute> */}
-      <Route>
+      <Route path="/home" >
         <Home />
       </Route>
     </div>
