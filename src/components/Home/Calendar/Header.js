@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { format, addMonths, subMonths } from "date-fns";
 const Header = props => {
   const dateFormat = "MMMM yyyy";

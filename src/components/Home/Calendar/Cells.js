@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-
+import DayPlanner from "./DayPlanner";
 import {
   format,
   startOfMonth,
@@ -12,10 +11,7 @@ import {
   parse,
   addDays
 } from "date-fns";
-
-
 const Cells = props => {
-  const [events, setevents] = useState([])
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -28,9 +24,6 @@ const Cells = props => {
   let days = [];
   let day = startDate;
   let formattedDate = "";
-
-
-
   const onDateClick = day => {
     setSelectedDate(day);
   };
@@ -63,13 +56,11 @@ const Cells = props => {
       <div className="row" key={day}>
         {" "}
         {days} 
-        
+        <DayPlanner toggler={toggle} modals={modal}  date = {format(selectedDate, 'MMMM d yyyy')}/>
       </div>
     );
     days = [];
   }
-  let myEvents = []
-  events.map(e=>myEvents.push(events))
   return <div className="body">{rows}
   </div>;
 };

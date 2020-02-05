@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { format, addDays, startOfWeek } from "date-fns";
 const DaysOfWeek = (props) => {
   const dateFormat = "EEE";
