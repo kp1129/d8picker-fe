@@ -59,7 +59,9 @@ const Cells = props => {
     );
     days = [];
   }
-  return <div className="body">{rows}
-  </div>;
+  return( 
+    <div className="body">{rows}
+    </div>
+  )
 };
 export default Cells;
