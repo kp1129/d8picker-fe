@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Typography, makeStyles } from '@material-ui/core'
-
-const useStyles =makeStyles(theme => ({
-profile: {
-  color: '#fcfcac',
-  fontSize: '1.3rem'
-}
-}))
+import React  from 'react'
+// import TemplateList from './TemplateList'
+// import axios from 'axios'
 
 const Sidebar = () => {
-  const classes = useStyles()
-  const [user, setUser] = useState('Bob')
+  
+  // FE fix for USER GETbyID also include DELETE by id 
+  // const user = localStorage.getItem('user')
+  // const person = JSON.parse(user)
+// console.log(person.name)
 
-  useEffect(() => {
-    axios.get('')
-    .then( res => {  
-      console.log('res.data:', res.data)
-      //setUser(res.data)
-    })
-    .catch( err =>{console.log(err)})
-  },[])
-
+  //publish 
   return (
     <div>
-        <Typography variant='h3'className={classes.profile} >
-          {user}
-          </Typography>
-        
+      {/* <TemplateList/> */}
     </div>
     )
 }
