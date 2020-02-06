@@ -13,6 +13,7 @@ const Sidebar = () => {
   return (
     <div>
       {/* <TemplateList/> */}
+      
     </div>
     )
 }
