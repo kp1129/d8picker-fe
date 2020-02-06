@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DayPlanner from "./DayPlanner";
 import {
   format,
   startOfMonth,
@@ -56,7 +55,6 @@ const Cells = props => {
       <div className="row" key={day}>
         {" "}
         {days} 
-        <DayPlanner toggler={toggle} modals={modal}  date = {format(selectedDate, 'MMMM d yyyy')}/>
       </div>
     );
     days = [];
