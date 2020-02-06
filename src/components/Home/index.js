@@ -17,6 +17,7 @@ const Home = () => {
 
 
 	useEffect(() => { setEmail('funnyusernamego') }, []);
+
 	const cal = `https://calendar.google.com/calendar/embed?src=${email}%40gmail.com&ctz=America%2FLos_Angeles`
   
 	return (
