@@ -13,20 +13,13 @@
 
 # misc
 .DS_Store
-.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
 npm-debug.log*
-package-lock.json
-yarn.lock
 yarn-debug.log*
 yarn-error.log*
 
-./src/credentials.json
-
-./vscode
-
-./src/credentials
+.vscode
