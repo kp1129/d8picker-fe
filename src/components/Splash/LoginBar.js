@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 
-// Pull in Modal component (register form)
-import Modal from './Modal';
 
 import { TextField, Button, makeStyles } from '@material-ui/core';
 
-import '../App.css';
+import '../../App.css';
 
 // Styling for material-ui
 const useStyles = makeStyles(theme => ({
@@ -62,7 +60,7 @@ function Login() {
 
 	return (
 		<div className='navbar'>
-			<Modal />
+
 			<form onSubmit={handleSubmit} className={classes.form}>
 				<TextField
 					type='email'
