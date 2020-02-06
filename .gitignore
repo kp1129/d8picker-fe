@@ -27,7 +27,7 @@ yarn-error.log*
 
 ./src/credentials.json
 
-./vscode
+.vscode
 
 ./src/credentials
 # hello
