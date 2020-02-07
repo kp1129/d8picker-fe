@@ -16,12 +16,12 @@ import '../../App.css';
 // };
 
 const Home = () => {
-	const [email, setEmail] = useState('')
+	// const [email, setEmail] = useState('')
 
 
-	useEffect(() => { setEmail('funnyusernamego') }, []);
+	// useEffect(() => { setEmail('funnyusernamego') }, []);
 
-	const cal = `https://calendar.google.com/calendar/embed?src=${email}%40gmail.com&ctz=America%2FLos_Angeles`
+	// const cal = `https://calendar.google.com/calendar/embed?src=${email}%40gmail.com&ctz=America%2FLos_Angeles`
   
 	// 	const [cal, setCal] = useState(
 	// 		'https://calendar.google.com/calendar/embed?src=funnyusernamego%40gmail.com&ctz=America%2FLos_Angeles'
