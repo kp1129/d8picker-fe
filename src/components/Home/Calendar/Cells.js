@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios'
 import {
   format,
   startOfMonth,
@@ -10,7 +11,9 @@ import {
   parse,
   addDays
 } from "date-fns";
+
 const Cells = props => {
+  const [data, setData] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -23,6 +26,16 @@ const Cells = props => {
   let days = [];
   let day = startDate;
   let formattedDate = "";
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get("/api/events");
+      const results = await res.data;
+      localStorage.setItem("googleId:", res.data.googleId)
+      console.log("results: ", results);
+      setData(results);
+    })();
+  }, [setData]);
   const onDateClick = day => {
     setSelectedDate(day);
   };
@@ -60,6 +73,17 @@ const Cells = props => {
     days = [];
   }
   return <div className="body">{rows}
+  <ul>
+          {data &&
+            data.events.map(event => (
+              <li key={event.id}>
+                <p>
+                  {event.start.dateTime}
+                  <strong> - {event.summary}</strong>
+                </p>
+              </li>
+            ))}
+        </ul>
   </div>;
 };
 export default Cells;
