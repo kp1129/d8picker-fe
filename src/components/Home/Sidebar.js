@@ -1,6 +1,7 @@
 import React  from 'react'
 // import TemplateList from './TemplateList'
 // import axios from 'axios'
+// import ProfileDisplay from './ProfileDisplay'
 
 const Sidebar = () => {
   
@@ -13,7 +14,7 @@ const Sidebar = () => {
   return (
     <div>
       {/* <TemplateList/> */}
-      
+      {/* <ProfileDisplay /> */}
     </div>
     )
 }
