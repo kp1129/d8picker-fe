@@ -42,18 +42,16 @@
   align-items: center;
   background:#5f6468d4;
   display: flex;
-  height: 30px;
-  justify-content: space-between;
+  justify-content: flex-end;
+  
   margin: 10px 0;
-  padding: 3%;
+  padding: .8%;
   width: 100%;
   -webkit-box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
   -moz-box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
   box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
 }
-/* .navbar :last-child {
-  font-size: xx-small;
-} */
+
 .splash {
   background-image: url('./img/SplashCal.jpg');
   position: absolute;
