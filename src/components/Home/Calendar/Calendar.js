@@ -29,10 +29,63 @@ const Calendar = props => {
   const handleNext = () => {
     setDate(date.add(1, "month"));
   };
-  
+
   return (
     <div className="calendar">
-     
+     <div className="header">
+        <button type="button" className="nav prev" onClick={handlePrev}>
+          &lt;
+        </button>
+        <h3 className="heading">{date.format("MMM DD YYYY")}</h3>
+        <button type="button" className="nav nav next" onClick={handleNext}>
+          &gt;
+        </button>
+      </div>
+      <div className="labels">
+        {weekDays.map(d => (
+          <span key={d}>{d}</span>
+        ))}
+      </div>
+      <div className="dates">
+        {[...Array(weekDayOfFirstDay).keys()].map(i => (
+          <span className="faded" key={i}>
+            {/* {firstDayOfMonth.subtract(weekDayOfFirstDay - i, "day").date()} */}
+          </span>
+        ))}
+        {[...Array(daysInMonth).keys()].map(i => {
+          const isToday =
+            i + 1 === currentDay.date() &&
+            currentMonth === currentDay.month() &&
+            currentYear === currentDay.year();
+          const style = {
+            color: isToday ? "indianred" : "inherit"
+          };
+          return (
+            <span style={style} key={i}>
+              {events &&
+                events.map(e => {
+                  {
+                    const event =
+                      i + 1 === dayjs(e && e.start.dateTime).date() &&
+                      currentMonth === dayjs(e && e.start.dateTime).month() &&
+                      currentYear === dayjs(e && e.start.dateTime).year()
+                        ? e.summary
+                        : null;
+                    return event;
+                  }
+                })}
+
+              {/* {event && event.start.dateTime} */}
+              {i + 1}
+            </span>
+          );
+        })}
+        {[...Array(6 - weekDayOfLastDay).keys()].map(i => (
+          <span className="faded" key={i}>
+            {/* {lastDayOfMonth.add(i + 1, "day").date()} */}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
