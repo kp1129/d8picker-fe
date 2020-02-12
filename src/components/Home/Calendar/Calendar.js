@@ -13,7 +13,8 @@ const currentDay = dayjs();
 const Calendar = props => {
   // Component state
 	const [events, setEvents] = useState(mockEvents.events);
-	const [date, setDate] = useState(dayjs());
+  const [date, setDate] = useState(dayjs());
+  const [data, setData] = useState({events:[{}]});
   // const [loading, setLoading] = useState(false);
 
 	const currentYear = date.year();
