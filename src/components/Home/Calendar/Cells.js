@@ -42,6 +42,7 @@ const Cells = props => {
       setLoading(true);
     })();
   }, [setData]);
+  
   console.log("andrew data:",data)
   const onDateClick = day => {
     setSelectedDate(day);
