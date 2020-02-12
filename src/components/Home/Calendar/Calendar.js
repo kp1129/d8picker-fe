@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import dayjs from 'dayjs';
-import axios from 'axios';
+
 
 // import Loading from '../loadingScreen/loading.js';
 
@@ -10,11 +10,9 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Calendar = props => {
+const Calendar = ({events , data}) => {
 	// Component state
-	const [events, setEvents] = useState([]);
 	const [date, setDate] = useState(dayjs());
-	const [data, setData] = useState({});
 	// const [loading, setLoading] = useState(false);
 
 	const currentYear = date.year();
