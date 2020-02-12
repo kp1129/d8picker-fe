@@ -28,7 +28,16 @@ const Calendar = props => {
 	);
   const weekDayOfLastDay = lastDayOfMonth.day();
   
-  
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get("/api/events");
+      const results = await res.data;
+      localStorage.setItem("googleId:", res.data.googleId)
+      console.log("results: ", results);
+      setData(results);
+      setLoading(true);
+    })();
+  }, [setData]);
 
 	const handlePrev = () => {
 		setDate(date.subtract(1, 'month'));
