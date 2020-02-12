@@ -13,7 +13,7 @@ import {
 } from "date-fns";
 
 const Cells = props => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({events:[{}]});
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -36,13 +36,17 @@ const Cells = props => {
       setData(results);
     })();
   }, [setData]);
+  console.log("andrew data:",data)
   const onDateClick = day => {
     setSelectedDate(day);
   };
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, dateFormat);
+      let eventDate = format(day, 'yyyymmdd')
       const cloneDay = day;
+      let eventDescription = data.events[i]
+      console.log('single events',data.events[i])
       days.push(
         <div
           className={`column cell ${
@@ -58,6 +62,8 @@ const Cells = props => {
             toggle();
           }}
         >
+        {}
+          
           <span className="number">{formattedDate}</span>
           <span className="bg">{formattedDate}</span>
         </div>
@@ -73,7 +79,7 @@ const Cells = props => {
     days = [];
   }
   return <div className="body">{rows}
-  <ul>
+  {/* <ul>
           {data &&
             data.events.map(event => (
               <li key={event.id}>
@@ -83,7 +89,7 @@ const Cells = props => {
                 </p>
               </li>
             ))}
-        </ul>
+        </ul> */}
   </div>;
 };
 export default Cells;
