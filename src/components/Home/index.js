@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from './Calendar/Calendar';
 import Sidebar from './Sidebar';
 // import GoogleFormConnect from './GoogleFormConnect';
+
 import NavBar from './Navbar';
 
 import '../../App.css';

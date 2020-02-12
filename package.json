@@ -9,6 +9,7 @@
     "dotenv": "^8.2.0",
     "gapi-script": "^1.0.1",
     "googleapis": "47.0.0",
+    "moment": "^2.24.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hook-form": "^4.8.2",
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "npm run test -- --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,5 +45,6 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^7.1.2",
     "react-test-renderer": "^16.12.0"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
