@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DisplayProfile from './ProfileDisplay'
+
 
 const Events = () => {
   const [data, setData] = useState(null);
@@ -27,7 +27,7 @@ const Events = () => {
         <hr />
       </div> */}
       <div>
-        <DisplayProfile />
+        
       </div>
       
       <div>
