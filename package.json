@@ -6,7 +6,6 @@
     "@material-ui/core": "^4.9.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
-    "date-fns": "^2.9.0",
     "dotenv": "^8.2.0",
     "gapi-script": "^1.0.1",
     "googleapis": "47.0.0",
