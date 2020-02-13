@@ -5,8 +5,8 @@ import Splash from './components/Splash/';
 import Home from './components/Home/';
 // import PrivateRoute from "./components/PrivateRoute";
 import Redirect from './components/Redirect';
-import Events from './components/Home/Events';
-import Profile from './components/Home/ProfileDisplay';
+
+
 
 import './App.css';
 
@@ -20,13 +20,6 @@ function App() {
 			{/* <PrivateRoute path="/home">
         <Home />
       </PrivateRoute> */}
-			
-			<Route path='/events'>
-				<Events />
-			</Route>
-			<Route path='/profile'>
-				<Profile />
-			</Route>
 			<Route path='/redirect'>
 				<Redirect />
 			</Route>
