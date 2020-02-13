@@ -11,7 +11,7 @@ const Home = () => {
 
 	useEffect(() => {
 		(async () => {
-			const res = await axios.get('https://d8picker.herokuapp.com/api/events');
+			const res = await axios.get('/api/events');
 			const results = await res.data;
 			localStorage.setItem('googleId:', res.data.googleId);
 			console.log('results: ', results);
