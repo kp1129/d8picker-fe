@@ -8,7 +8,7 @@ import Template from './Template'
 
 //brings up modal for user to generate a new template and add to list of preexisting ones. 
 const addTemplate = () => {
-  console.log('a modal will pop when the button is clcked')
+  console.log('a modal will pop when the button is clicked')
 }
 
 
