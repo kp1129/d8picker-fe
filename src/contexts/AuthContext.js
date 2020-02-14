@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import axios from "axios";
 
 const AuthContext = React.createContext();
@@ -91,9 +91,9 @@ const AuthProvider = ({ children }) => {
 
   const handleLogout = () => dispatch({ type: "LOGOUT" });
 
-  useEffect(() => {
-    console.log("token: ", state.token);
-  }, [state.token]);
+  // useEffect(() => {
+  //   console.log("token: ", state.token);
+  // }, [state.token]);
 
   return (
     <AuthContext.Provider

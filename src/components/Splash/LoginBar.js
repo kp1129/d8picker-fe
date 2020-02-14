@@ -8,7 +8,7 @@ function Login() {
 	
 	return (
 		<div className='navbar'>
-			<div ><a href={process.env.REACT_APP_LOGIN_BTN}><img src={GoogleBtn} alt=''/></a></div>
+			<div ><a href={'https://d8picker.herokuapp.com/api/auth/login'}><img src={GoogleBtn} alt=''/></a></div>
 			
 		</div>
 	);
