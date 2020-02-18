@@ -48,5 +48,6 @@
     "tabWidth": 2,
     "semi": true,
     "singleQuote": true
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
