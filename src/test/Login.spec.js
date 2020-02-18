@@ -10,21 +10,21 @@ import Login from '../components/Splash/LoginBar';
 afterEach(cleanup);
 
 describe('testing for state in Login', () => {
-	const { getByTestId, findByTestId } = render(
-		<AuthProvider>
-			<Router>
-				<Login />
-			</Router>
-		</AuthProvider>
-	);
+  const { getByTestId, findByTestId } = render(
+    <AuthProvider>
+      <Router>
+        <Login />
+      </Router>
+    </AuthProvider>
+  );
 
-	it('shows sign in text', () => {
-		const button = getByTestId('signBtn');
-		expect(button).toHaveTextContent('sign in');
-	});
+  it('shows sign in text', () => {
+    const button = getByTestId('signBtn');
+    expect(button).toHaveTextContent('sign in');
+  });
 
-	it.skip('should have required password input', () => {
-		const password = findByTestId('loginPassword');
-		expect(password).toBeRequired();
-	});
+  it.skip('should have required password input', () => {
+    const password = findByTestId('loginPassword');
+    expect(password).toBeRequired();
+  });
 });

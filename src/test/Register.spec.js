@@ -11,16 +11,16 @@ import RegisterModal from '../components/Splash/RegisterModal';
 afterEach(cleanup);
 
 describe('testing for state in Register', () => {
-	const { getByTestId } = render(
-		<AuthProvider>
-			<Router>
-				<RegisterModal />
-			</Router>
-		</AuthProvider>
-	);
+  const { getByTestId } = render(
+    <AuthProvider>
+      <Router>
+        <RegisterModal />
+      </Router>
+    </AuthProvider>
+  );
 
-	it('shows register btn text', () => {
-		const button = getByTestId('registerBtn');
-		expect(button).toHaveTextContent('Register');
-	});
+  it('shows register btn text', () => {
+    const button = getByTestId('registerBtn');
+    expect(button).toHaveTextContent('Register');
+  });
 });
