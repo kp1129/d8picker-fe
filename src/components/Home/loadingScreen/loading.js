@@ -1,7 +1,8 @@
 import React from 'react';
-import './loading.css'
+import './loading.css';
+
 const Loading = () => {
-    return ( <div class="cm-spinner"></div> );
-}
- 
+  return <div class="cm-spinner"></div>;
+};
+
 export default Loading;
