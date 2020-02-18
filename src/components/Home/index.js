@@ -10,10 +10,15 @@ const Home = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+    const url =
+      process.env.NODE_ENV === 'development'
+        ? '/api/events'
+        : `${process.env.REACT_APP_ENDPOINT_URL}/api/events`;
     (async () => {
-      const res = await axios.get(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/events`
-      );
+      const res = await axios.get(url);
+      // const res = await axios.get(
+      //   `${process.env.REACT_APP_ENDPOINT_URL}/api/events`
+      // );
       const results = await res.data;
       localStorage.setItem('googleId:', res.data.googleId);
       console.log('results: ', results);
