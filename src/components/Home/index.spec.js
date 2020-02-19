@@ -26,17 +26,16 @@ describe('Home', () => {
       callback(data);
     }, 500);
   }
-});
 
 
-it('should match snapshot', () => {
-  expect(render(<Home/>)).toMatchSnapshot();
 });
 
-it('renders the calendar', () => {
-  const { getByText } =  render(Home);
-   getByText(/Calendar/i);
-});
+it('should test Home component', () => {
+  const wrapper = shallow(<Home />);
+  expect(wrapper).toMatchSnapshot();
+ });
+
+
 
 
 
