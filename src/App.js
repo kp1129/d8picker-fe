@@ -1,11 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-
 import Splash from './components/Splash/';
 import Home from './components/Home/';
 // import PrivateRoute from "./components/PrivateRoute";
 import Redirect from './components/Redirect';
-
 import './App.css';
 
 function App() {
