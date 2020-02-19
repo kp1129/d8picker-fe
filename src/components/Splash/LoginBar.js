@@ -5,7 +5,7 @@ import '../../App.css';
 function Login() {
   return (
     <div className="navbar">
-      <div>
+      <div className='googleBtn'>
         <a href={`${process.env.REACT_APP_ENDPOINT_URL}/api/auth/login`}>
           <img src={GoogleBtn} alt="" />
         </a>

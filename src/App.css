@@ -1,3 +1,7 @@
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
 }
@@ -37,6 +41,13 @@
     transform: rotate(360deg);
   }
 }
+.splash {
+  background-image: url('./img/SplashCal.jpg');
+  position: absolute;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
 
 .navbar {
   align-items: center;
@@ -45,17 +56,44 @@
   justify-content: flex-end;
   
   margin: 10px 0;
-  padding: .8%;
+  /* padding: .8%; */
   width: 100%;
   -webkit-box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
   -moz-box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
   box-shadow: 0px 2px 15px -8px rgba(0, 0, 0, 0.42);
 }
 
-.splash {
-  background-image: url('./img/SplashCal.jpg');
-  position: absolute;
-  background-size: cover;
+.googleBtn {
+  margin: 5px;
+}
+
+.copyBox {
   width: 100%;
-  height: 100vh;
+  margin-top: 30%;
+  /* padding:10%; */
+  opacity: .9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.copy {
+  padding:2%;
+  background: #caac12;
+  border-radius: 10px;
+  width: 40%;
+  box-shadow: 8px 8px 8px 5px rgb(75, 74, 74);
+}
+
+/* .copy h3{
+  font-size: 4rem;
+} */
+.d8picker {
+  margin:1%;
+  width:100%;
+}
+.copy p{
+line-height: 1.5;
+font-size: 2rem;
 }
