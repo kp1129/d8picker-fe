@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar/Calendar';
+import Logo from '../../img/d8picker.png';
+import favicon from '../../img/white.png'
 
 import axios from 'axios';
-
-import '../../App.css';
 
 const Home = () => {
   const [data, setData] = useState({});
@@ -29,14 +29,30 @@ const Home = () => {
   }, [setEvents]);
 
   return (
-    <div>
-      <header>
-        <div id="logo">
-          <span className="icon">D8Picker Calendar</span>
+    <div className="home">
+      <div className="navbar">
+        <img src={favicon} alt='' className='favicon' />
+        <h2>Sign Out</h2>
+      </div>
+
+      <main className="main">
+        <div className="left">
+          <div className="profile">
+            <img src={data.photoUrl} alt="" />
+            <h3>{data.name}</h3>
+          </div>
+          <div className="template">
+            <h4>templates</h4>
+          </div>
         </div>
-      </header>
-      <main>
-        <Calendar events={events} data={data} />
+        <div className="right">
+         
+            <img src={Logo} alt="logo" className="logo"/>
+          
+          
+            <Calendar events={events} data={data} />
+          
+        </div>
       </main>
     </div>
   );
