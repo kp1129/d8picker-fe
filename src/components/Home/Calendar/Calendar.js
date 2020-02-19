@@ -36,12 +36,12 @@ const Calendar = ({ events, data }) => {
 
   return (
     <div>
-      <img src={data && data.photoUrl} alt="" width="90" />
+      {/* <img src={data && data.photoUrl} alt="" width="90" />
       <div>
         <h6>{data && data.name}</h6>
         <span>{data && data.email}</span>
         <br />
-      </div>
+      </div> */}
       <div className="calendar">
         <div className="header">
           <button type="button" className="nav prev" onClick={handlePrev}>
