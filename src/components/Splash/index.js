@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginBar from './LoginBar';
-import Logo from '../../img/d8picker.png'
+import Logo from '../../img/whiteLogo.png'
 // Pull in LoginBar component (Sign in form / Register modal)
 export default function Splash() {
   return (
