@@ -60,6 +60,15 @@
 	"jest": {
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"
+		],
+		"testEnvironment": "node",
+		"setupFiles": [
+		  "dotenv/config"
+		],
+		"collectCoverageFrom": [
+		  "**/*.{js,jsx}",
+		  "!**/node_modules/**",
+		  "!**/vendor/**"
 		]
 	},
 	"setupFiles": [
