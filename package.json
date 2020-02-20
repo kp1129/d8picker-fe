@@ -19,8 +19,6 @@
 		"!**/node_modules/**",
       	"!**/vendor/**",
       	"!**/__tests__/**"
-
-			
 		],
 		"testEnvironment": "node",
 		"setupFiles": [
@@ -30,7 +28,6 @@
 		  "**/*.{js,jsx}",
 		  "!**/node_modules/**",
 		  "!**/vendor/**"
-
 		]
 	  },									
   "eslintConfig": {
