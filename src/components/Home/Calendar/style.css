@@ -9,7 +9,10 @@ label {
     font-size: 12px;
     width: 100px;
   }
-  
+  .header{
+    display: flex;
+    justify-content: space-around;
+  }
   .labels,
   .dates {
     display: grid;
@@ -19,10 +22,10 @@ label {
   }
   
   .dates span {
-    height: 50px;
+    height: 90px;
     font-size: 16px;
     letter-spacing: -1px;
-    border: 1px solid #e6e4e4;
+    border: 1px solid #babab8;
     padding-right: 4px;
     font-weight: 700;
   }
