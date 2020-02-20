@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar/Calendar';
 import Logo from '../../img/d8picker.png';
-import favicon from '../../img/white.png'
+import favicon from '../../img/white.png';
 
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <div className="home">
       <div className="navbar">
-        <img src={favicon} alt='' className='favicon' />
+        <img src={favicon} alt="" className="favicon" />
         <h2>Sign Out</h2>
       </div>
 
@@ -46,12 +46,9 @@ const Home = () => {
           </div>
         </div>
         <div className="right">
-         
-            <img src={Logo} alt="logo" className="logo"/>
-          
-          
-            <Calendar events={events} data={data} />
-          
+          <img src={Logo} alt="logo" className="logo" />
+
+          <Calendar events={events} data={data} />
         </div>
       </main>
     </div>
