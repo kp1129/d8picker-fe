@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import React, { useState, useEffect } from 'react';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const Profile = () => {
   const [profile, setProfile] = useState({});
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axiosWithAuth().get("/api/profile");
-        console.log("data", data);
+        const { data } = await axiosWithAuth().get('/api/profile');
+        console.log('data', data);
         setProfile(data);
       } catch (error) {
         console.error(error);
@@ -15,7 +15,7 @@ const Profile = () => {
     })();
   }, []);
   useEffect(() => {
-    if (profile) console.log("profile", profile);
+    if (profile) console.log('profile', profile);
   }, [profile]);
 
   return (

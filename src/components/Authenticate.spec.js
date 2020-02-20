@@ -1,14 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Redirect from './Splash';
+import Authenticate from './Authenticate';
 
-
-describe('Redirect', () => {
+describe('Authenticate', () => {
   it('should render correctly', () => {
-    const component = shallow(<Redirect />);
-  
+    const component = shallow(<Authenticate />);
+
     expect(component).toMatchSnapshot();
   });
-
-  
 });
