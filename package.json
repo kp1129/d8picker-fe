@@ -11,6 +11,7 @@
 	},
 	"jest": {
 		"snapshotSerializers": [
+
 		  "enzyme-to-json/serializer"
 		],
 		"collectCoverageFrom": [
@@ -18,6 +19,18 @@
 		"!**/node_modules/**",
       	"!**/vendor/**",
       	"!**/__tests__/**"
+
+			
+		],
+		"testEnvironment": "node",
+		"setupFiles": [
+		  "dotenv/config"
+		],
+		"collectCoverageFrom": [
+		  "**/*.{js,jsx}",
+		  "!**/node_modules/**",
+		  "!**/vendor/**"
+
 		]
 	  },									
   "eslintConfig": {
