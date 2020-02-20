@@ -25,13 +25,8 @@
 		"testEnvironment": "node",
 		"setupFiles": [
 		  "dotenv/config"
-		],
-		"collectCoverageFrom": [
-		  "**/*.{js,jsx}",
-		  "!**/node_modules/**",
-		  "!**/vendor/**"
-
 		]
+		
 	  },									
   "eslintConfig": {
     "extends": "react-app"
@@ -101,5 +96,5 @@
 			"src"
 		]
 	},
-	"proxy": "http://localhost:4000",
+	"proxy": "http://localhost:4000"
 }
