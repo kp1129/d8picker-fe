@@ -11,7 +11,7 @@ const Authenticate = () => {
   useEffect(() => {
     localStorage.setItem('code', query.get('code'));
   });
-  return <Redirect to="/events" />;
+  return <Redirect to="/home" />;
 };
 
 export default Authenticate;

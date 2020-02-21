@@ -17,6 +17,10 @@ h3{
   font-size: 2.4rem;
 }
 
+img {
+  width: 100%;
+  height: auto;
+}
 
 .App-logo {
   height: 40vmin;
