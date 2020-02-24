@@ -36,7 +36,9 @@ const Calendar = ({ events }) => {
   };
 
   const handleSelected = i => {
-    console.log("i",i)
+    setSelected(selected.concat(i))
+    console.log(selected)
+
   }
 
   return (
