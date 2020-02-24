@@ -7,10 +7,13 @@ const applyTemplate = () => {
   console.log('select days on calendar you wish to add this event to');
 };
 
-const Template = props => {
+const Template = ({starttime, endtime, summary, description}) => {
   return (
     <div>
-      {props.thing}
+      {starttime}
+      {endtime}
+      {summary}
+      {description}
       <button onClick={() => applyTemplate()}> + </button>
     </div>
   );

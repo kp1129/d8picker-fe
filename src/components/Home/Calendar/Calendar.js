@@ -17,15 +17,15 @@ const Day = props => {
   const isToday = num === currentDay.date()
     && currentMonth === currentDay.month() 
     && currentYear === currentDay.year();
-  console.log(selected, num)
   const isPicked = selected.includes(num);
   const style = {
     color: isToday ? 'indianred' : 'inherit',
     background: isPicked ?'green': null
   };
-  const handleSelected = i => {
-    setSelected(selected.concat(i))
-    console.log(selected)
+  const handleSelected = i => { 
+    selected.includes(i)
+    ? setSelected(selected.filter(day => day !== i))
+    : setSelected(selected.concat(i)) 
   }
 
   return (
@@ -101,8 +101,8 @@ const Calendar = ({ events }) => {
           {[...Array(daysInMonth).keys()].map(i => {
             
             return (
-              
               <Day 
+                key={i+1}
                 num={i+1}  
                 event={events}
                 selected={selected}

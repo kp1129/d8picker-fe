@@ -2,8 +2,31 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar/Calendar';
 import Logo from '../../img/d8picker.png';
 import favicon from '../../img/white.png';
+import Template from './Template'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+
+
+
+
+const templateList = [
+  {
+    starttime:0,
+    endtime:0,
+    summary:'Basketball',
+    description:'',
+  },{
+    starttime:0,
+    endtime:0,
+    summary:'',
+    description:'',
+  },{
+    starttime:0,
+    endtime:0,
+    summary:'',
+    description:'',
+  }
+]
 
 const Home = () => {
   const [data, setData] = useState({});
@@ -42,7 +65,16 @@ const Home = () => {
             <h3>{data.name}</h3>
           </div>
           <div className="template">
-            <h4>templates</h4>
+            <h2>templates</h2>
+            {templateList.map(t=>(
+              <Template 
+                key={t.id}
+                starttime={t.starttime}
+                endtime={t.endtime}
+                summary={t.summary}
+                description={t.description}
+              />
+            ))}
           </div>
         </div>
         <div className="right">
