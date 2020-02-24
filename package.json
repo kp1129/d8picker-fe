@@ -7,7 +7,7 @@
   "build": "react-scripts build",
   "test": "react-scripts test",
   "eject": "react-scripts eject",
-  "coverage": "npm run test -- --coverage"
+  "coverage": "npm run test -- --coverage || true"
  },
  "jest": {
   "snapshotSerializers": [
@@ -47,6 +47,7 @@
   "googleapis": "47.0.0",
   "react": "^16.12.0",
   "react-dom": "^16.12.0",
+  "react-ga": "^2.7.0",
   "react-hook-form": "^4.8.2",
   "react-router-dom": "^5.1.2",
   "react-scripts": "3.3.1"
