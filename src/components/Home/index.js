@@ -3,7 +3,7 @@ import Calendar from './Calendar/Calendar';
 import Logo from '../../img/d8picker.png';
 import favicon from '../../img/white.png';
 
-import axios from 'axios';
+import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
 const Home = () => {
   const [data, setData] = useState({});
@@ -15,7 +15,7 @@ const Home = () => {
         ? '/api/events'
         : `${process.env.REACT_APP_ENDPOINT_URL}/api/events`;
     (async () => {
-      const res = await axios.get(url);
+      const res = await axiosWithAuth().get(url);
       // const res = await axios.get(
       //   `${process.env.REACT_APP_ENDPOINT_URL}/api/events`
       // );
@@ -38,7 +38,7 @@ const Home = () => {
       <main className="main">
         <div className="left">
           <div className="profile">
-            <img src={data.photoUrl} alt="" />
+            <img className="profile-img" src={data.photoUrl} alt="" />
             <h3>{data.name}</h3>
           </div>
           <div className="template">

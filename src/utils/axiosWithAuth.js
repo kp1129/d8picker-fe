@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const axiosWithAuth = () => {
-  const code = localStorage.getItem("code");
+  const code = localStorage.getItem('code');
 
   return axios.create({
-    baseURL: "http://localhost:4000",
+    baseURL: process.env.REACT_APP_ENDPOINT_URL,
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      'Content-Type': 'application/x-www-form-urlencoded',
       Authorization: code
     }
   });
