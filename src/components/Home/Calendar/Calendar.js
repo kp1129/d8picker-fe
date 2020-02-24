@@ -9,9 +9,8 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = props => {
+const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
   const [date, setDate] = useState(dayjs());
-  const {num, selected, events, setSelected} = props
   const currentYear = date.year();
   const currentMonth = date.month();
   const isToday = num === currentDay.date()
@@ -22,10 +21,12 @@ const Day = props => {
     color: isToday ? 'indianred' : 'inherit',
     background: isPicked ?'green': null
   };
-  const handleSelected = i => { 
-    selected.includes(i)
-    ? setSelected(selected.filter(day => day !== i))
-    : setSelected(selected.concat(i)) 
+  const handleSelected = i => {
+    templateFormOpen
+    ?(selected.includes(i)
+      ? setSelected(selected.filter(day => day !== i))
+      : setSelected(selected.concat(i)))
+    :console.log('pick a template')
   }
 
   return (
@@ -46,7 +47,7 @@ const Day = props => {
   )
 }
 
-const Calendar = ({ events }) => {
+const Calendar = ({ events, templateFormOpen }) => {
   // Component state
   const [date, setDate] = useState(dayjs());
   const [selected, setSelected] = useState([])
@@ -107,6 +108,7 @@ const Calendar = ({ events }) => {
                 event={events}
                 selected={selected}
                 setSelected={setSelected}
+                templateFormOpen={templateFormOpen}
               />
             );
           })}

@@ -3,11 +3,12 @@ import React, {setState} from 'react';
 //opens overlay for user to pick dates in calendar.
 //user clicks on dates, which get added to list
 //when user clicks 'Apply', create event on each day in list
-const applyTemplate = () => {
-  console.log('select days on calendar you wish to add this event to');
-};
 
-const Template = ({starttime, endtime, summary, description}) => {
+const Template = ({starttime, endtime, summary, description, templateFormOpen, setTemplateFormOpen}) => {
+  const openTemplate = () => {
+    setTemplateFormOpen(!templateFormOpen)
+    console.log(templateFormOpen)
+  };
   
   return (
     <div>
@@ -15,7 +16,7 @@ const Template = ({starttime, endtime, summary, description}) => {
       {endtime}
       {summary}
       {description}
-      <button onClick={() => applyTemplate()}> + </button>
+      <button onClick={() => openTemplate()}> + </button>
     </div>
   );
 };

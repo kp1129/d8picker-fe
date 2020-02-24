@@ -12,12 +12,12 @@ import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
 
 const templateList = [
-  // {
-  //   starttime:0,
-  //   endtime:0,
-  //   summary:'Basketball',
-  //   description:'',
-  // },{
+  {
+    starttime:'12:30PM',
+    endtime:'2:45PM',
+    summary:'Basketball',
+    description:'bouncy bouncy',
+  }
   //   starttime:0,
   //   endtime:0,
   //   summary:'',
@@ -33,13 +33,11 @@ const templateList = [
 const Home = () => {
   const [data, setData] = useState({});
   const [events, setEvents] = useState([]);
-  const [templateFormOpen] = useState(false);
+  const [templateFormOpen, setTemplateFormOpen] = useState(false);
 
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => {
-    templateList.push(data)
-  };
-  console.log(errors);
+  const onSubmit = formData => {templateList.push(formData)};
+  //console.log(errors);
 
 
   useEffect(() => {
@@ -83,6 +81,8 @@ const Home = () => {
                 endtime={t.endtime}
                 summary={t.summary}
                 description={t.description}
+                templateFormOpen={templateFormOpen}
+                setTemplateFormOpen={setTemplateFormOpen}
               />
             ))}
             <button>Create New Template</button>
@@ -91,8 +91,8 @@ const Home = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" placeholder="summary" name="summary" ref={register({maxLength: 80})} />
                 <input type="text" placeholder="description" name="description" ref={register({maxLength: 100})} />
-                <input type="time" placeholder="starttime" name="starttime" ref={register({required: true })} />
-                <input type="time" placeholder="endtime" name="endtime" ref={register({required: true, maxLength: 12})} />
+                <input type="time" name="starttime" ref={register({required: true })} />
+                <input type="time" name="endtime" ref={register({required: true})} />
 
                 <input type="submit" />
               </form>
@@ -105,7 +105,9 @@ const Home = () => {
         <div className="right">
           <img src={Logo} alt="logo" className="logo" />
 
-          <Calendar events={events} data={data} />
+          <Calendar events={events} data={data} 
+          templateFormOpen={templateFormOpen}
+          setTemplateFormOpen={setTemplateFormOpen}/>
         </div>
       </main>
     </div>
