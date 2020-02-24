@@ -3,6 +3,8 @@ import Calendar from './Calendar/Calendar';
 import Logo from '../../img/d8picker.png';
 import favicon from '../../img/white.png';
 import Template from './Template'
+import { useForm } from 'react-hook-form';
+
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
@@ -10,27 +12,35 @@ import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
 
 const templateList = [
-  {
-    starttime:0,
-    endtime:0,
-    summary:'Basketball',
-    description:'',
-  },{
-    starttime:0,
-    endtime:0,
-    summary:'',
-    description:'',
-  },{
-    starttime:0,
-    endtime:0,
-    summary:'',
-    description:'',
-  }
+  // {
+  //   starttime:0,
+  //   endtime:0,
+  //   summary:'Basketball',
+  //   description:'',
+  // },{
+  //   starttime:0,
+  //   endtime:0,
+  //   summary:'',
+  //   description:'',
+  // },{
+  //   starttime:0,
+  //   endtime:0,
+  //   summary:'',
+  //   description:'',
+  // }
 ]
 
 const Home = () => {
   const [data, setData] = useState({});
   const [events, setEvents] = useState([]);
+  const [templateFormOpen] = useState(false);
+
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = data => {
+    templateList.push(data)
+  };
+  console.log(errors);
+
 
   useEffect(() => {
     const url =
@@ -75,6 +85,21 @@ const Home = () => {
                 description={t.description}
               />
             ))}
+            <button>Create New Template</button>
+
+            <div>  
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <input type="text" placeholder="summary" name="summary" ref={register({maxLength: 80})} />
+                <input type="text" placeholder="description" name="description" ref={register({maxLength: 100})} />
+                <input type="time" placeholder="starttime" name="starttime" ref={register({required: true })} />
+                <input type="time" placeholder="endtime" name="endtime" ref={register({required: true, maxLength: 12})} />
+
+                <input type="submit" />
+              </form>
+            </div>
+
+
+
           </div>
         </div>
         <div className="right">

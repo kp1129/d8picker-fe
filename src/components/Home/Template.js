@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {setState} from 'react';
 
 //opens overlay for user to pick dates in calendar.
 //user clicks on dates, which get added to list
@@ -8,6 +8,7 @@ const applyTemplate = () => {
 };
 
 const Template = ({starttime, endtime, summary, description}) => {
+  
   return (
     <div>
       {starttime}
