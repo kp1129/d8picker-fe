@@ -9,12 +9,14 @@ import Events from './components/Events';
 
 import './App.css';
 
-function initializeAnalytics() {
-  ReactGA.initialize('UA-157827018-1');
-  ReactGA.pageview('/home');
-}
 
 function App() {
+  
+  function initializeAnalytics() {
+    ReactGA.initialize('UA-157827018-1');
+    ReactGA.pageview('/home');
+  }
+
   return (
     <div className="App">
       <Route exact path="/">
