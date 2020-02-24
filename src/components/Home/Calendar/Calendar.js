@@ -11,10 +11,14 @@ const currentDay = dayjs();
 
 const Day = props => {
   const [date, setDate] = useState(dayjs());
-  const {num, isToday, selected, events, setSelected} = props
+  const {num, selected, events, setSelected} = props
   const currentYear = date.year();
   const currentMonth = date.month();
-  const isPicked = num in selected;
+  const isToday = num === currentDay.date()
+    && currentMonth === currentDay.month() 
+    && currentYear === currentDay.year();
+  console.log(selected, num)
+  const isPicked = selected.includes(num);
   const style = {
     color: isToday ? 'indianred' : 'inherit',
     background: isPicked ?'green': null
@@ -95,7 +99,7 @@ const Calendar = ({ events }) => {
 
           {/* labeled days for current month */}
           {[...Array(daysInMonth).keys()].map(i => {
-            const isToday =i + 1 === currentDay.date() &&currentMonth === currentDay.month() &&currentYear === currentDay.year();
+            
             return (
               
               <Day 
