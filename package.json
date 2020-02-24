@@ -19,7 +19,7 @@
       	"!**/vendor/**",
       	"!**/__tests__/**"
 		],
-		"testEnvironment": "node",
+	
 		"setupFiles": [
 		  "dotenv/config"
 		]
