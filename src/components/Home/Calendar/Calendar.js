@@ -9,6 +9,39 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
+const Day = props => {
+  const [date, setDate] = useState(dayjs());
+  const {num, isToday, selected, events, setSelected} = props
+  const currentYear = date.year();
+  const currentMonth = date.month();
+  const isPicked = num in selected;
+  const style = {
+    color: isToday ? 'indianred' : 'inherit',
+    background: isPicked ?'green': null
+  };
+  const handleSelected = i => {
+    setSelected(selected.concat(i))
+    console.log(selected)
+  }
+
+  return (
+    <span style={style} onClick={()=> handleSelected(num)}>
+      {events && events.map(e => {
+        const event =
+          num === dayjs(e && e.start.dateTime).date() &&
+          currentMonth === dayjs(e && e.start.dateTime).month() &&
+          currentYear === dayjs(e && e.start.dateTime).year()
+            ? e.summary
+            : null;
+        return event;
+      })}
+
+      {/* {event && event.start.dateTime} */}
+      {num}
+    </span>
+  )
+}
+
 const Calendar = ({ events }) => {
   // Component state
   const [date, setDate] = useState(dayjs());
@@ -22,24 +55,15 @@ const Calendar = ({ events }) => {
   const firstDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-1`);
   const weekDayOfFirstDay = firstDayOfMonth.day(); // Sunday = 0
 
-  const lastDayOfMonth = dayjs(
-    `${currentYear}-${currentMonth + 1}-${daysInMonth}`
-  );
+  const lastDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-${daysInMonth}`);
   const weekDayOfLastDay = lastDayOfMonth.day();
 
-  const handlePrev = () => {
-    setDate(date.subtract(1, 'month'));
-  };
+  const handlePrev = () => {setDate(date.subtract(1, 'month'));};
 
-  const handleNext = () => {
-    setDate(date.add(1, 'month'));
-  };
+  const handleNext = () => {setDate(date.add(1, 'month'));};
 
-  const handleSelected = i => {
-    setSelected(selected.concat(i))
-    console.log(selected)
 
-  }
+  
 
   return (
     <div>
@@ -68,33 +92,18 @@ const Calendar = ({ events }) => {
               {/* {firstDayOfMonth.subtract(weekDayOfFirstDay - i, "day").date()} */}
             </span>
           ))}
+
           {/* labeled days for current month */}
           {[...Array(daysInMonth).keys()].map(i => {
-            const isToday =
-              i + 1 === currentDay.date() &&
-              currentMonth === currentDay.month() &&
-              currentYear === currentDay.year();
-            const style = {
-              color: isToday ? 'indianred' : 'inherit'
-            };
+            const isToday =i + 1 === currentDay.date() &&currentMonth === currentDay.month() &&currentYear === currentDay.year();
             return (
-              <span style={style} key={i}  onClick={()=> handleSelected(i+1)}>
-                {events &&
-                  events.map(e => {
-                    {
-                      const event =
-                        i + 1 === dayjs(e && e.start.dateTime).date() &&
-                        currentMonth === dayjs(e && e.start.dateTime).month() &&
-                        currentYear === dayjs(e && e.start.dateTime).year()
-                          ? e.summary
-                          : null;
-                      return event;
-                    }
-                  })}
-
-                {/* {event && event.start.dateTime} */}
-                {i + 1}
-              </span>
+              
+              <Day 
+                num={i+1}  
+                event={events}
+                selected={selected}
+                setSelected={setSelected}
+              />
             );
           })}
           {[...Array(6 - weekDayOfLastDay).keys()].map(i => (
