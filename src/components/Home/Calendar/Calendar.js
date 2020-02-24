@@ -9,9 +9,10 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Calendar = ({ events, data }) => {
+const Calendar = ({ events }) => {
   // Component state
   const [date, setDate] = useState(dayjs());
+  const [selected, setSelected] = useState([])
   // const [loading, setLoading] = useState(false);
 
   const currentYear = date.year();
@@ -34,15 +35,14 @@ const Calendar = ({ events, data }) => {
     setDate(date.add(1, 'month'));
   };
 
+  const handleSelected = i => {
+    console.log("i",i)
+  }
+
   return (
     <div>
-      {/* <img src={data && data.photoUrl} alt="" width="90" />
-      <div>
-        <h6>{data && data.name}</h6>
-        <span>{data && data.email}</span>
-        <br />
-      </div> */}
       <div className="calendar">
+       {/* Header contains PrevMonth, NextMonth and Current Date */}
         <div className="header">
           <button type="button" className="nav prev" onClick={handlePrev}>
             &lt;
@@ -52,17 +52,21 @@ const Calendar = ({ events, data }) => {
             &gt;
           </button>
         </div>
+        {/* Contains List of weekdays */}
         <div className="labels">
           {weekDays.map(d => (
             <span key={d}>{d}</span>
           ))}
         </div>
+        {/* holds days of month*/}
         <div className="dates">
+          {/* empty days from prevmonth */}
           {[...Array(weekDayOfFirstDay).keys()].map(i => (
             <span className="faded" key={i}>
               {/* {firstDayOfMonth.subtract(weekDayOfFirstDay - i, "day").date()} */}
             </span>
           ))}
+          {/* labeled days for current month */}
           {[...Array(daysInMonth).keys()].map(i => {
             const isToday =
               i + 1 === currentDay.date() &&
@@ -72,7 +76,7 @@ const Calendar = ({ events, data }) => {
               color: isToday ? 'indianred' : 'inherit'
             };
             return (
-              <span style={style} key={i}>
+              <span style={style} key={i}  onClick={()=> handleSelected(i+1)}>
                 {events &&
                   events.map(e => {
                     {
