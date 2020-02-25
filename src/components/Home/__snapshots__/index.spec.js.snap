@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home should test Home component 1`] = `
+<div
+  className="home"
+>
+  <div
+    className="navbar"
+  >
+    <img
+      alt=""
+      className="favicon"
+      src="white.png"
+    />
+    <h2>
+      Sign Out
+    </h2>
+  </div>
+  <main
+    className="main"
+  >
+    <div
+      className="left"
+    >
+      <div
+        className="profile"
+      >
+        <img
+          alt=""
+          className="profile-img"
+        />
+        <h3 />
+      </div>
+      <div
+        className="template"
+      >
+        <h4>
+          templates
+        </h4>
+      </div>
+    </div>
+    <div
+      className="right"
+    >
+      <img
+        alt="logo"
+        className="logo"
+        src="d8picker.png"
+      />
+      <Calendar
+        data={Object {}}
+        events={Array []}
+      />
+    </div>
+  </main>
+</div>
+`;
