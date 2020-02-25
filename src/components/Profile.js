@@ -15,7 +15,9 @@ const Profile = () => {
     })();
   }, []);
   useEffect(() => {
-    if (profile) console.log('profile', profile);
+    if (profile){
+      
+    } console.log('profile', profile);
   }, [profile]);
 
   return (

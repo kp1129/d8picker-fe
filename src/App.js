@@ -6,19 +6,26 @@ import Home from './components/Home/';
 // import PrivateRoute from "./components/PrivateRoute";
 import Authenticate from './components/Authenticate';
 import Events from './components/Events';
-
+import ReactGA from 'react-ga';
 import './App.css';
+import {createBrowserHistory} from 'history';
 
+
+const history = createBrowserHistory();
+history.listem(location => {
+  ReactGA.set({ page: location.pathname});
+  ReactGA.pageview(location.pathname);
+});
+const trackingId = "UA-157827018-1"; 
+ReactGA.initialize(trackingId);
+ReactGA.set({
+  userId: auth.currentUserId(),
+})
 
 function App() {
-  
-  function initializeAnalytics() {
-    ReactGA.initialize('UA-157827018-1');
-    ReactGA.pageview('/home');
-  }
-
   return (
     <div className="App">
+      <Router history={history}>
       <Route exact path="/">
         <Splash />
       </Route>
@@ -35,6 +42,7 @@ function App() {
       <Route path="/events">
         <Events />
       </Route>
+      </Router>
     </div>
   );
 }
