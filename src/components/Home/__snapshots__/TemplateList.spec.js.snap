@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TemplateList should render correctly 1`] = `
+<div>
+  <Template
+    key="1"
+    thing="basketball"
+  />
+  <Template
+    key="2"
+    thing="math class"
+  />
+  <Template
+    key="3"
+    thing="beer drinking"
+  />
+  <button
+    onClick={[Function]}
+  >
+     + New Template 
+  </button>
+</div>
+`;
