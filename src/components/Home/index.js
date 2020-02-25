@@ -4,6 +4,7 @@ import Logo from '../../img/d8picker.png';
 import favicon from '../../img/white.png';
 import Template from './Template'
 import { useForm } from 'react-hook-form';
+import axios from 'axios'
 
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
@@ -34,9 +35,20 @@ const Home = () => {
   const [data, setData] = useState({});
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(false)
 
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = formData => {templateList.push(formData)};
+  const onSubmit = formData => {
+    const template = {...formData, googleId:localStorage.getItem('googleId:') }
+    console.log(template)
+    axios.post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
+    .then(res => {console.log(res)})
+    .catch(err=>{console.log(err)})
+
+
+
+    templateList.push(formData)
+  };
   //console.log(errors);
 
 
@@ -65,7 +77,6 @@ const Home = () => {
         <img src={favicon} alt="" className="favicon" />
         <h2>Sign Out</h2>
       </div>
-
       <main className="main">
         <div className="left">
           <div className="profile">
@@ -84,10 +95,10 @@ const Home = () => {
                 templateFormOpen={templateFormOpen}
                 setTemplateFormOpen={setTemplateFormOpen}
               />
-            ))}
-            <button>Create New Template</button>
-
-            <div>  
+              ))}
+            <button onClick={() => setFormOpen(!formOpen)}>Create Template</button>
+            {formOpen && 
+            <div className="Form">  
               <form onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" placeholder="summary" name="summary" ref={register({maxLength: 80})} />
                 <input type="text" placeholder="description" name="description" ref={register({maxLength: 100})} />
@@ -96,15 +107,11 @@ const Home = () => {
 
                 <input type="submit" />
               </form>
-            </div>
-
-
-
+            </div>}
           </div>
         </div>
         <div className="right">
           <img src={Logo} alt="logo" className="logo" />
-
           <Calendar events={events} data={data} 
           templateFormOpen={templateFormOpen}
           setTemplateFormOpen={setTemplateFormOpen}/>

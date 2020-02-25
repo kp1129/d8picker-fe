@@ -26,7 +26,7 @@ const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
     ?(selected.includes(i)
       ? setSelected(selected.filter(day => day !== i))
       : setSelected(selected.concat(i)))
-    :console.log('pick a template')
+    :alert('pick a template')
   }
 
   return (

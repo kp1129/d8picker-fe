@@ -4,6 +4,16 @@ import React, {setState} from 'react';
 //user clicks on dates, which get added to list
 //when user clicks 'Apply', create event on each day in list
 
+
+const style = {
+  border: "1px red solid",
+  margin: 5,
+  fontSize:'1.6rem'
+
+}
+
+
+
 const Template = ({starttime, endtime, summary, description, templateFormOpen, setTemplateFormOpen}) => {
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen)
@@ -11,12 +21,13 @@ const Template = ({starttime, endtime, summary, description, templateFormOpen, s
   };
   
   return (
-    <div>
-      {starttime}
-      {endtime}
+    <div style={style}>
       {summary}
-      {description}
-      <button onClick={() => openTemplate()}> + </button>
+      <br/>
+      {starttime}-{endtime}
+      <button onClick={() => openTemplate()}> Choose Dates </button>
+      
+      {/*templateFormOpen && <button onClick={() => applyTemplate()}>Apply Template</button> */}
     </div>
   );
 };
