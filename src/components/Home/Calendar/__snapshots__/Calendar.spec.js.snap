@@ -4,15 +4,6 @@ exports[`Calendar should render correctly 1`] = `[Function]`;
 
 exports[`Calendar should render days-of-the-week labels 1`] = `
 <div>
-  <img
-    alt=""
-    width="90"
-  />
-  <div>
-    <h6 />
-    <span />
-    <br />
-  </div>
   <div
     className="calendar"
   >
@@ -29,7 +20,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
       <h3
         className="heading"
       >
-        Feb 19 2020
+        Feb 24 2020
       </h3>
       <button
         className="nav nav next"
@@ -289,7 +280,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
         key="18"
         style={
           Object {
-            "color": "indianred",
+            "color": "inherit",
           }
         }
       >
@@ -339,7 +330,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
         key="23"
         style={
           Object {
-            "color": "inherit",
+            "color": "indianred",
           }
         }
       >
