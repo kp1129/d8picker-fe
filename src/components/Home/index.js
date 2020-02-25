@@ -8,6 +8,7 @@ import axios from 'axios'
 
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { axiosByGid } from '../../utils/axiosByGid';
 
 
 
@@ -70,6 +71,18 @@ const Home = () => {
       // setLoading(true);
     })();
   }, [setEvents]);
+
+  useEffect(() => {
+    (async () => {
+      const res  = await axiosByGid().get(`/api/template`)
+
+      .then(res => {console.log("res getByGid",res)})
+      .catch(err => {console.log(err)})
+    })();
+    // return () => {
+    //   cleanup
+    // };
+  }, [])
 
   return (
     <div className="home">
