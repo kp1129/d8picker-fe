@@ -22,21 +22,16 @@ const Day = ({num, selected, events, setSelected, templateFormOpen, date, setDat
   };
   const handleSelected = i => {
     //dateTime: "2020-02-28T08:30:00-08:00"
-    console.log(currentYear, currentMonth)
-    console.log(date.$y)
-    console.log(selected)
-    const newdate = `${currentYear}-${currentMonth+1}-${num}`
-    //setDate(...date, {$D:num})
-    console.log(date)
-    const newdate2 = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
-    console.log(newdate2)
 
+    //concatinated to w/ turnary to put into correct format
+    const newdate = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
 
     templateFormOpen
     ?(selected.includes(newdate)
       ? setSelected(selected.filter(day => day !== newdate))
       : setSelected(selected.concat(newdate)))
     :alert('pick a template')
+    console.log(selected)
   }
 
   return (

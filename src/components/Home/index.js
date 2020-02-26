@@ -81,7 +81,7 @@ const Home = () => {
   }, [templateList]);
 
     //yall need to fighure
-  const applyTemplate = (summary, description, starttime, endtime) => {
+  const applyTemplate = (summary, description, starttime, endtime, selected) => {
     console.log(selected)
     console.log(summary)
 
@@ -90,6 +90,8 @@ const Home = () => {
   //   const dateTime:''
   // 
   }
+  console.log(selected)
+
 
   return (
     <div className="home">
