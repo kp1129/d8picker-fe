@@ -5,20 +5,24 @@ import favicon from '../../img/white.png';
 import Template from './Template';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import dayjs from 'dayjs'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
 
 const Home = () => {
   const [data, setData] = useState({});
+  const [date, setDate] = useState(dayjs());
+
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([])
 
+// January = 0
   const [templateList, setTemplateList] = useState([
     {
-      summary:'fucking bitches',
+      summary:'earning income',
       description:'getting money',
       starttime:'12:30',
       endtime:"14:45"
@@ -77,9 +81,15 @@ const Home = () => {
   }, [templateList]);
 
     //yall need to fighure
-    const applyTemplate = () => {
-      console.log(selected)
-    }
+  const applyTemplate = (summary, description, starttime, endtime) => {
+    console.log(selected)
+    console.log(summary)
+
+    //dateTime: "2020-02-28T08:30:00-08:00"
+
+  //   const dateTime:''
+  // 
+  }
 
   return (
     <div className="home">
@@ -133,6 +143,8 @@ const Home = () => {
             setTemplateFormOpen={setTemplateFormOpen}
             selected={selected}
             setSelected={setSelected}
+            date={date}
+            setDate={setDate}
           />
         </div>
       </main>
