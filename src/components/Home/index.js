@@ -14,7 +14,16 @@ const Home = () => {
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [templateList, setTemplateList] = useState([]);
+  const [selected, setSelected] = useState([])
+
+  const [templateList, setTemplateList] = useState([
+    {
+      summary:'fucking bitches',
+      description:'getting money',
+      starttime:'12:30',
+      endtime:"14:45"
+    }
+  ]);
   const { register, handleSubmit, errors } = useForm();
 
   // Submit for template form
@@ -24,16 +33,17 @@ const Home = () => {
       googleId: localStorage.getItem('googleId:')
     };
     console.log('template', template);
-    axios
-      .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
-      .then(res => {
-        console.log('Template Post', res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // axios
+    //   .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
+    //   .then(res => {
+    //     console.log('Template Post', res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    setTemplateList(templateList.concat(template))
   };
- 
+
 
   useEffect(() => {
     const url =
@@ -51,8 +61,9 @@ const Home = () => {
       setEvents(results.events);
   
       // call BE for templates by googleId
+      // this  needs to be reformatted to be dynamic !!!!!!!!!!!!!!
       (async () => {
-         await axiosByGid()
+        await axiosByGid()
           .get(`/api/template`)
 
           .then(res => {
@@ -63,8 +74,12 @@ const Home = () => {
           });
       })();
     })();
-  }, [setEvents]);
+  }, [templateList]);
 
+    //yall need to fighure
+    const applyTemplate = () => {
+      console.log(selected)
+    }
 
   return (
     <div className="home">
@@ -89,6 +104,7 @@ const Home = () => {
                 description={t.description}
                 templateFormOpen={templateFormOpen}
                 setTemplateFormOpen={setTemplateFormOpen}
+                applyTemplate={applyTemplate}
               />
             ))}
             <button onClick={() => setFormOpen(!formOpen)}>
@@ -97,28 +113,10 @@ const Home = () => {
             {formOpen && (
               <div className="Form">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="text"
-                    placeholder="summary"
-                    name="summary"
-                    ref={register({ maxLength: 80 })}
-                  />
-                  <input
-                    type="text"
-                    placeholder="description"
-                    name="description"
-                    ref={register({ maxLength: 100 })}
-                  />
-                  <input
-                    type="time"
-                    name="starttime"
-                    ref={register({ required: true })}
-                  />
-                  <input
-                    type="time"
-                    name="endtime"
-                    ref={register({ required: true })}
-                  />
+                  <input type="text" placeholder="summary" name="summary" ref={register({ maxLength: 80 })} />
+                  <input type="text" placeholder="description" name="description" ref={register({ maxLength: 100 })} />
+                  <input type="time" name="starttime" ref={register({ required: true })} />
+                  <input type="time" name="endtime" ref={register({ required: true })} />
 
                   <input type="submit" />
                 </form>
@@ -133,6 +131,8 @@ const Home = () => {
             data={data}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
+            selected={selected}
+            setSelected={setSelected}
           />
         </div>
       </main>
