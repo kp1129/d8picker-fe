@@ -11,15 +11,13 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = ({num, events, templateFormOpen, date, setDate}) => {
+const Day = ({num, events, templateFormOpen, date, setDate, month, year}) => {
   const {selected, setSelected} = useTemplate()
 
-  const currentYear = date.year();
-  const currentMonth = date.month();
   const isToday = num === currentDay.date()
-    && currentMonth === currentDay.month() 
-    && currentYear === currentDay.year();
-  const isPicked = selected.includes(num);
+    && month === currentDay.month() 
+    && year === currentDay.year();
+  const isPicked = selected.includes(`${year}-${month+1 < 10 ? 0 : ''}${month+1}-${num < 10 ? 0 : ''}${num}`);
   const style = {
     color: isToday ? 'indianred' : 'inherit',
     background: isPicked ?'green': null
@@ -43,8 +41,8 @@ const Day = ({num, events, templateFormOpen, date, setDate}) => {
       {events && events.map(e => {
         const event =
           num === dayjs(e && e.start.dateTime).date() &&
-          currentMonth === dayjs(e && e.start.dateTime).month() &&
-          currentYear === dayjs(e && e.start.dateTime).year()
+          month === dayjs(e && e.start.dateTime).month() &&
+          year === dayjs(e && e.start.dateTime).year()
             ? e.summary
             : null;
         return event;
@@ -112,7 +110,9 @@ const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDa
             return (
               <Day 
                 key={i+1}
-                num={i+1}  
+                num={i+1}
+                month={currentMonth}
+                year={currentYear}  
                 events={events}
                 templateFormOpen={templateFormOpen}
                 date={date}
