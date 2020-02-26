@@ -5,16 +5,31 @@ import favicon from '../../img/white.png';
 import Template from './Template';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import dayjs from 'dayjs'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
+import { useTemplate } from '../../hooks/useTemplate'
 
 const Home = () => {
+
+  const {selected, setSelected} = useTemplate()
   const [data, setData] = useState({});
+  const [date, setDate] = useState(dayjs());
+
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [templateList, setTemplateList] = useState([]);
+
+// January = 0
+  const [templateList, setTemplateList] = useState([
+    {
+      summary:'earning income',
+      description:'getting money',
+      starttime:'12:30',
+      endtime:"14:45"
+    }
+  ]);
   const { register, handleSubmit, errors } = useForm();
 
   // Submit for template form
@@ -24,16 +39,17 @@ const Home = () => {
       googleId: localStorage.getItem('googleId:')
     };
     console.log('template', template);
-    axios
-      .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
-      .then(res => {
-        console.log('Template Post', res);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // axios
+    //   .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
+    //   .then(res => {
+    //     console.log('Template Post', res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    setTemplateList(templateList.concat(template))
   };
- 
+
 
   useEffect(() => {
     const url =
@@ -51,8 +67,9 @@ const Home = () => {
       setEvents(results.events);
   
       // call BE for templates by googleId
+      // this  needs to be reformatted to be dynamic !!!!!!!!!!!!!!
       (async () => {
-         await axiosByGid()
+        await axiosByGid()
           .get(`/api/template`)
 
           .then(res => {
@@ -63,7 +80,21 @@ const Home = () => {
           });
       })();
     })();
-  }, [setEvents]);
+  }, [templateList]);
+
+    //yall need to fighure
+  const applyTemplate = (summary, description, starttime, endtime) => {
+    console.log('inside', selected)
+
+    const EventList = selected.map(e => (
+      `${e}T${starttime}:00-8:00`
+    ))
+
+    console.log(EventList)
+    //dateTime: "2020-02-28T08:30:00-08:00"
+  //   const dateTime:''
+  // 
+  }
 
 
   return (
@@ -89,6 +120,7 @@ const Home = () => {
                 description={t.description}
                 templateFormOpen={templateFormOpen}
                 setTemplateFormOpen={setTemplateFormOpen}
+                applyTemplate={applyTemplate}
               />
             ))}
             <button onClick={() => setFormOpen(!formOpen)}>
@@ -97,28 +129,10 @@ const Home = () => {
             {formOpen && (
               <div className="Form">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="text"
-                    placeholder="summary"
-                    name="summary"
-                    ref={register({ maxLength: 80 })}
-                  />
-                  <input
-                    type="text"
-                    placeholder="description"
-                    name="description"
-                    ref={register({ maxLength: 100 })}
-                  />
-                  <input
-                    type="time"
-                    name="starttime"
-                    ref={register({ required: true })}
-                  />
-                  <input
-                    type="time"
-                    name="endtime"
-                    ref={register({ required: true })}
-                  />
+                  <input type="text" placeholder="summary" name="summary" ref={register({ maxLength: 80 })} />
+                  <input type="text" placeholder="description" name="description" ref={register({ maxLength: 100 })} />
+                  <input type="time" name="starttime" ref={register({ required: true })} />
+                  <input type="time" name="endtime" ref={register({ required: true })} />
 
                   <input type="submit" />
                 </form>
@@ -133,6 +147,8 @@ const Home = () => {
             data={data}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
+            date={date}
+            setDate={setDate}
           />
         </div>
       </main>

@@ -4,16 +4,19 @@ import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { AuthProvider } from './contexts/AuthContext';
+import {StateProvider} from './contexts/Context'
 import * as serviceWorker from './serviceWorker';
 
 const AppWithRouter = withRouter(App);
 
 ReactDOM.render(
-  <AuthProvider>
-    <Router>
-      <AppWithRouter />
-    </Router>
-  </AuthProvider>,
+  <StateProvider>
+    <AuthProvider>
+      <Router>
+        <AppWithRouter />
+      </Router>
+    </AuthProvider>
+  </StateProvider>,
   document.getElementById('root')
 );
 // If you want your app to work offline and load faster, you can change

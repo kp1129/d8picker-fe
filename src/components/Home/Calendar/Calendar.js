@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTemplate } from '../../../hooks/useTemplate'
+
 
 import dayjs from 'dayjs';
 
@@ -9,8 +11,9 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
-  const [date, setDate] = useState(dayjs());
+const Day = ({num, events, templateFormOpen, date, setDate}) => {
+  const {selected, setSelected} = useTemplate()
+
   const currentYear = date.year();
   const currentMonth = date.month();
   const isToday = num === currentDay.date()
@@ -22,11 +25,17 @@ const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
     background: isPicked ?'green': null
   };
   const handleSelected = i => {
+    //dateTime: "2020-02-28T08:30:00-08:00"
+
+    //concatinated to w/ turnary to put into correct format
+    const newdate = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
+
     templateFormOpen
-    ?(selected.includes(i)
-      ? setSelected(selected.filter(day => day !== i))
-      : setSelected(selected.concat(i)))
+    ?(selected.includes(newdate)
+      ? setSelected(selected.filter(day => day !== newdate))
+      : setSelected(selected.concat(newdate)))
     :alert('pick a template')
+    console.log(selected)
   }
 
   return (
@@ -47,12 +56,9 @@ const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
   )
 }
 
-const Calendar = ({ events, templateFormOpen }) => {
+const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDate}) => {
   // Component state
-  const [date, setDate] = useState(dayjs());
-  const [selected, setSelected] = useState([])
   // const [loading, setLoading] = useState(false);
-
   const currentYear = date.year();
   const currentMonth = date.month(); // January = 0
   const daysInMonth = date.daysInMonth();
@@ -68,6 +74,8 @@ const Calendar = ({ events, templateFormOpen }) => {
   const handleNext = () => {setDate(date.add(1, 'month'));};
 
 
+
+
   
 
   return (
@@ -78,7 +86,7 @@ const Calendar = ({ events, templateFormOpen }) => {
           <button type="button" className="nav prev" onClick={handlePrev}>
             &lt;
           </button>
-          <h3 className="heading">{date.format('MMM DD YYYY')}</h3>
+          <h3 className="heading">{date.format('MMMM YYYY')}</h3>
           <button type="button" className="nav nav next" onClick={handleNext}>
             &gt;
           </button>
@@ -106,9 +114,9 @@ const Calendar = ({ events, templateFormOpen }) => {
                 key={i+1}
                 num={i+1}  
                 events={events}
-                selected={selected}
-                setSelected={setSelected}
                 templateFormOpen={templateFormOpen}
+                date={date}
+                setDate={setDate}
               />
             );
           })}
