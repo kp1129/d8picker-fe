@@ -20,7 +20,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
       <h3
         className="heading"
       >
-        Feb 24 2020
+        Feb 25 2020
       </h3>
       <button
         className="nav nav next"
@@ -330,7 +330,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
         key="23"
         style={
           Object {
-            "color": "indianred",
+            "color": "inherit",
           }
         }
       >
@@ -340,7 +340,7 @@ exports[`Calendar should render days-of-the-week labels 1`] = `
         key="24"
         style={
           Object {
-            "color": "inherit",
+            "color": "indianred",
           }
         }
       >
