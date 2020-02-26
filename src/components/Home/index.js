@@ -51,6 +51,8 @@ const Home = () => {
       setEvents(results.events);
   
       // call BE for templates by googleId
+
+      //!!!!NEEDS TO BE REFORMATTED TO MAKE THIS DYNAMIC!!!!
       (async () => {
          await axiosByGid()
           .get(`/api/template`)
