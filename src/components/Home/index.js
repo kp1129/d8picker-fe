@@ -98,7 +98,7 @@ const Home = () => {
           </div>
           <div className="template">
             <h2>templates</h2>
-            {templateList.map(t=>(
+            {templateList.map((t) => (
               <Template 
                 key={t.id}
                 starttime={t.starttime}

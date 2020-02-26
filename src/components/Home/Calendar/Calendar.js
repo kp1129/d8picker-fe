@@ -105,7 +105,7 @@ const Calendar = ({ events, templateFormOpen }) => {
               <Day 
                 key={i+1}
                 num={i+1}  
-                event={events}
+                events={events}
                 selected={selected}
                 setSelected={setSelected}
                 templateFormOpen={templateFormOpen}
