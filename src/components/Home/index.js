@@ -9,15 +9,19 @@ import dayjs from 'dayjs'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
+import { useTemplate } from '../../hooks/useTemplate'
 
 const Home = () => {
+
+  const {selected, setSelected} = useTemplate()
   const [data, setData] = useState({});
   const [date, setDate] = useState(dayjs());
 
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [selected, setSelected] = useState([])
+  //const [selected, setSelected] = useState([])
+  console.log(selected)
 
 // January = 0
   const [templateList, setTemplateList] = useState([
