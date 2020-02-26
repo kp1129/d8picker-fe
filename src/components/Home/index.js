@@ -9,16 +9,6 @@ import axios from 'axios';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
 
-// const templateList = [
-//   {
-//     starttime:'12:30PM',
-//     endtime:'2:45PM',
-//     summary:'Basketball',
-//     description:'bouncy bouncy',
-//   }
-
-// ]
-
 const Home = () => {
   const [data, setData] = useState({});
   const [events, setEvents] = useState([]);
@@ -42,34 +32,30 @@ const Home = () => {
       .catch(err => {
         console.log(err);
       });
-
-    // templateList.push(formData)
   };
-  //console.log(errors);
+ 
 
   useEffect(() => {
     const url =
       process.env.NODE_ENV === 'development'
         ? '/api/events'
         : `${process.env.REACT_APP_ENDPOINT_URL}/api/events`;
+
+      // Call for google for user events
     (async () => {
       const res = await axiosWithAuth().get(url);
-      // const res = await axios.get(
-      //   `${process.env.REACT_APP_ENDPOINT_URL}/api/events`
-      // );
       const results = await res.data;
       localStorage.setItem('googleId:', res.data.googleId);
       console.log('results: ', results);
       setData(results);
       setEvents(results.events);
-      // setLoading(true);
-
+  
+      // call BE for templates by googleId
       (async () => {
-        const temp = await axiosByGid()
+         await axiosByGid()
           .get(`/api/template`)
 
           .then(res => {
-            console.log('res getByGid', res);
             setTemplateList(res.data)
           })
           .catch(err => {
