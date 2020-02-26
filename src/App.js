@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import Splash from './components/Splash/';
 import Home from './components/Home/';
-// import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 import Authenticate from './components/Authenticate';
 import Events from './components/Events';
 
@@ -22,19 +22,15 @@ function App() {
       <Route exact path="/">
         <Splash />
       </Route>
-      {/* Remember to change back to private */}
-      {/* <PrivateRoute path="/home">
-        <Home />
-      </PrivateRoute> */}
       <Route path="/authenticate/google">
         <Authenticate />
       </Route>
-      <Route path="/home">
+      <PrivateRoute path="/home">
         <Home />
-      </Route>
-      <Route path="/events">
+      </PrivateRoute>
+      <PrivateRoute path="/events">
         <Events />
-      </Route>
+      </PrivateRoute>
     </div>
   );
 }

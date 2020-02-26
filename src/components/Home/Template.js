@@ -25,6 +25,7 @@ const Template = ({starttime, endtime, summary, description, templateFormOpen, s
       {summary}
       <br/>
       {starttime}-{endtime}
+      <br/>
       <button onClick={() => openTemplate()}> Choose Dates </button>
       
       {/*templateFormOpen && <button onClick={() => applyTemplate()}>Apply Template</button> */}

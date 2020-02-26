@@ -6,7 +6,7 @@ const PrivateRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) =>
-        localStorage.getItem('token') ? (
+        localStorage.getItem('code') ? (
           children
         ) : (
           <Redirect
