@@ -9,8 +9,7 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
-  const [date, setDate] = useState(dayjs());
+const Day = ({num, selected, events, setSelected, templateFormOpen, date, setDate}) => {
   const currentYear = date.year();
   const currentMonth = date.month();
   const isToday = num === currentDay.date()
@@ -23,8 +22,11 @@ const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
   };
   const handleSelected = i => {
     //dateTime: "2020-02-28T08:30:00-08:00"
-
+    console.log(currentYear, currentMonth)
+    console.log(date.$y)
+    console.log(selected)
     const newdate = `${currentYear}-${currentMonth+1}-${num}`
+    console.log(newdate)
 
     templateFormOpen
     ?(selected.includes(newdate)
@@ -69,9 +71,7 @@ const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDa
   const handleNext = () => {setDate(date.add(1, 'month'));};
 
 
-  console.log(currentYear, currentMonth)
-  console.log(date)
-  console.log(selected)
+
 
   
 
@@ -114,6 +114,8 @@ const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDa
                 selected={selected}
                 setSelected={setSelected}
                 templateFormOpen={templateFormOpen}
+                date={date}
+                setDate={setDate}
               />
             );
           })}
