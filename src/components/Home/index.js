@@ -20,8 +20,6 @@ const Home = () => {
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  //const [selected, setSelected] = useState([])
-  console.log(selected)
 
 // January = 0
   const [templateList, setTemplateList] = useState([
@@ -85,16 +83,18 @@ const Home = () => {
   }, [templateList]);
 
     //yall need to fighure
-  const applyTemplate = (summary, description, starttime, endtime, selected) => {
-    console.log(selected)
-    console.log(summary)
+  const applyTemplate = (summary, description, starttime, endtime) => {
+    console.log('inside', selected)
 
+    const EventList = selected.map(e => (
+      `${e}T${starttime}:00-8:00`
+    ))
+
+    console.log(EventList)
     //dateTime: "2020-02-28T08:30:00-08:00"
-
   //   const dateTime:''
   // 
   }
-  console.log(selected)
 
 
   return (
@@ -147,8 +147,6 @@ const Home = () => {
             data={data}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
-            selected={selected}
-            setSelected={setSelected}
             date={date}
             setDate={setDate}
           />

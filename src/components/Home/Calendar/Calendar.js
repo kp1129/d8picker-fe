@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useTemplate } from '../../../hooks/useTemplate'
+
 
 import dayjs from 'dayjs';
 
@@ -9,7 +11,9 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = ({num, selected, events, setSelected, templateFormOpen, date, setDate}) => {
+const Day = ({num, events, templateFormOpen, date, setDate}) => {
+  const {selected, setSelected} = useTemplate()
+
   const currentYear = date.year();
   const currentMonth = date.month();
   const isToday = num === currentDay.date()
@@ -110,8 +114,6 @@ const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDa
                 key={i+1}
                 num={i+1}  
                 events={events}
-                selected={selected}
-                setSelected={setSelected}
                 templateFormOpen={templateFormOpen}
                 date={date}
                 setDate={setDate}
