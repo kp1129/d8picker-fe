@@ -26,7 +26,11 @@ const Day = ({num, selected, events, setSelected, templateFormOpen, date, setDat
     console.log(date.$y)
     console.log(selected)
     const newdate = `${currentYear}-${currentMonth+1}-${num}`
-    console.log(newdate)
+    //setDate(...date, {$D:num})
+    console.log(date)
+    const newdate2 = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
+    console.log(newdate2)
+
 
     templateFormOpen
     ?(selected.includes(newdate)
