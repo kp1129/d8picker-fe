@@ -87,7 +87,17 @@ const Home = () => {
     console.log('inside', selected)
 
     const EventList = selected.map(e => (
-      `${e}T${starttime}:00-8:00`
+      {
+        "end": {
+          "dateTime": `${e}T${endtime}:00-8:00`
+        },
+        "start": {
+          "dateTime": `${e}T${starttime}:00-8:00`
+        },
+        "summary": summary,
+        "description": description
+      }
+      
     ))
 
     console.log(EventList)
