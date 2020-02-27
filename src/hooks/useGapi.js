@@ -11,7 +11,7 @@ function useGapi({
   onLoaded
 }) {
   const [gapi, setGapi] = useState(undefined);
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -32,11 +32,11 @@ function useGapi({
           });
           const auth = window.gapi.auth2.getAuthInstance();
           auth.isSignedIn.listen(() => {
-            setIsAuthorized(auth.currentUser.get().hasGrantedScopes(scope));
+            setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(scope));
           });
           // Load an API (ex. Calendar API) when client is loaded to the DOM
           onLoaded(window.gapi.client);
-          setIsAuthorized(auth.currentUser.get().hasGrantedScopes(scope));
+          setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(scope));
           setCurrentUser(auth.currentUser.get().getBasicProfile());
           setGapi(window.gapi);
         } catch (error) {
@@ -69,7 +69,7 @@ function useGapi({
   return {
     isLoading,
     currentUser,
-    isAuthorized,
+    isAuthenticated,
     onSignIn,
     onSignOut
   };
