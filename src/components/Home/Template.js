@@ -14,11 +14,13 @@ const style = {
 
 
 
-const Template = ({starttime, endtime, summary, description, templateFormOpen, setTemplateFormOpen}) => {
+const Template = ({starttime, endtime, summary, description, templateFormOpen, setTemplateFormOpen, applyTemplate}) => {
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen)
-    console.log(templateFormOpen)
+    //console.log(templateFormOpen)
   };
+
+
   
   return (
     <div style={style}>
@@ -28,7 +30,7 @@ const Template = ({starttime, endtime, summary, description, templateFormOpen, s
       <br/>
       <button onClick={() => openTemplate()}> Choose Dates </button>
       
-      {/*templateFormOpen && <button onClick={() => applyTemplate()}>Apply Template</button> */}
+      {templateFormOpen && <button onClick={() => applyTemplate()}>Apply Template</button> }
     </div>
   );
 };

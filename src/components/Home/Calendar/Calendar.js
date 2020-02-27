@@ -47,10 +47,9 @@ const Day = ({num, selected, events, setSelected, templateFormOpen}) => {
   )
 }
 
-const Calendar = ({ events, templateFormOpen }) => {
+const Calendar = ({ events, templateFormOpen, selected, setSelected}) => {
   // Component state
   const [date, setDate] = useState(dayjs());
-  const [selected, setSelected] = useState([])
   // const [loading, setLoading] = useState(false);
 
   const currentYear = date.year();
