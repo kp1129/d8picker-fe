@@ -13,7 +13,7 @@ import { useTemplate } from '../../hooks/useTemplate'
 
 const Home = () => {
 
-  const {selected, setSelected} = useTemplate()
+  const {selected, setSelected, templateList, getTemplateList} = useTemplate()
   const [data, setData] = useState({});
   const [date, setDate] = useState(dayjs());
 
@@ -22,14 +22,7 @@ const Home = () => {
   const [formOpen, setFormOpen] = useState(false);
 
 // January = 0
-  const [templateList, setTemplateList] = useState([
-    {
-      summary:'earning income',
-      description:'getting money',
-      starttime:'12:30',
-      endtime:"14:45"
-    }
-  ]);
+
   const { register, handleSubmit, errors } = useForm();
 
   // Submit for template form
@@ -39,22 +32,17 @@ const Home = () => {
       googleId: localStorage.getItem('googleId:')
     };
     console.log('template', template);
-    // axios
-    //   .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
-    //   .then(res => {
-    //     console.log('Template Post', res);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    setTemplateList(templateList.concat(template))
+    axios
+      .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
+      .then(res => { console.log('Template Post', res); })
+      .catch(err => { console.log(err); });
   };
 
 
   useEffect(() => {
     const url =
-      process.env.NODE_ENV === 'development'
-        ? '/api/events'
+    process.env.NODE_ENV === 'development'
+    ? '/api/events'
         : `${process.env.REACT_APP_ENDPOINT_URL}/api/events`;
 
       // Call for google for user events
@@ -65,21 +53,22 @@ const Home = () => {
       console.log('results: ', results);
       setData(results);
       setEvents(results.events);
-  
+      
+      //need to include filter by ID
+      getTemplateList()
       // call BE for templates by googleId
 
       //!!!!NEEDS TO BE REFORMATTED TO MAKE THIS DYNAMIC!!!!
-      (async () => {
-        await axiosByGid()
-          .get(`/api/template`)
+      // (async () => {
+      //   await axiosByGid()
+      //     .get(`/api/template`)
 
-          .then(res => {
-            setTemplateList(res.data)
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      })();
+      //     .then(res => {
+      //       console.log("Template list res.data:", res.data)
+      //       setTemplateList(res.data)
+      //     })
+      //     .catch(err => {console.log(err);});
+      // })();
     })();
   }, [templateList]);
 
@@ -88,12 +77,8 @@ const Home = () => {
 
     const EventList = selected.map(e => (
       {
-        "end": {
-          "dateTime": `${e}T${endtime}:00-8:00`
-        },
-        "start": {
-          "dateTime": `${e}T${starttime}:00-8:00`
-        },
+        "end": { "dateTime": `${e}T${endtime}:00-8:00` },
+        "start": { "dateTime": `${e}T${starttime}:00-8:00` },
         "summary": summary,
         "description": description
       }
@@ -106,7 +91,7 @@ const Home = () => {
   // 
   }
 
-
+console.log(templateList)
   return (
     <div className="home">
       <div className="navbar">
@@ -124,6 +109,7 @@ const Home = () => {
             {templateList.map(t => (
               <Template
                 key={t.id}
+                id={t._id}
                 starttime={t.starttime}
                 endtime={t.endtime}
                 summary={t.summary}
@@ -133,9 +119,7 @@ const Home = () => {
                 applyTemplate={applyTemplate}
               />
             ))}
-            <button onClick={() => setFormOpen(!formOpen)}>
-              Create Template
-            </button>
+            <button onClick={() => setFormOpen(!formOpen)}>Create Template</button>
             {formOpen && (
               <div className="Form">
                 <form onSubmit={handleSubmit(onSubmit)}>

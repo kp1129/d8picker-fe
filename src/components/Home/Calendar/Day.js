@@ -3,8 +3,9 @@ import dayjs from 'dayjs';
 import { useTemplate } from '../../../hooks/useTemplate'
 
 
-const Day = ({num, events, templateFormOpen, date, setDate, month, year}) => {
+const Day = ({num, events, templateFormOpen, month, year}) => {
   const {selected, setSelected} = useTemplate()
+  const {date, setDate} = useTemplate()
   const currentDay = dayjs();
 
   const isToday = num === currentDay.date()

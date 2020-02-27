@@ -27,14 +27,8 @@ const Calendar = ({ events, templateFormOpen, date, setDate}) => {
   const lastDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-${daysInMonth}`);
   const weekDayOfLastDay = lastDayOfMonth.day();
 
-  const handlePrev = () => {setDate(date.subtract(1, 'month'));};
-
-  const handleNext = () => {setDate(date.add(1, 'month'));};
-
-
-
-
-  
+  const handlePrev = () => {setDate(date.subtract(1, 'month'))};
+  const handleNext = () => {setDate(date.add(1, 'month'))};
 
   return (
     <div>
