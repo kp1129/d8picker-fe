@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTemplate } from '../../../hooks/useTemplate'
+import Day from './Day'
 
 
 import dayjs from 'dayjs';
@@ -11,50 +12,9 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-const Day = ({num, events, templateFormOpen, date, setDate, month, year}) => {
-  const {selected, setSelected} = useTemplate()
 
-  const isToday = num === currentDay.date()
-    && month === currentDay.month() 
-    && year === currentDay.year();
-  const isPicked = selected.includes(`${year}-${month+1 < 10 ? 0 : ''}${month+1}-${num < 10 ? 0 : ''}${num}`);
-  const style = {
-    color: isToday ? 'indianred' : 'inherit',
-    background: isPicked ?'green': null
-  };
-  const handleSelected = i => {
-    //dateTime: "2020-02-28T08:30:00-08:00"
 
-    //concatinated to w/ turnary to put into correct format
-    const newdate = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
-
-    templateFormOpen
-    ?(selected.includes(newdate)
-      ? setSelected(selected.filter(day => day !== newdate))
-      : setSelected(selected.concat(newdate)))
-    :alert('pick a template')
-    console.log(selected)
-  }
-
-  return (
-    <span style={style} onClick={()=> handleSelected(num)}>
-      {events && events.map(e => {
-        const event =
-          num === dayjs(e && e.start.dateTime).date() &&
-          month === dayjs(e && e.start.dateTime).month() &&
-          year === dayjs(e && e.start.dateTime).year()
-            ? e.summary
-            : null;
-        return event;
-      })}
-
-      {/* {event && event.start.dateTime} */}
-      {num}
-    </span>
-  )
-}
-
-const Calendar = ({ events, templateFormOpen, selected, setSelected, date, setDate}) => {
+const Calendar = ({ events, templateFormOpen, date, setDate}) => {
   // Component state
   // const [loading, setLoading] = useState(false);
   const currentYear = date.year();

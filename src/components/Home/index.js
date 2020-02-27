@@ -84,7 +84,6 @@ const Home = () => {
 
     //yall need to fighure
   const applyTemplate = (summary, description, starttime, endtime) => {
-    console.log('inside', selected)
 
     const EventList = selected.map(e => (
       {
