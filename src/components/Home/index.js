@@ -36,6 +36,7 @@ const Home = () => {
       .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
       .then(res => { console.log('Template Post', res); })
       .catch(err => { console.log(err); });
+    getTemplateList();
   };
 
 
