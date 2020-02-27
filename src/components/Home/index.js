@@ -5,20 +5,26 @@ import favicon from '../../img/white.png';
 import Template from './Template';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import dayjs from 'dayjs'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
+import { useTemplate } from '../../hooks/useTemplate'
 
 const Home = () => {
+
+  const {selected, setSelected} = useTemplate()
   const [data, setData] = useState({});
+  const [date, setDate] = useState(dayjs());
+
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [selected, setSelected] = useState([])
 
+// January = 0
   const [templateList, setTemplateList] = useState([
     {
-      summary:'fucking bitches',
+      summary:'earning income',
       description:'getting money',
       starttime:'12:30',
       endtime:"14:45"
@@ -78,9 +84,29 @@ const Home = () => {
   }, [templateList]);
 
     //yall need to fighure
-    const applyTemplate = () => {
-      console.log(selected)
-    }
+  const applyTemplate = (summary, description, starttime, endtime) => {
+    console.log('inside', selected)
+
+    const EventList = selected.map(e => (
+      {
+        "end": {
+          "dateTime": `${e}T${endtime}:00-8:00`
+        },
+        "start": {
+          "dateTime": `${e}T${starttime}:00-8:00`
+        },
+        "summary": summary,
+        "description": description
+      }
+      
+    ))
+
+    console.log(EventList)
+    //dateTime: "2020-02-28T08:30:00-08:00"
+  //   const dateTime:''
+  // 
+  }
+
 
   return (
     <div className="home">
@@ -132,8 +158,8 @@ const Home = () => {
             data={data}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
-            selected={selected}
-            setSelected={setSelected}
+            date={date}
+            setDate={setDate}
           />
         </div>
       </main>
