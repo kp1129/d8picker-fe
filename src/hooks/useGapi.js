@@ -12,6 +12,7 @@ function useGapi({
   const [gapi, setGapi] = useState(undefined);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [currentUser, setCurrentUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -45,6 +46,10 @@ function useGapi({
     document.body.appendChild(script);
   }, [apiKey, clientId, discoveryDocs, scope, ux_mode, redirect_uri, onLoaded]);
 
+  useEffect(() => {
+    !gapi ? setIsLoading(true) : setIsLoading(false);
+  }, [isLoading, gapi]);
+
   const onSignOut = async () => {
     if (!gapi) {
       throw new Error('No Gapi');
@@ -59,14 +64,8 @@ function useGapi({
     await gapi.auth2.getAuthInstance().signIn();
   };
 
-  if (!gapi) {
-    return {
-      isLoading: true
-    };
-  }
-
   return {
-    isLoading: false,
+    isLoading,
     currentUser,
     isAuthorized,
     onSignIn,
