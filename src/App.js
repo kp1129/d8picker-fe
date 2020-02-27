@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ReactGA from 'react-ga';
 import Splash from './components/Splash/';
 import Home from './components/Home/';
 import PrivateRoute from "./components/PrivateRoute";
@@ -38,6 +37,7 @@ function App() {
       <PrivateRoute path="/events">
         <Events />
       </PrivateRoute>
+      </Router>
     </div>
   );
 }
