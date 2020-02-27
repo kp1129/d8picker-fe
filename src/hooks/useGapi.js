@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+// Custom hook to initialize and use the Google API
 function useGapi({
   apiKey,
   clientId,
@@ -15,6 +16,7 @@ function useGapi({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // Create script tag, initialize gapi, append script to document
     const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/api.js';
     script.onload = () => {
@@ -32,7 +34,7 @@ function useGapi({
           auth.isSignedIn.listen(() => {
             setIsAuthorized(auth.currentUser.get().hasGrantedScopes(scope));
           });
-
+          // Load an API (ex. Calendar API) when client is loaded to the DOM
           onLoaded(window.gapi.client);
           setIsAuthorized(auth.currentUser.get().hasGrantedScopes(scope));
           setCurrentUser(auth.currentUser.get().getBasicProfile());
