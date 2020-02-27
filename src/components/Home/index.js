@@ -2,55 +2,53 @@ import React, { useState, useEffect } from 'react';
 import Calendar from './Calendar/Calendar';
 import Logo from '../../img/d8picker.png';
 import favicon from '../../img/white.png';
-import Template from './Template'
+import Template from './Template';
 import { useForm } from 'react-hook-form';
-import axios from 'axios'
-
+import axios from 'axios';
+import dayjs from 'dayjs'
 
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
-
-
-
-
-const templateList = [
-  {
-    starttime:'12:30PM',
-    endtime:'2:45PM',
-    summary:'Basketball',
-    description:'bouncy bouncy',
-  }
-  //   starttime:0,
-  //   endtime:0,
-  //   summary:'',
-  //   description:'',
-  // },{
-  //   starttime:0,
-  //   endtime:0,
-  //   summary:'',
-  //   description:'',
-  // }
-]
+import { useTemplate } from '../../hooks/useTemplate'
 
 const Home = () => {
+
+  const {selected, setSelected} = useTemplate()
   const [data, setData] = useState({});
+  const [date, setDate] = useState(dayjs());
+
   const [events, setEvents] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
-  const [formOpen, setFormOpen] = useState(false)
+  const [formOpen, setFormOpen] = useState(false);
 
+// January = 0
+  const [templateList, setTemplateList] = useState([
+    {
+      summary:'earning income',
+      description:'getting money',
+      starttime:'12:30',
+      endtime:"14:45"
+    }
+  ]);
   const { register, handleSubmit, errors } = useForm();
+
+  // Submit for template form
   const onSubmit = formData => {
-    const template = {...formData, googleId:localStorage.getItem('googleId:') }
-    console.log(template)
-    axios.post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
-    .then(res => {console.log(res)})
-    .catch(err=>{console.log(err)})
-
-
-
-    templateList.push(formData)
+    const template = {
+      ...formData,
+      googleId: localStorage.getItem('googleId:')
+    };
+    console.log('template', template);
+    // axios
+    //   .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
+    //   .then(res => {
+    //     console.log('Template Post', res);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    setTemplateList(templateList.concat(template))
   };
-  //console.log(errors);
 
 
   useEffect(() => {
@@ -58,31 +56,56 @@ const Home = () => {
       process.env.NODE_ENV === 'development'
         ? '/api/events'
         : `${process.env.REACT_APP_ENDPOINT_URL}/api/events`;
+
+      // Call for google for user events
     (async () => {
       const res = await axiosWithAuth().get(url);
-      // const res = await axios.get(
-      //   `${process.env.REACT_APP_ENDPOINT_URL}/api/events`
-      // );
       const results = await res.data;
       localStorage.setItem('googleId:', res.data.googleId);
       console.log('results: ', results);
       setData(results);
       setEvents(results.events);
-      // setLoading(true);
-    })();
-  }, [setEvents]);
+  
+      // call BE for templates by googleId
+      // this  needs to be reformatted to be dynamic !!!!!!!!!!!!!!
+      (async () => {
+        await axiosByGid()
+          .get(`/api/template`)
 
-  useEffect(() => {
-    (async () => {
-      const res  = await axiosByGid().get(`/api/template`)
-
-      .then(res => {console.log("res getByGid",res)})
-      .catch(err => {console.log(err)})
+          .then(res => {
+            setTemplateList(res.data)
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      })();
     })();
-    // return () => {
-    //   cleanup
-    // };
-  }, [])
+  }, [templateList]);
+
+    //yall need to fighure
+  const applyTemplate = (summary, description, starttime, endtime) => {
+    console.log('inside', selected)
+
+    const EventList = selected.map(e => (
+      {
+        "end": {
+          "dateTime": `${e}T${endtime}:00-8:00`
+        },
+        "start": {
+          "dateTime": `${e}T${starttime}:00-8:00`
+        },
+        "summary": summary,
+        "description": description
+      }
+      
+    ))
+
+    console.log(EventList)
+    //dateTime: "2020-02-28T08:30:00-08:00"
+  //   const dateTime:''
+  // 
+  }
+
 
   return (
     <div className="home">
@@ -98,8 +121,8 @@ const Home = () => {
           </div>
           <div className="template">
             <h2>templates</h2>
-            {templateList.map(t=>(
-              <Template 
+            {templateList.map(t => (
+              <Template
                 key={t.id}
                 starttime={t.starttime}
                 endtime={t.endtime}
@@ -107,27 +130,36 @@ const Home = () => {
                 description={t.description}
                 templateFormOpen={templateFormOpen}
                 setTemplateFormOpen={setTemplateFormOpen}
+                applyTemplate={applyTemplate}
               />
-              ))}
-            <button onClick={() => setFormOpen(!formOpen)}>Create Template</button>
-            {formOpen && 
-            <div className="Form">  
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder="summary" name="summary" ref={register({maxLength: 80})} />
-                <input type="text" placeholder="description" name="description" ref={register({maxLength: 100})} />
-                <input type="time" name="starttime" ref={register({required: true })} />
-                <input type="time" name="endtime" ref={register({required: true})} />
+            ))}
+            <button onClick={() => setFormOpen(!formOpen)}>
+              Create Template
+            </button>
+            {formOpen && (
+              <div className="Form">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <input type="text" placeholder="summary" name="summary" ref={register({ maxLength: 80 })} />
+                  <input type="text" placeholder="description" name="description" ref={register({ maxLength: 100 })} />
+                  <input type="time" name="starttime" ref={register({ required: true })} />
+                  <input type="time" name="endtime" ref={register({ required: true })} />
 
-                <input type="submit" />
-              </form>
-            </div>}
+                  <input type="submit" />
+                </form>
+              </div>
+            )}
           </div>
         </div>
         <div className="right">
           <img src={Logo} alt="logo" className="logo" />
-          <Calendar events={events} data={data} 
-          templateFormOpen={templateFormOpen}
-          setTemplateFormOpen={setTemplateFormOpen}/>
+          <Calendar
+            events={events}
+            data={data}
+            templateFormOpen={templateFormOpen}
+            setTemplateFormOpen={setTemplateFormOpen}
+            date={date}
+            setDate={setDate}
+          />
         </div>
       </main>
     </div>
