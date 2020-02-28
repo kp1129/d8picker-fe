@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Custom hook to initialize and use the Google API
 function useGapi({
@@ -12,8 +12,8 @@ function useGapi({
 }) {
   const [gapi, setGapi] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Create script tag, initialize gapi, append script to document
@@ -37,8 +37,17 @@ function useGapi({
           // Load an API (ex. Calendar API) when client is loaded to the DOM
           onLoaded(window.gapi.client);
           setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(scope));
-          setCurrentUser(auth.currentUser.get().getBasicProfile());
+          const userInfo = auth.currentUser.get().getBasicProfile();
+          const profile = {
+            name: userInfo && userInfo.getName(),
+            email: userInfo && userInfo.getEmail(),
+            photoUrl: userInfo && userInfo.getImageUrl(),
+            googleId: userInfo && userInfo.getId()
+          };
+          setCurrentUser(profile);
+          // setCurrentUser(auth.currentUser.get().getBasicProfile());
           setGapi(window.gapi);
+          gapi && setIsLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -46,24 +55,33 @@ function useGapi({
     };
 
     document.body.appendChild(script);
-  }, [apiKey, clientId, discoveryDocs, scope, ux_mode, redirect_uri, onLoaded]);
-
-  useEffect(() => {
-    !gapi ? setIsLoading(true) : setIsLoading(false);
-  }, [isLoading, gapi]);
+  }, [
+    apiKey,
+    clientId,
+    discoveryDocs,
+    scope,
+    ux_mode,
+    redirect_uri,
+    onLoaded,
+    gapi
+  ]);
 
   const onSignOut = async () => {
-    if (!gapi) {
-      throw new Error('No Gapi');
+    try {
+      await gapi.auth2.getAuthInstance().signOut();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Google API not loaded', error);
     }
-    await gapi.auth2.getAuthInstance().signOut();
   };
 
   const onSignIn = async () => {
-    if (!gapi) {
-      throw new Error('No Gapi');
+    try {
+      await gapi.auth2.getAuthInstance().signIn();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Google API not loaded', error);
     }
-    await gapi.auth2.getAuthInstance().signIn();
   };
 
   return {
