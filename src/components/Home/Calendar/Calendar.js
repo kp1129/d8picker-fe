@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useTemplate } from '../../../hooks/useTemplate'
-import Day from './Day'
-
+import { useTemplate } from '../../../hooks/useTemplate';
+import Day from './Day';
 
 import dayjs from 'dayjs';
 
@@ -12,9 +11,7 @@ import './style.css';
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const currentDay = dayjs();
 
-
-
-const Calendar = ({ events, templateFormOpen, date, setDate}) => {
+const Calendar = ({ events, templateFormOpen, date, setDate }) => {
   // Component state
   // const [loading, setLoading] = useState(false);
   const currentYear = date.year();
@@ -24,16 +21,22 @@ const Calendar = ({ events, templateFormOpen, date, setDate}) => {
   const firstDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-1`);
   const weekDayOfFirstDay = firstDayOfMonth.day(); // Sunday = 0
 
-  const lastDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-${daysInMonth}`);
+  const lastDayOfMonth = dayjs(
+    `${currentYear}-${currentMonth + 1}-${daysInMonth}`
+  );
   const weekDayOfLastDay = lastDayOfMonth.day();
 
-  const handlePrev = () => {setDate(date.subtract(1, 'month'))};
-  const handleNext = () => {setDate(date.add(1, 'month'))};
+  const handlePrev = () => {
+    setDate(date.subtract(1, 'month'));
+  };
+  const handleNext = () => {
+    setDate(date.add(1, 'month'));
+  };
 
   return (
     <div>
       <div className="calendar">
-       {/* Header contains PrevMonth, NextMonth and Current Date */}
+        {/* Header contains PrevMonth, NextMonth and Current Date */}
         <div className="header">
           <button type="button" className="nav prev" onClick={handlePrev}>
             &lt;
@@ -60,13 +63,12 @@ const Calendar = ({ events, templateFormOpen, date, setDate}) => {
 
           {/* labeled days for current month */}
           {[...Array(daysInMonth).keys()].map(i => {
-            
             return (
-              <Day 
-                key={i+1}
-                num={i+1}
+              <Day
+                key={i + 1}
+                num={i + 1}
                 month={currentMonth}
-                year={currentYear}  
+                year={currentYear}
                 events={events}
                 templateFormOpen={templateFormOpen}
                 date={date}
