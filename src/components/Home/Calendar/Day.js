@@ -20,12 +20,12 @@ const Day = ({num, events, templateFormOpen, month, year}) => {
     //dateTime: "2020-02-28T08:30:00-08:00"
 
     //concatinated to w/ turnary to put into correct format
-    const newdate = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
+    const newDate = date.format('YYYY-MM').concat(`-${num < 10 ? 0 : ''}${num}`)
 
     templateFormOpen
-    ?(selected.includes(newdate)
-      ? setSelected(selected.filter(day => day !== newdate))
-      : setSelected(selected.concat(newdate)))
+    ?(selected.includes(newDate)
+      ? setSelected(selected.filter(day => day !== newDate))
+      : setSelected(selected.concat(newDate)))
     :alert('pick a template')
     console.log(selected)
   }

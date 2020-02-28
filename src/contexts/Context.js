@@ -2,7 +2,6 @@ import React, { useState, useReducer } from 'react'
 import dayjs from 'dayjs';
 import axios from 'axios'
 
-
 const StateContext = React.createContext()
 
 const initialState = {
@@ -37,9 +36,6 @@ export function reducer(state = initialState, action) {
   }
 }
 
-
-
-
 const StateProvider = ({ children })  =>  {
   const [selected, setSelected] = useState([])
   const [date, setDate] = useState(dayjs())
@@ -63,7 +59,7 @@ const StateProvider = ({ children })  =>  {
     try {
       // Test endpoint
       const response = await axios.get(`${process.env.REACT_APP_ENDPOINT_URL}/api/template/`);
-      console.log(response.data);
+      console.log('Gnrl Tsos chx',response.data);
       dispatch({
         type: 'GET_TEMPLATE_SUCCESS',
         payload: response.data
