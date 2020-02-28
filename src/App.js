@@ -22,14 +22,14 @@ function App() {
   // }
 
   const googleApi = useGapi({
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    apiKey: process.env.GOOGLE_CALENDAR_API_KEY,
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     scope: 'https://www.googleapis.com/auth/calendar.events',
     discoveryDocs: [
       'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
     ],
     ux_mode: 'redirect',
-    redirect_uri: 'http://localhost:3000/authenticate/google',
+    redirect_uri: `${process.env.REDIRECT_URI}/authenticate/google`,
     onLoaded: onGapiLoaded
   });
 
