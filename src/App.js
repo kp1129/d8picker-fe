@@ -29,7 +29,7 @@ function App() {
       'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
     ],
     ux_mode: 'redirect',
-    redirect_uri: 'http://localhost:3000/authenticate/google',
+    redirect_uri: `${process.env.REACT_APP_BASE_URL}/authenticate/google`,
     onLoaded: onGapiLoaded
   });
 

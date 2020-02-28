@@ -8,6 +8,14 @@ const calendarApi = gapiClient => ({
       orderBy: 'startTime'
     });
     return data.result.items;
+  },
+
+  addEvent: resource => {
+    const data = gapiClient.calendar.events.insert({
+      calendarId: 'primary', // controls which calendar to show
+      resource
+    });
+    return data;
   }
 });
 

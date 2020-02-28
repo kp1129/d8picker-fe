@@ -11,6 +11,7 @@ import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import { axiosByGid } from '../../utils/axiosByGid';
 import { useTemplate } from '../../hooks/useTemplate';
 
+
 const Home = ({ profile, eventsApi }) => {
   const {
     selected,
@@ -75,7 +76,11 @@ const Home = ({ profile, eventsApi }) => {
       description: description
     }));
 
+    
     console.log(EventList);
+    for (let i of EventList) {
+      eventsApi.addEvent(i)
+    }
     //dateTime: "2020-02-28T08:30:00-08:00"
     //   const dateTime:''
     //

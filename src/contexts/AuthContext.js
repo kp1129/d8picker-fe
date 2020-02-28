@@ -1,115 +1,45 @@
-import React, { useReducer } from 'react';
-import axios from 'axios';
-
+import React from 'react';
+import useGapi from '../hooks/useGapi';
+import calendarApi from '../gapi/calendarApi'
+​
 const AuthContext = React.createContext();
-
-export const reducer = (state, action) => {
-  switch (action.type) {
-    case 'REGISTER_SUCCESS':
-      localStorage.setItem('token', JSON.stringify(action.payload.token));
-      state.registered = true;
-      state.isAuthenticated = state.registered;
-      return {
-        ...state,
-        ...action.payload
-      };
-    case 'LOGIN_SUCCESS':
-      localStorage.setItem('token', JSON.stringify(action.payload.token));
-      localStorage.setItem('user', JSON.stringify(action.payload.user));
-      state.isAuthenticated = true;
-      return {
-        ...state,
-        ...action.payload
-      };
-    case 'AUTH_ERR':
-    case 'LOGOUT':
-      localStorage.clear();
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: null,
-        user: null
-      };
-    // default
-    default:
-      return state;
-  }
-};
-
-const AuthProvider = ({ children }) => {
-  const initialState = {
-    isAuthenticated: localStorage.getItem('token') ? true : false,
-    registered: false,
-    user: localStorage.getItem('user') || null,
-    token: localStorage.getItem('token') || null
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const handleLogin = async values => {
-    try {
-      // Test endpoint
-      const response = await axios.post(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/auth/login`,
-        values
-      );
-
-      console.log('login', response.data);
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        payload: response.data
-      });
-    } catch (err) {
-      console.log(err.response);
-      dispatch({
-        type: 'AUTH_ERR',
-        payload: err.response
-      });
-    }
-  };
-
-  const handleRegister = async values => {
-    try {
-      // Test endpoint
-      const response = await axios.post(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/auth/register`,
-        values
-      );
-      console.log(response.data);
-      dispatch({
-        type: 'REGISTER_SUCCESS',
-        payload: response.data
-      });
-    } catch (err) {
-      console.log(err.response);
-      dispatch({
-        type: 'AUTH_ERR',
-        payload: err.response
-      });
-    }
-  };
-
-  const handleLogout = () => dispatch({ type: 'LOGOUT' });
-
-  // useEffect(() => {
-  //   console.log("token: ", state.token);
-  // }, [state.token]);
-
+​
+function AuthProvider({ children }) {
+  const [api, setApi] = React.useState(null);
+​
+  const onGapiLoaded = gapiClient => setApi(calendarApi(gapiClient));
+​
+  const googleApi = useGapi({
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    scope: 'https://www.googleapis.com/auth/calendar.events',
+    discoveryDocs: [
+      'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
+    ],
+    ux_mode: 'redirect',
+    redirect_uri: 'http://localhost:3000/authenticate/google',
+    onLoaded: onGapiLoaded
+  });
+​
   return (
-    <AuthContext.Provider
-      value={{
-        token: state.token,
-        isAuthenticated: state.isAuthenticated,
-        registered: state.registered,
-        user: state.user,
-        handleLogin,
-        handleRegister,
-        handleLogout
-      }}
-    >
-      {children}
+    <AuthContext.Provider value={{
+      googleApi,
+      api
+    }}>
+        {children}
     </AuthContext.Provider>
   );
+}
+​
+const useAuth = () => {
+  const context = React.useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+  return context;
 };
-
-export { AuthProvider, AuthContext };
+​
+export {
+  AuthProvider,
+  useAuth
+};
