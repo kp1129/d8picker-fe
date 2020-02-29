@@ -7,15 +7,15 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import dayjs from 'dayjs';
 
-import { axiosWithAuth } from '../../utils/axiosWithAuth';
-import { axiosByGid } from '../../utils/axiosByGid';
+// import { axiosWithAuth } from '../../utils/axiosWithAuth';
+// import { axiosByGid } from '../../utils/axiosByGid';
 import { useTemplate } from '../../hooks/useTemplate';
 
 
 const Home = ({ profile, eventsApi }) => {
   const {
     selected,
-    setSelected,
+    // setSelected,
     templateList,
     getTemplateList
   } = useTemplate();
@@ -42,11 +42,12 @@ const Home = ({ profile, eventsApi }) => {
       .post(`${process.env.REACT_APP_ENDPOINT_URL}/api/template`, template)
       .then(res => {
         console.log('Template Post', res);
+        getTemplateList();
       })
       .catch(err => {
         console.log(err);
       });
-    getTemplateList();
+    
   };
 
   // Load Events from Google Calendar API and set them to state
