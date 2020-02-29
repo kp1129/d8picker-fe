@@ -11,11 +11,14 @@ const calendarApi = gapiClient => ({
   },
 
   addEvent: resource => {
+    console.log('addEvent', resource);
     const data = gapiClient.calendar.events.insert({
       calendarId: 'primary', // controls which calendar to show
       resource
     });
-    return data;
+    data.execute(resource => {
+      console.log('execute', resource);
+    });
   }
 });
 

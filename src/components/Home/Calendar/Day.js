@@ -11,11 +11,14 @@ const Day = ({num, events, templateFormOpen, month, year}) => {
   const isToday = num === currentDay.date()
     && month === currentDay.month() 
     && year === currentDay.year();
+
   const isPicked = selected.includes(`${year}-${month+1 < 10 ? 0 : ''}${month+1}-${num < 10 ? 0 : ''}${num}`);
+
   const style = {
     color: isToday ? 'indianred' : 'inherit',
     background: isPicked ?'green': null
   };
+  
   const handleSelected = i => {
     //dateTime: "2020-02-28T08:30:00-08:00"
 

@@ -70,8 +70,8 @@ const Home = ({ profile, eventsApi }) => {
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     const EventList = selected.map(e => ({
-      end: { dateTime: `${e}T${endtime}:00-8:00` },
-      start: { dateTime: `${e}T${starttime}:00-8:00` },
+      end: { dateTime: `${e}T${endtime}:00-08:00` },
+      start: { dateTime: `${e}T${starttime}:00-08:00` },
       summary: summary,
       description: description
     }));
