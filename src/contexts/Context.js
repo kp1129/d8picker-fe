@@ -56,9 +56,10 @@ const StateProvider = ({ children })  =>  {
 
   //
   const getTemplateList = async () => {
+    const googleId = localStorage.getItem('googleId')
     try {
       // Test endpoint
-      const response = await axios.get(`${process.env.REACT_APP_ENDPOINT_URL}/api/template/`);
+      const response = await axios.get(`${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`);
       console.log('Gnrl Tsos chx',response.data);
       dispatch({
         type: 'GET_TEMPLATE_SUCCESS',

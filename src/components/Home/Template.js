@@ -1,4 +1,4 @@
-import React, {setState, useEffect} from 'react';
+import React from 'react';
 import axios from 'axios'
 import { useTemplate } from '../../hooks/useTemplate'
 
