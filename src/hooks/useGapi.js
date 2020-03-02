@@ -56,13 +56,6 @@ function useGapi({
 
     document.body.appendChild(script);
   }, [
-    // apiKey,
-    // clientId,
-    // discoveryDocs,
-    // scope,
-    // ux_mode,
-    // redirect_uri,
-    // onLoaded,
     gapi
   ]);
 
