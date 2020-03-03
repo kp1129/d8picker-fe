@@ -33,10 +33,6 @@ Github handle: https://github.com/Kennethaustin
 
 :memo: [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
 
-:memo: [UX Design files](https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0)
-
-:memo: [API Documentations](https://lab17-makata.herokuapp.com/api-docs/)
-
 School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
 Along with these things notifying changes to a schedule the coach would like to update things inside the events such as time and location. The last key feature would be event templates that can be placed in bulk across unrelated days.
