@@ -29,17 +29,23 @@ const Dashboard = () => {
   const { currentUser, handleSignOut } = googleApi;
 
   // Submit for template form
-  const onSubmit = formData => addTemplate(formData, currentUser);
+  const onSubmit = formData => {
+    addTemplate(formData, currentUser);
+    setFormOpen(false);
+  };
 
   const getTemplates = useCallback(
     currentUser => {
       getTemplateList(currentUser);
     },
-    [currentUser]
+    [getTemplateList, currentUser]
   );
 
   useEffect(() => {
     getTemplates(currentUser);
+    return () => {
+      getTemplates(currentUser);
+    };
   }, [getTemplates, currentUser]);
 
   const applyTemplate = (summary, description, starttime, endtime) => {
@@ -49,9 +55,9 @@ const Dashboard = () => {
       summary: summary,
       description: description
     }));
-
     console.log('eventList', eventList);
     eventList.forEach(event => api.addEvent(event));
+    setSelected([]);
   };
 
   return (
