@@ -7,6 +7,7 @@ import {
   IconButton
 } from '@chakra-ui/core';
 import useTemplate from '../hooks/useTemplate';
+import { useAuth } from '../contexts/auth';
 
 const Template = ({
   id,
@@ -20,10 +21,15 @@ const Template = ({
   applyTemplate
 }) => {
   const { deleteTemplate } = useTemplate();
+  const { googleApi } = useAuth();
+  const { currentUser } = googleApi;
 
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen);
   };
+
+  const handleDelete = async (id, currentUser) =>
+    deleteTemplate(id, currentUser);
 
   return (
     <Flex direction="column" align="center" justify="center" my={2}>
@@ -43,7 +49,7 @@ const Template = ({
             aria-label="Delete"
             size="sm"
             icon="close"
-            onClick={() => deleteTemplate(id)}
+            onClick={() => handleDelete(id, currentUser)}
           />
         </ButtonGroup>
       </Flex>
