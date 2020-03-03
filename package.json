@@ -39,19 +39,17 @@
   "@chakra-ui/core": "^0.5.2",
   "@emotion/core": "^10.0.27",
   "@emotion/styled": "^10.0.27",
-  "@material-ui/core": "^4.9.1",
   "axios": "^0.19.2",
   "dayjs": "^1.8.20",
-  "dotenv": "^8.2.0",
   "emotion-theming": "^10.0.27",
   "googleapis": "47.0.0",
   "history": "^4.10.1",
   "react": "^16.12.0",
   "react-dom": "^16.12.0",
   "react-ga": "^2.7.0",
-  "react-hook-form": "^4.8.2",
+  "react-hook-form": "^4.10.1",
   "react-router-dom": "^5.1.2",
-  "react-scripts": "3.3.1"
+  "react-scripts": "3.4.0"
  },
  "devDependencies": {
   "@testing-library/jest-dom": "^4.2.4",

@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 // Custom hook to initialize and use the Google API
-function useGapi({
-  apiKey,
-  clientId,
-  discoveryDocs,
-  scope,
-  ux_mode,
-  redirect_uri,
-  onLoaded
-}) {
+function useGapi(opts) {
   const [gapi, setGapi] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const {
+      apiKey,
+      clientId,
+      discoveryDocs,
+      scope,
+      ux_mode,
+      redirect_uri,
+      onLoaded
+    } = opts;
+
     // Create script tag, initialize gapi, append script to document
     const script = document.createElement('script');
     script.src = 'https://apis.google.com/js/api.js';
@@ -47,7 +49,7 @@ function useGapi({
           setCurrentUser(profile);
           // setCurrentUser(auth.currentUser.get().getBasicProfile());
           setGapi(window.gapi);
-          gapi && setIsLoading(false);
+          setIsLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -55,22 +57,20 @@ function useGapi({
     };
 
     document.body.appendChild(script);
-  }, [
-    gapi
-  ]);
+  }, [gapi]);
 
-  const onSignOut = async () => {
+  const handleSignIn = async () => {
     try {
-      await gapi.auth2.getAuthInstance().signOut();
+      await gapi.auth2.getAuthInstance().signIn();
     } catch (error) {
       console.log(error);
       throw new Error('Google API not loaded', error);
     }
   };
 
-  const onSignIn = async () => {
+  const handleSignOut = async () => {
     try {
-      await gapi.auth2.getAuthInstance().signIn();
+      await gapi.auth2.getAuthInstance().signOut();
     } catch (error) {
       console.log(error);
       throw new Error('Google API not loaded', error);
@@ -81,8 +81,8 @@ function useGapi({
     isLoading,
     currentUser,
     isAuthenticated,
-    onSignIn,
-    onSignOut
+    handleSignIn,
+    handleSignOut
   };
 }
 
