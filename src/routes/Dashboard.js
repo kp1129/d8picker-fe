@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Flex,
@@ -21,7 +21,7 @@ const Dashboard = () => {
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
   // state used by template for selected days
   const [selected, setSelected] = useState([]);
@@ -31,9 +31,16 @@ const Dashboard = () => {
   // Submit for template form
   const onSubmit = formData => addTemplate(formData, currentUser);
 
+  const getTemplates = useCallback(
+    currentUser => {
+      getTemplateList(currentUser);
+    },
+    [currentUser]
+  );
+
   useEffect(() => {
-    getTemplateList(currentUser);
-  }, []);
+    getTemplates(currentUser);
+  }, [getTemplates, currentUser]);
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     const eventList = selected.map(e => ({
@@ -103,20 +110,21 @@ const Dashboard = () => {
             borderRadius="10px"
           >
             <Heading as="h2">Templates</Heading>
-            {templateList.map(t => (
-              <Template
-                key={t._id}
-                id={t._id}
-                starttime={t.starttime}
-                endtime={t.endtime}
-                summary={t.summary}
-                description={t.description}
-                selected={selected}
-                templateFormOpen={templateFormOpen}
-                setTemplateFormOpen={setTemplateFormOpen}
-                applyTemplate={applyTemplate}
-              />
-            ))}
+            {templateList &&
+              templateList.map(t => (
+                <Template
+                  key={t._id}
+                  id={t._id}
+                  starttime={t.starttime}
+                  endtime={t.endtime}
+                  summary={t.summary}
+                  description={t.description}
+                  selected={selected}
+                  templateFormOpen={templateFormOpen}
+                  setTemplateFormOpen={setTemplateFormOpen}
+                  applyTemplate={applyTemplate}
+                />
+              ))}
             <Button
               my={4}
               variantColor="teal"
