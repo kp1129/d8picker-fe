@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   Flex,
@@ -9,44 +9,77 @@ import {
   Button,
   Input
 } from '@chakra-ui/core';
+import axios from 'axios';
 import { useAuth } from '../contexts/auth';
 import Calendar from '../components/Calendar';
-import useTemplate from '../hooks/useTemplate';
 import Template from '../components/Template';
+
+const getTemplateList = async ({ googleId }) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const addTemplate = async (data, { googleId }) => {
+  const template = { ...data, googleId };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
+      template
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteTemplate = async id => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const Dashboard = () => {
   const { googleApi, api } = useAuth();
-  const { templateList, getTemplateList, addTemplate } = useTemplate();
-
+  const [templateList, setTemplateList] = useState(null);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   const { register, handleSubmit } = useForm();
-
   // state used by template for selected days
-  const [selected, setSelected] = useState([]);
 
   const { currentUser, handleSignOut } = googleApi;
 
   // Submit for template form
-  const onSubmit = formData => {
-    addTemplate(formData, currentUser);
+  const onSubmit = async formData => {
+    const template = await addTemplate(formData, currentUser);
+    setTemplateList(prevTemplates => [...prevTemplates, template]);
     setFormOpen(false);
   };
 
-  const getTemplates = useCallback(
-    currentUser => {
-      getTemplateList(currentUser);
-    },
-    [getTemplateList, currentUser]
-  );
-
   useEffect(() => {
-    getTemplates(currentUser);
-    return () => {
-      getTemplates(currentUser);
-    };
-  }, [getTemplates, currentUser]);
+    (async () => {
+      const templates = await getTemplateList(currentUser);
+      setTemplateList(templates);
+    })();
+  }, [currentUser]);
+
+  const handleDelete = async id => {
+    await deleteTemplate(id);
+    const templates = templateList.filter(template => template._id !== id);
+    setTemplateList(templates);
+  };
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     const eventList = selected.map(e => ({
@@ -129,6 +162,7 @@ const Dashboard = () => {
                   templateFormOpen={templateFormOpen}
                   setTemplateFormOpen={setTemplateFormOpen}
                   applyTemplate={applyTemplate}
+                  handleDelete={handleDelete}
                 />
               ))}
             <Button
