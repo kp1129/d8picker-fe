@@ -51,7 +51,7 @@ const deleteTemplate = async id => {
 
 const Dashboard = () => {
   const { googleApi, api } = useAuth();
-  const [templateList, setTemplateList] = useState(null);
+  const [templateList, setTemplateList] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([]);
