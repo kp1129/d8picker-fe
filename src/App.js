@@ -22,7 +22,6 @@ function App() {
     return <Loading />;
   }
 
-function App() {
   return (
     <Stack pos="relative" w="100%" minHeight="100vh">
       <Header />
