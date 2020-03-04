@@ -38,7 +38,7 @@ const Dashboard = () => {
     currentUser => {
       getTemplateList(currentUser);
     },
-    [getTemplateList, currentUser]
+    [ currentUser]
   );
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Dashboard = () => {
     return () => {
       getTemplates(currentUser);
     };
-  }, [getTemplates, currentUser]);
+  }, [ currentUser]);
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     const eventList = selected.map(e => ({

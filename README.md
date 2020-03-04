@@ -27,6 +27,10 @@ Github handle: https://github.com/juarezfrench
 ~ Kenneth Austin ~
 ![Kenneth](./src/img/Kenneth.jpg)
 Github handle: https://github.com/Kennethaustin
+
+~ Andrew Ogle ~
+![Kenneth](./src/img/Andrew.jpg)
+Github handle: https://github.com/andrewogle
 ## :three: Project Overview
 
 :memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
