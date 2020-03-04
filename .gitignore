@@ -30,4 +30,5 @@ yarn-error.log*
 .vscode
 
 ./src/credentials
+/src/*.old
 # hello

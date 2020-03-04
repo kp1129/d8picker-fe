@@ -8,21 +8,34 @@ d8picker.com
 
 
 ## :one:  Developers and Designers
+~ DeAndre Johnson ~
+![DeAndre](./src/img/DeAndre.png)
+Github Handle: https://github.com/drejohnson
 
+~ Jeremy McWilliams ~
+![IMG_5896](./src/img/IMG_5896.jpg)
+Github handle: https://github.com/J2Macwilliams
 
-<br>
+~ Daniel Stadler ~
+![IMG_4767](./src/img/IMG-4767.JPG)
+Github handle: https://github.com/dstadz
 
+~ Mark French ~
+![Mark](./src/img/Mark.jpg)
+Github handle: https://github.com/juarezfrench
+
+~ Kenneth Austin ~
+![Kenneth](./src/img/Kenneth.jpg)
+Github handle: https://github.com/Kennethaustin
+
+~ Andrew Ogle ~
+![Kenneth](./src/img/Andrew.jpg)
+Github handle: https://github.com/andrewogle
 ## :three: Project Overview
 
 :memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
 
 :memo: [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
-
-:memo: [UX Design files](https://www.figma.com/file/ZFCqLlEQkCcIBSUtrKIu0u/Aaryn-%2F-My-Notepad?node-id=81%3A0)
-
-:memo: [API Documentations](https://lab17-makata.herokuapp.com/api-docs/)
-
-:memo: [Database schema](https://dbdesigner.page.link/SgFU)
 
 School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
 
@@ -36,7 +49,6 @@ Along with these things notifying changes to a schedule the coach would like to 
 -    Create, Edit, and Delete simple events
 -    Display upcoming events
 -    Handle Re-Occuring Events
--    Interactive Visual Calendar
 
 
 ## :five: Tech Stack
@@ -72,20 +84,19 @@ Along with these things notifying changes to a schedule the coach would like to 
 
 In order for the app to function correctly, the user must set up their own environment variables. These variables are stored securely on Heroku.
 
--   DATABASE_URL
--   JWT_SECRET
--   SEED_PASSWORD
--   TWILIO_ACCOUNT_SID
--   TWILIO_AUTH_TOKEN
+REACT_APP_GOOGLE_CLIENT_ID
+REACT_APP_GOOGLE_API_KEY
+REACT_APP_BASE_URL
+REACT_APP_ENDPOINT_URL
+FRONTEND_URL
+BASE_URL
+SESSION_SECRET 
+GOOGLE_CLIENT_REDIRECT
+GOOGLE_CLIENT_SECRET
+GOOGLE_CLIENT_ID
+DB_CONNECT=MONGODB
 
-## :seven: Credentials
-
-The database is seeded with two user accounts. Users may use them to test or demo the function of the application.
-
--   tnguyen/makata17
--   bsmith/makata17
-
-## :eight: Open Questions ❓
+## :seven: Open Questions ❓
 
 -   What if a users want to use their Google credential to log into the application?
 -   Can the application push existing calendars and/or events to a user's Google calendar or Apple Calendar?
@@ -94,9 +105,10 @@ The database is seeded with two user accounts. Users may use them to test or dem
 -   Imagine a calendar is full of events, how to can a user search for an interested event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia.
 
 
-## :nine: Installation Instructions
+## :eight: Installation Instructions
 
-With this project NPM was used. The Dependancies are as followed; ```"@date-io/moment": "^1.3.11", "@fullcalendar/core": "^4.3.1", "@fullcalendar/daygrid": "^4.3.0", "@fullcalendar/interaction": "^4.3.0", "@fullcalendar/react": "^4.3.0", "@fullcalendar/timegrid": "^4.3.0", "@material-ui/core": "^4.5.1", "@material-ui/icons": "^4.5.1", "@material-ui/pickers": "^3.2.7", "@material/snackbar": "^3.2.0", "firebase": "^7.2.0", "formik": "^1.5.8", "fullcalendar-reactwrapper": "^1.0.7", "moment": "^2.24.0", "node-sass": "^4.12.0", "react": "^16.10.2", "react-dom": "^16.10.2", "react-router": "^5.1.2", "react-router-dom": "^5.1.2", "react-scripts": "3.2.0", "yup": "^0.27.0"```
+With this project Yarn was used for the frontend and NPM was used for the backend. The Dependancies are as followed; ```"@chakra-ui/core": "^0.5.2",
+  "@emotion/core": "^10.0.27", "@emotion/styled": "^10.0.27", "@material-ui/core": "^4.9.1", "axios": "^0.19.2", "dayjs": "^1.8.20", "dotenv": "^8.2.0", "emotion-theming": "^10.0.27", "googleapis": "47.0.0", "history": "^4.10.1", "react": "^16.12.0", "react-dom": "^16.12.0", "react-ga": "^2.7.0", "react-hook-form": "^4.8.2", "react-router-dom": "^5.1.2", "react-scripts": "3.3.1"```
 
 ## Other Scripts
 

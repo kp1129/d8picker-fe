@@ -1,41 +1,40 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ReactGA from 'react-ga';
-import Splash from './components/Splash/';
-import Home from './components/Home/';
-// import PrivateRoute from "./components/PrivateRoute";
-import Authenticate from './components/Authenticate';
-import Events from './components/Events';
+// import ReactGA from 'react-ga';
+import { Stack } from '@chakra-ui/core';
+import Authenticate from './routes/Authenticate';
+import { useAuth } from './contexts/auth';
+import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
+import Welcome from './routes/Welcome';
+import Dashboard from './routes/Dashboard';
+import Loading from './components/Loading';
 
-import './App.css';
-
+// function initializeAnalytics() {
+//   ReactGA.initialize('UA-157827018-1');
+//   ReactGA.pageview('/home');
+// }
 
 function App() {
-  
-  function initializeAnalytics() {
-    ReactGA.initialize('UA-157827018-1');
-    ReactGA.pageview('/home');
+  const { googleApi } = useAuth();
+
+  if (googleApi.isLoading) {
+    return <Loading />;
   }
 
   return (
-    <div className="App">
-      <Route exact path="/">
-        <Splash />
-      </Route>
-      {/* Remember to change back to private */}
-      {/* <PrivateRoute path="/home">
-        <Home />
-      </PrivateRoute> */}
+    <Stack pos="relative" w="100%" minHeight="100vh">
+      <Header />
       <Route path="/authenticate/google">
         <Authenticate />
       </Route>
-      <Route path="/home">
-        <Home />
+      <Route exact path="/">
+        <Welcome />
       </Route>
-      <Route path="/events">
-        <Events />
-      </Route>
-    </div>
+      <PrivateRoute path="/:id/dashboard">
+        <Dashboard />
+      </PrivateRoute>
+    </Stack>
   );
 }
 
