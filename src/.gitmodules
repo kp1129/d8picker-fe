@@ -1,3 +1,0 @@
-[submodule "school-calendar-fe"] 
-  path = school-calendar-fe 
-  url = git://https://github.com/Lambda-School-Labs/school-calendar-fe/tree/development/src/
