@@ -68,21 +68,6 @@ const Dashboard = () => {
     setFormOpen(false);
   };
 
-<<<<<<< HEAD
-  const getTemplates = useCallback(
-    currentUser => {
-      getTemplateList(currentUser);
-    },
-    [ currentUser]
-  );
-
-  useEffect(() => {
-    getTemplates(currentUser);
-    return () => {
-      getTemplates(currentUser);
-    };
-  }, [ currentUser]);
-=======
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
@@ -95,7 +80,6 @@ const Dashboard = () => {
     const templates = templateList.filter(template => template._id !== id);
     setTemplateList(templates);
   };
->>>>>>> add template state
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     const eventList = selected.map(e => ({
