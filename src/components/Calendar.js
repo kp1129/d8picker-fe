@@ -14,6 +14,7 @@ const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
 
   // state to show users events
   const [events, setEvents] = useState(null);
+  
 
   const {
     // currentDay,
@@ -112,6 +113,7 @@ const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
 };
 
 export default Calendar;
+
 
 
 const MonthNameContainer = styled.div`
