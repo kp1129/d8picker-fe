@@ -58,7 +58,6 @@ const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
           size="lg"
           onClick={handlePrev}
         />
-        {/* <Heading className="heading">{date.format('MMMM')}</Heading> */}
         <MonthNameContainer>
           <Heading className="heading">{date.format('MMMM')}</Heading>
         </MonthNameContainer>
