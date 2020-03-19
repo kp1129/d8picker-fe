@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core';
 import theme from './utils/theme';
 import App from './App';
