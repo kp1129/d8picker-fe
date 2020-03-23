@@ -14,6 +14,7 @@ const Template = ({
   summary,
   description,
   selected,
+  setSelected,
   templateFormOpen,
   setTemplateFormOpen,
   applyTemplate,
@@ -22,6 +23,10 @@ const Template = ({
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen);
   };
+
+  const clearSelected = () => {
+    setSelected([]);
+  }
 
   return (
     <Flex direction="column" align="center" justify="center" my={2}>
@@ -47,6 +52,7 @@ const Template = ({
       </Flex>
 
       {templateFormOpen && (
+        <div>
         <button
           onClick={() =>
             applyTemplate(summary, description, starttime, endtime, selected)
@@ -54,6 +60,8 @@ const Template = ({
         >
           Apply Template
         </button>
+        <Button onClick={clearSelected}>Clear Selection</Button>
+        </div>
       )}
     </Flex>
   );

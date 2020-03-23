@@ -158,6 +158,7 @@ const Dashboard = () => {
                   endtime={t.endtime}
                   summary={t.summary}
                   description={t.description}
+                  setSelected={setSelected}
                   selected={selected}
                   templateFormOpen={templateFormOpen}
                   setTemplateFormOpen={setTemplateFormOpen}
