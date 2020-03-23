@@ -177,13 +177,13 @@ const Dashboard = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Input
                     type="text"
-                    placeholder="summary"
+                    placeholder="title"
                     name="summary"
-                    ref={register({ maxLength: 80 })}
+                    ref={register({ maxLength: 80, required: true })}
                   />
                   <Input
                     type="text"
-                    placeholder="description"
+                    placeholder="notes"
                     name="description"
                     ref={register({ maxLength: 100 })}
                   />
