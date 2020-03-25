@@ -22,20 +22,38 @@ function App() {
     return <Loading />;
   }
 
-  return (
-    <Stack pos="relative" w="100%" minHeight="100vh">
-      <Header />
-      <Route path="/authenticate/google">
-        <Authenticate />
-      </Route>
-      <Route exact path="/">
-        <Welcome />
-      </Route>
-      <PrivateRoute path="/:id/dashboard">
-        <Dashboard />
-      </PrivateRoute>
-    </Stack>
-  );
+  if (googleApi.currentUser){
+    return (
+      <Stack pos="relative" w="100%" minHeight="100vh">
+        <Header />
+        <Route path="/">
+          <Authenticate />
+        </Route>
+        {googleApi.currentUser && <Route exact path="/">
+          <Welcome />
+        </Route>}
+        <PrivateRoute path="/:id/dashboard">
+          <Dashboard />
+        </PrivateRoute>
+      </Stack>
+    );
+  } else {
+    return (
+      <Stack pos="relative" w="100%" minHeight="100vh">
+        <Header />
+        <Route path="/authenticate/google">
+          <Authenticate />
+        </Route>
+        <Route exact path="/">
+          <Welcome />
+        </Route>
+        <PrivateRoute path="/:id/dashboard">
+          <Dashboard />
+        </PrivateRoute>
+      </Stack>
+
+    )
+  }
 }
 
 export default App;

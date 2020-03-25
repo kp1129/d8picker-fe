@@ -6,7 +6,7 @@ const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
   const [api, setApi] = React.useState(null);
-
+  console.log(children)
   const googleApi = useGapi({
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
