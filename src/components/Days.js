@@ -69,8 +69,9 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
         return (
           <Cell
             className="calendar-days-item"
-            borderBottomWidth="1px"
+            borderBottomWidth="10px"
             borderBottomColor="gray.200"
+            height="120px"
             key={i}
           >
             <Flex
@@ -85,7 +86,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
             >
               <Box
                 as="span"
-                fontSize={['xl', '2xl']}
+                fontSize={['xs', 'm']}
                 fontWeight={700}
                 color={isToday ? 'brand.blue_primary' : 'inherit'}
               >
@@ -99,6 +100,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
                       day={day}
                       currentMonth={currentMonth}
                       currentYear={currentYear}
+                      fontSize="2px"
                     />
                   </div>
                 ))}
