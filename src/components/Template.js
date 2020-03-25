@@ -32,8 +32,11 @@ const Template = ({
     setSelected([]);
   };
 
-  const [toggledTemplate, setToggledTemplate] = useState(false)
-  
+
+  const clearSelected = () => {
+    setSelected([]);
+  }
+
   return (
     <Flex direction="column" align="center" justify="center" my={2}>
       <Heading fontSize="sm" fontWeight="normal">
@@ -57,7 +60,9 @@ const Template = ({
         </ButtonGroup>
       </Flex>
 
-      {toggledTemplate && (
+      {templateFormOpen && (
+        <div>
+
         <button
           onClick={() =>
             applyTemplate(summary, description, starttime, endtime, selected)
@@ -65,6 +70,8 @@ const Template = ({
         >
           Apply Template
         </button>
+        <Button onClick={clearSelected}>Clear Selection</Button>
+        </div>
       )}
     </Flex>
   );
