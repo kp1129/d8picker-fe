@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useReducer} from 'react';
 import {
   Flex,
   ButtonGroup,
@@ -6,6 +6,9 @@ import {
   Heading,
   IconButton
 } from '@chakra-ui/core';
+
+//TODO LINK UP THE DAYS.JS TRIGGER TO MATCH THE TEMPLATE TOGGLE FROM A STATE WIDE SELECTION.
+
 
 const Template = ({
   id,
@@ -20,9 +23,15 @@ const Template = ({
   applyTemplate,
   handleDelete
 }) => {
+
+
+
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen);
+    setToggledTemplate(!toggledTemplate);
+    setSelected([]);
   };
+
 
   const clearSelected = () => {
     setSelected([]);
@@ -53,6 +62,7 @@ const Template = ({
 
       {templateFormOpen && (
         <div>
+
         <button
           onClick={() =>
             applyTemplate(summary, description, starttime, endtime, selected)

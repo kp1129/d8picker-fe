@@ -1,5 +1,6 @@
 {
  "name": "school-calendar-fe",
+ "homepage": "www.d8picker.com",
  "version": "0.1.0",
  "private": true,
  "scripts": {
@@ -49,7 +50,8 @@
   "react-ga": "^2.7.0",
   "react-hook-form": "^4.10.1",
   "react-router-dom": "^5.1.2",
-  "react-scripts": "3.4.0"
+  "react-scripts": "3.4.0",
+  "styled-components": "^5.0.1"
  },
  "devDependencies": {
   "@testing-library/jest-dom": "^4.2.4",

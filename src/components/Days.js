@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
@@ -30,6 +30,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
     weekDayOfFirstDoM,
     weekDayOfLastDoM
   } = useDate(date);
+
   return (
     <>
       <DisabledDays days={weekDayOfFirstDoM} />
@@ -50,17 +51,18 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
 
         const handleSelected = () => {
           //dateTime: "2020-02-28T08:30:00-08:00"
-
+          
           //concatinated to w/ turnary to put into correct format
           const newdate = date
             .format('YYYY-MM')
             .concat(`-${day < 10 ? 0 : ''}${day}`);
-
+          
           templateFormOpen
             ? selected.includes(newdate)
               ? setSelected(selected.filter(date => date !== newdate))
               : setSelected(selected.concat(newdate))
             : alert('pick a template');
+         
           console.log(selected);
         };
 

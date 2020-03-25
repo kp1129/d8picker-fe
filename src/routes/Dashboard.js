@@ -93,6 +93,7 @@ const Dashboard = () => {
     setSelected([]);
   };
 
+
   return (
     <Box
       pos="relative"
@@ -160,11 +161,13 @@ const Dashboard = () => {
                   description={t.description}
                   setSelected={setSelected}
                   selected={selected}
+                  setSelected={setSelected}
                   templateFormOpen={templateFormOpen}
                   setTemplateFormOpen={setTemplateFormOpen}
                   applyTemplate={applyTemplate}
                   handleDelete={handleDelete}
                 />
+                
               ))}
             <Button
               my={4}
