@@ -10,10 +10,24 @@ const Event = styled.div`
 
 // Displays circle icon if day has an event
 const EventIndicator = ({ event, day, currentMonth, currentYear }) => {
-  const hasEvents =
+  // const hasEvents =
+  //   day === dayjs(event.start.dateTime).date() &&
+  //   currentMonth === dayjs(event.start.dateTime).month() &&
+  //   currentYear === dayjs(event.start.dateTime).year();
+
+  let hasEvents;
+  if(event.start.dateTime){
+    hasEvents =
     day === dayjs(event.start.dateTime).date() &&
     currentMonth === dayjs(event.start.dateTime).month() &&
     currentYear === dayjs(event.start.dateTime).year();
+  } else if (event.start.date){
+    hasEvents =
+    day === dayjs(event.start.date).date() &&
+    currentMonth === dayjs(event.start.date).month() &&
+    currentYear === dayjs(event.start.date).year();
+  }
+  
 
   return hasEvents ? (
     <>
