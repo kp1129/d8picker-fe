@@ -24,7 +24,7 @@ const Template = ({
   handleDelete
 }) => {
 
-
+  const [toggledTemplate, setToggledTemplate] = useState(false);
 
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen);

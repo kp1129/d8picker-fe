@@ -165,7 +165,6 @@ const Dashboard = () => {
                   description={t.description}
                   setSelected={setSelected}
                   selected={selected}
-                  setSelected={setSelected}
                   templateFormOpen={templateFormOpen}
                   setTemplateFormOpen={setTemplateFormOpen}
                   applyTemplate={applyTemplate}
