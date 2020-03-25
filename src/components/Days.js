@@ -69,6 +69,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
             className="calendar-days-item"
             borderBottomWidth="1px"
             borderBottomColor="gray.200"
+            height="120px"
             key={i}
           >
             <Flex

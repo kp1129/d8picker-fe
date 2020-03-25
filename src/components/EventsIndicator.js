@@ -1,7 +1,12 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import styled from 'styled-components';
 
 import { Icon } from '@chakra-ui/core';
+
+const Event = styled.div`
+  font-size: 0.6rem;
+`
 
 // Displays circle icon if day has an event
 const EventIndicator = ({ event, day, currentMonth, currentYear }) => {
@@ -13,7 +18,7 @@ const EventIndicator = ({ event, day, currentMonth, currentYear }) => {
   return hasEvents ? (
     <>
       <Icon name="circle" fill="brand.blue_accent" />
-      <div>{event.summary}</div>
+      <Event>{event.summary}</Event>
     </>
   ) : null;
 };
