@@ -1,8 +1,28 @@
 import React from 'react';
-import { Heading, Text, Flex, Grid, Image } from '@chakra-ui/core';
-import LoginButton from '../components/LoginButton';
+import {useAuth} from '../contexts/auth'
+import { Heading, Text, Flex, Grid, Image, Button } from '@chakra-ui/core';
+// import LoginButton from '../components/LoginButton';
 
-import graphic from '../undraw_calendar_dutt.svg';
+import graphic from '../img/undraw_calendar_dutt.svg';
+
+const LoginButton = () => {
+  const { googleApi } = useAuth();
+
+  return (
+    <Button
+      leftIcon={'google'}
+      backgroundColor="white"
+      color="#737373"
+      width="300px"
+      height="48px"
+      rounded="2.5rem"
+      boxShadow="0 0 4px rgba(0, 0, 0, 0.05), 0 0px 0px rgba(0, 0, 0, 0.08)"
+      onClick={googleApi.handleSignIn}
+    >
+      <span>Sign in with Google</span>
+    </Button>
+  );
+};
 
 const CallToAction = () => (
   <Flex order={[2, 1]} direction="column" justify="center" align="center">

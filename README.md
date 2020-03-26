@@ -8,7 +8,7 @@ d8picker.com
 
 
 ## :one:  Developers and Designers
-~ DeAndre Johnson ~
+<!-- ~ DeAndre Johnson ~
 ![DeAndre](./src/img/DeAndre.png)
 Github Handle: https://github.com/drejohnson
 
@@ -30,7 +30,7 @@ Github handle: https://github.com/Kennethaustin
 
 ~ Andrew Ogle ~
 ![Kenneth](./src/img/Andrew.jpg)
-Github handle: https://github.com/andrewogle
+Github handle: https://github.com/andrewogle -->
 ## :three: Project Overview
 
 :memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)

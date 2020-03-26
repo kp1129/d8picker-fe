@@ -1,12 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, createContext, useState } from 'react';
 import useGapi from '../hooks/useGapi';
-import calendarApi from '../gapi/calendarApi';
+import calendarApi from '../utils/calendarApi';
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const [api, setApi] = React.useState(null);
-  console.log(children)
+  const [api, setApi] = useState(null);
   const googleApi = useGapi({
     apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
@@ -34,11 +33,11 @@ function AuthProvider({ children }) {
 }
 
 const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }
   return context;
 };
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuth, AuthContext };

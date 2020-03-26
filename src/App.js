@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Route } from 'react-router-dom';
 // import ReactGA from 'react-ga';
 import { Stack } from '@chakra-ui/core';
-import Authenticate from './routes/Authenticate';
+import Authenticate from './components/Authenticate';
 import { useAuth } from './contexts/auth';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import Welcome from './routes/Welcome';
-import Dashboard from './routes/Dashboard';
+import Welcome from './components/Welcome';
+import Dashboard from './components/dashboardComponents/Dashboard';
 import Loading from './components/Loading';
 
 // function initializeAnalytics() {
@@ -17,6 +17,13 @@ import Loading from './components/Loading';
 
 function App() {
   const { googleApi } = useAuth();
+ 
+  const [userState, SetUserState] = useState({})
+  let currentUser = googleApi.currentUser
+  useEffect(()=>{
+    SetUserState(currentUser)
+  },[currentUser])
+  console.log(userState)
 
   if (googleApi.isLoading) {
     return <Loading />;
@@ -25,7 +32,7 @@ function App() {
   if (googleApi.currentUser){
     return (
       <Stack pos="relative" w="100%" minHeight="100vh">
-        <Header />
+        <Header userState={userState} />
         <Route path="/">
           <Authenticate />
         </Route>

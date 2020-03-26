@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Link as StyledLink, Flex, Box, Image } from '@chakra-ui/core';
-import { useAuth } from '../contexts/auth';
 
-import logo from '../logo.svg';
+import logo from '../img/logo.svg';
 
-const Header = () => {
-  const { googleApi } = useAuth();
-  const { isAuthenticated, currentUser } = googleApi;
+const Header = ({userState}) => {
 
   return (
     <Flex
@@ -23,13 +20,13 @@ const Header = () => {
       <Box className="logo-container" width="200px">
         <Image src={logo} alt="logo" />
       </Box>
-      {isAuthenticated ? (
+      { userState ? (
         <Box>
-          <StyledLink as={Link} to={`/${currentUser.googleId}/dashboard`}>
+          <StyledLink as={Link} to={`/${userState.googleId}/dashboard`}>
             <Image
               rounded="full"
               size="40px"
-              src={currentUser.photoUrl}
+              src={userState.photoUrl}
               alt="avatar"
             />
           </StyledLink>

@@ -10,9 +10,10 @@ import {
   Input
 } from '@chakra-ui/core';
 import axios from 'axios';
-import { useAuth } from '../contexts/auth';
-import Calendar from '../components/Calendar';
-import Template from '../components/Template';
+import { useAuth } from '../../contexts/auth';
+import Calendar from './calendarComponents/Calendar.js';
+import Template from './Template.js';
+
 
 const getTemplateList = async ({ googleId }) => {
   try {
@@ -51,6 +52,7 @@ const deleteTemplate = async id => {
 
 const Dashboard = () => {
   const { googleApi, api } = useAuth();
+  
   const [templateList, setTemplateList] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
