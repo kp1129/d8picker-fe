@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState} from 'react';
 import {
   Flex,
   ButtonGroup,
@@ -60,7 +60,7 @@ const Template = ({
         </ButtonGroup>
       </Flex>
 
-      {templateFormOpen && (
+      {templateFormOpen && toggledTemplate && (
         <div>
 
         <button
