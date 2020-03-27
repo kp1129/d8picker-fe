@@ -13,7 +13,6 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
 import ChooseDateForm from './ChooseDateForm.js';
-import CreateTemplateForm from './CreateTemplateForm'
 
 
 const getTemplateList = async ({ googleId }) => {
@@ -102,87 +101,7 @@ const Dashboard = () => {
 
 
   return (
-    <Box
-      pos="relative"
-      backgroundColor="brand.lightgray"
-      p={[4, 16]}
-      minHeight="100vh"
-    >
-      <Grid
-        width="100%"
-        gap={4}
-        templateColumns={['1fr', '250px 1fr']}
-        gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
-      >
-        <Flex
-          className="sidebar"
-          gridArea="sidebar"
-          direction="column"
-          align="center"
-        >
-          <Flex
-            className="profileInfo"
-            direction="column"
-            align="center"
-            justify="center"
-            w="100%"
-            p={8}
-            mb={4}
-            backgroundColor="white"
-            borderRadius="10px"
-          >
-            <Image
-              rounded="full"
-              size="150px"
-              src={currentUser.photoUrl}
-              alt="avatar"
-              mb={2}
-            />
-            <Heading as="h4" fontSize="xl" fontWeight="medium" mb={2}>
-              {currentUser.email}
-            </Heading>
-            <Button variantColor="red" onClick={handleSignOut} mb={2}>
-              Sign out
-            </Button>
-          </Flex>
-          <Flex
-            className="templateArea"
-            direction="column"
-            align="center"
-            justify="center"
-            w="100%"
-            p={8}
-            mb={4}
-            backgroundColor="white"
-            borderRadius="10px"
-          >
-            <Heading as="h2">Templates</Heading>
-            {templateList &&
-              templateList.map(t => (
-                <ChooseDateForm
-                  key={t._id}
-                  id={t._id}
-                  starttime={t.starttime}
-                  endtime={t.endtime}
-                  summary={t.summary}
-                  description={t.description}
-                  setSelected={setSelected}
-                  selected={selected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  applyTemplate={applyTemplate}
-                  handleDelete={handleDelete}
-                />
-                
-              ))}
-            <Button
-              my={4}
-              variantColor="teal"
-              onClick={() => setFormOpen(!formOpen)}
-            >
-              Create Template
-            </Button>
-            {formOpen && (
+
               <div className="Form">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Input
@@ -211,22 +130,7 @@ const Dashboard = () => {
                   <Button type="submit">Submit</Button>
                 </form>
               </div>
-            )}
-            <h2>My Form</h2>
-            <CreateTemplateForm/>
-          </Flex>
-        </Flex>
-        <Box className="calendarArea" gridArea="main">
-          <Calendar
-            api={api}
-            selected={selected}
-            setSelected={setSelected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-          />
-        </Box>
-      </Grid>
-    </Box>
+
   );
 };
 
