@@ -42,6 +42,7 @@ const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
       try {
         const data = await api.listEvents();
         setEvents(data);
+        console.log('events', data)
       } catch (error) {
         console.log(error);
       }
