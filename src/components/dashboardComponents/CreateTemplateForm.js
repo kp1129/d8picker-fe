@@ -65,7 +65,7 @@ const Dashboard = () => {
 
   // Submit for template form
   const onSubmit = async formData => {
-    const template = await addTemplate(formData, currentUser);
+    const template = addTemplate(formData, currentUser);
     setTemplateList(prevTemplates => [...prevTemplates, template]);
     setFormOpen(false);
   };
