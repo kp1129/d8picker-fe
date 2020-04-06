@@ -29,7 +29,7 @@ const deleteTemplate = async id => {
   }
 };
 
-const Dashboard = () => {
+const Dashboard = ({setUserState}) => {
   const { googleApi, api } = useAuth();
   
   const [templateList, setTemplateList] = useState([]);
@@ -89,7 +89,7 @@ const Dashboard = () => {
           direction="column"
           align="center"
         >
-          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut}/>
+          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState}/>
           <TemplateContainer
             setSelected={setSelected}
             selected={selected}

@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/auth';
 
 const ProfileInfo = (props) => {
     // const {currentUser, handleSignOut} = props;
+    const {setUserState} = props;
     const { googleApi, api } = useAuth();
     const { currentUser, handleSignOut } = googleApi;
 
@@ -32,7 +33,10 @@ const ProfileInfo = (props) => {
             <Heading as="h4" fontSize="xl" fontWeight="medium" mb={2}>
               {currentUser.email}
             </Heading>
-            <Button variantColor="red" onClick={handleSignOut} mb={2}>
+            <Button variantColor="red" onClick={()=>{
+              handleSignOut();
+              setUserState();
+            }} mb={2}>
               Sign out
             </Button>
           </Flex>
