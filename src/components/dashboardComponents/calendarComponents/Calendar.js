@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
 import Days from './Days';
 import Cell from './Cell';
-import useDate from '../hooks/useDate';
+import useDate from '../../../hooks/useDate';
 import styled from 'styled-components';
 
 const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {

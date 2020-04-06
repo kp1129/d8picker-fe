@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
-import useDate from '../hooks/useDate';
+import useDate from '../../../hooks/useDate';
 
 export const DisabledDays = ({ days }) => {
   return (
