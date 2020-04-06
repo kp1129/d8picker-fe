@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Icon } from '@chakra-ui/core';
 
 const Event = styled.div`
-  font-size: 0.6rem;
+  font-size: 1.25rem;
 `
 
 // Displays circle icon if day has an event
