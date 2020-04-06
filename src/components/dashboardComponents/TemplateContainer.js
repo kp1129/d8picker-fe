@@ -20,9 +20,7 @@ const TemplateContainer = (props) => {
     setFormOpen,
     setTemplateList,
     templateList,
-    currentUser,
-    deleteTemplate
-} = props;
+    currentUser} = props;
 
 
 
@@ -54,7 +52,6 @@ const TemplateContainer = (props) => {
                   setTemplateFormOpen={setTemplateFormOpen}
                   setTemplateList={setTemplateList}
                   templateList={templateList}
-                  deleteTemplate={deleteTemplate}
                 />
                 
               ))}

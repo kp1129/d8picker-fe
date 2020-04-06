@@ -7,6 +7,7 @@ import {
   IconButton
 } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
+import axios from 'axios'
 
 
 //TODO LINK UP THE DAYS.JS TRIGGER TO MATCH THE TEMPLATE TOGGLE FROM A STATE WIDE SELECTION.
@@ -23,11 +24,20 @@ const ChooseDateForm = ({
   templateFormOpen,
   setTemplateFormOpen,
   setTemplateList,
-  templateList,
-  deleteTemplate
+  templateList
 }) => {
 
   const { googleApi, api } = useAuth();
+  const deleteTemplate = async id => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error); 
+    }
+  };
   const handleDelete = async id => {
     await deleteTemplate(id);
     const templates = templateList.filter(template => template._id !== id);

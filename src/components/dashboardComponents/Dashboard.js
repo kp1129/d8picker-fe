@@ -18,16 +18,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const deleteTemplate = async id => {
-  try {
-    const response = await axios.delete(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 const Dashboard = ({setUserState}) => {
   const { googleApi, api } = useAuth();
@@ -81,7 +72,6 @@ const Dashboard = ({setUserState}) => {
             setTemplateList={setTemplateList}
             currentUser={currentUser}
             templateList={templateList}
-            deleteTemplate={deleteTemplate}
           />
         </Flex>
         <Box className="calendarArea" gridArea="main">
