@@ -26,7 +26,7 @@ const CreateTemplateForm = (props) => {
   // Submit for template form
   const onSubmit = async formData => {
     const template = addTemplate(formData, currentUser);
-    setTemplateList(prevTemplates => [...prevTemplates, template]);
+    await setTemplateList(prevTemplates => [...prevTemplates, template]);
     setFormOpen(!formOpen);
   };
 
@@ -57,7 +57,7 @@ const CreateTemplateForm = (props) => {
                     ref={register({ required: true })}
                   />
 
-                  <Button type="submit" onClick={() => setFormOpen(!formOpen)}>Submit</Button>
+                  <Button type="submit">Submit</Button>
                 </form>
               </div>
 
