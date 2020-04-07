@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
 import ProfileInfo from './ProfileInfo'
 import TemplateContainer from './TemplateContainer'
+import styled from 'styled-components';
 
 
 const getTemplateList = async ({ googleId }) => {
@@ -27,6 +28,7 @@ const Dashboard = ({setUserState}) => {
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
 
   console.log('formOpen', formOpen);
@@ -37,6 +39,19 @@ const Dashboard = ({setUserState}) => {
         setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
+
+  //highlights calendar based on whether choose dates button is active or not
+  useEffect(()=>{
+    if(templateFormOpen){
+      setShadow("box-shadow: 0px 0px 19px 7px rgba(99,179,237,1);")
+    } else {
+      setShadow("");
+    }
+  },[templateFormOpen])
+
+  const DynamicBox = styled(Box)`
+    ${shadow}
+  `;
 
 
 
@@ -74,7 +89,7 @@ const Dashboard = ({setUserState}) => {
             templateList={templateList}
           />
         </Flex>
-        <Box className="calendarArea" gridArea="main">
+        <DynamicBox className="calendarArea" gridArea="main">
           <Calendar
             api={api}
             selected={selected}
@@ -82,10 +97,11 @@ const Dashboard = ({setUserState}) => {
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
           />
-        </Box>
+        </DynamicBox>
       </Grid>
     </Box>
   );
 };
 
 export default Dashboard;
+
