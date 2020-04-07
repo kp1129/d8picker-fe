@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import {
-  Flex,
-  Box,
-  Grid,
-  Heading,
-  Image,
-  Button,
-  Input
-} from '@chakra-ui/core';
+import {Flex, Box, Grid} from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
-import Template from './Template.js';
+import ProfileInfo from './ProfileInfo'
+import TemplateContainer from './TemplateContainer'
 
 
 const getTemplateList = async ({ googleId }) => {
@@ -26,121 +18,26 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const addTemplate = async (data, { googleId }) => {
-  const template = { ...data, googleId };
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
-      template
-    );
 
-    // variable makes possible manipulation of object returned from response.data
-    let newResponse;
-
-    // code converts response.data.starttime to number
-    let splitStartTime = response.data.starttime.split(':');
-    let joinStartTime = splitStartTime.join('');
-    let startTimeAsNumber = parseInt(joinStartTime, 10);
-
-    // code converts response.data.endtime to number
-    let splitEndTime = response.data.endtime.split(':');
-    let joinEndTime = splitEndTime.join('');
-    let endTimeAsNumber = parseInt(joinEndTime, 10);
-    
-    // fn for converting response.data.starttime and/or endtime back to time string (from number)
-    function convertToTime(value, index) {
-      return value.substring(0, index) + ":" + value.substring(index);
-    }
-    
-    // converts times from 24 hour to 12 hour format
-    if (startTimeAsNumber >= 1300) {
-      startTimeAsNumber -= 1200;
-      let startTimeAsString = startTimeAsNumber.toString();
-      console.log(`event start time: ${convertToTime(startTimeAsString, startTimeAsString.length - 2)}`);
-      let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
-      newResponse = {...response.data, starttime: convertedStartTime + 'pm'};
-      if (endTimeAsNumber >= 1300) {
-        endTimeAsNumber -= 1200;
-        let endTimeAsString = endTimeAsNumber.toString();
-        let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
-        newResponse = {...newResponse, endtime: convertedEndTime + 'pm'};
-      } else {
-        newResponse = {...newResponse, endtime: newResponse.endtime + 'am'};
-      }
-    } else if (endTimeAsNumber >= 1300) {
-      endTimeAsNumber -= 1200;
-      let endTimeAsString = endTimeAsNumber.toString();
-      let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
-      newResponse = {...response.data, starttime: response.data.starttime + 'am', endtime: convertedEndTime + 'pm'};
-    } else {
-      newResponse = {...response.data, starttime: response.data.starttime + 'am', endtime: response.data.endtime + 'am'};
-      }
-    console.log(newResponse);
-    return newResponse;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const deleteTemplate = async id => {
-  try {
-    const response = await axios.delete(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const Dashboard = () => {
+const Dashboard = ({setUserState}) => {
   const { googleApi, api } = useAuth();
   
   const [templateList, setTemplateList] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([]);
-
-  const { register, handleSubmit } = useForm();
-  // state used by template for selected days
-
   const { currentUser, handleSignOut } = googleApi;
 
-  // Submit for template form
-  const onSubmit = async formData => {
-    const template = await addTemplate(formData, currentUser);
-    setTemplateList(prevTemplates => [...prevTemplates, template]);
-    setFormOpen(false);
-  };
+  console.log('formOpen', formOpen);
 
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
-      setTemplateList(templates);
+        setTemplateList(templates);
     })();
-  }, [currentUser]);
+  }, [currentUser, formOpen]);
 
-  const handleDelete = async id => {
-    await deleteTemplate(id);
-    const templates = templateList.filter(template => template._id !== id);
-    setTemplateList(templates);
-  };
 
-  const applyTemplate = (summary, description, starttime, endtime) => {
-    //creates new date and isolates timezone offset
-    let date = new Date().toString().split("GMT");
-    //takes the first few characters of offset with + or - to be slotted in the start and end times
-    let zone = date[1].split(' ')[0].slice(0, 3);
-    const eventList = selected.map(e => ({
-      end: { dateTime: `${e}T${endtime}:00${zone}:00` },
-      start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-      summary: summary,
-      description: description
-    }));
-    console.log('eventList', eventList);
-    eventList.forEach(event => api.addEvent(event));
-    setSelected([]);
-  };
 
 
   return (
@@ -162,99 +59,19 @@ const Dashboard = () => {
           direction="column"
           align="center"
         >
-          <Flex
-            className="profileInfo"
-            direction="column"
-            align="center"
-            justify="center"
-            w="100%"
-            p={8}
-            mb={4}
-            backgroundColor="white"
-            borderRadius="10px"
-          >
-            <Image
-              rounded="full"
-              size="150px"
-              src={currentUser.photoUrl}
-              alt="avatar"
-              mb={2}
-            />
-            <Heading as="h4" fontSize="xl" fontWeight="medium" mb={2}>
-              {currentUser.email}
-            </Heading>
-            <Button variantColor="red" onClick={handleSignOut} mb={2}>
-              Sign out
-            </Button>
-          </Flex>
-          <Flex
-            className="templateArea"
-            direction="column"
-            align="center"
-            justify="center"
-            w="100%"
-            p={8}
-            mb={4}
-            backgroundColor="white"
-            borderRadius="10px"
-          >
-            <Heading as="h2">Templates</Heading>
-            {templateList &&
-              templateList.map(t => (
-                <Template
-                  key={t._id}
-                  id={t._id}
-                  starttime={t.starttime}
-                  endtime={t.endtime}
-                  summary={t.summary}
-                  description={t.description}
-                  setSelected={setSelected}
-                  selected={selected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  applyTemplate={applyTemplate}
-                  handleDelete={handleDelete}
-                />
-                
-              ))}
-            <Button
-              my={4}
-              variantColor="teal"
-              onClick={() => setFormOpen(!formOpen)}
-            >
-              Create Template
-            </Button>
-            {formOpen && (
-              <div className="Form">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Input
-                    type="text"
-                    placeholder="title"
-                    name="summary"
-                    ref={register({ maxLength: 80, required: true })}
-                  />
-                  <Input
-                    type="text"
-                    placeholder="notes"
-                    name="description"
-                    ref={register({ maxLength: 100 })}
-                  />
-                  <Input
-                    type="time"
-                    name="starttime"
-                    ref={register({ required: true })}
-                  />
-                  <Input
-                    type="time"
-                    name="endtime"
-                    ref={register({ required: true })}
-                  />
+          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState}/>
+          <TemplateContainer
+            setSelected={setSelected}
+            selected={selected}
+            templateFormOpen={templateFormOpen}
+            setTemplateFormOpen={setTemplateFormOpen}
 
-                  <Button type="submit">Submit</Button>
-                </form>
-              </div>
-            )}
-          </Flex>
+            formOpen={formOpen}
+            setFormOpen={setFormOpen}
+            setTemplateList={setTemplateList}
+            currentUser={currentUser}
+            templateList={templateList}
+          />
         </Flex>
         <Box className="calendarArea" gridArea="main">
           <Calendar

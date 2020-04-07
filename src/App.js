@@ -20,12 +20,11 @@ import Loading from './components/Loading';
 function App() {
   const { googleApi } = useAuth();
  
-  const [userState, SetUserState] = useState({})
+  const [userState, setUserState] = useState({})
   let currentUser = googleApi.currentUser
   useEffect(()=>{
-    SetUserState(currentUser)
+    setUserState(currentUser)
   },[currentUser])
-  console.log(userState)
 
   if (googleApi.isLoading) {
     return <Loading />;
@@ -42,7 +41,7 @@ function App() {
           <Welcome />
         </Route>}
         <PrivateRoute path="/:id/dashboard">
-          <Dashboard />
+          <Dashboard setUserState={setUserState}/>
         </PrivateRoute>
       </Stack>
     );
