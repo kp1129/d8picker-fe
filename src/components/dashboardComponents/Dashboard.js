@@ -19,7 +19,6 @@ const getTemplateList = async ({ googleId }) => {
 };
 
 
-
 const Dashboard = ({setUserState}) => {
   const { googleApi, api } = useAuth();
   

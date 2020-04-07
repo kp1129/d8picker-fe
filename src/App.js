@@ -1,6 +1,8 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { Route } from 'react-router-dom';
+
 // import ReactGA from 'react-ga';
+
 import { Stack } from '@chakra-ui/core';
 import Authenticate from './components/Authenticate';
 import { useAuth } from './contexts/auth';
