@@ -1,25 +1,9 @@
-import React from 'react';
-import { Flex, Box } from '@chakra-ui/core';
-import Cell from './Cell';
-import EventsIndicator from './EventsIndicator';
+import React, {useState} from 'react';
 import useDate from '../../../hooks/useDate';
+import Day from './Day'
+import DisabledDays from './DIsabledDays'
 
-export const DisabledDays = ({ days }) => {
-  return (
-    <>
-      {[...Array(days).keys()].map(i => (
-        <Cell
-          className="calendar-days-item faded"
-          borderBottomWidth="1px"
-          borderBottomColor="gray.200"
-          key={i}
-        >
-          <Box backgroundColor="gray.100" h="100%" />
-        </Cell>
-      ))}
-    </>
-  );
-};
+
 
 const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
   const {
@@ -33,7 +17,9 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
 
   return (
     <>
+      {/* accounts for the whitespace at the beginning of the month */}
       <DisabledDays days={weekDayOfFirstDoM} />
+
       {[...Array(daysInMonth).keys()].map(i => {
         // day is determined by items index + 1
         const day = i + 1;
@@ -44,6 +30,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
           currentMonth === currentDay.month() &&
           currentYear === currentDay.year();
 
+
         const isPicked = selected.includes(
           `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
             1}-${day < 10 ? 0 : ''}${day}`
@@ -52,7 +39,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
         const handleSelected = () => {
           //dateTime: "2020-02-28T08:30:00-08:00"
           
-          //concatinated to w/ turnary to put into correct format
+          //concatenated to w/ ternary to put into correct format
           const newdate = date
             .format('YYYY-MM')
             .concat(`-${day < 10 ? 0 : ''}${day}`);
@@ -62,52 +49,16 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
               ? setSelected(selected.filter(date => date !== newdate))
               : setSelected(selected.concat(newdate))
             : alert('pick a template');
-         
-          console.log(selected);
-        };
+          };
+
+          
 
         return (
-          <Cell
-            className="calendar-days-item"
-            borderBottomWidth="10px"
-            borderBottomColor="gray.200"
-            height="120px"
-            key={i}
-          >
-            <Flex
-              direction="column"
-              align="center"
-              justify="space-between"
-              h="100%"
-              py={[1, 8]}
-              backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
-              color={isPicked ? 'white' : 'inherit'}
-              onClick={handleSelected}
-            >
-              <Box
-                as="span"
-                fontSize={['xs', 'm']}
-                fontWeight={700}
-                color={isToday ? 'brand.blue_primary' : 'inherit'}
-              >
-                {day}
-              </Box>
-              {events &&
-                events.map(event => (
-                  <div key={event.id}>
-                    <EventsIndicator
-                      event={event}
-                      day={day}
-                      currentMonth={currentMonth}
-                      currentYear={currentYear}
-                      fontSize="2px"
-                    />
-                  </div>
-                ))}
-            </Flex>
-          </Cell>
+          <Day i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events}/>
         );
       })}
+
+      {/* accounts for the whitespace at the end of the month */}
       <DisabledDays days={6 - weekDayOfLastDoM} />
     </>
   );
