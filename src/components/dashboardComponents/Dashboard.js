@@ -42,7 +42,7 @@ const Dashboard = ({setUserState}) => {
   //highlights calendar based on whether choose dates button is active or not
   useEffect(()=>{
     if(templateFormOpen){
-      setShadow("0px 0px 19px 7px rgba(99,179,237,1);")
+      setShadow("0px 0px 19px 7px rgba(99,179,237,1)")
     } else {
       setShadow("");
     }
