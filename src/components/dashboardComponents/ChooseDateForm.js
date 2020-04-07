@@ -66,6 +66,7 @@ const ChooseDateForm = ({
     setTemplateFormOpen(!templateFormOpen);
     setToggledTemplate(!toggledTemplate);
     setSelected([]);
+    console.log(templateFormOpen);
   };
 
 
@@ -83,7 +84,9 @@ const ChooseDateForm = ({
       </Heading>
       <Flex>
         <ButtonGroup spacing={4}>
-          <Button size="sm" variantColor="blue" onClick={() => openTemplate()}>
+          <Button size="sm" variantColor="blue" onClick={() => {
+            openTemplate()
+          }}>
             Choose Dates
           </Button>
           <IconButton

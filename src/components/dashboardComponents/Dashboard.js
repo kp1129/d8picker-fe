@@ -26,6 +26,7 @@ const Dashboard = ({setUserState}) => {
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
 
   console.log('formOpen', formOpen);
@@ -36,6 +37,33 @@ const Dashboard = ({setUserState}) => {
         setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
+
+  //highlights calendar based on whether choose dates button is active or not
+  useEffect(()=>{
+    if(templateFormOpen){
+      setShadow("0px 0px 19px 7px rgba(99,179,237,1)")
+    } else {
+      setShadow("");
+    }
+  },[templateFormOpen])
+
+  
+
+    // state to show users events
+    const [events, setEvents] = useState(null);
+  
+    // get events from api and set to state
+    useEffect(() => {
+      (async () => {
+        try {
+          const data = await api.listEvents();
+          setEvents(data);
+          console.log('events', data)
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }, [api]);
 
 
 
@@ -73,13 +101,14 @@ const Dashboard = ({setUserState}) => {
             templateList={templateList}
           />
         </Flex>
-        <Box className="calendarArea" gridArea="main">
+        <Box className="calendarArea" gridArea="main" style={{boxShadow: shadow}}>
           <Calendar
             api={api}
             selected={selected}
             setSelected={setSelected}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
+            events={events}
           />
         </Box>
       </Grid>
@@ -88,3 +117,4 @@ const Dashboard = ({setUserState}) => {
 };
 
 export default Dashboard;
+
