@@ -6,20 +6,14 @@ import Cell from './Cell';
 import useDate from '../../../hooks/useDate';
 import styled from 'styled-components';
 
-const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen }) => {
   const currentDay = dayjs();
 
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
-
-  // state to show users events
-  const [events, setEvents] = useState(null);
   
 
   const {
-    // currentDay,
-    // date,
-    // setDate,
     currentMonth,
     currentYear,
     daysInMonth,
@@ -36,18 +30,6 @@ const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
     setDate(date.add(1, 'month'));
   };
 
-  // get events from api and set to state
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await api.listEvents();
-        setEvents(data);
-        console.log('events', data)
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [api]);
 
   return (
     <Box className="calendar" backgroundColor="white" borderRadius="10px">

@@ -5,7 +5,6 @@ import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
 import ProfileInfo from './ProfileInfo'
 import TemplateContainer from './TemplateContainer'
-import styled from 'styled-components';
 
 
 const getTemplateList = async ({ googleId }) => {
@@ -43,15 +42,29 @@ const Dashboard = ({setUserState}) => {
   //highlights calendar based on whether choose dates button is active or not
   useEffect(()=>{
     if(templateFormOpen){
-      setShadow("box-shadow: 0px 0px 19px 7px rgba(99,179,237,1);")
+      setShadow("0px 0px 19px 7px rgba(99,179,237,1);")
     } else {
       setShadow("");
     }
   },[templateFormOpen])
 
-  const DynamicBox = styled(Box)`
-    ${shadow}
-  `;
+  
+
+    // state to show users events
+    const [events, setEvents] = useState(null);
+  
+    // get events from api and set to state
+    useEffect(() => {
+      (async () => {
+        try {
+          const data = await api.listEvents();
+          setEvents(data);
+          console.log('events', data)
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }, [api]);
 
 
 
@@ -89,15 +102,16 @@ const Dashboard = ({setUserState}) => {
             templateList={templateList}
           />
         </Flex>
-        <DynamicBox className="calendarArea" gridArea="main">
+        <Box className="calendarArea" gridArea="main" style={{boxShadow: shadow}}>
           <Calendar
             api={api}
             selected={selected}
             setSelected={setSelected}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
+            events={events}
           />
-        </DynamicBox>
+        </Box>
       </Grid>
     </Box>
   );
