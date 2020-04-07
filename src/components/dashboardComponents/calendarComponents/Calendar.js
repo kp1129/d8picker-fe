@@ -107,7 +107,7 @@ const MonthNameContainer = styled.div`
   box-sizing: border-box;
 
   @media(max-width: 1700px){
-    width: 20%;
+    width: 30%;
   }
   @media(max-width: 1400px){
     width: 25%;
