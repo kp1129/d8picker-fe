@@ -36,7 +36,7 @@ const TemplateContainer = (props) => {
             backgroundColor="white"
             borderRadius="10px"
           >
-            <Heading as="h2">Templates</Heading>
+            <Heading as="h2">Events</Heading>
             {templateList &&
               templateList.map(t => (
                 <ChooseDateForm
@@ -60,7 +60,7 @@ const TemplateContainer = (props) => {
               variantColor="teal"
               onClick={() => setFormOpen(!formOpen)}
             >
-              Create Template
+              Create Event Chain
             </Button>
             {formOpen && <CreateTemplateForm setFormOpen={setFormOpen} setTemplateList={setTemplateList} currentUser={currentUser} formOpen={formOpen}/>}
           </Flex>

@@ -15,7 +15,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
 //   console.log('dayjs', dayjs())
 
 
-  
 
   
   const setBackgroundColor = ()=>{
