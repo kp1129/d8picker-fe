@@ -42,15 +42,15 @@ const getTemplateList = async ({ googleId }) => {
           let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
           event = { ...event, endtime: convertedEndTime + ' PM' };
         } else {
-          event = { ...event, endtime: newResponse.endtime + ' AM' };
+          event = { ...event, endtime: event.endtime + ' AM' };
         }
       } else if (endTimeAsNumber >= 1300) {
         endTimeAsNumber -= 1200;
         let endTimeAsString = endTimeAsNumber.toString();
         let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
-        event = { ...event, starttime: response.data.starttime + ' AM', endtime: convertedEndTime + ' PM' };
+        event = { ...event, starttime: event.starttime + ' AM', endtime: convertedEndTime + ' PM' };
       } else {
-        event = { ...event, starttime: response.data.starttime + ' AM', endtime: response.data.endtime + ' PM' };
+        event = { ...event, starttime: event.starttime + ' AM', endtime: event.endtime + ' PM' };
       }
       console.log("Event2:", event)
       return event;
