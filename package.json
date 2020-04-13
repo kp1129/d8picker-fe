@@ -1,5 +1,6 @@
 {
  "name": "school-calendar-fe",
+ "homepage": "",
  "version": "0.1.0",
  "private": true,
  "scripts": {
@@ -44,12 +45,14 @@
   "emotion-theming": "^10.0.27",
   "googleapis": "47.0.0",
   "history": "^4.10.1",
+  "node-sass": "^4.13.1",
   "react": "^16.12.0",
   "react-dom": "^16.12.0",
   "react-ga": "^2.7.0",
   "react-hook-form": "^4.10.1",
   "react-router-dom": "^5.1.2",
-  "react-scripts": "3.4.0"
+  "react-scripts": "3.4.0",
+  "styled-components": "^5.0.1"
  },
  "devDependencies": {
   "@testing-library/jest-dom": "^4.2.4",
