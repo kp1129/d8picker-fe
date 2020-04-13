@@ -42,8 +42,7 @@ const ChooseDateForm = ({
     await deleteTemplate(id);
     const templates = templateList.filter(template => template._id !== id);
     setTemplateList(templates);
-    clearSelected();
-    setTemplateFormOpen(false);
+
   };
 
   const applyTemplate = (summary, description, starttime, endtime) => {
