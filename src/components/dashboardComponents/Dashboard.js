@@ -28,7 +28,7 @@ const Dashboard = ({setUserState}) => {
   const [selected, setSelected] = useState([]);
   const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
-
+console.log(templateList)
   console.log('formOpen', formOpen);
 
   useEffect(() => {
