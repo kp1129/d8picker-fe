@@ -34,7 +34,9 @@ console.log(templateList)
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
+        console.log('getTemplateList', templates);
         setTemplateList(templates);
+        console.log('templateList', templateList);
     })();
   }, [currentUser, formOpen]);
 
