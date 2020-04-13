@@ -60,6 +60,7 @@ const ChooseDateForm = ({
     console.log('eventList', eventList);
     eventList.forEach(event => api.addEvent(event));
     setSelected([]);
+    reloadPage()
   };
 
   const [toggledTemplate, setToggledTemplate] = useState(false);
@@ -74,6 +75,14 @@ const ChooseDateForm = ({
 
   const clearSelected = () => {
     setSelected([]);
+  }
+
+  //triggers the refresh for the page on submiting calendar information
+  const reloadPage=() =>{
+    const reload=() =>{
+      window.location.reload(false)
+    }
+    reload()
   }
 
   return (
@@ -104,12 +113,12 @@ const ChooseDateForm = ({
       {templateFormOpen && toggledTemplate && (
         <div>
 
-        <button
+        <button style={{margin: 2}}
           onClick={() =>
             applyTemplate(summary, description, starttime, endtime, selected)
           }
         >
-          Apply Template
+          Save Events
         </button>
         <Button onClick={clearSelected}>Clear Selection</Button>
         </div>
