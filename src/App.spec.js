@@ -28,12 +28,11 @@ describe('Initializing Components', () => {
   });
 
   it('should render Welcome correctly', () => {
-    const welcome = shallow(<Welcome />);
-    let signin = welcome.find('span.signin');
-    console.log(signin);
-    // expect(welcome.find('span.signin').text()).to.be.equal('Sign in with Google')
+    const welcome = render(<Welcome />);
+    let signin = <span className="signin">Sign in with Google</span>
 
-    // expect(component).toMatchSnapshot();
+    expect(welcome.contains(signin)).toEqual(true);
+   
   });
 
 
