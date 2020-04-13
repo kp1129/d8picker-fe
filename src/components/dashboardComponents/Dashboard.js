@@ -11,53 +11,7 @@ const getTemplateList = async ({ googleId }) => {
     const response = await axios.get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
-    console.log("Get Template List Data:", response.data)
-    let newResponse = response.data.map(event => {
-      console.log("Events:", event)
-      // code converts response.data.starttime to number
-      let splitStartTime = event.starttime.split(':');
-      let joinStartTime = splitStartTime.join('');
-      let startTimeAsNumber = parseInt(joinStartTime, 10);
-
-      // code converts response.data.endtime to number
-      let splitEndTime = event.endtime.split(':');
-      let joinEndTime = splitEndTime.join('');
-      let endTimeAsNumber = parseInt(joinEndTime, 10);
-
-      // fn for converting response.data.starttime and/or endtime back to time string (from number)
-      function convertToTime(value, index) {
-        return value.substring(0, index) + ":" + value.substring(index);
-      }
-
-      // converts times from 24 hour to 12 hour format
-      if (startTimeAsNumber >= 1300) {
-        startTimeAsNumber -= 1200;
-        let startTimeAsString = startTimeAsNumber.toString();
-        console.log(`event start time: ${convertToTime(startTimeAsString, startTimeAsString.length - 2)}`);
-        let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
-        event = { ...event, starttime: convertedStartTime + ' PM' };
-        if (endTimeAsNumber >= 1300) {
-          endTimeAsNumber -= 1200;
-          let endTimeAsString = endTimeAsNumber.toString();
-          let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
-          event = { ...event, endtime: convertedEndTime + ' PM' };
-        } else {
-          event = { ...event, endtime: event.endtime + ' AM' };
-        }
-      } else if (endTimeAsNumber >= 1300) {
-        endTimeAsNumber -= 1200;
-        let endTimeAsString = endTimeAsNumber.toString();
-        let convertedEndTime = convertToTime(endTimeAsString, endTimeAsString.length - 2);
-        event = { ...event, starttime: event.starttime + ' AM', endtime: convertedEndTime + ' PM' };
-      } else {
-        event = { ...event, starttime: event.starttime + ' AM', endtime: event.endtime + ' PM' };
-      }
-      console.log("Event2:", event)
-      return event;
-    })
-    setTimeout(1000)
-    console.log("Converted Response:", newResponse)
-    return newResponse;
+    return response.data;
   } catch (error) {
     console.log(error);
   }

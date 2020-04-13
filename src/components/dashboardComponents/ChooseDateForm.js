@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Flex,
   ButtonGroup,
@@ -58,7 +58,10 @@ const ChooseDateForm = ({
       description: description
     }));
     console.log('eventList', eventList);
-    eventList.forEach(event => api.addEvent(event));
+    eventList.forEach(event => {
+      console.log('adding event', event)
+      api.addEvent(event)
+    });
     setSelected([]);
     reloadPage()
   };
@@ -85,13 +88,30 @@ const ChooseDateForm = ({
     reload()
   }
 
+
+  const [conStart, setConStart] = useState("");
+  const [conEnd, setConEnd] = useState("");
+
+  useEffect(()=>{
+    if (starttime){
+      setConStart(convertTime(starttime))
+    }
+    if (endtime){
+      setConEnd(convertTime(endtime))
+    }
+  },[starttime, endtime])
+  console.log('convertedstart', convertTime(starttime), 'convertedend', convertTime(endtime))
+
+
+
+
   return (
     <Flex direction="column" align="center" justify="center" my={2}>
       <Heading fontSize="sm" fontWeight="normal">
         {summary}
       </Heading>
       <Heading fontSize="sm" fontWeight="normal">
-        {starttime}-{endtime}
+        {conStart}-{conEnd}
       </Heading>
       <Flex>
         <ButtonGroup spacing={4}>
@@ -126,5 +146,36 @@ const ChooseDateForm = ({
     </Flex>
   );
 };
+
+
+
+
+    const convertTime = (time)=>{
+      // code converts response.data.starttime to number
+
+      console.log('TIME', time)
+      if (time){
+
+          let splitStartTime = time.split(':');
+          let joinStartTime = splitStartTime.join('');
+          let startTimeAsNumber = parseInt(joinStartTime, 10);
+      
+          // fn for converting response.data.starttime and/or endtime back to time string (from number)
+          function convertToTime(value, index) {
+            return value.substring(0, index) + ":" + value.substring(index);
+          }
+      
+          // converts times from 24 hour to 12 hour format
+          if (startTimeAsNumber >= 1300) {
+            startTimeAsNumber -= 1200;
+            let startTimeAsString = startTimeAsNumber.toString();
+            let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
+            return convertedStartTime + 'pm';
+          } else {
+            return time + 'am';
+          }
+      }
+    }
+
 
 export default ChooseDateForm;
