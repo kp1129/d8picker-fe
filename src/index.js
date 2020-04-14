@@ -14,6 +14,9 @@ history.listen(location =>{
   ReactGA.set({page: location.pathname});
   ReactGA.pageview(location.pathname);
 });
+
+
+
 ReactDOM.render(
   <AuthProvider>
     <BrowserRouter>
