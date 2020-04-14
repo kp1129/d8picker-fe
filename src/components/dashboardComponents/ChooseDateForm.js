@@ -57,9 +57,9 @@ const ChooseDateForm = ({
       summary: summary,
       description: description
     }));
-    console.log('eventList', eventList);
+    
     eventList.forEach(event => {
-      console.log('adding event', event)
+     
       api.addEvent(event)
     });
     setSelected([]);
@@ -72,7 +72,7 @@ const ChooseDateForm = ({
     setTemplateFormOpen(!templateFormOpen);
     setToggledTemplate(!toggledTemplate);
     setSelected([]);
-    console.log(templateFormOpen);
+    
   };
 
 
@@ -100,7 +100,7 @@ const ChooseDateForm = ({
       setConEnd(convertTime(endtime))
     }
   },[starttime, endtime])
-  console.log('convertedstart', convertTime(starttime), 'convertedend', convertTime(endtime))
+  
 
 
 
@@ -153,7 +153,7 @@ const ChooseDateForm = ({
     const convertTime = (time)=>{
       // code converts response.data.starttime to number
 
-      console.log('TIME', time)
+      
       if (time){
 
           let splitStartTime = time.split(':');
