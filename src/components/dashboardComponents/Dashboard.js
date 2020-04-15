@@ -7,7 +7,7 @@ import ProfileInfo from './ProfileInfo'
 import TemplateContainer from './TemplateContainer'
 
 
-const getTemplateList = async ({ googleId }) => {
+export const getTemplateList = async ({ googleId }) => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`

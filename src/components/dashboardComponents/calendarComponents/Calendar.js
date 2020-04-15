@@ -9,6 +9,7 @@ import styled from 'styled-components';
 const Calendar = ({ events, selected, setSelected, templateFormOpen }) => {
   const currentDay = dayjs();
 
+
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
   

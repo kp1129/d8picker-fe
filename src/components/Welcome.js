@@ -5,7 +5,7 @@ import { Heading, Text, Flex, Grid, Image, Button } from '@chakra-ui/core';
 
 import graphic from '../img/undraw_calendar_dutt.svg';
 
-const LoginButton = () => {
+export const LoginButton = () => {
   const { googleApi } = useAuth();
 
   return (

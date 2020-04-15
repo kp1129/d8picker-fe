@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow} from 'enzyme';
 import App, {initializeAnalytics} from './App';
-import Welcome from './components/Welcome'
+import {LoginButton} from './components/Welcome'
 
 // Grab the module that we want to mock part of
 var auth = require('./contexts/auth');
@@ -14,6 +14,9 @@ auth.useAuth = jest.fn(
     return { googleApi: jest.fn() }
   });
 
+
+
+
 describe('Initializing Components', () => {
   it('should render initializeAnalytics', () => {
     const component = shallow(<initializeAnalytics />);
@@ -22,18 +25,27 @@ describe('Initializing Components', () => {
   });
 
   it('should render App correctly', () => {
-    const component = shallow(<App />);
+    const component = shallow(<App/>);
 
     expect(component).toMatchSnapshot();
   });
 
-  it('should render Welcome correctly', () => {
-    const welcome = render(<Welcome />);
-    let signin = <span className="signin">Sign in with Google</span>
 
-    expect(welcome.contains(signin)).toEqual(true);
-   
-  });
 
+  it('should render login button correctly', ()=>{
+    const component = shallow(<LoginButton/>);
+    // console.log('login', component.debug())
+    let button = component.find('span');
+    expect(button.text()).toBe('Sign in with Google')
+
+    
+
+  })
 
 });
+
+
+
+
+
+
