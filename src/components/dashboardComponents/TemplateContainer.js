@@ -2,6 +2,7 @@ import React from 'react';
 import {Flex, Heading, Button} from '@chakra-ui/core';
 import ChooseDateForm from './ChooseDateForm.js';
 import CreateTemplateForm from './CreateTemplateForm'
+import NewEventForm from '../mobile/NewEventForm';
 
 
 
