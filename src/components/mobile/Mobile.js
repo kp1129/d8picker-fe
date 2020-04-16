@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import BotNav from './NavigationComponents/BotNav'
 import styled from 'styled-components'
+import Dashboard from './Dashboard'
 
 const Mobile = () => {
 
@@ -13,7 +14,8 @@ const Mobile = () => {
     top: 83vh;`
 
     return(
-        <div>hello im mobile
+        <div>hello moto
+            <Dashboard/>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>
