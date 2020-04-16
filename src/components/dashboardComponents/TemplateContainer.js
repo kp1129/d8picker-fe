@@ -57,6 +57,7 @@ const TemplateContainer = (props) => {
                 
               ))}
             <Button
+              id="createEventChain"
               my={4}
               variantColor="teal"
               onClick={() => setFormOpen(!formOpen)}

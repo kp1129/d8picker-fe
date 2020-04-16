@@ -68,6 +68,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
                 events.map(event => (
                   <div key={event.id}>
                     <EventsIndicator
+                      key={event.id}
                       event={event}
                       day={day}
                       currentMonth={currentMonth}

@@ -15,6 +15,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
     weekDayOfLastDoM
   } = useDate(date);
 
+  console.log('events', events, JSON.stringify(events))
   return (
     <>
       {/* accounts for the whitespace at the beginning of the month */}
