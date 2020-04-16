@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {Flex, Box, Grid} from '@chakra-ui/core';
+import { Flex, Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
 import ProfileInfo from './ProfileInfo'
 import TemplateContainer from './TemplateContainer'
 
-
-export const getTemplateList = async ({ googleId }) => {
+const getTemplateList = async ({ googleId }) => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
@@ -19,51 +18,50 @@ export const getTemplateList = async ({ googleId }) => {
 };
 
 
-const Dashboard = ({setUserState}) => {
+const Dashboard = ({ setUserState }) => {
   const { googleApi, api } = useAuth();
-  
+
   const [templateList, setTemplateList] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
-
+  console.log(templateList)
   console.log('formOpen', formOpen);
 
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
-        setTemplateList(templates);
+      setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
 
   //highlights calendar based on whether choose dates button is active or not
-  useEffect(()=>{
-    if(templateFormOpen){
+  useEffect(() => {
+    if (templateFormOpen) {
       setShadow("0px 0px 19px 7px rgba(99,179,237,1)")
     } else {
       setShadow("");
     }
-  },[templateFormOpen])
+  }, [templateFormOpen])
 
-  
 
-    // state to show users events
-    const [events, setEvents] = useState(null);
-  
-    // get events from api and set to state
-    useEffect(() => {
-      (async () => {
-        try {
-          const data = await api.listEvents();
-          setEvents(data);
-          console.log('events', data)
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }, [api]);
+
+  // state to show users events
+  const [events, setEvents] = useState(null);
+
+  // get events from api and set to state
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await api.listEvents();
+        setEvents(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [api]);
 
 
 
@@ -87,7 +85,7 @@ const Dashboard = ({setUserState}) => {
           direction="column"
           align="center"
         >
-          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState}/>
+          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState} />
           <TemplateContainer
             setSelected={setSelected}
             selected={selected}
@@ -101,7 +99,7 @@ const Dashboard = ({setUserState}) => {
             templateList={templateList}
           />
         </Flex>
-        <Box className="calendarArea" gridArea="main" style={{boxShadow: shadow}}>
+        <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
           <Calendar
             api={api}
             selected={selected}

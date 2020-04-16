@@ -12,6 +12,7 @@ const addTemplate = async (data, { googleId }) => {
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
       template
     );
+    console.log('response.data', response.data)
     return response.data;
   } catch (error) {
     console.log(error);
@@ -19,7 +20,7 @@ const addTemplate = async (data, { googleId }) => {
 };
 
 const CreateTemplateForm = (props) => {
-  const {setFormOpen, setTemplateList, currentUser, formOpen} = props;
+  const { setFormOpen, setTemplateList, currentUser, formOpen } = props;
   const { googleApi, api } = useAuth();
   const { register, handleSubmit } = useForm();
 
@@ -32,34 +33,34 @@ const CreateTemplateForm = (props) => {
 
   return (
 
-              <div className="Form">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Input
-                    type="text"
-                    placeholder="title"
-                    name="summary"
-                    ref={register({ maxLength: 80, required: true })}
-                  />
-                  <Input
-                    type="text"
-                    placeholder="notes"
-                    name="description"
-                    ref={register({ maxLength: 100 })}
-                  />
-                  <Input
-                    type="time"
-                    name="starttime"
-                    ref={register({ required: true })}
-                  />
-                  <Input
-                    type="time"
-                    name="endtime"
-                    ref={register({ required: true })}
-                  />
+    <div className="Form">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          type="text"
+          placeholder="title"
+          name="summary"
+          ref={register({ maxLength: 80, required: true })}
+        />
+        <Input
+          type="text"
+          placeholder="notes"
+          name="description"
+          ref={register({ maxLength: 100 })}
+        />
+        <Input
+          type="time"
+          name="starttime"
+          ref={register({ required: true })}
+        />
+        <Input
+          type="time"
+          name="endtime"
+          ref={register({ required: true })}
+        />
 
-                  <Button type="submit">Submit</Button>
-                </form>
-              </div>
+        <Button type="submit">Submit</Button>
+      </form>
+    </div>
 
   );
 };
