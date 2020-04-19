@@ -8,22 +8,10 @@ import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
-const scrollToRef = (ref, penultMonth) => {
-    // window.scrollTo(0, ref.current.offsetTop); 
-    window.addEventListener('scroll', ()=>{
-        console.log('ref.current.offsetTop', ref.current.offsetTop)
-        console.log('y', window.scrollY)
-        if (window.scrollY > ref.current.offsetTop){
-            console.log(ref.current.innerText.substring(0,3));
-            console.log('penultMonth', penultMonth)
+const useMountEffect = (fun, numOfMonths) => useEffect(fun, [numOfMonths])
 
-        }
-    })
-    return window.removeEventListener('scroll', ()=>console.log('removed'))
-    } 
-const useMountEffect = (fun) => useEffect(fun, [])
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, setMonths, numOfMonths, setNumOfMonths}) => {
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month, penultMonth }) => {
   const currentDay = dayjs();
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
@@ -37,22 +25,34 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, penu
     weekDays
   } = useDate(date);
 
-  const handlePrev = () => {
-    setDate(date.subtract(1, 'month'));
-  };
+ 
+  const scrollToRef = (ref) => {
+    window.addEventListener('scroll', ()=>{
+        //define a month when user scrolls to it will trigger load of additional months (in this case second to last in array)
+        let reloadMonth = monthList[monthList.length-2].format('MMMM')
+        //if the user scrolls past a month whose name matches the reloadMonth, load more months
+        if (window.scrollY > ref.current.offsetTop && ref.current.innerText.substring(0,3) === reloadMonth.substring(0,3)){
+            //load more months
+            // if(numOfMonths >= 12){
+            //   setNumOfMonths(0);
+            // } else {
+              setNumOfMonths(numOfMonths + 12)
+            // }
 
-
-  const handleNext = () => {
-    setDate(date.add(1, 'month'));
-  };
+        }
+    })
+    return window.removeEventListener('scroll', ()=>console.log('removed'))
+    }
   
+  
+
   useEffect(()=>{
     setDate(month)
-  },[])
+  },[monthList])
 
 const myRef = useRef(null)
 
-    useMountEffect(() => scrollToRef(myRef, penultMonth))
+    useMountEffect(() => scrollToRef(myRef))
   
 
   return (
@@ -65,26 +65,10 @@ const myRef = useRef(null)
       
       className="calendar" backgroundColor="white" borderRadius="10px">
       <Flex className="header" align="center" justify="center" py={4}>
-        <IconButton
-          w="2em"
-          aria-label="Previous Month"
-          icon="prev"
-          backgroundColor="transparent"
-          size="lg"
-          onClick={handlePrev}
-        />
         <MonthNameContainer>
           {/* <Heading className="heading">{date.format('MMMM')} {date.format('YYYY')}</Heading> */}
           <Heading className="heading">{month.format('MMMM')} {date.format('YYYY')}</Heading>
         </MonthNameContainer>
-
-        <IconButton
-          aria-label="Next Month"
-          icon="next"
-          backgroundColor="transparent"
-          size="lg"
-          onClick={handleNext}
-        />
       </Flex>
       <Grid
         className="weekdays-grid"

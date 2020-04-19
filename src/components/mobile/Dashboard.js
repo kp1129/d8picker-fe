@@ -17,7 +17,6 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-
 const Dashboard = ({ setUserState }) => {
   const { googleApi, api } = useAuth();
 
@@ -45,24 +44,15 @@ const Dashboard = ({ setUserState }) => {
     }
   }, [templateFormOpen])
   
-  
+  const [numOfMonths, setNumOfMonths] = useState(5);
   const [months, setMonths] = useState([])
-  const [penultMonth, setPenultMonth] = useState()
   useEffect(()=>{
-    setMonths(nextMonth(5));
-
+    setMonths(nextMonth(numOfMonths));
     
-  },[])
+  },[numOfMonths])
   
-  useEffect(()=>{
-    
-    if(months.length > 2){
-      setPenultMonth('last month', months[months.length-2].format('MMMM'))
-      console.log('longer than 2, set penultimate month')
-    }
-  },[months])
 
-  function nextMonth(num){
+  const nextMonth = (num) => {
     let arr = [];
     for(let i=0; i<num; i++){
       arr.push(dayjs().add(i,'month'));
@@ -116,7 +106,10 @@ const Dashboard = ({ setUserState }) => {
             setTemplateFormOpen={setTemplateFormOpen}
             events={events}
             month={thisMonth}
-            penultMonth={penultMonth}
+            monthList={months}
+            setMonths={setMonths}
+            numOfMonths={numOfMonths}
+            setNumOfMonths={setNumOfMonths}
           />
           })}
           
