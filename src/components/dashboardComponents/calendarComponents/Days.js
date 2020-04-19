@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import useDate from '../../../hooks/useDate';
 import Day from './Day'
 import DisabledDays from './DIsabledDays'
@@ -54,7 +54,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
           
 
         return (
-          <Day i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events}/>
+          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events}/>
         );
       })}
 

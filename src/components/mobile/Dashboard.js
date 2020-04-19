@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Box, Grid } from '@chakra-ui/core';
+import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import Calendar from './Calendar';
@@ -27,8 +27,7 @@ const Dashboard = ({ setUserState }) => {
   const [selected, setSelected] = useState([]);
   const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
-  console.log(templateList)
-  console.log('formOpen', formOpen);
+
 
   useEffect(() => {
     (async () => {
@@ -45,23 +44,32 @@ const Dashboard = ({ setUserState }) => {
       setShadow("");
     }
   }, [templateFormOpen])
+  
+  
+  const [months, setMonths] = useState([])
+  const [penultMonth, setPenultMonth] = useState()
+  useEffect(()=>{
+    setMonths(nextMonth(5));
 
-  // useEffect(()=>{
-  //   window.addEventListener("scroll", ()=>{
-  //     console.log(document.body.scrollTop)
-  //   });
+    
+  },[])
+  
+  useEffect(()=>{
+    
+    if(months.length > 2){
+      setPenultMonth('last month', months[months.length-2].format('MMMM'))
+      console.log('longer than 2, set penultimate month')
+    }
+  },[months])
 
-  //   return window.removeEventListener("scroll", ()=>{
-  //     console.log('removed')
-  //   })
-  // },[])
+  function nextMonth(num){
+    let arr = [];
+    for(let i=0; i<num; i++){
+      arr.push(dayjs().add(i,'month'));
+    }
+    return arr;
+  }
 
-
-
-
-  const [currentEl, setCurrentEl] = useState("");
-
-  const [months, setMonths] = useState([dayjs().format('MMMM'), dayjs().add(1, 'month').format('MMMM'), dayjs().add(2, 'month').format('MMMM'),dayjs().add(3, 'month').format('MMMM'),dayjs().add(4, 'month').format('MMMM')])
 
 
   // state to show users events
@@ -79,8 +87,10 @@ const Dashboard = ({ setUserState }) => {
     })();
   }, [api]);
 
+  if(months.length > 1){
+    // console.log('last month', months[months.length-1].format('MMMM'))
 
-
+  }
 
   return (
     <Box
@@ -96,8 +106,9 @@ const Dashboard = ({ setUserState }) => {
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
-          {months.map(thisMonth=>{
+          {months.map((thisMonth, i)=>{
             return <Calendar 
+            key={i}
             api={api}
             selected={selected}
             setSelected={setSelected}
@@ -105,6 +116,7 @@ const Dashboard = ({ setUserState }) => {
             setTemplateFormOpen={setTemplateFormOpen}
             events={events}
             month={thisMonth}
+            penultMonth={penultMonth}
           />
           })}
           

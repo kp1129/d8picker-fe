@@ -8,23 +8,23 @@ import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
-const scrollToRef = (ref) => {
+const scrollToRef = (ref, penultMonth) => {
     // window.scrollTo(0, ref.current.offsetTop); 
     window.addEventListener('scroll', ()=>{
         console.log('ref.current.offsetTop', ref.current.offsetTop)
         console.log('y', window.scrollY)
         if (window.scrollY > ref.current.offsetTop){
             console.log(ref.current.innerText.substring(0,3));
+            console.log('penultMonth', penultMonth)
+
         }
     })
     return window.removeEventListener('scroll', ()=>console.log('removed'))
     } 
 const useMountEffect = (fun) => useEffect(fun, [])
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month }) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month, penultMonth }) => {
   const currentDay = dayjs();
-
-
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
 
@@ -41,16 +41,19 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month }) =>
     setDate(date.subtract(1, 'month'));
   };
 
+
   const handleNext = () => {
     setDate(date.add(1, 'month'));
   };
   
-
+  useEffect(()=>{
+    setDate(month)
+  },[])
 
 const myRef = useRef(null)
 
-    useMountEffect(() => scrollToRef(myRef))
-    
+    useMountEffect(() => scrollToRef(myRef, penultMonth))
+  
 
   return (
     <Box 
@@ -72,7 +75,7 @@ const myRef = useRef(null)
         />
         <MonthNameContainer>
           {/* <Heading className="heading">{date.format('MMMM')} {date.format('YYYY')}</Heading> */}
-          <Heading className="heading">{month} {date.format('YYYY')}</Heading>
+          <Heading className="heading">{month.format('MMMM')} {date.format('YYYY')}</Heading>
         </MonthNameContainer>
 
         <IconButton
