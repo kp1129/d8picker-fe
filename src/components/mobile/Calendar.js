@@ -47,17 +47,19 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
         let yearIndex = ref.current.innerText.match(/[0-9][0-9][0-9]|[0-9]/).index;
         let yearText = ref.current.innerText.substring(yearIndex, yearIndex+4);
         let yearNum = Number(yearText)
-        
+        console.log('scrollY', window.scrollY, 'ref.current', ref.current.offsetTop)
         //checks what month we've scrolled past and if the month and year names match our reloadMonth
         if (window.scrollY > ref.current.offsetTop && ref.current.innerText.substring(0,3) === reloadMonth.substring(0,3) && yearNum === month.$y){
             //if yes, load more months
-            
+            setNumOfMonths(numOfMonths + 12)
             
             //check dimensions of calendars above and subtract when changing start and end
-            setNumOfMonths(numOfMonths + 12)
-            setStartMonth(startMonth + 12)
 
-            window.scroll(0, 0);
+
+            // setNumOfMonths(numOfMonths + 12)
+            // setStartMonth(startMonth + 12)
+
+            // window.scrollTo(0, 0);
 
 
 
@@ -68,14 +70,14 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             // if(!reloadMonths.includes(reloadDay)){
             //   setNumOfMonths(numOfMonths + 12)
             //   setReloadMonths([...reloadMonths, reloadDay])
-            //   setVisibleMonths({start: numOfMonths, end: numOfMonths+12})
+            //   // setVisibleMonths({start: numOfMonths, end: numOfMonths+12})
             // }
                 // setStartMonth(startMonth + 12)
               
 
         }
 
-        }, 500)
+        }, 350)
        } else {
          console.log("LOADING")
        }
