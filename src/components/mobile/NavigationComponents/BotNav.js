@@ -13,6 +13,8 @@ const BotNav = (props) => {
 
     // const [NavState, setNavState] = useState(0) this state now lives in the Mobile.js component
 
+    // 0 = calendar, 1 = events, 2 = groups
+
     const handleEvents = () =>{
         props.setNavState(1)
     }

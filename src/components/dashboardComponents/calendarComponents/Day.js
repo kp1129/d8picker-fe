@@ -5,7 +5,7 @@ import EventsIndicator from './EventsIndicator';
 import useDate from '../../../hooks/useDate';
 import dayjs from 'dayjs';
 
-
+   
 
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
   const {
@@ -13,8 +13,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
     currentYear,
   } = useDate(date);
 //   console.log('dayjs', dayjs())
-
-
 
   
   const setBackgroundColor = ()=>{

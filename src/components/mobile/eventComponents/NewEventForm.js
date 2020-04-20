@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
 import axios from 'axios';
-import { useAuth, AuthContext } from '../../contexts/auth';
+import { useAuth, AuthContext } from '../../../contexts/auth';
 import styled from 'styled-components';
 
 const EventForm = styled.div`
