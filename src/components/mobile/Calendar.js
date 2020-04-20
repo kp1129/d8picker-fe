@@ -54,10 +54,10 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             
             
             //check dimensions of calendars above and subtract when changing start and end
-            setNumOfMonths(numOfMonths + 12)
-            setStartMonth(startMonth + 12)
+            // setNumOfMonths(numOfMonths + 12)
+            // setStartMonth(startMonth + 12)
 
-            window.scroll(0, 0);
+            // window.scroll(0, 0);
 
 
 
