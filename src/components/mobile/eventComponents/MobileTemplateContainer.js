@@ -15,7 +15,8 @@ const MobileTemplateContainer = (props) => {
     setFormOpen,
     setTemplateList,
     templateList,
-    currentUser} = props;
+    currentUser,
+    setNavState} = props;
 
 
   return (
@@ -46,6 +47,7 @@ const MobileTemplateContainer = (props) => {
                   setTemplateFormOpen={setTemplateFormOpen}
                   setTemplateList={setTemplateList}
                   templateList={templateList}
+                  setNavState={setNavState}
                 />
                 
               ))}

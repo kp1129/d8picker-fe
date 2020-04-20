@@ -21,7 +21,8 @@ const MobileChooseDateForm = ({
   templateFormOpen,
   setTemplateFormOpen,
   setTemplateList,
-  templateList
+  templateList,
+  setNavState
 }) => {
 
   const { googleApi, api } = useAuth();
@@ -63,14 +64,6 @@ const MobileChooseDateForm = ({
     reloadPage()
   };
 
-  const [toggledTemplate, setToggledTemplate] = useState(false);
-
-  const openTemplate = () => {
-    setTemplateFormOpen(!templateFormOpen);
-    setToggledTemplate(!toggledTemplate);
-    setSelected([]);
-    
-  };
 
 
   const clearSelected = () => {
@@ -100,32 +93,38 @@ const MobileChooseDateForm = ({
   
 
 
+  const handleCalendarView = () =>{
+    setNavState(0)
+    // toggleCalendarConfirm
+  }
+
 
 
   return (
-    <Flex direction="column" align="center" justify="center" my={2}>
+    <Flex direction="column" align="center" justify="center" my={2} onClick={handleCalendarView}>
       <Heading fontSize="m" fontWeight="normal">
         {summary}
       </Heading>
       <Heading fontSize="m" fontWeight="normal">
         {conStart}-{conEnd}
       </Heading>
+      
       {/* <Flex>
         <ButtonGroup spacing={3}>
-          <Button size="sm" variantColor="blue" onClick={() => {
+        <Button size="sm" variantColor="blue" onClick={() => {
             openTemplate()
           }}>
-            Choose Dates
+          Choose Dates
           </Button>
           <IconButton
-            variantColor="red"
-            aria-label="Delete"
-            size="sm"
+          variantColor="red"
+          aria-label="Delete"
+          size="sm"
             icon="close"
             onClick={() => handleDelete(id)}
           />
-        </ButtonGroup>
-      </Flex> */}
+          </ButtonGroup>
+        </Flex> */}
 
     </Flex>
   );

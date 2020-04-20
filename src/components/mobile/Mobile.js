@@ -24,7 +24,7 @@ const Mobile = () => {
     } else if(NavState === 1){
         return(
         <div>hello im events
-            <MobileEvents></MobileEvents>
+            <MobileEvents setNavState={setNavState}></MobileEvents>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>

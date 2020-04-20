@@ -20,9 +20,9 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = () => {
+const MobileEvents = ({setNavState}) => {
 
-
+  
 
     const { googleApi, api } = useAuth();
 
@@ -62,18 +62,17 @@ const MobileEvents = () => {
   
 
     const FixedMobile = styled.div`
-    position: absolute
-    top: 50px`
+    border: 5px black;
+    `
 
     return(
-        <div>hello im MobileEvents
-            <FixedMobile>
+          <FixedMobile>
             <MobileTemplateContainer
             setSelected={setSelected}
             selected={selected}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
-
+            setNavState={setNavState}
             formOpen={formOpen}
             setFormOpen={setFormOpen}
             setTemplateList={setTemplateList}
@@ -81,7 +80,7 @@ const MobileEvents = () => {
             templateList={templateList}
           />
             </FixedMobile>
-        </div>
+
     )
 
     
