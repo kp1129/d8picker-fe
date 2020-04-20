@@ -100,6 +100,7 @@ const Dashboard = ({ setUserState }) => {
             return <Calendar 
             key={i}
             api={api}
+            i={i}
             selected={selected}
             setSelected={setSelected}
             templateFormOpen={templateFormOpen}

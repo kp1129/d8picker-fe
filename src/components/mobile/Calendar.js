@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 const useMountEffect = (fun, numOfMonths) => useEffect(fun, [numOfMonths])
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, setMonths, numOfMonths, setNumOfMonths}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, setMonths, numOfMonths, setNumOfMonths, i}) => {
 
   const currentDay = dayjs();
   // state to display cuurent date
@@ -29,8 +29,15 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   const scrollToRef = (ref) => {
     window.addEventListener('scroll', ()=>{
         //define a month when user scrolls to it will trigger load of additional months (in this case second to last in array)
-        let reloadMonth = monthList[monthList.length-2].format('MMMM')
+        // console.log('ref', ref)
+        let reloadMonth = monthList[monthList.length-3].format('MMMM')
+        // console.log('reloadMonth', reloadMonth, 'window.scrollY', window.scrollY, 'ref.current.offsetTop', ref.current.offsetTop)
         //if the user scrolls past a month whose name matches the reloadMonth, load more months
+        // let thisYear = date.format('YYYY');
+        // let yearText = ref.current.innerText.match(/[0-9][0-9][0-9]|[0-9]/).index;
+        // console.log('yearText', ref.current.innerText.substring(yearText, yearText+4))
+
+        setTimeout(()=>{console.log('current ref', ref.current)},1000)
         if (window.scrollY > ref.current.offsetTop && ref.current.innerText.substring(0,3) === reloadMonth.substring(0,3)){
             //load more months
             // if(numOfMonths >= 12){
@@ -58,7 +65,7 @@ const myRef = useRef(null)
   return (
     <Box 
     ref={myRef}
-    
+    id={i}
     // onClick={()=>scrollToRef(myRef)} 
 
       
