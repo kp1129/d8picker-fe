@@ -50,9 +50,12 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
         //checks what month we've scrolled past and if the month and year names match our reloadMonth
         if (window.scrollY > ref.current.offsetTop && ref.current.innerText.substring(0,3) === reloadMonth.substring(0,3) && yearNum === month.$y){
             //if yes, load more months
-            setReloadMonths([...reloadMonths, reloadDay])
+            
             console.log('num of months before', numOfMonths)
-            setNumOfMonths(numOfMonths + 24)
+            if(!reloadMonths.includes(reloadDay)){
+              setNumOfMonths(numOfMonths + 12)
+              setReloadMonths([...reloadMonths, reloadDay])
+            }
                 // setStartMonth(startMonth + 12)
               
 
