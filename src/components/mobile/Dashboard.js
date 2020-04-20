@@ -44,17 +44,20 @@ const Dashboard = ({ setUserState }) => {
     }
   }, [templateFormOpen])
   
-  const [numOfMonths, setNumOfMonths] = useState(5);
+  //end months
+  const [numOfMonths, setNumOfMonths] = useState(48);
+  //start of months
+  const [startMonth, setStartMonth] = useState(0);
   const [months, setMonths] = useState([])
+  const [reloadMonths, setReloadMonths] = useState([])
   useEffect(()=>{
-    setMonths(nextMonth(numOfMonths));
-    
+    setMonths(nextMonth(startMonth, numOfMonths));
   },[numOfMonths])
   
 
-  const nextMonth = (num) => {
+  const nextMonth = (start, end) => {
     let arr = [];
-    for(let i=0; i<num; i++){
+    for(let i=start; i<end; i++){
       arr.push(dayjs().add(i,'month'));
     }
     return arr;
@@ -111,6 +114,10 @@ const Dashboard = ({ setUserState }) => {
             setMonths={setMonths}
             numOfMonths={numOfMonths}
             setNumOfMonths={setNumOfMonths}
+            setStartMonth={setStartMonth}
+            startMonth={startMonth}
+            reloadMonths={reloadMonths}
+            setReloadMonths={setReloadMonths}
           />
           })}
           
