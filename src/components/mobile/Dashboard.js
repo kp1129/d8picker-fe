@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Box, Grid } from '@chakra-ui/core';
+import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
-import Calendar from './calendarComponents/Calendar.js';
-import ProfileInfo from './ProfileInfo'
-import TemplateContainer from './TemplateContainer'
+import Calendar from './Calendar';
+import dayjs from 'dayjs';
+
 
 const getTemplateList = async ({ googleId }) => {
   try {
@@ -16,7 +16,6 @@ const getTemplateList = async ({ googleId }) => {
     console.log(error);
   }
 };
-
 
 const Dashboard = ({ setUserState }) => {
   const { googleApi, api } = useAuth();
@@ -44,6 +43,25 @@ const Dashboard = ({ setUserState }) => {
       setShadow("");
     }
   }, [templateFormOpen])
+  
+  //end months
+  const [numOfMonths, setNumOfMonths] = useState(24);
+  //start of months
+  const [startMonth, setStartMonth] = useState(0);
+  const [months, setMonths] = useState([])
+  const [reloadMonths, setReloadMonths] = useState([])
+  useEffect(()=>{
+    setMonths(nextMonth(startMonth, numOfMonths));
+  },[numOfMonths])
+  
+
+  const nextMonth = (start, end) => {
+    let arr = [];
+    for(let i=start; i<end; i++){
+      arr.push(dayjs().add(i,'month'));
+    }
+    return arr;
+  }
 
 
 
@@ -62,6 +80,7 @@ const Dashboard = ({ setUserState }) => {
     })();
   }, [api]);
 
+  const[visibleMonths, setVisibleMonths] = useState({start: 0, end: 12})
 
 
 
@@ -78,35 +97,31 @@ const Dashboard = ({ setUserState }) => {
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
-        <Flex
-          className="sidebar"
-          gridArea="sidebar"
-          direction="column"
-          align="center"
-        >
-          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState} />
-          <TemplateContainer
-            setSelected={setSelected}
-            selected={selected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-
-            formOpen={formOpen}
-            setFormOpen={setFormOpen}
-            setTemplateList={setTemplateList}
-            currentUser={currentUser}
-            templateList={templateList}
-          />
-        </Flex>
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
-          <Calendar
+          {months.map((thisMonth, i)=>{
+            return <Calendar 
+            key={i}
             api={api}
+            i={i}
             selected={selected}
             setSelected={setSelected}
             templateFormOpen={templateFormOpen}
             setTemplateFormOpen={setTemplateFormOpen}
             events={events}
+            month={thisMonth}
+            monthList={months}
+            setMonths={setMonths}
+            numOfMonths={numOfMonths}
+            setNumOfMonths={setNumOfMonths}
+            setStartMonth={setStartMonth}
+            startMonth={startMonth}
+            reloadMonths={reloadMonths}
+            setReloadMonths={setReloadMonths}
+            visibleMonths={visibleMonths}
+            setVisibleMonths={setVisibleMonths}
           />
+          })}
+          
         </Box>
       </Grid>
     </Box>

@@ -27,7 +27,7 @@ const ChooseDateForm = ({
   templateList
 }) => {
 
-  const { googleApi, api } = useAuth();
+  const { api } = useAuth();
   const deleteTemplate = async id => {
     try {
       const response = await axios.delete(

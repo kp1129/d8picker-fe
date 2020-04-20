@@ -2,7 +2,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
 import axios from 'axios';
-import { useAuth } from '../../contexts/auth';
 
 
 const addTemplate = async (data, { googleId }) => {
@@ -21,7 +20,7 @@ const addTemplate = async (data, { googleId }) => {
 
 const CreateTemplateForm = (props) => {
   const { setFormOpen, setTemplateList, currentUser, formOpen } = props;
-  const { googleApi, api } = useAuth();
+  // const { googleApi, api } = useAuth();
   const { register, handleSubmit } = useForm();
 
   // Submit for template form
