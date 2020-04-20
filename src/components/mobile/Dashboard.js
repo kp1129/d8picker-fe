@@ -45,7 +45,7 @@ const Dashboard = ({ setUserState }) => {
   }, [templateFormOpen])
   
   //end months
-  const [numOfMonths, setNumOfMonths] = useState(48);
+  const [numOfMonths, setNumOfMonths] = useState(24);
   //start of months
   const [startMonth, setStartMonth] = useState(0);
   const [months, setMonths] = useState([])
@@ -80,10 +80,9 @@ const Dashboard = ({ setUserState }) => {
     })();
   }, [api]);
 
-  if(months.length > 1){
-    // console.log('last month', months[months.length-1].format('MMMM'))
+  const[visibleMonths, setVisibleMonths] = useState({start: 0, end: 12})
 
-  }
+
 
   return (
     <Box
@@ -118,6 +117,8 @@ const Dashboard = ({ setUserState }) => {
             startMonth={startMonth}
             reloadMonths={reloadMonths}
             setReloadMonths={setReloadMonths}
+            visibleMonths={visibleMonths}
+            setVisibleMonths={setVisibleMonths}
           />
           })}
           
