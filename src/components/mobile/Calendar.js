@@ -10,7 +10,9 @@ import styled from 'styled-components';
 //for some reason, a regular useEffect doesn't work but putting this out here like this does
 const useMountEffect = (fun, numOfMonths) => useEffect(fun, [numOfMonths])
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, setMonths, numOfMonths, setNumOfMonths, i, reloadMonths, setReloadMonths, setStartMonth, startMonth, visibleMonths, setVisibleMonths}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, setMonths, numOfMonths, setNumOfMonths, i, reloadMonths, setReloadMonths, setStartMonth, startMonth, visibleMonths, setVisibleMonths, ref}) => {
+
+  console.log('calref', ref)
 
   const currentDay = dayjs();
   // state to display cuurent date
@@ -30,6 +32,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
     weekDays
   } = useDate(date);
 
+  console.log('num of months from calendar body', numOfMonths)
  
   const scrollToRef = (ref) => {
     // window.addEventListener('scroll', ()=>{
@@ -39,7 +42,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
         setTimeout(()=>{
           
         let reloadDay = monthList[monthList.length-6].$d
-        console.log('dimensions', ref.current.getBoundingClientRect().height)
+        // console.log('dimensions', ref.current.getBoundingClientRect().height)
         
         //if the user scrolls past a month whose name matches the reloadMonth, load more months
         
@@ -51,6 +54,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
         //checks what month we've scrolled past and if the month and year names match our reloadMonth
         if (window.scrollY > ref.current.offsetTop && ref.current.innerText.substring(0,3) === reloadMonth.substring(0,3) && yearNum === month.$y){
             //if yes, load more months
+            console.log('should load more months')
             setNumOfMonths(numOfMonths + 12)
             
             //check dimensions of calendars above and subtract when changing start and end
@@ -92,7 +96,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   },[monthList])
 
   const myRef = useRef("")
-  useMountEffect(() => scrollToRef(myRef),[numOfMonths])
+  // useMountEffect(() => scrollToRef(myRef),[numOfMonths])
   
   
 

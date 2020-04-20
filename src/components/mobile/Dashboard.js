@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import Calendar from './Calendar';
 import dayjs from 'dayjs';
+import { FixedSizeList as List } from 'react-window';
+import AltCalendar from './AltCalendar'
+import Welcome from '../Welcome'
 
+const useMountEffect = (fun, numOfMonths) => useEffect(fun, [numOfMonths])
 
 const getTemplateList = async ({ googleId }) => {
   try {
@@ -17,6 +21,13 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
+const Row = ({index, style}) => (
+  <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
+    <Welcome/>
+  </div>
+);
+const scrollToRef = (ref) => {console.log('theref', ref)}
+
 const Dashboard = ({ setUserState }) => {
   const { googleApi, api } = useAuth();
 
@@ -27,6 +38,7 @@ const Dashboard = ({ setUserState }) => {
   const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
 
+  
 
   useEffect(() => {
     (async () => {
@@ -45,25 +57,27 @@ const Dashboard = ({ setUserState }) => {
   }, [templateFormOpen])
   
   //end months
-  const [numOfMonths, setNumOfMonths] = useState(24);
+  const [numOfMonths, setNumOfMonths] = useState(8);
   //start of months
-  const [startMonth, setStartMonth] = useState(0);
+  const [startMonth, setStartMonth] = useState(-1);
   const [months, setMonths] = useState([])
   const [reloadMonths, setReloadMonths] = useState([])
   useEffect(()=>{
-    setMonths(nextMonth(startMonth, numOfMonths));
+    setMonths(nextMonth(numOfMonths));
+    console.log('months', nextMonth(numOfMonths))
   },[numOfMonths])
   
 
-  const nextMonth = (start, end) => {
+  const nextMonth = (numOfMonths) => {
     let arr = [];
-    for(let i=start; i<end; i++){
+    for(let i=0; i<numOfMonths; i++){
       arr.push(dayjs().add(i,'month'));
     }
     return arr;
   }
 
-
+  const calRef = useRef("")
+  useMountEffect(() => scrollToRef(calRef),[numOfMonths])
 
   // state to show users events
   const [events, setEvents] = useState(null);
@@ -82,8 +96,16 @@ const Dashboard = ({ setUserState }) => {
 
   const[visibleMonths, setVisibleMonths] = useState({start: 0, end: 12})
 
+  const [num, setNum] = useState(5);
+  
 
+  useEffect(()=>{
+    setTimeout((num)=>{num+=2},5000)
+    console.log('num', num)
+  },[num])
+  const listRef = useRef("")
 
+  
   return (
     <Box
       pos="relative"
@@ -98,7 +120,7 @@ const Dashboard = ({ setUserState }) => {
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
-          {months.map((thisMonth, i)=>{
+          {/* {months.map((thisMonth, i)=>{
             return <Calendar 
             key={i}
             api={api}
@@ -120,7 +142,48 @@ const Dashboard = ({ setUserState }) => {
             visibleMonths={visibleMonths}
             setVisibleMonths={setVisibleMonths}
           />
-          })}
+          })} */}
+
+        {months.length > 0 && <List
+            ref={listRef}
+            className="List"
+            height={window.innerHeight}
+            itemCount={numOfMonths}
+            itemSize={1000}
+            width={window.innerWidth}
+            months={months}
+          >
+            {({index, style}) => {
+              return  <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
+              {/* <Welcome/> */}
+              {/* {console.log('months inside row', months)} */}
+              {/* {console.log('listref', listRef.current)} */}
+              {console.log('numofmonths', numOfMonths)}
+              <Calendar 
+            ref={calRef}  
+            key={index}
+            api={api}
+            i={index}
+            selected={selected}
+            setSelected={setSelected}
+            templateFormOpen={templateFormOpen}
+            setTemplateFormOpen={setTemplateFormOpen}
+            events={events}
+            month={months[index]}
+            monthList={months}
+            setMonths={setMonths}
+            numOfMonths={numOfMonths}
+            setNumOfMonths={setNumOfMonths}
+            setStartMonth={setStartMonth}
+            startMonth={startMonth}
+            reloadMonths={reloadMonths}
+            setReloadMonths={setReloadMonths}
+            visibleMonths={visibleMonths}
+            setVisibleMonths={setVisibleMonths}
+          />
+            </div>
+            }}
+          </List>}
           
         </Box>
       </Grid>
