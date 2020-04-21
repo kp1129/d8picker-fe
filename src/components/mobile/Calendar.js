@@ -29,6 +29,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
     weekDayOfLastDoM,
     weekDays
   } = useDate(date);
+
   
 
   useEffect(()=>{
