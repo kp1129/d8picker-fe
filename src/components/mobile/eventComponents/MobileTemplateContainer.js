@@ -1,13 +1,11 @@
 import React from 'react';
 import {Flex, Heading, Button} from '@chakra-ui/core';
-import ChooseDateForm from './ChooseDateForm.js';
-import CreateTemplateForm from './CreateTemplateForm'
-import NewEventForm from '../mobile/eventComponents/NewEventForm';
+import MobileChooseDateForm from './MobileChooseDateForm';
+import CreateTemplateForm from '../../dashboardComponents/CreateTemplateForm'
 
 
 
-
-const TemplateContainer = (props) => {
+const MobileTemplateContainer = (props) => {
     const {
     setSelected,
     selected,
@@ -17,7 +15,8 @@ const TemplateContainer = (props) => {
     setFormOpen,
     setTemplateList,
     templateList,
-    currentUser} = props;
+    currentUser,
+    setNavState} = props;
 
 
   return (
@@ -35,7 +34,7 @@ const TemplateContainer = (props) => {
             <Heading as="h2">Events</Heading>
             {templateList &&
               templateList.map(t => (
-                <ChooseDateForm
+                <MobileChooseDateForm
                   key={t._id}
                   id={t._id}
                   starttime={t.starttime}
@@ -48,20 +47,13 @@ const TemplateContainer = (props) => {
                   setTemplateFormOpen={setTemplateFormOpen}
                   setTemplateList={setTemplateList}
                   templateList={templateList}
+                  setNavState={setNavState}
                 />
                 
               ))}
-            <Button
-              id="createEventChain"
-              my={4}
-              variantColor="teal"
-              onClick={() => setFormOpen(!formOpen)}
-            >
-              Create Event Chain
-            </Button>
             {formOpen && <CreateTemplateForm setFormOpen={setFormOpen} setTemplateList={setTemplateList} currentUser={currentUser} formOpen={formOpen}/>}
           </Flex>
   );
 };
 
-export default TemplateContainer;
+export default MobileTemplateContainer;
