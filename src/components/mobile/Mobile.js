@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import BotNav from './NavigationComponents/BotNav'
 import MobileEvents from './eventComponents/MobileEvents'
 import styled from 'styled-components'
+import Dashboard from './Dashboard'
 
 const Mobile = () => {
 
@@ -14,8 +15,9 @@ const Mobile = () => {
     top: 83vh;`
     if(NavState === 0){
     return(
-        <div>hello im calendar
-            
+
+        <div>hello moto
+            <Dashboard/>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>

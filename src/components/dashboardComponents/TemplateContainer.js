@@ -6,6 +6,7 @@ import NewEventForm from '../mobile/eventComponents/NewEventForm';
 
 
 
+
 const TemplateContainer = (props) => {
     const {
     setSelected,

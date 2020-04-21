@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
 import Days from './Days';

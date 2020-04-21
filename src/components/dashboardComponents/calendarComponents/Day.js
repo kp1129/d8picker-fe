@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
