@@ -1,3 +1,4 @@
+import Nav from './Nav';
 import React, {useState} from 'react'
 import BotNav from './NavigationComponents/BotNav'
 import MobileEvents from './eventComponents/MobileEvents'
@@ -15,29 +16,22 @@ const Mobile = () => {
     top: 83vh;`
     if(NavState === 0){
     return(
-
         <div>hello moto
             <Dashboard/>
-            <NavBar>
-            <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
-            </NavBar>
+            <Nav NavState={NavState} setNavState={setNavState} />
         </div>
     )
     } else if(NavState === 1){
         return(
         <div>hello im events
             <MobileEvents setNavState={setNavState}></MobileEvents>
-            <NavBar>
-            <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
-            </NavBar>
+            <Nav NavState={NavState} setNavState={setNavState} />
         </div>
         )
     } else if(NavState === 2){
         return(
             <div>hello im groups
-            <NavBar>
-            <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
-            </NavBar>
+            <Nav NavState={NavState} setNavState={setNavState} />
         </div>
         )
     }
