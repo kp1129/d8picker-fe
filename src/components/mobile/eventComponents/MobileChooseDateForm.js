@@ -6,14 +6,11 @@ import {
   Heading,
   IconButton
 } from '@chakra-ui/core';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../../contexts/auth';
 import axios from 'axios'
 
 
-//TODO LINK UP THE DAYS.JS TRIGGER TO MATCH THE TEMPLATE TOGGLE FROM A STATE WIDE SELECTION.
-
-
-const ChooseDateForm = ({
+const MobileChooseDateForm = ({
   id,
   starttime,
   endtime,
@@ -24,10 +21,11 @@ const ChooseDateForm = ({
   templateFormOpen,
   setTemplateFormOpen,
   setTemplateList,
-  templateList
+  templateList,
+  setNavState
 }) => {
 
-  const { api } = useAuth();
+  const { googleApi, api } = useAuth();
   const deleteTemplate = async id => {
     try {
       const response = await axios.delete(
@@ -66,14 +64,6 @@ const ChooseDateForm = ({
     reloadPage()
   };
 
-  const [toggledTemplate, setToggledTemplate] = useState(false);
-
-  const openTemplate = () => {
-    setTemplateFormOpen(!templateFormOpen);
-    setToggledTemplate(!toggledTemplate);
-    setSelected([]);
-    
-  };
 
 
   const clearSelected = () => {
@@ -103,46 +93,39 @@ const ChooseDateForm = ({
   
 
 
+  const handleCalendarView = () =>{
+    setNavState(0)
+    // toggleCalendarConfirm
+  }
+
 
 
   return (
-    <Flex direction="column" align="center" justify="center" my={2}>
-      <Heading fontSize="sm" fontWeight="normal">
+    <Flex direction="column" align="center" justify="center" my={2} onClick={handleCalendarView}>
+      <Heading fontSize="m" fontWeight="normal">
         {summary}
       </Heading>
-      <Heading fontSize="sm" fontWeight="normal">
+      <Heading fontSize="m" fontWeight="normal">
         {conStart}-{conEnd}
       </Heading>
-      <Flex>
-        <ButtonGroup spacing={4}>
-          <Button size="sm" variantColor="blue" onClick={() => {
+      
+      {/* <Flex>
+        <ButtonGroup spacing={3}>
+        <Button size="sm" variantColor="blue" onClick={() => {
             openTemplate()
           }}>
-            Choose Dates
+          Choose Dates
           </Button>
           <IconButton
-            variantColor="red"
-            aria-label="Delete"
-            size="sm"
+          variantColor="red"
+          aria-label="Delete"
+          size="sm"
             icon="close"
             onClick={() => handleDelete(id)}
           />
-        </ButtonGroup>
-      </Flex>
+          </ButtonGroup>
+        </Flex> */}
 
-      {templateFormOpen && toggledTemplate && (
-        <div>
-
-        <button style={{margin: 2}}
-          onClick={() =>
-            applyTemplate(summary, description, starttime, endtime, selected)
-          }
-        >
-          Save Events
-        </button>
-        <Button onClick={clearSelected}>Clear Selection</Button>
-        </div>
-      )}
     </Flex>
   );
 };
@@ -178,4 +161,4 @@ const ChooseDateForm = ({
     }
 
 
-export default ChooseDateForm;
+export default MobileChooseDateForm;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
 import Days from './Days';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 const Calendar = ({ events, selected, setSelected, templateFormOpen }) => {
   const currentDay = dayjs();
+
 
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());

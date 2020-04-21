@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
 import useDate from '../../../hooks/useDate';
 import dayjs from 'dayjs';
 
-
+   
 
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
   const {
@@ -13,8 +13,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
     currentYear,
   } = useDate(date);
 //   console.log('dayjs', dayjs())
-
-
 
   
   const setBackgroundColor = ()=>{
@@ -68,6 +66,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
                 events.map(event => (
                   <div key={event.id}>
                     <EventsIndicator
+                      key={event.id}
                       event={event}
                       day={day}
                       currentMonth={currentMonth}
