@@ -48,6 +48,8 @@ const MobileTemplateContainer = (props) => {
                   setTemplateList={setTemplateList}
                   templateList={templateList}
                   setNavState={setNavState}
+                  formOpen={formOpen}
+                  setFormOpen={setFormOpen}
                 />
                 
               ))}

@@ -20,15 +20,15 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = ({setNavState}) => {
+const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, templateFormOpen}) => {
 
   
 
     const { googleApi, api } = useAuth();
 
     const [templateList, setTemplateList] = useState([]);
-    const [templateFormOpen, setTemplateFormOpen] = useState(false);
-    const [formOpen, setFormOpen] = useState(false);
+    // const [templateFormOpen, setTemplateFormOpen] = useState(false);
+    // const [formOpen, setFormOpen] = useState(false);
     const [selected, setSelected] = useState([]);
     const [shadow, setShadow] = useState("");
     const { currentUser, handleSignOut } = googleApi;

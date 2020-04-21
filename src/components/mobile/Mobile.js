@@ -8,6 +8,9 @@ const Mobile = () => {
 
     const [NavState, setNavState] = useState(0) // 0 = calendar, 1 = events, 2 = groups
 
+    const[formOpen, setFormOpen] = useState(false);
+    const [templateFormOpen, setTemplateFormOpen] = useState(false);
+
     const NavBar = styled.div`
     display: flex;
     justify-content: center;
@@ -17,7 +20,7 @@ const Mobile = () => {
     return(
 
         <div>hello moto
-            <Dashboard/>
+            <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen}/>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>
@@ -26,7 +29,7 @@ const Mobile = () => {
     } else if(NavState === 1){
         return(
         <div>hello im events
-            <MobileEvents setNavState={setNavState}></MobileEvents>
+            <MobileEvents setNavState={setNavState} formOpen={formOpen} setFormOpen={setFormOpen}setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen}></MobileEvents>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>

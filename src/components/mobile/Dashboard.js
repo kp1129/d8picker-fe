@@ -17,19 +17,20 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({ setUserState }) => {
+const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
 
   const [templateList, setTemplateList] = useState([]);
-  const [templateFormOpen, setTemplateFormOpen] = useState(false);
+  // const [templateFormOpen, setTemplateFormOpen] = useState(false);
   
   // state to show users events
   const [events, setEvents] = useState(null);
 
-  const [formOpen, setFormOpen] = useState(false);
+  // const [formOpen, setFormOpen] = useState(false);
+  console.log('formOpen', formOpen)
   //dates selected to add template to
   const [selected, setSelected] = useState([]);
   //shadow to indicate select date mode is enabled
@@ -66,7 +67,7 @@ const Dashboard = ({ setUserState }) => {
   //dynamically sets the state of months based on the state numOfMonths
   useEffect(()=>{
     setMonths(nextMonth(numOfMonths));
-    console.log('months', nextMonth(numOfMonths))
+    // console.log('months', nextMonth(numOfMonths))
   },[numOfMonths])
   
   //helper function to loop create months in the future based on numOfMonths

@@ -9,7 +9,7 @@ const InfiniteCalendar = ({ items, moreItemsLoading, loadMore, hasNextPage, even
 
     const Row = ({ index, style }) => {
       if(items[index]){
-        console.log('items at index', items[index])
+        // console.log('items at index', items[index])
         return (
           <Calendar 
                   style={style}

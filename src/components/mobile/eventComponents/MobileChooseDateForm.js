@@ -22,7 +22,9 @@ const MobileChooseDateForm = ({
   setTemplateFormOpen,
   setTemplateList,
   templateList,
-  setNavState
+  setNavState,
+  formOpen,
+  setFormOpen
 }) => {
 
   const { googleApi, api } = useAuth();
@@ -96,6 +98,8 @@ const MobileChooseDateForm = ({
   const handleCalendarView = () =>{
     setNavState(0)
     // toggleCalendarConfirm
+    setTemplateFormOpen(!templateFormOpen)
+    setFormOpen(!formOpen)
   }
 
 
