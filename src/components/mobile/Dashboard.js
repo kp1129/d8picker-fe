@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import InfiniteCalendar from './InfiniteCalendar'
+import ConfirmDatesBtn from './ConfirmDatesBtn'
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -17,7 +18,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen}) => {
+const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -32,7 +33,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   // const [formOpen, setFormOpen] = useState(false);
   console.log('formOpen', formOpen)
   //dates selected to add template to
-  const [selected, setSelected] = useState([]);
+  // const [selected, setSelected] = useState([]);
   //shadow to indicate select date mode is enabled
   const [shadow, setShadow] = useState("");
   
@@ -117,9 +118,10 @@ const loadMore = () => {
     <Box
       pos="relative"
       backgroundColor="brand.lightgray"
-      p={[4, 16]}
-      minHeight="100vh"
+      // p={[4, 16]}
+      maxHeight="100vh"
     >
+      
       <Grid
         width="100%"
         gap={4}
@@ -127,23 +129,28 @@ const loadMore = () => {
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+
         {months.length > 0 && 
         <InfiniteCalendar
-          items={items}
-          moreItemsLoading={moreItemsLoading}
-          loadMore={loadMore}
-          hasNextPage={hasNextPage}
-                api={api}
-                selected={selected}
-                setSelected={setSelected}
-                templateFormOpen={templateFormOpen}
-                setTemplateFormOpen={setTemplateFormOpen}
-                events={events}
-                month={months}
-                monthList={months}
+        items={items}
+        moreItemsLoading={moreItemsLoading}
+        loadMore={loadMore}
+        hasNextPage={hasNextPage}
+        api={api}
+        selected={selected}
+        setSelected={setSelected}
+        templateFormOpen={templateFormOpen}
+        setTemplateFormOpen={setTemplateFormOpen}
+        events={events}
+        month={months}
+        monthList={months}
         />
         
-        }
+      }
+      {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
+      </div>
+        
           
         </Box>
       </Grid>

@@ -10,6 +10,11 @@ const Mobile = () => {
 
     const[formOpen, setFormOpen] = useState(false);
     const [templateFormOpen, setTemplateFormOpen] = useState(false);
+    const [conStart, setConStart] = useState("");
+    const [conEnd, setConEnd] = useState("");
+    const [summ, setSumm] = useState("")
+    const [toggleNav, setToggleNav] = useState(true);
+    const [selected, setSelected] = useState([]);
 
     const NavBar = styled.div`
     display: flex;
@@ -19,17 +24,17 @@ const Mobile = () => {
     if(NavState === 0){
     return(
 
-        <div>hello moto
-            <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen}/>
+        <div >
+            <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav}/>
             <NavBar>
-            <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
+            {toggleNav && <BotNav NavState={NavState} setNavState={setNavState}></BotNav>}
             </NavBar>
         </div>
     )
     } else if(NavState === 1){
         return(
         <div>hello im events
-            <MobileEvents setNavState={setNavState} formOpen={formOpen} setFormOpen={setFormOpen}setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen}></MobileEvents>
+            <MobileEvents setNavState={setNavState} formOpen={formOpen} setFormOpen={setFormOpen}setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} setToggleNav={setToggleNav} toggleNav={toggleNav} conStart={conStart} setConStart={setConStart} conEnd={conEnd} setConEnd={setConEnd} summ={summ} setSumm={setSumm} selected={selected} setSelected={setSelected}></MobileEvents>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
             </NavBar>

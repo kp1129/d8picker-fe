@@ -1,7 +1,6 @@
 import React from 'react'
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
-
 import Calendar from './Calendar';
 
 
@@ -11,6 +10,8 @@ const InfiniteCalendar = ({ items, moreItemsLoading, loadMore, hasNextPage, even
       if(items[index]){
         // console.log('items at index', items[index])
         return (
+
+            
           <Calendar 
                   style={style}
                   key={index}
@@ -23,7 +24,8 @@ const InfiniteCalendar = ({ items, moreItemsLoading, loadMore, hasNextPage, even
                   events={events}
                   month={items[index]}
                   monthList={month}
-                />
+                  />
+
            );
       } else {
         return (<div>Loading</div>)
@@ -44,13 +46,14 @@ const InfiniteCalendar = ({ items, moreItemsLoading, loadMore, hasNextPage, even
            return (
             <FixedSizeList
               overscanCount={6}
-              height={window.innerHeight}
-              width={window.innerWidth-30}
+              height={window.innerHeight-20}
+              width={window.innerWidth-10}
               itemCount={itemCount}
               itemSize={160}
               onItemsRendered={onItemsRendered}
               ref={ref}
-            >
+              >
+              
               {Row}
             </FixedSizeList>
           )
