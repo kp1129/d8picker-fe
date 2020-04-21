@@ -1,10 +1,11 @@
 import React from 'react'
+import Nav from './Nav';
 
 const Mobile = () => {
 
 
     return(
-        <div>hello im mobile</div>
+        <Nav />
     )
 }
 
