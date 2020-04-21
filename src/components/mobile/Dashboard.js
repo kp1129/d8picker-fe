@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
-import Calendar from './Calendar';
 import dayjs from 'dayjs';
-import { FixedSizeList as List } from 'react-window';
-import InfiniteLoader from "react-window-infinite-loader";
-import AltCalendar from './AltCalendar'
+import InfiniteCalendar from './InfiniteCalendar'
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -39,7 +36,7 @@ const Dashboard = ({ setUserState }) => {
   const [shadow, setShadow] = useState("");
   
   //sets initial number of months to display
-  const [numOfMonths, setNumOfMonths] = useState(8);
+  const [numOfMonths, setNumOfMonths] = useState(12);
 
   //array which will hold all of the months on the DOM
   const [months, setMonths] = useState([])
@@ -97,7 +94,7 @@ const Dashboard = ({ setUserState }) => {
 
 
  //infinite loading stuff
-const [items, setItems] = useState(nextMonth(2));
+const [items, setItems] = useState(nextMonth(24));
 const [moreItemsLoading, setMoreItemsLoading] = useState(false);
 const [hasNextPage, setHasNextPage] = useState(true);
 
@@ -105,9 +102,11 @@ useEffect(()=>{
   console.log('items has changed')
 },[items])
 
+
 const loadMore = () => {
   console.log('loading more');
-  setItems([...items, nextMonth(numOfMonths+ 12)])
+  setNumOfMonths(numOfMonths + 12); 
+  setItems([...items, ...nextMonth(numOfMonths+ 12)])
 }
 
  //end infinite loading stuff
@@ -128,46 +127,19 @@ const loadMore = () => {
       >
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
         {months.length > 0 && 
-  //       <InfiniteLoader
-  //           isItemLoaded={index => index < numOfMonths}
-  //           itemCount={itemCount}
-  //           loadMoreItems={loadMore}
-  //       >
-  //         <List
-  //           className="List"
-  //           height={window.innerHeight}
-  //           itemCount={itemCount}
-  //           itemSize={1000}
-  //           width={window.innerWidth}
-  //           months={months}
-  //         >
-  //           {({index, style}) => {
-              
-  //             return  <div className={index % 2 ? 'ListItemOdd' : 'ListItemEven'} style={style}>
-  //             {console.log('numofmonths', numOfMonths)}
-  //             {/* <Calendar 
-  //               key={index}
-  //               api={api}
-  //               i={index}
-  //               selected={selected}
-  //               setSelected={setSelected}
-  //               templateFormOpen={templateFormOpen}
-  //               setTemplateFormOpen={setTemplateFormOpen}
-  //               events={events}
-  //               month={months[index]}
-  //               monthList={months}
-  //             /> */}
-  //             <AltCalendar/>
-  //           </div>
-  //           }}
-  //         </List>
-  //     )}
-  // </InfiniteLoader>
-        <AltCalendar
+        <InfiniteCalendar
           items={items}
           moreItemsLoading={moreItemsLoading}
           loadMore={loadMore}
           hasNextPage={hasNextPage}
+                api={api}
+                selected={selected}
+                setSelected={setSelected}
+                templateFormOpen={templateFormOpen}
+                setTemplateFormOpen={setTemplateFormOpen}
+                events={events}
+                month={months}
+                monthList={months}
         />
         
         }
