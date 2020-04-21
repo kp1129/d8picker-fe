@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
-import Calendar from './Calendar';
 import dayjs from 'dayjs';
+import InfiniteCalendar from './InfiniteCalendar'
 
-
+//gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
   try {
     const response = await axios.get(
@@ -18,16 +18,34 @@ const getTemplateList = async ({ googleId }) => {
 };
 
 const Dashboard = ({ setUserState }) => {
+
+  //google OAuth2
   const { googleApi, api } = useAuth();
+  const { currentUser, handleSignOut } = googleApi;
 
   const [templateList, setTemplateList] = useState([]);
   const [templateFormOpen, setTemplateFormOpen] = useState(false);
+  
+  // state to show users events
+  const [events, setEvents] = useState(null);
+
   const [formOpen, setFormOpen] = useState(false);
+  //dates selected to add template to
   const [selected, setSelected] = useState([]);
+  //shadow to indicate select date mode is enabled
   const [shadow, setShadow] = useState("");
-  const { currentUser, handleSignOut } = googleApi;
+  
+  //sets initial number of months to display
+  const [numOfMonths, setNumOfMonths] = useState(12);
+
+  //array which will hold all of the months on the DOM
+  const [months, setMonths] = useState([])
+
+  
 
 
+
+  //gets event templates assigned to user from backend
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
@@ -44,29 +62,23 @@ const Dashboard = ({ setUserState }) => {
     }
   }, [templateFormOpen])
   
-  //end months
-  const [numOfMonths, setNumOfMonths] = useState(24);
-  //start of months
-  const [startMonth, setStartMonth] = useState(0);
-  const [months, setMonths] = useState([])
-  const [reloadMonths, setReloadMonths] = useState([])
+
+  //dynamically sets the state of months based on the state numOfMonths
   useEffect(()=>{
-    setMonths(nextMonth(startMonth, numOfMonths));
+    setMonths(nextMonth(numOfMonths));
+    console.log('months', nextMonth(numOfMonths))
   },[numOfMonths])
   
-
-  const nextMonth = (start, end) => {
+  //helper function to loop create months in the future based on numOfMonths
+  const nextMonth = (numOfMonths) => {
     let arr = [];
-    for(let i=start; i<end; i++){
+    for(let i=0; i<numOfMonths; i++){
       arr.push(dayjs().add(i,'month'));
     }
     return arr;
   }
 
 
-
-  // state to show users events
-  const [events, setEvents] = useState(null);
 
   // get events from api and set to state
   useEffect(() => {
@@ -80,10 +92,26 @@ const Dashboard = ({ setUserState }) => {
     })();
   }, [api]);
 
-  const[visibleMonths, setVisibleMonths] = useState({start: 0, end: 12})
+
+ //infinite loading stuff
+const [items, setItems] = useState(nextMonth(24));
+const [moreItemsLoading, setMoreItemsLoading] = useState(false);
+const [hasNextPage, setHasNextPage] = useState(true);
+
+useEffect(()=>{
+  console.log('items has changed')
+},[items])
 
 
+const loadMore = () => {
+  console.log('loading more');
+  setNumOfMonths(numOfMonths + 12); 
+  setItems([...items, ...nextMonth(numOfMonths+ 12)])
+}
 
+ //end infinite loading stuff
+
+  
   return (
     <Box
       pos="relative"
@@ -98,29 +126,23 @@ const Dashboard = ({ setUserState }) => {
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
-          {months.map((thisMonth, i)=>{
-            return <Calendar 
-            key={i}
-            api={api}
-            i={i}
-            selected={selected}
-            setSelected={setSelected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-            events={events}
-            month={thisMonth}
-            monthList={months}
-            setMonths={setMonths}
-            numOfMonths={numOfMonths}
-            setNumOfMonths={setNumOfMonths}
-            setStartMonth={setStartMonth}
-            startMonth={startMonth}
-            reloadMonths={reloadMonths}
-            setReloadMonths={setReloadMonths}
-            visibleMonths={visibleMonths}
-            setVisibleMonths={setVisibleMonths}
-          />
-          })}
+        {months.length > 0 && 
+        <InfiniteCalendar
+          items={items}
+          moreItemsLoading={moreItemsLoading}
+          loadMore={loadMore}
+          hasNextPage={hasNextPage}
+                api={api}
+                selected={selected}
+                setSelected={setSelected}
+                templateFormOpen={templateFormOpen}
+                setTemplateFormOpen={setTemplateFormOpen}
+                events={events}
+                month={months}
+                monthList={months}
+        />
+        
+        }
           
         </Box>
       </Grid>
