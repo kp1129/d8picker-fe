@@ -1,3 +1,4 @@
+import Nav from './Nav';
 import React, {useState} from 'react'
 import BotNav from './NavigationComponents/BotNav'
 import MobileEvents from './eventComponents/MobileEvents'
@@ -24,6 +25,7 @@ const Mobile = () => {
     if(NavState === 0){
     return(
 
+
         <div >
             <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav}/>
             <NavBar>
@@ -34,6 +36,7 @@ const Mobile = () => {
     } else if(NavState === 1){
         return(
         <div>hello im events
+
             <MobileEvents setNavState={setNavState} formOpen={formOpen} setFormOpen={setFormOpen}setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} setToggleNav={setToggleNav} toggleNav={toggleNav} conStart={conStart} setConStart={setConStart} conEnd={conEnd} setConEnd={setConEnd} summ={summ} setSumm={setSumm} selected={selected} setSelected={setSelected}></MobileEvents>
             <NavBar>
             <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
@@ -43,9 +46,7 @@ const Mobile = () => {
     } else if(NavState === 2){
         return(
             <div>hello im groups
-            <NavBar>
-            <BotNav NavState={NavState} setNavState={setNavState}></BotNav>
-            </NavBar>
+            <Nav NavState={NavState} setNavState={setNavState} />
         </div>
         )
     }
