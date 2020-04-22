@@ -171,7 +171,15 @@ const loadMore = (startIndex, stopIndex) => {
         />
         
         } */}
-        {items.length > 0 && <NewInfCal items={items}/>}
+        {items.length > 0 && <NewInfCal items={items}
+        api={api}
+        selected={selected}
+        setSelected={setSelected}
+        templateFormOpen={templateFormOpen}
+        setTemplateFormOpen={setTemplateFormOpen}
+        events={events}
+        month={items}
+        monthList={items}/>}
       {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
         

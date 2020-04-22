@@ -67,7 +67,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
           templateColumns="repeat(7, 1fr)"
           textAlign="right"
         >
-          {/* <Days
+          <Days
             events={events}
             date={date}
             templateFormOpen={templateFormOpen}
@@ -79,7 +79,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             currentDay={currentDay}
             currentMonth={currentMonth}
             currentYear={currentYear}
-          /> */}
+          />
         </Grid>
       </Box>
     );

@@ -26,7 +26,7 @@ const loadMoreItems = (startIndex, stopIndex) => {
 
 
 
-export default function NewInfCal({ items}) {
+export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month}) {
 
   
   
@@ -41,8 +41,8 @@ export default function NewInfCal({ items}) {
             <List
               className="List"
               height={window.innerHeight}
-              itemCount={200}
-              itemSize={100}
+              itemCount={2000}
+              itemSize={817}
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={window.innerWidth}
@@ -54,15 +54,15 @@ export default function NewInfCal({ items}) {
                   label = <Calendar 
                   style={style}
                   key={index}
-                  // api={api}
-                //   i={index}
-                  // selected={selected}
-                  // setSelected={setSelected}
-                  // templateFormOpen={templateFormOpen}
-                  // setTemplateFormOpen={setTemplateFormOpen}
-                  // events={events}
+                  api={api}
+                  i={index}
+                  selected={selected}
+                  setSelected={setSelected}
+                  templateFormOpen={templateFormOpen}
+                  setTemplateFormOpen={setTemplateFormOpen}
+                  events={events}
                   month={items[index]}
-                  // monthList={month}
+                  monthList={month}
                   />
                 
                 } else {
