@@ -37,7 +37,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   },[monthList])
 
     return (
-      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px">
+      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px" style={{border: '1px solid red', margin: '4%'}}>
         <Flex className="header" align="center" justify="center" py={4}>
           <MonthNameContainer>
             {/* <Heading className="heading">{date.format('MMMM')} {date.format('YYYY')}</Heading> */}
@@ -67,7 +67,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
           templateColumns="repeat(7, 1fr)"
           textAlign="right"
         >
-          <Days
+          {/* <Days
             events={events}
             date={date}
             templateFormOpen={templateFormOpen}
@@ -79,7 +79,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             currentDay={currentDay}
             currentMonth={currentMonth}
             currentYear={currentYear}
-          />
+          /> */}
         </Grid>
       </Box>
     );

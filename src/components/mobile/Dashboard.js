@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import InfiniteCalendar from './InfiniteCalendar'
 import ConfirmDatesBtn from './ConfirmDatesBtn'
+import NewInfCal from './NewInfCal'
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -30,15 +31,12 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   // state to show users events
   const [events, setEvents] = useState(null);
 
-  // const [formOpen, setFormOpen] = useState(false);
-  console.log('formOpen', formOpen)
-  //dates selected to add template to
-  // const [selected, setSelected] = useState([]);
+
   //shadow to indicate select date mode is enabled
   const [shadow, setShadow] = useState("");
   
   //sets initial number of months to display
-  const [numOfMonths, setNumOfMonths] = useState(12);
+  const [numOfMonths, setNumOfMonths] = useState(24);
 
   //array which will hold all of the months on the DOM
   const [months, setMonths] = useState([])
@@ -69,7 +67,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   useEffect(()=>{
     setMonths(nextMonth(numOfMonths));
     // console.log('months', nextMonth(numOfMonths))
-  },[numOfMonths])
+  },[templateFormOpen])
   
   //helper function to loop create months in the future based on numOfMonths
   const nextMonth = (numOfMonths) => {
@@ -96,24 +94,45 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
 
 
  //infinite loading stuff
-const [items, setItems] = useState(nextMonth(24));
-const [moreItemsLoading, setMoreItemsLoading] = useState(false);
-const [hasNextPage, setHasNextPage] = useState(true);
-
-useEffect(()=>{
-  console.log('items has changed')
-},[items])
+const [items, setItems] = useState(nextMonth(2000));
+// const [moreItemsLoading, setMoreItemsLoading] = useState(false);
+// const [hasNextPage, setHasNextPage] = useState(true);
+// const [isNextPageLoading, setIsNextPageLoading] = useState(false);
 
 
-const loadMore = () => {
-  console.log('loading more');
-  setNumOfMonths(numOfMonths + 12); 
-  setItems([...items, ...nextMonth(numOfMonths+ 12)])
-}
+
+const LOADING = 1;
+const LOADED = 2;
+let itemStatusMap = {};
+
+const loadMore = (startIndex, stopIndex) => {
+  for (let index = startIndex; index <= stopIndex; index++) {
+    itemStatusMap[index] = LOADING;
+  }
+  return new Promise(resolve =>
+    setTimeout(() => {
+      for (let index = startIndex; index <= stopIndex; index++) {
+        itemStatusMap[index] = LOADED;
+      }
+      resolve();
+    }, 2500)
+  );
+};
+
+// const loadMore = () => {
+//   console.log('loading more');
+//   setIsNextPageLoading(true);
+//   setTimeout(()=>{setNumOfMonths(numOfMonths + 1); 
+//     setItems([...nextMonth(numOfMonths +1)])
+//     console.log('num of months from loadmore', numOfMonths)
+//     setIsNextPageLoading(false);}, 5000)
+//   // setMoreItemsLoading(false);
+
+// }
 
  //end infinite loading stuff
 
-  
+  // const [items, setItems] = useState(["fire", "water", "earth", "heart"])
   return (
     <Box
       pos="relative"
@@ -131,7 +150,7 @@ const loadMore = () => {
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {months.length > 0 && 
+        {/* {months.length > 0 && 
         <InfiniteCalendar
         items={items}
         moreItemsLoading={moreItemsLoading}
@@ -143,11 +162,16 @@ const loadMore = () => {
         templateFormOpen={templateFormOpen}
         setTemplateFormOpen={setTemplateFormOpen}
         events={events}
-        month={months}
-        monthList={months}
+        month={items}
+        monthList={items}
+        isItemLoaded={isItemLoaded}
+        numOfMonths={numOfMonths}
+        indexes={indexes}
+        setIndexes={setIndexes}
         />
         
-      }
+        } */}
+        {items.length > 0 && <NewInfCal items={items}/>}
       {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
         
