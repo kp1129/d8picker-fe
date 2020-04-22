@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import InfiniteCalendar from './InfiniteCalendar'
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import NewInfCal from './NewInfCal'
+import Hamburger from './Hamburger/TopNav';
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -134,60 +135,63 @@ const loadMore = (startIndex, stopIndex) => {
 
   // const [items, setItems] = useState(["fire", "water", "earth", "heart"])
   return (
-    <Box
-      pos="relative"
-      backgroundColor="brand.lightgray"
-      // p={[4, 16]}
-      maxHeight="100vh"
-    >
-      
-      <Grid
-        width="100%"
-        gap={4}
-        templateColumns={['1fr', '250px 1fr']}
-        gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
+    <>
+      <Hamburger />
+      <Box
+        pos="relative"
+        backgroundColor="brand.lightgray"
+        // p={[4, 16]}
+        maxHeight="100vh"
       >
-        <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-
-        {/* {months.length > 0 && 
-        <InfiniteCalendar
-        items={items}
-        moreItemsLoading={moreItemsLoading}
-        loadMore={loadMore}
-        hasNextPage={hasNextPage}
-        api={api}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={items}
-        monthList={items}
-        isItemLoaded={isItemLoaded}
-        numOfMonths={numOfMonths}
-        indexes={indexes}
-        setIndexes={setIndexes}
-        />
         
-        } */}
-        {items.length > 0 && <NewInfCal items={items}
-        api={api}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={items}
-        monthList={items}/>}
-      {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
-      </div>
-      {/* <button>load more months</button> */}
-        
+        <Grid
+          width="100%"
+          gap={4}
+          templateColumns={['1fr', '250px 1fr']}
+          gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
+        >
+          <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+  
+          {/* {months.length > 0 && 
+          <InfiniteCalendar
+          items={items}
+          moreItemsLoading={moreItemsLoading}
+          loadMore={loadMore}
+          hasNextPage={hasNextPage}
+          api={api}
+          selected={selected}
+          setSelected={setSelected}
+          templateFormOpen={templateFormOpen}
+          setTemplateFormOpen={setTemplateFormOpen}
+          events={events}
+          month={items}
+          monthList={items}
+          isItemLoaded={isItemLoaded}
+          numOfMonths={numOfMonths}
+          indexes={indexes}
+          setIndexes={setIndexes}
+          />
           
-        </Box>
-      </Grid>
-    </Box>
+          } */}
+          {items.length > 0 && <NewInfCal items={items}
+          api={api}
+          selected={selected}
+          setSelected={setSelected}
+          templateFormOpen={templateFormOpen}
+          setTemplateFormOpen={setTemplateFormOpen}
+          events={events}
+          month={items}
+          monthList={items}/>}
+        {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
+        </div>
+        {/* <button>load more months</button> */}
+          
+            
+          </Box>
+        </Grid>
+      </Box>
+    </>
   );
 };
 
