@@ -26,7 +26,7 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
         setToggleNav(true)
         setFormOpen(false);
         setTemplateFormOpen(false)
-        // window.location.reload(false)
+        setTimeout(()=>{window.location.reload(false)}, 500)
       };
 
     const handleClick = (e) =>{

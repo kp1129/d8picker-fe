@@ -34,23 +34,22 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
       <Fragment>
         <InfiniteLoader
           isItemLoaded={isItemLoaded}
-          itemCount={2000}
+          itemCount={50}
           loadMoreItems={loadMoreItems}
         >
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
-              height={window.innerHeight}
-              itemCount={2000}
+              height={window.innerHeight-20}
+              itemCount={50}
               itemSize={817}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              width={window.innerWidth}
+              width={window.innerWidth-10}
             >
               {({ index, style }) => {
                 let label;
                 if (itemStatusMap[index] === LOADED) {
-                  console.log('item at index', items[index])
                   label = <Calendar 
                   style={style}
                   key={index}

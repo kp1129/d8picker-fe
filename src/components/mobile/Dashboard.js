@@ -94,7 +94,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
 
 
  //infinite loading stuff
-const [items, setItems] = useState(nextMonth(2000));
+const [items, setItems] = useState(nextMonth(50));
 // const [moreItemsLoading, setMoreItemsLoading] = useState(false);
 // const [hasNextPage, setHasNextPage] = useState(true);
 // const [isNextPageLoading, setIsNextPageLoading] = useState(false);
@@ -182,6 +182,7 @@ const loadMore = (startIndex, stopIndex) => {
         monthList={items}/>}
       {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
+      {/* <button>load more months</button> */}
         
           
         </Box>
