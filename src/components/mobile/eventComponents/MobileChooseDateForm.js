@@ -22,7 +22,17 @@ const MobileChooseDateForm = ({
   setTemplateFormOpen,
   setTemplateList,
   templateList,
-  setNavState
+  setNavState,
+  formOpen,
+  setFormOpen,
+  setToggleNav, 
+  toggleNav,
+  conStart, 
+  setConStart, 
+  conEnd, 
+  setConEnd, 
+  summ, 
+  setSumm
 }) => {
 
   const { googleApi, api } = useAuth();
@@ -78,24 +88,37 @@ const MobileChooseDateForm = ({
     reload()
   }
 
-
-  const [conStart, setConStart] = useState("");
-  const [conEnd, setConEnd] = useState("");
+  // const [summ, setSumm] = useState("");
+  // const [conStart, setConStart] = useState("");
+  // const [conEnd, setConEnd] = useState("");
 
   useEffect(()=>{
+    setSumm(summary);
     if (starttime){
       setConStart(convertTime(starttime))
     }
     if (endtime){
       setConEnd(convertTime(endtime))
     }
+
+    console.log(summ, conStart, conEnd)
   },[starttime, endtime])
   
 
 
   const handleCalendarView = () =>{
+    setSumm(summary);
+    if (starttime){
+      setConStart(starttime)
+    }
+    if (endtime){
+      setConEnd(endtime)
+    }
     setNavState(0)
     // toggleCalendarConfirm
+    setTemplateFormOpen(!templateFormOpen)
+    setFormOpen(!formOpen)
+    setToggleNav(!toggleNav)
   }
 
 

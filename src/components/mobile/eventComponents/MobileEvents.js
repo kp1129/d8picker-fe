@@ -20,16 +20,16 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = ({setNavState}) => {
+const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, templateFormOpen, setToggleNav, toggleNav, conStart,setConStart, conEnd, setConEnd, summ, setSumm, selected, setSelected}) => {
 
   
 
     const { googleApi, api } = useAuth();
 
     const [templateList, setTemplateList] = useState([]);
-    const [templateFormOpen, setTemplateFormOpen] = useState(false);
-    const [formOpen, setFormOpen] = useState(false);
-    const [selected, setSelected] = useState([]);
+    // const [templateFormOpen, setTemplateFormOpen] = useState(false);
+    // const [formOpen, setFormOpen] = useState(false);
+    // const [selected, setSelected] = useState([]);
     const [shadow, setShadow] = useState("");
     const { currentUser, handleSignOut } = googleApi;
     console.log(templateList)
@@ -78,6 +78,14 @@ const MobileEvents = ({setNavState}) => {
             setTemplateList={setTemplateList}
             currentUser={currentUser}
             templateList={templateList}
+            setToggleNav={setToggleNav} 
+            toggleNav={toggleNav}
+            conStart={conStart} 
+            setConStart={setConStart} 
+            conEnd={conEnd} 
+            setConEnd={setConEnd} 
+            summ={summ} 
+            setSumm={setSumm}
           />
             </FixedMobile>
 
