@@ -8,7 +8,8 @@ const LOADING = 1;
 const LOADED = 2;
 let itemStatusMap = {};
 
-const isItemLoaded = index => !!itemStatusMap[index];
+// const isItemLoaded = index => !!itemStatusMap[index];
+const isItemLoaded = index => itemStatusMap[index] === 2;
 const loadMoreItems = (startIndex, stopIndex) => {
   for (let index = startIndex; index <= stopIndex; index++) {
     itemStatusMap[index] = LOADING;
@@ -40,7 +41,7 @@ export default function NewInfCal({ items}) {
             <List
               className="List"
               height={window.innerHeight}
-              itemCount={2000}
+              itemCount={200}
               itemSize={100}
               onItemsRendered={onItemsRendered}
               ref={ref}
@@ -49,7 +50,8 @@ export default function NewInfCal({ items}) {
               {({ index, style }) => {
                 let label;
                 if (itemStatusMap[index] === LOADED) {
-                  return <Calendar 
+                  console.log('item at index', items[index])
+                  label = <Calendar 
                   style={style}
                   key={index}
                   // api={api}
@@ -62,6 +64,7 @@ export default function NewInfCal({ items}) {
                   month={items[index]}
                   // monthList={month}
                   />
+                
                 } else {
                   label = "Loading...";
                 }

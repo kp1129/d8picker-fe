@@ -3,7 +3,6 @@ import { FixedSizeList, areEqual} from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './Calendar';
 import memoize from 'memoize-one';
-import AutoSizer from 'react-virtualized-auto-sizer';
 
 
 const InfiniteCalendar = ({ isItemLoaded, items, moreItemsLoading, loadMore, hasNextPage, events, selected, setSelected, templateFormOpen, api, setTemplateFormOpen, month, numOfMonths, indexes, setIndexes})=>{
