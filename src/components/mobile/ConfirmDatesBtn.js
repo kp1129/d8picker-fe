@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 
@@ -31,7 +31,7 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
 
     const handleClick = (e) =>{
         e.preventDefault();
-        console.log('clicked confirm dates')
+        // console.log('clicked confirm dates')
         applyTemplate(summ, "", conStart, conEnd);
     }
 

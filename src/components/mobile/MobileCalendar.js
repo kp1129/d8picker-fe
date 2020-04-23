@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import dayjs from 'dayjs';
-import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
+import { Heading, Flex, Grid, Box } from '@chakra-ui/core';
 import Days from '../dashboardComponents/calendarComponents/Days';
 import Cell from '../dashboardComponents/calendarComponents/Cell';
 import useDate from '../../hooks/useDate';

@@ -12,7 +12,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
     currentMonth,
     currentYear,
   } = useDate(date);
-//   console.log('dayjs', dayjs())
 
   
   const setBackgroundColor = ()=>{
@@ -20,7 +19,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
             let index = i+1;
             let newDate = new Date()
             let str = newDate.toUTCString();
-            console.log(str)
+            // console.log(str)
           if(currentMonth < dayjs().$M){
               return '#FC8181'
           } 
