@@ -1,8 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {
   Flex,
-  ButtonGroup,
-  Button,
   Heading,
   IconButton
 } from '@chakra-ui/core';
@@ -54,43 +52,32 @@ const MobileChooseDateForm = ({
     setTemplateFormOpen(false);
   };
 
-  const applyTemplate = (summary, description, starttime, endtime) => {
-    //creates new date and isolates timezone offset
-    let date = new Date().toString().split("GMT");
-    //takes the first few characters of offset with + or - to be slotted in the start and end times
-    let zone = date[1].split(' ')[0].slice(0, 3);
-    const eventList = selected.map(e => ({
-      end: { dateTime: `${e}T${endtime}:00${zone}:00` },
-      start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-      summary: summary,
-      description: description
-    }));
+  // const applyTemplate = (summary, description, starttime, endtime) => {
+  //   //creates new date and isolates timezone offset
+  //   let date = new Date().toString().split("GMT");
+  //   //takes the first few characters of offset with + or - to be slotted in the start and end times
+  //   let zone = date[1].split(' ')[0].slice(0, 3);
+  //   const eventList = selected.map(e => ({
+  //     end: { dateTime: `${e}T${endtime}:00${zone}:00` },
+  //     start: { dateTime: `${e}T${starttime}:00${zone}:00` },
+  //     summary: summary,
+  //     description: description
+  //   }));
     
-    eventList.forEach(event => {
+  //   eventList.forEach(event => {
      
-      api.addEvent(event)
-    });
-    setSelected([]);
-    reloadPage()
-  };
-
+  //     api.addEvent(event)
+  //   });
+  //   setSelected([]);
+  //   reloadPage()
+  // };
 
 
   const clearSelected = () => {
     setSelected([]);
   }
 
-  //triggers the refresh for the page on submiting calendar information
-  const reloadPage=() =>{
-    const reload=() =>{
-      window.location.reload(false)
-    }
-    reload()
-  }
 
-  // const [summ, setSumm] = useState("");
-  // const [conStart, setConStart] = useState("");
-  // const [conEnd, setConEnd] = useState("");
 
   useEffect(()=>{
     setSumm(summary);
@@ -100,8 +87,6 @@ const MobileChooseDateForm = ({
     if (endtime){
       setConEnd(convertTime(endtime))
     }
-
-    console.log(summ, conStart, conEnd)
   },[starttime, endtime])
   
 
@@ -115,12 +100,10 @@ const MobileChooseDateForm = ({
       setConEnd(endtime)
     }
     setNavState(0)
-    // toggleCalendarConfirm
     setTemplateFormOpen(!templateFormOpen)
     setFormOpen(!formOpen)
     setToggleNav(!toggleNav)
   }
-
 
 
   return (
@@ -131,23 +114,6 @@ const MobileChooseDateForm = ({
       <Heading fontSize="m" fontWeight="normal">
         {conStart}-{conEnd}
       </Heading>
-      
-      {/* <Flex>
-        <ButtonGroup spacing={3}>
-        <Button size="sm" variantColor="blue" onClick={() => {
-            openTemplate()
-          }}>
-          Choose Dates
-          </Button>
-          <IconButton
-          variantColor="red"
-          aria-label="Delete"
-          size="sm"
-            icon="close"
-            onClick={() => handleDelete(id)}
-          />
-          </ButtonGroup>
-        </Flex> */}
 
     </Flex>
   );

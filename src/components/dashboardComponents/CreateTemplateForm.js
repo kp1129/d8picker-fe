@@ -11,7 +11,7 @@ const addTemplate = async (data, { googleId }) => {
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
       template
     );
-    console.log('response.data', response.data)
+    // console.log('response.data', response.data)
     return response.data;
   } catch (error) {
     console.log(error);
