@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 
@@ -6,6 +6,8 @@ import {useAuth} from '../../contexts/auth'
 const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setToggleNav, setTemplateFormOpen, setFormOpen}) => {
 
     const { googleApi, api } = useAuth();
+
+    //takes input from date selection and add template form and sends to google calendar api
     const applyTemplate = (summary, description, starttime, endtime) => {
         //creates new date and isolates timezone offset
         let date = new Date().toString().split("GMT");
@@ -23,9 +25,10 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
           api.addEvent(event)
         });
         setSelected([]);
-        setToggleNav(true)
+        // setToggleNav(true)
         setFormOpen(false);
         setTemplateFormOpen(false)
+        //necessary so that event is sent to api before the page reloads. Page must reload to show new event list that contains the added events
         setTimeout(()=>{window.location.reload(false)}, 500)
       };
 
@@ -35,11 +38,22 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
         applyTemplate(summ, "", conStart, conEnd);
     }
 
+    const[shortSumm, setShortSumm] = useState(summ)
+
+    //truncates the name of an event to fit on the button based on a percentage of the inner width of the window
+    useEffect(()=>{
+      console.log('window.innerwidth', window.innerWidth, (window.innerWidth*.4))
+      if(summ.length > (window.innerWidth*.04)){
+        setShortSumm(`${summ.substring(0,Math.floor((window.innerWidth*.04))-3)}...`)
+      }
+    
+    },[summ])
+
 
     return(
         <ButtonContainer>
             <EventDiv>
-                <Title>{summ}</Title>
+                <Title>{shortSumm}</Title>
                 <Time>{convertTime(conStart)}-{convertTime(conEnd)}</Time>
             </EventDiv>
             <Button onClick={handleClick}>Confirm Dates</Button>
@@ -77,21 +91,23 @@ const convertTime = (time)=>{
   }
 
 
-const ButtonContainer = styled.div`
-    position: absolute;
-    // bottom: 0;
-    top: 90%;
-    left: 20%;
-    // border: 1px solid red;
-    width: 60%;
-    margin: 0 auto;
-    height: 60px;
-    border-radius: 30px;
-    background: #d6d9db;
-    // background: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  const ButtonContainer = styled.div`
+  position: absolute;
+  top: 90%;
+  left: 20%;
+  width: 60%;
+  margin: 0 auto;
+  height: 60px;
+  border-radius: 30px;
+  background: #d6d9db;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  @media(max-width: 768px){
+    width: 80%;
+    left: 10%;
+  }
 `;
 
 const EventDiv = styled.div`
@@ -105,6 +121,10 @@ const EventDiv = styled.div`
 
 const Title = styled.h1`
     font-size: 1.4rem;
+    
+    @media(max-width: 768px){
+      font-size: 1rem;
+    }
 `;
 
 const Time = styled.p`

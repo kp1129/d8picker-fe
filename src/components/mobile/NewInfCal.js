@@ -40,12 +40,12 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
-              height={window.innerHeight-20}
+              height={window.innerHeight-115}
               itemCount={50}
               itemSize={817}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              width={window.innerWidth-10}
+              width={window.innerWidth}
             >
               {({ index, style }) => {
                 let label;
