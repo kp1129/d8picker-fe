@@ -29,10 +29,6 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   
   // state to show users events
   const [events, setEvents] = useState(null);
-
-
-  //shadow to indicate select date mode is enabled
-  const [shadow, setShadow] = useState("");
   
   //sets initial number of months to display
   const [numOfMonths, setNumOfMonths] = useState(24);
@@ -51,15 +47,6 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
       setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
-
-  //highlights calendar based on whether choose dates button is active or not
-  useEffect(() => {
-    if (templateFormOpen) {
-      setShadow("0px 0px 19px 7px rgba(99,179,237,1)")
-    } else {
-      setShadow("");
-    }
-  }, [templateFormOpen])
   
 
   //dynamically sets the state of months based on the state numOfMonths
@@ -146,7 +133,7 @@ const loadMore = (startIndex, stopIndex) => {
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
-        <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
+        <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
         {/* {months.length > 0 && 
