@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 
    
 
-const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr }) => {
+const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
   const {
     currentMonth,
     currentYear,
@@ -37,6 +37,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
       1}-${day < 10 ? 0 : ''}${day}`;
     if(eventNameArr.includes(formattedDate)){
       // let formattedEvent = event[i].start.dateTime.substring(0,10)
+      let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
       return <EventsIndicator
             key={formattedDate}
             event={formattedDate}
@@ -44,6 +45,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
             day={day}
             currentMonth={currentMonth}
             currentYear={currentYear}
+            eventSummary={eventSummary}
             fontSize="2px"
           />
     }

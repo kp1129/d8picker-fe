@@ -65,17 +65,19 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   }
 
 
-
+  const [summaries, setSummaries] = useState([]);
   // get events from api and set to state
   useEffect(() => {
     (async () => {
       try {
         const data = await api.listEvents();
         setEvents(data);
+        let summariesArr = [];
         let formattedEvents = data.map(event=>{
+          summariesArr.push(event.summary)
           return event.start.dateTime.substring(0,10)
         })
-
+        setSummaries(summariesArr)
         setEventNameArr(formattedEvents);
 
         console.log('formattedEvents', formattedEvents)
@@ -118,7 +120,8 @@ const [items, setItems] = useState(nextMonth(50));
         events={events}
         month={items}
         monthList={items}
-        eventNameArr={eventNameArr}/>}
+        eventNameArr={eventNameArr}
+        summaries={summaries}/>}
 
 
         
