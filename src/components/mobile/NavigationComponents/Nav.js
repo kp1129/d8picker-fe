@@ -15,7 +15,7 @@ const Nav = props => {
 
     if (props.NavState === 0) {
         return (
-            <div style={{ height: '100vh' }}>
+            <div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', position: 'fixed', bottom: '0', padding: '3% 2.5%', borderTop: '1px solid #F2F2F2', background: 'white' }}>
                     <div onClick={handleCalendar} style={{ width: '61px', height: '55px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <i className="far fa-calendar-alt" style={{ fontSize: '1.5rem', color: '#BDBDBD' }}></i>
