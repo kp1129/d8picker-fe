@@ -5,8 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
-import useDate from '../../hooks/useDate'
-import Calendar from './MobileCalendar'
+
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -20,16 +19,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
-
-  const {
-    currentMonth,
-    currentYear,
-    daysInMonth,
-    weekDayOfFirstDoM,
-    weekDayOfLastDoM,
-    weekDays
-  } = useDate(dayjs());
+const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -91,8 +81,6 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
         setSummaries(summariesArr)
         setEventNameArr(formattedEvents);
 
-        console.log('formattedEvents', formattedEvents)
-        console.log('summs', summariesArr)
 
       } catch (error) {
         console.log(error);
@@ -103,35 +91,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
 
 const [items, setItems] = useState(nextMonth(50));
 
-const createCalList = () => {
 
-  return items.map((cal, index)=>{
-    return (
-      <Calendar 
-        key={index}
-        api={api}
-        i={index}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={cal}
-        eventNameArr={eventNameArr}
-        summaries={summaries}/>
-    )
-
-
-  });
-
-
-
-} 
-
-console.log('createcallist', createCalList());
-
-const [calList, setCalList] = useState(createCalList())
-  console.log('selected', selected)
   return (
     <Box
       pos="relative"
@@ -160,29 +120,6 @@ const [calList, setCalList] = useState(createCalList())
         monthList={items}
         eventNameArr={eventNameArr}
         summaries={summaries}/>}
-
-        {/* {calList} */}
-
-        {/* {items && items.map((cal, index)=>{
-    return (
-      <Calendar 
-        key={index}
-        api={api}
-        i={index}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={cal}
-        eventNameArr={eventNameArr}
-        summaries={summaries}/>
-    )
-
-
-  })} */}
-
-
         
         {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>

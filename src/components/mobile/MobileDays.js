@@ -15,7 +15,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen, eventName
     weekDayOfLastDoM
   } = useDate(date);
 
-  console.log('mobiledays')
+
 
   return (
     <>

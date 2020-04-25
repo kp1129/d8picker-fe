@@ -30,16 +30,18 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
   } = useDate(date);
 
   
+
   const setBackgroundColor = ()=>{
-      if(isPicked === true){
+
+      if(isPicked === true){  
             let index = i+1;
             let newDate = new Date()
-            let str = newDate.toUTCString();
-            // console.log(str)
-          if(currentMonth < dayjs().$M){
+            let thisYear = newDate.getYear() + 1900;
+          console.log('currentYear', currentYear, 'thisYear', thisYear)
+          if(currentMonth < dayjs().$M && currentYear === thisYear){
               return '#FC8181'
           } 
-          else if (date.$D > index && currentMonth === dayjs().$M){
+          else if (date.$D > index && currentMonth === dayjs().$M && currentYear === thisYear){
                 return '#FC8181'
           }else {
               return 'brand.blue_primary';

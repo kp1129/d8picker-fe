@@ -17,11 +17,7 @@ const Mobile = () => {
     const [toggleNav, setToggleNav] = useState(true);
     const [selected, setSelected] = useState([]);
 
-    const NavBar = styled.div`
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 83vh;`
+    
     if(NavState === 0){
     return(
 
@@ -53,3 +49,9 @@ const Mobile = () => {
 }
 
 export default Mobile
+
+const NavBar = styled.div`
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 83vh;`
