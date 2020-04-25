@@ -149,7 +149,7 @@ const [calList, setCalList] = useState(createCalList())
         <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {items.length > 0 && <InfiniteCal items={items}
+        {/* {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
         setSelected={setSelected}
@@ -159,9 +159,28 @@ const [calList, setCalList] = useState(createCalList())
         month={items}
         monthList={items}
         eventNameArr={eventNameArr}
-        summaries={summaries}/>}
+        summaries={summaries}/>} */}
 
         {/* {calList} */}
+
+        {items && items.map((cal, index)=>{
+    return (
+      <Calendar 
+        key={index}
+        api={api}
+        i={index}
+        selected={selected}
+        setSelected={setSelected}
+        templateFormOpen={templateFormOpen}
+        setTemplateFormOpen={setTemplateFormOpen}
+        events={events}
+        month={cal}
+        eventNameArr={eventNameArr}
+        summaries={summaries}/>
+    )
+
+
+  })}
 
 
         

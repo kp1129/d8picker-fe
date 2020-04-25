@@ -84,5 +84,5 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
           </Cell>
         );
 }
-
-export default Day;
+const MemoizedDay = React.memo(Day);
+export default MemoizedDay;

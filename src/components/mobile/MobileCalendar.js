@@ -85,7 +85,8 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
     );
 };
 
-export default Calendar;
+const MemoizedCal = React.memo(Calendar);
+export default MemoizedCal;
 
 
 
