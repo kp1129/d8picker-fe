@@ -17,10 +17,6 @@ export const matchTheEvents = (eventNameArr, currentYear, currentMonth, day, eve
       return <EventsIndicator
             key={formattedDate}
             event={formattedDate}
-            events={events}
-            day={day}
-            currentMonth={currentMonth}
-            currentYear={currentYear}
             eventSummary={eventSummary}
             fontSize="2px"
           />
@@ -52,24 +48,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
 
   }
 
-//   const mapTheEvents = (eventNameArr) => {
-//     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
-//       1}-${day < 10 ? 0 : ''}${day}`;
-//     if(eventNameArr.includes(formattedDate)){
-//       // let formattedEvent = event[i].start.dateTime.substring(0,10)
-//       let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
-//       return <EventsIndicator
-//             key={formattedDate}
-//             event={formattedDate}
-//             events={events}
-//             day={day}
-//             currentMonth={currentMonth}
-//             currentYear={currentYear}
-//             eventSummary={eventSummary}
-//             fontSize="2px"
-//           />
-//     }
-//   }
+
 
   return (
           <Cell
@@ -86,7 +65,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
               justify="space-between"
               h="100%"
               py={[1, 8]}
-            //   backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
               backgroundColor={setBackgroundColor()}
               color={isPicked ? 'white' : 'inherit'}
               onClick={()=>{
@@ -101,19 +79,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
               >
                 {day}
               </Box>
-              {/* {events &&
-                events.map(event => (
-                  <div key={event.id}>
-                    <EventsIndicator
-                      key={event.id}
-                      event={event}
-                      day={day}
-                      currentMonth={currentMonth}
-                      currentYear={currentYear}
-                      fontSize="2px"
-                    />
-                  </div>
-                ))} */}
                 {eventNameArr && matchTheEvents(eventNameArr, currentYear, currentMonth, day, events, summaries)}
             </Flex>
           </Cell>

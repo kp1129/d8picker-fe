@@ -61,7 +61,6 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
                   setTemplateFormOpen={setTemplateFormOpen}
                   events={events}
                   month={items[index]}
-                  monthList={month}
                   eventNameArr={eventNameArr}
                   summaries={summaries}
                   />

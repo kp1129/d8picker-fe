@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
+import useDate from '../../hooks/useDate'
+import Calendar from './MobileCalendar'
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -19,6 +21,15 @@ const getTemplateList = async ({ googleId }) => {
 };
 
 const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
+
+  const {
+    currentMonth,
+    currentYear,
+    daysInMonth,
+    weekDayOfFirstDoM,
+    weekDayOfLastDoM,
+    weekDays
+  } = useDate(dayjs());
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -90,10 +101,37 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   }, [api]);
 
 
-const [items, setItems] = useState(nextMonth(50));
+const [items, setItems] = useState(nextMonth(12));
+
+const createCalList = () => {
+
+  return items.map((cal, index)=>{
+    return (
+      <Calendar 
+        key={index}
+        api={api}
+        i={index}
+        selected={selected}
+        setSelected={setSelected}
+        templateFormOpen={templateFormOpen}
+        setTemplateFormOpen={setTemplateFormOpen}
+        events={events}
+        month={cal}
+        eventNameArr={eventNameArr}
+        summaries={summaries}/>
+    )
+
+
+  });
 
 
 
+} 
+
+console.log('createcallist', createCalList());
+
+const [calList, setCalList] = useState(createCalList())
+  console.log('selected', selected)
   return (
     <Box
       pos="relative"
@@ -122,6 +160,8 @@ const [items, setItems] = useState(nextMonth(50));
         monthList={items}
         eventNameArr={eventNameArr}
         summaries={summaries}/>}
+
+        {/* {calList} */}
 
 
         
