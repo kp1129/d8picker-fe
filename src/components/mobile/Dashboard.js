@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
-import NewInfCal from './NewInfCal'
+import InfiniteCal from './InfiniteCal'
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -111,7 +111,7 @@ const [items, setItems] = useState(nextMonth(50));
         <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {items.length > 0 && <NewInfCal items={items}
+        {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
         setSelected={setSelected}
