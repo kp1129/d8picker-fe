@@ -101,7 +101,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   }, [api]);
 
 
-const [items, setItems] = useState(nextMonth(12));
+const [items, setItems] = useState(nextMonth(50));
 
 const createCalList = () => {
 
@@ -149,7 +149,7 @@ const [calList, setCalList] = useState(createCalList())
         <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {/* {items.length > 0 && <InfiniteCal items={items}
+        {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
         setSelected={setSelected}
@@ -159,11 +159,11 @@ const [calList, setCalList] = useState(createCalList())
         month={items}
         monthList={items}
         eventNameArr={eventNameArr}
-        summaries={summaries}/>} */}
+        summaries={summaries}/>}
 
         {/* {calList} */}
 
-        {items && items.map((cal, index)=>{
+        {/* {items && items.map((cal, index)=>{
     return (
       <Calendar 
         key={index}
@@ -180,7 +180,7 @@ const [calList, setCalList] = useState(createCalList())
     )
 
 
-  })}
+  })} */}
 
 
         
