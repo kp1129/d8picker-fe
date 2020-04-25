@@ -7,6 +7,26 @@ import dayjs from 'dayjs';
 
    
 
+
+export const matchTheEvents = (eventNameArr, currentYear, currentMonth, day, events, summaries) => {
+    let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
+      1}-${day < 10 ? 0 : ''}${day}`;
+    if(eventNameArr.includes(formattedDate)){
+      // let formattedEvent = event[i].start.dateTime.substring(0,10)
+      let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
+      return <EventsIndicator
+            key={formattedDate}
+            event={formattedDate}
+            events={events}
+            day={day}
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            eventSummary={eventSummary}
+            fontSize="2px"
+          />
+    }
+  }
+
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
   const {
     currentMonth,
@@ -32,24 +52,24 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
 
   }
 
-  const mapTheEvents = (eventNameArr) => {
-    let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
-      1}-${day < 10 ? 0 : ''}${day}`;
-    if(eventNameArr.includes(formattedDate)){
-      // let formattedEvent = event[i].start.dateTime.substring(0,10)
-      let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
-      return <EventsIndicator
-            key={formattedDate}
-            event={formattedDate}
-            events={events}
-            day={day}
-            currentMonth={currentMonth}
-            currentYear={currentYear}
-            eventSummary={eventSummary}
-            fontSize="2px"
-          />
-    }
-  }
+//   const mapTheEvents = (eventNameArr) => {
+//     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
+//       1}-${day < 10 ? 0 : ''}${day}`;
+//     if(eventNameArr.includes(formattedDate)){
+//       // let formattedEvent = event[i].start.dateTime.substring(0,10)
+//       let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
+//       return <EventsIndicator
+//             key={formattedDate}
+//             event={formattedDate}
+//             events={events}
+//             day={day}
+//             currentMonth={currentMonth}
+//             currentYear={currentYear}
+//             eventSummary={eventSummary}
+//             fontSize="2px"
+//           />
+//     }
+//   }
 
   return (
           <Cell
@@ -94,7 +114,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
                     />
                   </div>
                 ))} */}
-                {eventNameArr && mapTheEvents(eventNameArr)}
+                {eventNameArr && matchTheEvents(eventNameArr, currentYear, currentMonth, day, events, summaries)}
             </Flex>
           </Cell>
         );

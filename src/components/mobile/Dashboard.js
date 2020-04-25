@@ -81,7 +81,7 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
         setEventNameArr(formattedEvents);
 
         console.log('formattedEvents', formattedEvents)
-
+        console.log('summs', summariesArr)
 
       } catch (error) {
         console.log(error);
