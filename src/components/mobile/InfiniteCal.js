@@ -66,6 +66,7 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
+              // style={{border: '1px solid blue'}}
               height={window.innerHeight-115}
               itemCount={50}
               itemSize={817}
