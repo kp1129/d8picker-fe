@@ -92,7 +92,18 @@ function App() {
 
   if(googleApi.currentUser){
     return (
-      <Mobile></Mobile>
+      <Stack pos="relative" w="100%" minHeight="100vh">
+            {/* <Header userState={userState} /> */}
+            <Route path="/">
+              <Authenticate />
+            </Route>
+            {googleApi.currentUser && <Route exact path="/">
+              <Welcome />
+            </Route>}
+            <PrivateRoute path="/:id/dashboard">
+              <Mobile setUserState={setUserState}/>
+            </PrivateRoute>
+          </Stack>
     )
   } else {
 
