@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 
 
+
 const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventDatesArr, summaries}) => {
 
  
@@ -41,30 +42,13 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
             <MonthName className="heading">{month.format('MMMM')} {date.format('YYYY')}</MonthName>
           </MonthNameContainer>
         </Flex>
-        {/* <Grid
-          className="weekdays-grid"
-          templateColumns="repeat(7, 1fr)"
-          textAlign="right"
-          borderWidth="1px"
-          borderColor="gray.200"
-        >
-          {weekDays.map(d => (
-            <Cell
-              className="weekdays-item"
-              fontSize={['lg', '3xl']}
-              height="auto"
-              key={d}
-            >
-              {d}
-            </Cell>
-          ))}
-        </Grid> */}
         <Grid
           className="calendar-days-grid"
           templateColumns="repeat(7, 0fr)"
           textAlign="right"
           style={{ width: '100%'}}
         >
+          
           <Days
             events={events}
             date={date}

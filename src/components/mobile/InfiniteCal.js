@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
+import AddEventButton from './AddEventButton'
 
 
 const LOADING = 1;
@@ -52,7 +53,7 @@ const Row = ({ data, index, style }) => {
   );
 }
 
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries}) {
+export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries, setNavState}) {
 
   
   
@@ -79,6 +80,8 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
             </List>
           )}
         </InfiniteLoader>
+          <AddEventButton setNavState={setNavState}/>
       </Fragment>
     );
   }
+

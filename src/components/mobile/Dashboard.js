@@ -9,6 +9,7 @@ import Cell from '../../components/dashboardComponents/calendarComponents/Cell'
 import TopNav from './NavigationComponents/TopNav'
 
 
+
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
   try {
@@ -21,7 +22,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
+const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav, setNavState}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -142,7 +143,8 @@ const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         month={items}
         monthList={items}
         eventDatesArr={eventDatesArr}
-        summaries={summaries}/>}
+        summaries={summaries}
+        setNavState={setNavState}/>}
         
         {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
