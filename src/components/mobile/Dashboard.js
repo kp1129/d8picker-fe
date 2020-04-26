@@ -29,20 +29,20 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
   const { googleApi, api } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
 
+  //list of event templates
   const [templateList, setTemplateList] = useState([]);
   
-  // state to show users events
+  // state for full user objects from calendar api
   const [events, setEvents] = useState(null);
 
+  //array of only the formatted date strings of events from calendar api
   const [eventDatesArr, setEventDatesArr] = useState([])
   
-  //sets initial number of months to display
-  const [numOfMonths, setNumOfMonths] = useState(24);
+  //array of only event name strings from calendar api
+  const [summaries, setSummaries] = useState([]);
 
-
-
-  
-
+  //array of weekdays which sits at top of calendar
+  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 
   //gets event templates assigned to user from backend
@@ -53,23 +53,7 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
     })();
   }, [currentUser, formOpen]);
   
-
-  //dynamically sets the state of months based on the state numOfMonths
-  // useEffect(()=>{
-  //   setMonths(nextMonth(numOfMonths));
-  // },[templateFormOpen])
   
-  //helper function to loop create months in the future based on numOfMonths
-  const nextMonth = (numOfMonths) => {
-    let arr = [];
-    for(let i=0; i<numOfMonths; i++){
-      arr.push(dayjs().add(i,'month'));
-    }
-    return arr;
-  }
-
-
-  const [summaries, setSummaries] = useState([]);
   // get events from api and set to state
   useEffect(() => {
     (async () => {
@@ -92,11 +76,21 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
   }, [api]);
 
 
+  //helper function to loop through and create months in the future based on number passed into the function
+  const nextMonth = (numOfMonths) => {
+    let arr = [];
+    for(let i=0; i<numOfMonths; i++){
+      arr.push(dayjs().add(i,'month'));
+    }
+    return arr;
+  }
+
+//sets array of months based on number passed in to give to the infinite list as a starting number (items name chosen as suggested by react-window examples)
 const [items, setItems] = useState(nextMonth(50));
 
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   return (
     <>
+    {/*toggle nav toggles off nav to indicate in date selection mode, this changes the header to reflect this*/}
     {toggleNav === false && <Container>
           <Cancel onClick={()=>{
             setToggleNav(true);
@@ -108,14 +102,9 @@ const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
           </BtnDiv>
       </Container>}
     <Box
-      // pos="relative"
-      // backgroundColor="brand.lightgray"
-      // p={[4, 16]}
       maxHeight="100vh"
       style={{marginTop: window.innerHeight*.067}}
     >
-      
-      
       <Grid
         width="100%"
         gap={4}
@@ -123,44 +112,44 @@ const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" backgroundColor="white">
-        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        <Box className="calendar" backgroundColor="#F8F8F8"  style={{width: "100%", height: '40px'}}>
-        <Grid
-          className="weekdays-grid"
-          templateColumns="repeat(7, 1fr)"
-          textAlign="right"
-        >
-        {weekDays.map(d => (
-            <Cell
-              className="weekdays-item"
-              fontSize={['lg', '3xl']}
-              height="auto"
-              key={d}
-            >
-              {d}
-            </Cell>
-          ))}
-        </Grid>
-        </Box>
-        {items.length > 0 && <InfiniteCal items={items}
-        api={api}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={items}
-        monthList={items}
-        eventDatesArr={eventDatesArr}
-        summaries={summaries}
-        setNavState={setNavState}/>}
-        
-        {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
-      </div>
+            <Box className="calendar" backgroundColor="#F8F8F8"  style={{width: "100%", height: '40px'}}>
+              <Grid
+                className="weekdays-grid"
+                templateColumns="repeat(7, 1fr)"
+                textAlign="right"
+              >
+                {weekDays.map(d => (
+                    <Cell
+                      className="weekdays-item"
+                      fontSize={['lg', '3xl']}
+                      height="auto"
+                      key={d}
+                    >
+                      {d}
+                    </Cell>
+                  ))}
+              </Grid>
+            </Box>
+            {items.length > 0 && <InfiniteCal items={items}
+            api={api}
+            selected={selected}
+            setSelected={setSelected}
+            templateFormOpen={templateFormOpen}
+            setTemplateFormOpen={setTemplateFormOpen}
+            events={events}
+            month={items}
+            monthList={items}
+            eventDatesArr={eventDatesArr}
+            summaries={summaries}
+            setNavState={setNavState}/>}
+            
+            {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
+          </div>
         
           
-        </Box>
+          </Box>
       </Grid>
     </Box>
     </>
@@ -168,18 +157,6 @@ const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 };
 
 export default Dashboard;
-
-// const Groups = () => {
-//   return(
-//       <Container>
-//           <Cancel>Cancel</Cancel>
-//           <Title>Choose Group</Title>
-//           <BtnDiv>
-//               <Btn>+</Btn>
-//           </BtnDiv>
-//       </Container>
-//   )
-// }
 
 
 const Container = styled.div`
@@ -215,19 +192,4 @@ const BtnDiv = styled.div`
   height: 40%;
   display: flex;
   justify-content: flex-end;
-`;
-
-const Btn = styled.div`
-  background: white;
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #28807D;
-  border: 3px solid #28807D;
-  font-size: 40px;
-  cursor: pointer;
-  
 `;
