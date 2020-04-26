@@ -11,9 +11,6 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
         setTemplateFormOpen(false)
         setSelected([])
         setToggleNav(true)
-        if(num===1){
-            setToggleNav(false)
-        }
     }
 
            return( <div>
