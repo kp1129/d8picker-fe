@@ -81,8 +81,9 @@ const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, 
           />
             </FixedMobile>
     )
-
-    
 }
 
 export default MobileEvents
+
+
+

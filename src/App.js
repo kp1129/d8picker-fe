@@ -47,10 +47,6 @@ function App() {
     setUserState(currentUser)
   },[currentUser])
 
-
-  
-  
-  
   
   
   if (googleApi.isLoading) {
@@ -93,8 +89,28 @@ function App() {
         )
       }
 } else if(dimensions.width <= breakPoint){
+
+  if(googleApi.currentUser){
+    return (
+      <Mobile></Mobile>
+    )
+  } else {
+
+  }
+
   return(
-    <Mobile></Mobile>
+    <Stack pos="relative" w="100%" minHeight="100vh">
+            <Header />
+            <Route path="/authenticate/google">
+              <Authenticate />
+            </Route>
+            <Route exact path="/">
+              <Welcome />
+            </Route>
+            <PrivateRoute path="/:id/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+          </Stack>
   )
 }
 }
