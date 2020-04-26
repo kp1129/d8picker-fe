@@ -80,7 +80,7 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
             </List>
           )}
         </InfiniteLoader>
-          <AddEventButton setNavState={setNavState}/>
+          {!templateFormOpen && <AddEventButton setNavState={setNavState}/>}
       </Fragment>
     );
   }

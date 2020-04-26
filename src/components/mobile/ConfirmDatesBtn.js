@@ -93,7 +93,7 @@ const convertTime = (time)=>{
 
   const ButtonContainer = styled.div`
   position: absolute;
-  top: 90%;
+  top: 80%;
   left: 20%;
   width: 60%;
   margin: 0 auto;
