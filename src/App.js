@@ -94,7 +94,7 @@ function App() {
       }
 } else if(dimensions.width <= breakPoint){
   return(
-    <Mobile></Mobile>
+    <Mobile/>
   )
 }
 }

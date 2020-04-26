@@ -29,6 +29,7 @@ const MobileTemplateContainer = (props) => {
 
   return (
           <Flex
+            style={{marginTop: "20%"}}
             className="templateArea"
             direction="column"
             align="center"
