@@ -42,7 +42,6 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
 
     //truncates the name of an event to fit on the button based on a percentage of the inner width of the window
     useEffect(()=>{
-      console.log('window.innerwidth', window.innerWidth, (window.innerWidth*.4))
       if(summ.length > (window.innerWidth*.04)){
         setShortSumm(`${summ.substring(0,Math.floor((window.innerWidth*.04))-3)}...`)
       }

@@ -5,7 +5,7 @@ import DisabledDays from '../dashboardComponents/calendarComponents/DIsabledDays
 
 
 
-const Days = ({ events, date, selected, setSelected, templateFormOpen, eventNameArr, summaries }) => {
+const Days = ({ events, date, selected, setSelected, templateFormOpen, eventDatesArr, summaries }) => {
   const {
     daysInMonth,
     currentDay,
@@ -56,7 +56,7 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen, eventName
           
 
         return (
-          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events} eventNameArr={eventNameArr} summaries={summaries}/>
+          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events} eventDatesArr={eventDatesArr} summaries={summaries}/>
         );
       })}
 

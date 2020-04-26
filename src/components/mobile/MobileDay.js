@@ -8,22 +8,34 @@ import dayjs from 'dayjs';
    
 
 
-export const matchTheEvents = (eventNameArr, currentYear, currentMonth, day, events, summaries) => {
+
+
+const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventDatesArr, summaries }) => {
+
+
+  const matchTheEvents = () => {
+    
     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
       1}-${day < 10 ? 0 : ''}${day}`;
-    if(eventNameArr.includes(formattedDate)){
-      // let formattedEvent = event[i].start.dateTime.substring(0,10)
-      let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
-      return <EventsIndicator
-            key={formattedDate}
-            event={formattedDate}
-            eventSummary={eventSummary}
-            fontSize="2px"
-          />
+    if(eventDatesArr.includes(formattedDate)){
+      let eventSummary;
+      return eventDatesArr.map((eventName, i) => {
+        if(eventName === formattedDate){
+          eventSummary = summaries[i];
+          return <EventsIndicator
+                key={i}
+                event={formattedDate}
+                eventSummary={eventSummary}
+                fontSize="2px"
+              />
+        }
+      }); 
     }
   }
 
-const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
+  
+
+
   const {
     currentMonth,
     currentYear,
@@ -37,7 +49,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
             let index = i+1;
             let newDate = new Date()
             let thisYear = newDate.getYear() + 1900;
-          console.log('currentYear', currentYear, 'thisYear', thisYear)
           if(currentMonth < dayjs().$M && currentYear === thisYear){
               return '#FC8181'
           } 
@@ -81,10 +92,12 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
               >
                 {day}
               </Box>
-                {eventNameArr && matchTheEvents(eventNameArr, currentYear, currentMonth, day, events, summaries)}
+              <div>
+                {eventDatesArr && matchTheEvents()}
+
+              </div>
             </Flex>
           </Cell>
         );
 }
-const MemoizedDay = React.memo(Day);
-export default MemoizedDay;
+export default Day;

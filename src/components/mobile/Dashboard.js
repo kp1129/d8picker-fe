@@ -30,13 +30,12 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
   // state to show users events
   const [events, setEvents] = useState(null);
 
-  const [eventNameArr, setEventNameArr] = useState([])
+  const [eventDatesArr, setEventDatesArr] = useState([])
   
   //sets initial number of months to display
   const [numOfMonths, setNumOfMonths] = useState(24);
 
-  //array which will hold all of the months on the DOM
-  const [months, setMonths] = useState([])
+
 
   
 
@@ -52,9 +51,9 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
   
 
   //dynamically sets the state of months based on the state numOfMonths
-  useEffect(()=>{
-    setMonths(nextMonth(numOfMonths));
-  },[templateFormOpen])
+  // useEffect(()=>{
+  //   setMonths(nextMonth(numOfMonths));
+  // },[templateFormOpen])
   
   //helper function to loop create months in the future based on numOfMonths
   const nextMonth = (numOfMonths) => {
@@ -79,7 +78,7 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
           return event.start.dateTime.substring(0,10)
         })
         setSummaries(summariesArr)
-        setEventNameArr(formattedEvents);
+        setEventDatesArr(formattedEvents);
 
 
       } catch (error) {
@@ -118,12 +117,11 @@ const [items, setItems] = useState(nextMonth(50));
         events={events}
         month={items}
         monthList={items}
-        eventNameArr={eventNameArr}
+        eventDatesArr={eventDatesArr}
         summaries={summaries}/>}
         
         {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
-      {/* <button>load more months</button> */}
         
           
         </Box>

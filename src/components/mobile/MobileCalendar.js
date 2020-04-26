@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventNameArr, summaries}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventDatesArr, summaries}) => {
 
  
 
@@ -77,7 +77,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
             currentDay={currentDay}
             currentMonth={currentMonth}
             currentYear={currentYear}
-            eventNameArr={eventNameArr}
+            eventDatesArr={eventDatesArr}
             summaries={summaries}
           />
         </Grid>
