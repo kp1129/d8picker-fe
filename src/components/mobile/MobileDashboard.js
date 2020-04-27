@@ -1,37 +1,20 @@
 import React, { useState, useEffect} from 'react';
 import { Box, Grid } from '@chakra-ui/core';
-import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
-import Cell from '../../components/dashboardComponents/calendarComponents/Cell'
-import TopNav from './NavigationComponents/TopNav'
+import Cell from '../dashboardComponents/calendarComponents/Cell'
 import styled from 'styled-components'
 
 
 
-//gets event templates from backend
-const getTemplateList = async ({ googleId }) => {
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav, setNavState}) => {
+const Dashboard = ({setFormOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav, setNavState}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
-  const { currentUser, handleSignOut } = googleApi;
 
-  //list of event templates
-  const [templateList, setTemplateList] = useState([]);
-  
   // state for full user objects from calendar api
   const [events, setEvents] = useState(null);
 
@@ -44,14 +27,6 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
   //array of weekdays which sits at top of calendar
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-
-  //gets event templates assigned to user from backend
-  useEffect(() => {
-    (async () => {
-      const templates = await getTemplateList(currentUser);
-      setTemplateList(templates);
-    })();
-  }, [currentUser, formOpen]);
   
   
   // get events from api and set to state

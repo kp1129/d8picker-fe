@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const convertTime = (time)=>{
     // code converts response.data.starttime to number
 
@@ -23,4 +25,18 @@ export const convertTime = (time)=>{
           return time + 'am';
         }
     }
+}
+
+export const addTemplate = async (data, { googleId }) => {
+  const template = { ...data, googleId };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
+      template
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
+};
+
