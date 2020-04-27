@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {MobileContext, MobileDashboardContext} from '../../contexts/MobileContexts';
+import React, { useState, useEffect} from 'react';
 import dayjs from 'dayjs';
 import {Flex, Grid, Box } from '@chakra-ui/core';
 import Days from './MobileDays';
-import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
@@ -11,30 +9,11 @@ import styled from 'styled-components';
 //need month and i
 const Calendar = ({month, i}) => {
 
-  const {events, eventDatesArr, summaries} = useContext(MobileDashboardContext);
 
 
-  const {templateFormOpen, selected, setSelected} = useContext(MobileContext);
- 
-
-  const currentDay = dayjs();
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
 
-
-  
-  
-  const {
-    currentMonth,
-    currentYear,
-    daysInMonth,
-    weekDayOfFirstDoM,
-    weekDayOfLastDoM,
-    weekDays
-  } = useDate(date);
-  
-
-  
 
   useEffect(()=>{
     setDate(month)
