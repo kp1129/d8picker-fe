@@ -79,13 +79,9 @@ const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, 
           />
             </FixedMobile>
     )
-
-    
 }
 
 export default MobileEvents
 
 
-const FixedMobile = styled.div`
-    border: 5px black;
-    `
+

@@ -47,10 +47,6 @@ function App() {
     setUserState(currentUser)
   },[currentUser])
 
-
-  
-  
-  
   
   
   if (googleApi.isLoading) {
@@ -93,8 +89,39 @@ function App() {
         )
       }
 } else if(dimensions.width <= breakPoint){
+
+  if(googleApi.currentUser){
+    return (
+      <Stack pos="relative" w="100%" minHeight="100vh">
+            {/* <Header userState={userState} /> */}
+            <Route path="/">
+              <Authenticate />
+            </Route>
+            {googleApi.currentUser && <Route exact path="/">
+              <Welcome />
+            </Route>}
+            <PrivateRoute path="/:id/dashboard">
+              <Mobile setUserState={setUserState}/>
+            </PrivateRoute>
+          </Stack>
+    )
+  } else {
+
+  }
+
   return(
-    <Mobile/>
+    <Stack pos="relative" w="100%" minHeight="100vh">
+            <Header />
+            <Route path="/authenticate/google">
+              <Authenticate />
+            </Route>
+            <Route exact path="/">
+              <Welcome />
+            </Route>
+            <PrivateRoute path="/:id/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+          </Stack>
   )
 }
 }
