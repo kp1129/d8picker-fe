@@ -1,13 +1,13 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {MobileContext} from '../../../contexts/MobileContexts'
 import styled from 'styled-components'
-import {convertTime} from '../../../utils/helperFunctions'
+import {convertTime, handleDelete, deleteTemplate} from '../../../utils/helperFunctions'
 
 
-const MobileChooseDateForm = ({starttime, endtime, summary}) => {
+const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
 
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm} = useContext(MobileContext);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList} = useContext(MobileContext);
 
   
 
@@ -44,9 +44,27 @@ const MobileChooseDateForm = ({starttime, endtime, summary}) => {
     setToggleNav(false)
   }
 
+  const [del, setDel] = useState(false)
+
+  const handleTouch = e => {
+    e.stopPropagation()
+    setTimeout(()=>{console.log('touched long time'); setDel(!del)},1000)
+  }
+
+  const setBackground = () => {
+    return del ? "#FC8181" : "white"
+  }
+
+  const handleMobileDelete = e => {
+    e.stopPropagation();
+    console.log('deleted')
+    handleDelete(id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
+  }
+
 
   return (
-    <Container onClick={handleCalendarView}>
+    <Container onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}}>
+      {del && <Delete onClick={(e)=>handleMobileDelete(e)}>X</Delete>}
       <EventDiv>
         <Title>
           {summary}
@@ -73,10 +91,8 @@ const Container = styled.div`
     // flex-direction: column;
     border-bottom: 1px solid #BDBDBD;
     padding: 2% 3%;
-    background: white; 
-    &:hover{
-      background: #BDBDBD;
-    }
+    // background: white; 
+
 
 `;
 
@@ -119,18 +135,13 @@ const ArrowDiv = styled.div`
 
 `;
 
-const Btn = styled.div`
-    background: white;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
+const Delete = styled.div`
+    // background: red;
+    color: white;
+    width: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #28807D;
-    border: 3px solid #28807D;
-    font-size: 40px;
-    cursor: pointer;
     
 `;
 
