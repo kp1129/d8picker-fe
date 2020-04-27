@@ -7,7 +7,6 @@ import InfiniteCalendar from './InfiniteCalendar'
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import NewInfCal from './NewInfCal'
 import Hamburger from './Hamburger/TopNav';
-import NewEventButton from './NavigationComponents/NewEventButton';
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
