@@ -5,6 +5,7 @@ import { useAuth } from '../../../contexts/auth';
 const Hamburger = () => {
   const { googleApi} = useAuth();
   const { currentUser, handleSignOut } = googleApi;
+  console.log("In hamburger")
 
   return (
     <div>
