@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/core';
 import { useAuth } from '../../../contexts/auth';
 import axios from 'axios'
+import styled from 'styled-components'
 
 
 const MobileChooseDateForm = ({
@@ -88,15 +89,20 @@ const MobileChooseDateForm = ({
 
 
   return (
-    <Flex direction="column" align="center" justify="center" my={2} onClick={handleCalendarView}>
-      <Heading fontSize="m" fontWeight="normal">
-        {summary}
-      </Heading>
-      <Heading fontSize="m" fontWeight="normal">
-        {conStart}-{conEnd}
-      </Heading>
+    <Container onClick={handleCalendarView}>
+      <EventDiv>
+        <Title>
+          {summary}
+        </Title>
+        <Time fontSize="m" fontWeight="normal">
+          {conStart}-{conEnd}
+        </Time>
+      </EventDiv>
+      <ArrowDiv>
+        >
+      </ArrowDiv>
 
-    </Flex>
+    </Container>
   );
 };
 
@@ -132,3 +138,71 @@ const MobileChooseDateForm = ({
 
 
 export default MobileChooseDateForm;
+
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    // flex-direction: column;
+    border-bottom: 1px solid #BDBDBD;
+    padding: 2% 3%;
+    background: white; 
+    &:hover{
+      background: #BDBDBD;
+    }
+
+`;
+
+const EventDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    font-size: 20px;
+    line-height: 27px;
+`;
+
+const Title = styled.p`
+    width: 90%;
+    // text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 27px;
+`;
+
+const Time = styled.p`
+    // width: 60%;
+    // text-align: center;
+    font-weight: bold;
+    font-size: .75rem;
+    line-height: 27px;
+`;
+
+
+
+const ArrowDiv = styled.div`
+    width: 10%;
+    display: flex;
+    align-items: center;
+    font-size: 210%;
+    color: #BDBDBD;
+    cursor: pointer;
+    &:hover{
+      color: white;
+    }
+
+`;
+
+const Btn = styled.div`
+    background: white;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #28807D;
+    border: 3px solid #28807D;
+    font-size: 40px;
+    cursor: pointer;
+    
+`;
+

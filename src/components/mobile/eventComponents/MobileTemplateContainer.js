@@ -2,6 +2,7 @@ import React from 'react';
 import {Flex, Heading, Button} from '@chakra-ui/core';
 import MobileChooseDateForm from './MobileChooseDateForm';
 import CreateTemplateForm from '../../dashboardComponents/CreateTemplateForm'
+import styled from 'styled-components'
 
 
 
@@ -28,19 +29,11 @@ const MobileTemplateContainer = (props) => {
 
 
   return (
-          <Flex
-            style={{marginTop: "20%"}}
-            className="templateArea"
-            direction="column"
-            align="center"
-            justify="center"
-            w="100%"
-            p={8}
-            mb={4}
-            backgroundColor="white"
-            borderRadius="10px"
-          >
-            <Heading as="h2">Events</Heading>
+          <>
+          <Container>
+            <Title as="h2">Events</Title>
+            </Container>
+            <EventDiv>
             {templateList &&
               templateList.map(t => (
                 <MobileChooseDateForm
@@ -71,9 +64,35 @@ const MobileTemplateContainer = (props) => {
                 />
                 
               ))}
-            {formOpen && <CreateTemplateForm setFormOpen={setFormOpen} setTemplateList={setTemplateList} currentUser={currentUser} formOpen={formOpen}/>}
-          </Flex>
+              </EventDiv>
+          </>
   );
 };
 
 export default MobileTemplateContainer;
+
+
+
+const Container = styled.div`
+    width: 100%;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #BDBDBD;
+    padding: 5% 2.5% 2.5% 2.5%;
+    position: fixed;
+    top: 0;
+    background: white; 
+`;
+
+const Title = styled.h1`
+    width: 60%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    line-height: 27px;
+`;
+
+const EventDiv = styled.div`
+  margin-top: 20%;
+`
