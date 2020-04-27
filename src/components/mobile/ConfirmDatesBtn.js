@@ -64,7 +64,7 @@ export default ConfirmDatesBtn
 
   const ButtonContainer = styled.div`
   position: absolute;
-  top: 90%;
+  top: 70%;
   left: 20%;
   width: 60%;
   margin: 0 auto;
