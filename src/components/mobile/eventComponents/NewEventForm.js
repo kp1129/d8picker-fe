@@ -12,6 +12,7 @@ const EventForm = styled.div`
     // background-color: #AFC9D9;
     background-color: #E5E5E5;
     width: 100%;
+    height: 100vh;
 `
 const NewEventHead = styled.div`
     background-color: white;
@@ -61,8 +62,8 @@ const NewEventForm = props => {
 
     return (
         <EventForm>
-            <div style={{ background: 'white', marginBottom: '5%', paddingTop: '25%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
-                <p style={{ paddingLeft: '2%', color: '#28807D' }}>Cancel</p>
+            <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
+                <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={()=>setNavState(0)}>Cancel</p>
                 <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
             </div>
 
@@ -91,9 +92,11 @@ const NewEventForm = props => {
                     />
                 </div>
 
-                <div>
-                <div style={{ paddingLeft: '5%' }}>Time</div>
-                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #E5E5E5', paddingTop: '3%', paddingBottom: '3%' }}>
+                <div style={{background: 'white'}}>
+                <div style={{ paddingLeft: '5%', background:'#E5E5E5' }}>Time</div>
+                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', 
+                    // borderBottom: '1px solid #E5E5E5',
+                     paddingTop: '3%', paddingBottom: '3%', marginBottom: '1%' }}>
                         <p style={{ paddingLeft: '5%' }}>starts</p>
                         <Input
                             type="time"
@@ -104,8 +107,8 @@ const NewEventForm = props => {
                             onChange={handleChange}
                         />
                     </div>
-
-                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', paddingTop: '3%' }}>
+                    <hr style={{width: '90%', margin: "0 auto"}}/>
+                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', paddingTop: '3%', marginBottom: '1%' }}>
                         <p style={{ paddingLeft: '5%' }}>ends</p>
                         <Input
                             type="time"
@@ -119,7 +122,7 @@ const NewEventForm = props => {
                 </div>
 
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                <Button type="submit" style={{ width: '90%', background: '#28807D', color: 'white', textAlign: 'center', marginTop: '8%', marginBottom: '8%', paddingLeft: 'auto', paddingRight: 'auto', borderRadius: '10px' }}onClick={()=>{
+                <button type="submit" style={{ width: '70%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}onClick={()=>{
                     setToggleNav(false);
                     setTemplateFormOpen(true)
                     setFormOpen(true)
@@ -127,7 +130,7 @@ const NewEventForm = props => {
                     setConStart(input.starttime);
                     setConEnd(input.endtime);
                     setNavState(0);
-                }}>Select dates</Button>
+                }}>Select dates</button>
                 </div>
 
             </form>
