@@ -42,7 +42,7 @@ const Hamburger = () => {
               src={img}
               alt="avatar"
               // mb={2}
-              style={{marginTop: window.innerHeight*-.068, marginLeft: "2%", marginBottom: "2%"}}
+              style={{marginTop: window.innerHeight*-.072, marginLeft: "2%", marginBottom: "2%"}}
             />
           <ul>
             <li onClick={() => {

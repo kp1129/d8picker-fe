@@ -18,7 +18,7 @@ const Btn = styled.div`
     color: white;
     font-size: 50px;
     position: absolute;
-    top: 80%;
+    top: 70%;
     left: 85%;
     cursor: pointer;
     &:hover{
