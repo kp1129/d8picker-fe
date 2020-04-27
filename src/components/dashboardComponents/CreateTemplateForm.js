@@ -1,26 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DashboardContext} from '../../contexts/DesktopContexts'
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
-import axios from 'axios';
+import {addTemplate} from '../../utils/helperFunctions'
 
+const CreateTemplateForm = () => {
 
-const addTemplate = async (data, { googleId }) => {
-  const template = { ...data, googleId };
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
-      template
-    );
-    console.log('response.data', response.data)
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const {
+    formOpen,
+    setFormOpen,
+    setTemplateList,
+    currentUser} = useContext(DashboardContext);
 
-const CreateTemplateForm = (props) => {
-  const { setFormOpen, setTemplateList, currentUser, formOpen } = props;
-  // const { googleApi, api } = useAuth();
+    
   const { register, handleSubmit } = useForm();
 
   // Submit for template form

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAuth} from '../contexts/auth'
 import { Heading, Text, Flex, Grid, Image, Button } from '@chakra-ui/core';
-// import LoginButton from '../components/LoginButton';
+
 
 import graphic from '../img/undraw_calendar_dutt.svg';
 

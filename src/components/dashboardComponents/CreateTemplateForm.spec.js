@@ -24,24 +24,7 @@ describe('CreateTemplateForm', ()=>{
         expect(auth.useAuth.mock.calls.length).toEqual(1);
     })
 
-    // it('should not submit form', ()=>{
-    //     const wrapper = shallow(<CreateTemplateForm formOpen={false}/>)
-    //     let summary = wrapper.find('#summary');
-    //     let description = wrapper.find('#description');
-    //     let starttime = wrapper.find('#starttime');
-    //     let endtime = wrapper.find('#endtime');
 
-    //     summary.simulate('change', { target: { value: 'a' } })
-    //     description.simulate('change', { target: { value: '' } })
-    //     starttime.simulate('change', { target: { value: '13:00' } })
-    //     endtime.simulate('change', { target: { value: '13:05' } })
-
-    //     let button = wrapper.find(Button)
-    //     button.simulate('click');
-
-        
-        
-    // })
 })
 
 
