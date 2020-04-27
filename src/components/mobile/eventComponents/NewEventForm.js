@@ -12,6 +12,7 @@ const EventForm = styled.div`
     // background-color: #AFC9D9;
     background-color: #E5E5E5;
     width: 100%;
+    height: 100vh;
 `
 const NewEventHead = styled.div`
     background-color: white;
@@ -122,7 +123,7 @@ const NewEventForm = props => {
                 </div>
 
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                <Button type="submit" style={{ width: '90%', background: '#28807D', color: 'white', textAlign: 'center', marginTop: '8%', marginBottom: '8%', paddingLeft: 'auto', paddingRight: 'auto', borderRadius: '10px' }}onClick={()=>{
+                <button type="submit" style={{ width: '70%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}onClick={()=>{
                     setToggleNav(false);
                     setTemplateFormOpen(true)
                     setFormOpen(true)
@@ -130,7 +131,7 @@ const NewEventForm = props => {
                     setConStart(input.starttime);
                     setConEnd(input.endtime);
                     setNavState(0);
-                }}>Select dates</Button>
+                }}>Select dates</button>
                 </div>
 
             </form>
