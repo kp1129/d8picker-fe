@@ -22,6 +22,7 @@ const NewEventHead = styled.div`
 
 
 
+
 const NewEventForm = props => {
     const {setTemplateList} = props;
 
@@ -34,8 +35,10 @@ const NewEventForm = props => {
 
     // Submit for template form
     const onSubmit = async formData => {
-        const template = await addTemplate(formData, currentUser);
+        console.log('currentUser', currentUser)
+        const template = addTemplate(formData, currentUser);
         console.log('template', template)
+        
         await setTemplateList(prevTemplates => [...prevTemplates, template]);
         setFormOpen(!formOpen);
     };
@@ -52,7 +55,7 @@ const NewEventForm = props => {
                     <div style={{ paddingLeft: '5%' }}>Event name</div>
                     <Input
                         type="text"
-                        name="event-name"
+                        name="summary"
                         placeholder="Event name"
                         ref={register({ maxLength: 80, required: true })}
                         style={{ marginBottom: '5%' }}
@@ -63,7 +66,7 @@ const NewEventForm = props => {
                 <div style={{ paddingLeft: '5%' }}>Description</div>
                     <Input
                         type="text"
-                        name="event-description"
+                        name="description"
                         placeholder="Event description"
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%' }}

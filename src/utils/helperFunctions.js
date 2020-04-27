@@ -30,13 +30,16 @@ export const convertTime = (time)=>{
 export const addTemplate = async (data, { googleId }) => {
   const template = { ...data, googleId };
   try {
+    console.log('data', data)
+    console.log('googleId', googleId)
+    console.log('template', template)
     const response = await axios.post(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
       template
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
 

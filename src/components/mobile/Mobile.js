@@ -6,7 +6,6 @@ import MobileEvents from './eventComponents/MobileEvents'
 import Nav from './NavigationComponents/Nav'
 import NewEventForm from './eventComponents/NewEventForm';
 import Groups from './Groups'
-import NewEventForm from './eventComponents/NewEventForm'
 
 const Mobile = () => {
     // 0 = calendar, 1 = events, 2 = groups
