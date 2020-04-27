@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, i, eventNameArr, summaries}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventNameArr, summaries}) => {
 
  
 
@@ -17,9 +17,8 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   const [date, setDate] = useState(dayjs());
 
 
-console.log('calendar')
-
-
+  
+  
   const {
     currentMonth,
     currentYear,
@@ -28,12 +27,13 @@ console.log('calendar')
     weekDayOfLastDoM,
     weekDays
   } = useDate(date);
+  
 
   
 
   useEffect(()=>{
     setDate(month)
-  },[monthList])
+  },[])
 
     return (
       <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px" style={{margin: '4%'}}>
@@ -85,7 +85,8 @@ console.log('calendar')
     );
 };
 
-export default Calendar;
+const MemoizedCal = React.memo(Calendar);
+export default MemoizedCal;
 
 
 

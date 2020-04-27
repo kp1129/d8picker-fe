@@ -9,7 +9,7 @@ const Event = styled.div`
 `
 
 // Displays circle icon if day has an event
-const EventIndicator = ({ event, day, currentMonth, currentYear, eventSummary}) => {
+const EventIndicator = ({ event, eventSummary}) => {
  
   
   return event ? (

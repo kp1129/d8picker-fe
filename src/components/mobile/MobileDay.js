@@ -7,32 +7,8 @@ import dayjs from 'dayjs';
 
    
 
-const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
-  const {
-    currentMonth,
-    currentYear,
-  } = useDate(date);
 
-  
-  const setBackgroundColor = ()=>{
-      if(isPicked === true){
-            let index = i+1;
-            let newDate = new Date()
-            let str = newDate.toUTCString();
-            // console.log(str)
-          if(currentMonth < dayjs().$M){
-              return '#FC8181'
-          } 
-          else if (date.$D > index && currentMonth === dayjs().$M){
-                return '#FC8181'
-          }else {
-              return 'brand.blue_primary';
-          }
-      }
-
-  }
-
-  const mapTheEvents = (eventNameArr) => {
+export const matchTheEvents = (eventNameArr, currentYear, currentMonth, day, events, summaries) => {
     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
       1}-${day < 10 ? 0 : ''}${day}`;
     if(eventNameArr.includes(formattedDate)){
@@ -41,15 +17,40 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
       return <EventsIndicator
             key={formattedDate}
             event={formattedDate}
-            events={events}
-            day={day}
-            currentMonth={currentMonth}
-            currentYear={currentYear}
             eventSummary={eventSummary}
             fontSize="2px"
           />
     }
   }
+
+const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
+  const {
+    currentMonth,
+    currentYear,
+  } = useDate(date);
+
+  
+
+  const setBackgroundColor = ()=>{
+
+      if(isPicked === true){  
+            let index = i+1;
+            let newDate = new Date()
+            let thisYear = newDate.getYear() + 1900;
+          console.log('currentYear', currentYear, 'thisYear', thisYear)
+          if(currentMonth < dayjs().$M && currentYear === thisYear){
+              return '#FC8181'
+          } 
+          else if (date.$D > index && currentMonth === dayjs().$M && currentYear === thisYear){
+                return '#FC8181'
+          }else {
+              return 'brand.blue_primary';
+          }
+      }
+
+  }
+
+
 
   return (
           <Cell
@@ -66,7 +67,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
               justify="space-between"
               h="100%"
               py={[1, 8]}
-            //   backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
               backgroundColor={setBackgroundColor()}
               color={isPicked ? 'white' : 'inherit'}
               onClick={()=>{
@@ -81,23 +81,10 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNam
               >
                 {day}
               </Box>
-              {/* {events &&
-                events.map(event => (
-                  <div key={event.id}>
-                    <EventsIndicator
-                      key={event.id}
-                      event={event}
-                      day={day}
-                      currentMonth={currentMonth}
-                      currentYear={currentYear}
-                      fontSize="2px"
-                    />
-                  </div>
-                ))} */}
-                {eventNameArr && mapTheEvents(eventNameArr)}
+                {eventNameArr && matchTheEvents(eventNameArr, currentYear, currentMonth, day, events, summaries)}
             </Flex>
           </Cell>
         );
 }
-
-export default Day;
+const MemoizedDay = React.memo(Day);
+export default MemoizedDay;

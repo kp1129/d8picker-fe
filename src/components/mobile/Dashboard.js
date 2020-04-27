@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
-import NewInfCal from './NewInfCal'
+import InfiniteCal from './InfiniteCal'
+
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -18,7 +19,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
+const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -80,8 +81,6 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
         setSummaries(summariesArr)
         setEventNameArr(formattedEvents);
 
-        console.log('formattedEvents', formattedEvents)
-
 
       } catch (error) {
         console.log(error);
@@ -91,7 +90,6 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
 
 
 const [items, setItems] = useState(nextMonth(50));
-
 
 
   return (
@@ -111,7 +109,7 @@ const [items, setItems] = useState(nextMonth(50));
         <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {items.length > 0 && <NewInfCal items={items}
+        {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
         setSelected={setSelected}
@@ -122,8 +120,6 @@ const [items, setItems] = useState(nextMonth(50));
         monthList={items}
         eventNameArr={eventNameArr}
         summaries={summaries}/>}
-
-
         
         {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>

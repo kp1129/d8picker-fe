@@ -18,13 +18,10 @@ const Mobile = () => {
     const [colors, setColors] = useState(["#BDBDBD", "#BDBDBD", "#BDBDBD"])
     
 
-    //changes the color of the nav icons depending on which components are rendered
-    useEffect(()=>{
-        let newColors = [...colors];
-        newColors[newColors.indexOf("#28807D")] = "#BDBDBD"
-        newColors[navState] = "#28807D";
-        setColors(newColors)
-    },[navState])
+
+    if(NavState === 0){
+    return(
+
 
 
     return(
@@ -47,3 +44,9 @@ const Mobile = () => {
 }
 
 export default Mobile
+
+const NavBar = styled.div`
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 83vh;`

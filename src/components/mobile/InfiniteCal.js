@@ -20,11 +20,37 @@ const loadMoreItems = (startIndex, stopIndex) => {
         itemStatusMap[index] = LOADED;
       }
       resolve();
-    }, 2500)
+    }, 10)
   );
 };
 
-
+const Row = ({ data, index, style }) => {
+  let label;
+  if (itemStatusMap[index] === LOADED) {
+    label = <Calendar 
+    style={style}
+    key={index}
+    api={data.api}
+    i={index}
+    selected={data.selected}
+    setSelected={data.setSelected}
+    templateFormOpen={data.templateFormOpen}
+    setTemplateFormOpen={data.setTemplateFormOpen}
+    events={data.events}
+    month={data.items[index]}
+    eventNameArr={data.eventNameArr}
+    summaries={data.summaries}
+    />
+  
+  } else {
+    label = "Loading...";
+  }
+  return (
+    <div className="ListItem" style={style}>
+      {label}
+    </div>
+  );
+}
 
 export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventNameArr, summaries}) {
 
@@ -46,35 +72,9 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={window.innerWidth}
+              itemData={{items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventNameArr, summaries}}
             >
-              {({ index, style }) => {
-                let label;
-                if (itemStatusMap[index] === LOADED) {
-                  label = <Calendar 
-                  style={style}
-                  key={index}
-                  api={api}
-                  i={index}
-                  selected={selected}
-                  setSelected={setSelected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  events={events}
-                  month={items[index]}
-                  monthList={month}
-                  eventNameArr={eventNameArr}
-                  summaries={summaries}
-                  />
-                
-                } else {
-                  label = "Loading...";
-                }
-                return (
-                  <div className="ListItem" style={style}>
-                    {label}
-                  </div>
-                );
-              }}
+              {Row}
             </List>
           )}
         </InfiniteLoader>
