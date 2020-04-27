@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import "./TopNav.css"
 import { useAuth } from '../../../contexts/auth';
-import {Image} from '@chakra-ui/core';
+import styled from "styled-components"
 
 
 const Hamburger = () => {
-  const { googleApi} = useAuth();
+  const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
   console.log("In hamburger")
   const [img, setImg] = useState(currentUser.photoUrl);
@@ -14,9 +14,18 @@ const Hamburger = () => {
     setImg(currentUser.photoUrl)
   },[])
 
+  const ProfileImg = styled.img`
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: fixed;
+  margin: 2.5% 0% 0% 2.5%;
+  z-index: 201;
+  `
+
   return (
     <div>
-      
+     
       <input type="checkbox" className="blue" id="menu"/>
       
         <label htmlFor="menu" className="icon">
