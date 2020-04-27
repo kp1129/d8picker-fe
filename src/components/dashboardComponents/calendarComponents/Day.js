@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
    
 
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
+  
   const {
     currentMonth,
     currentYear,
@@ -44,7 +45,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
               justify="space-between"
               h="100%"
               py={[1, 8]}
-            //   backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
               backgroundColor={setBackgroundColor()}
               color={isPicked ? 'white' : 'inherit'}
               onClick={()=>{

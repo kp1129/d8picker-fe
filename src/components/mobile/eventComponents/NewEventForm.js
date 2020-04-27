@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
-import axios from 'axios';
-import { useAuth, AuthContext } from '../../../contexts/auth';
+import { useAuth} from '../../../contexts/auth';
 import styled from 'styled-components';
 import {addTemplate} from '../../../utils/helperFunctions'
 
@@ -18,19 +17,6 @@ const NewEventHead = styled.div`
     padding-bottom: 4%;
 `
 
-// const addTemplate = async (data, { googleId }) => {
-//     const template = { ...data, googleId };
-//     try {
-//       const response = await axios.post(
-//         `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
-//         template
-//       );
-//     //   console.log('response.data', response.data)
-//       return response.data;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
 
 const NewEventForm = props => {
     const { setFormOpen, setTemplateList, currentUser, formOpen } = props;

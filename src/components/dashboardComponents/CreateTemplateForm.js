@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
-import axios from 'axios';
 import {addTemplate} from '../../utils/helperFunctions'
 
 const CreateTemplateForm = (props) => {

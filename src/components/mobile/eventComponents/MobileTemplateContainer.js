@@ -1,7 +1,5 @@
 import React from 'react';
-import {Flex, Heading, Button} from '@chakra-ui/core';
 import MobileChooseDateForm from './MobileChooseDateForm';
-import CreateTemplateForm from '../../dashboardComponents/CreateTemplateForm'
 import styled from 'styled-components'
 
 
@@ -16,7 +14,6 @@ const MobileTemplateContainer = (props) => {
     setFormOpen,
     setTemplateList,
     templateList,
-    currentUser,
     setNavState, 
     setToggleNav, 
     toggleNav,

@@ -40,3 +40,32 @@ export const addTemplate = async (data, { googleId }) => {
   }
 };
 
+
+export const convertEvents = (selected, starttime, endtime, zone, summary, description) => {
+  return selected.map(e => ({
+    end: { dateTime: `${e}T${endtime}:00${zone}:00` },
+    start: { dateTime: `${e}T${starttime}:00${zone}:00` },
+    summary: summary,
+    description: description
+  }));
+}
+
+export const deleteTemplate = async id => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error); 
+  }
+};
+
+export const handleDelete = async (id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen) => {
+  await deleteTemplate(id);
+  const templates = templateList.filter(template => template._id !== id);
+  setTemplateList(templates);
+  clearSelected();
+  setTemplateFormOpen(false);
+};
+

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
-import {convertTime} from '../../utils/helperFunctions'
+import {convertTime, convertEvents} from '../../utils/helperFunctions'
 
 
 const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTemplateFormOpen, setFormOpen}) => {
@@ -14,12 +14,7 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTemp
         let date = new Date().toString().split("GMT");
         //takes the first few characters of offset with + or - to be slotted in the start and end times
         let zone = date[1].split(' ')[0].slice(0, 3);
-        const eventList = selected.map(e => ({
-          end: { dateTime: `${e}T${endtime}:00${zone}:00` },
-          start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-          summary: summary,
-          description: description
-        }));
+        const eventList = convertEvents(selected, starttime, endtime, zone, summary, description);
         
         
         eventList.forEach(event => {

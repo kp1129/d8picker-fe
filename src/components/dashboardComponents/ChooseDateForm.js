@@ -7,8 +7,7 @@ import {
   IconButton
 } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
-import {convertTime} from '../../utils/helperFunctions'
-import axios from 'axios'
+import {convertTime, convertEvents, deleteTemplate, handleDelete} from '../../utils/helperFunctions'
 
 
 
@@ -30,35 +29,15 @@ const ChooseDateForm = ({
 }) => {
 
   const { api } = useAuth();
-  const deleteTemplate = async id => {
-    try {
-      const response = await axios.delete(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error); 
-    }
-  };
-  const handleDelete = async id => {
-    await deleteTemplate(id);
-    const templates = templateList.filter(template => template._id !== id);
-    setTemplateList(templates);
-    clearSelected();
-    setTemplateFormOpen(false);
-  };
+
+
 
   const applyTemplate = (summary, description, starttime, endtime) => {
     //creates new date and isolates timezone offset
     let date = new Date().toString().split("GMT");
     //takes the first few characters of offset with + or - to be slotted in the start and end times
     let zone = date[1].split(' ')[0].slice(0, 3);
-    const eventList = selected.map(e => ({
-      end: { dateTime: `${e}T${endtime}:00${zone}:00` },
-      start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-      summary: summary,
-      description: description
-    }));
+    const eventList = convertEvents(selected, starttime, endtime, zone, summary, description);
     
     eventList.forEach(event => {
      
@@ -127,7 +106,7 @@ const ChooseDateForm = ({
             aria-label="Delete"
             size="sm"
             icon="close"
-            onClick={() => handleDelete(id)}
+            onClick={() => handleDelete(id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)}
           />
         </ButtonGroup>
       </Flex>

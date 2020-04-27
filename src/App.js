@@ -24,10 +24,19 @@ function App() {
 
   const breakPoint = 768
 
-    const [dimensions, setDimensions] = useState({ 
+  const [dimensions, setDimensions] = useState({ 
       height: window.innerHeight,
       width: window.innerWidth
-    })
+      })
+
+  const [userState, setUserState] = useState({})
+  
+  let currentUser = googleApi.currentUser
+
+  useEffect(()=>{
+    setUserState(currentUser)
+  },[currentUser])
+
     useEffect(() => {
       function handleResize() {
         setDimensions({
@@ -41,11 +50,6 @@ function App() {
       }
       },[])
 
-  const [userState, setUserState] = useState({})
-  let currentUser = googleApi.currentUser
-  useEffect(()=>{
-    setUserState(currentUser)
-  },[currentUser])
 
 
   
@@ -92,10 +96,10 @@ function App() {
 
         )
       }
-} else if(dimensions.width <= breakPoint){
-  return(
-    <Mobile/>
-  )
-}
+  } else if(dimensions.width <= breakPoint){
+      return(
+        <Mobile/>
+      )
+  }
 }
 export default App;

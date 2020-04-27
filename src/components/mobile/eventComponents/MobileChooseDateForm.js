@@ -1,19 +1,14 @@
 import React, {useEffect} from 'react';
-import { useAuth } from '../../../contexts/auth';
-import axios from 'axios'
 import styled from 'styled-components'
 import {convertTime} from '../../../utils/helperFunctions'
 
 
 const MobileChooseDateForm = ({
-  id,
   starttime,
   endtime,
   summary,
   setSelected,
   setTemplateFormOpen,
-  setTemplateList,
-  templateList,
   setNavState,
   setFormOpen,
   setToggleNav, 
@@ -24,25 +19,7 @@ const MobileChooseDateForm = ({
   setSumm
 }) => {
 
-  // const { googleApi, api } = useAuth();
-  const deleteTemplate = async id => {
-    try {
-      const response = await axios.delete(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error); 
-    }
-  };
-  const handleDelete = async id => {
-    await deleteTemplate(id);
-    const templates = templateList.filter(template => template._id !== id);
-    setTemplateList(templates);
-    clearSelected();
-    setTemplateFormOpen(false);
-  };
-
+  
 
 
   const clearSelected = () => {
