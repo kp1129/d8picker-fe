@@ -33,7 +33,7 @@ const Mobile = () => {
 
     return(
         
-        <MobileContext.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm}}>
+        <MobileContext.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList}}>
             
             {navState===0 && <Dashboard setTemplateList={setTemplateList}/>}
         

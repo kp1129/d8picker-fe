@@ -24,7 +24,8 @@ const MobileTemplateContainer = ({templateList}) => {
                   starttime={t.starttime}
                   endtime={t.endtime}
                   summary={t.summary}
-                  description={t.description}/>
+                  description={t.description}
+                  templateList={templateList}/>
                 
               ))}
               </EventDiv>
