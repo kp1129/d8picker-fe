@@ -6,7 +6,6 @@ import MobileEvents from './eventComponents/MobileEvents'
 import Nav from './NavigationComponents/Nav'
 import NewEventForm from './eventComponents/NewEventForm';
 import Groups from './Groups'
-import NewEventForm from './eventComponents/NewEventForm'
 
 const Mobile = () => {
     // 0 = calendar, 1 = events, 2 = groups
@@ -44,7 +43,8 @@ const Mobile = () => {
 
             {navState===2 && <Groups/>}
 
-            {navState===3 && <NewEventForm setTemplateList={setTemplateList}/>}
+
+            {navState===3 && <NewEventForm setTemplateList={setTemplateList} setToggleNav={setToggleNav} setNavState={setNavState} setSumm={setSumm} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
         </MobileContext.Provider>

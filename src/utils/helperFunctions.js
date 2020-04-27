@@ -36,9 +36,11 @@ export const addTemplate = async (data, { googleId }) => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };
+
+
 
 
 export const convertEvents = (selected, starttime, endtime, zone, summary, description) => {
