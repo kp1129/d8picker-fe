@@ -1,7 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext} from "react";
+import {MobileContext} from '../../contexts/MobileContexts';
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
+import AddEventButton from './AddEventButton'
 
 
 const LOADING = 1;
@@ -20,15 +22,33 @@ const loadMoreItems = (startIndex, stopIndex) => {
         itemStatusMap[index] = LOADED;
       }
       resolve();
-    }, 2500)
+    }, 10)
   );
 };
 
-
-
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month}) {
-
+const Row = ({ data, index, style }) => {
+  let label;
+  if (itemStatusMap[index] === LOADED) {
+    label = <Calendar 
+    style={style}
+    key={index}
+    i={index}
+    month={data.items[index]}
+    />
   
+  } else {
+    label = "Loading...";
+  }
+  return (
+    <div className="ListItem" style={style}>
+      {label}
+    </div>
+  );
+}
+
+export default function NewInfCal({items}) {
+
+  const {templateFormOpen, setNavState} = useContext(MobileContext);
   
     return (
       <Fragment>
@@ -40,42 +60,20 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
-              height={window.innerHeight-20}
+              height={window.innerHeight-130}
               itemCount={50}
               itemSize={817}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              width={window.innerWidth-10}
+              width={window.innerWidth}
+              itemData={{items}}
             >
-              {({ index, style }) => {
-                let label;
-                if (itemStatusMap[index] === LOADED) {
-                  label = <Calendar 
-                  style={style}
-                  key={index}
-                  api={api}
-                  i={index}
-                  selected={selected}
-                  setSelected={setSelected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  events={events}
-                  month={items[index]}
-                  monthList={month}
-                  />
-                
-                } else {
-                  label = "Loading...";
-                }
-                return (
-                  <div className="ListItem" style={style}>
-                    {label}
-                  </div>
-                );
-              }}
+              {Row}
             </List>
           )}
         </InfiniteLoader>
+          {!templateFormOpen && <AddEventButton setNavState={setNavState}/>}
       </Fragment>
     );
   }
+

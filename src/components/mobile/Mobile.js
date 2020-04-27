@@ -1,14 +1,15 @@
-import Nav from './NavigationComponents/Nav';
-import React, {useState} from 'react'
-// import BotNav from './NavigationComponents/BotNav'
+
+import React, {useState, useEffect} from 'react'
+import {MobileContext} from '../../contexts/MobileContexts'
+import Dashboard from './MobileDashboard'
 import MobileEvents from './eventComponents/MobileEvents'
-import styled from 'styled-components'
-import Dashboard from './Dashboard'
+import Nav from './NavigationComponents/Nav'
+import NewEventForm from './eventComponents/NewEventForm';
+import Groups from './Groups'
 
 const Mobile = () => {
-
-    const [NavState, setNavState] = useState(0) // 0 = calendar, 1 = events, 2 = groups
-
+    // 0 = calendar, 1 = events, 2 = groups
+    const [navState, setNavState] = useState(0) 
     const [formOpen, setFormOpen] = useState(false);
     const [templateFormOpen, setTemplateFormOpen] = useState(false);
     const [conStart, setConStart] = useState("");
@@ -16,41 +17,39 @@ const Mobile = () => {
     const [summ, setSumm] = useState("")
     const [toggleNav, setToggleNav] = useState(true);
     const [selected, setSelected] = useState([]);
+    const [colors, setColors] = useState(["#BDBDBD", "#BDBDBD", "#BDBDBD"])
+    
 
-    const NavBar = styled.div`
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 83vh;`
+    //changes the color of the nav icons depending on which components are rendered
+    useEffect(()=>{
+        let newColors = [...colors];
+        newColors[newColors.indexOf("#28807D")] = "#BDBDBD"
+        newColors[navState] = "#28807D";
+        setColors(newColors)
+    },[navState])
 
-    if(NavState === 0){
+
+
     return(
+        
+        <MobileContext.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm}}>
+            
+            {navState===0 && <Dashboard/>}
+        
+            {navState===1 && <>
+                <MobileEvents formOpen={formOpen}></MobileEvents>
+            </>}
 
+            {navState===2 && <Groups/>}
 
-        <div >
-            <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav}/>
-            <NavBar>
-            {toggleNav && <Nav NavState={NavState} setNavState={setNavState} />}
-            </NavBar>
-        </div>
+            {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
+        </MobileContext.Provider>
     )
-    } else if(NavState === 1){
-        return(
-        <div>
 
-            <MobileEvents setNavState={setNavState} formOpen={formOpen} setFormOpen={setFormOpen}setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} setToggleNav={setToggleNav} toggleNav={toggleNav} conStart={conStart} setConStart={setConStart} conEnd={conEnd} setConEnd={setConEnd} summ={summ} setSumm={setSumm} selected={selected} setSelected={setSelected}></MobileEvents>
-            <NavBar>
-            <Nav NavState={NavState} setNavState={setNavState} />
-            </NavBar>
-        </div>
-        )
-    } else if(NavState === 2){
-        return(
-            <div>
-            <Nav NavState={NavState} setNavState={setNavState} />
-        </div>
-        )
-    }
+
+    
 }
 
 export default Mobile
+
+

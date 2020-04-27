@@ -5,7 +5,6 @@ import { Link as StyledLink, Flex, Box, Image } from '@chakra-ui/core';
 import logo from '../img/logo.svg';
 
 const Header = ({userState}) => {
-  // console.log('userState', userState);
   return (
     <Flex
       as="header"

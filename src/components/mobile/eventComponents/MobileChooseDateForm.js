@@ -1,76 +1,15 @@
-import React, {useEffect} from 'react';
-import {
-  Flex,
-  Heading,
-  IconButton
-} from '@chakra-ui/core';
-import { useAuth } from '../../../contexts/auth';
-import axios from 'axios'
+import React, {useEffect, useContext} from 'react';
+import {MobileContext} from '../../../contexts/MobileContexts'
+import styled from 'styled-components'
+import {convertTime} from '../../../utils/helperFunctions'
 
 
-const MobileChooseDateForm = ({
-  id,
-  starttime,
-  endtime,
-  summary,
-  description,
-  selected,
-  setSelected,
-  templateFormOpen,
-  setTemplateFormOpen,
-  setTemplateList,
-  templateList,
-  setNavState,
-  formOpen,
-  setFormOpen,
-  setToggleNav, 
-  toggleNav,
-  conStart, 
-  setConStart, 
-  conEnd, 
-  setConEnd, 
-  summ, 
-  setSumm
-}) => {
+const MobileChooseDateForm = ({starttime, endtime, summary}) => {
 
-  const { googleApi, api } = useAuth();
-  const deleteTemplate = async id => {
-    try {
-      const response = await axios.delete(
-        `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error); 
-    }
-  };
-  const handleDelete = async id => {
-    await deleteTemplate(id);
-    const templates = templateList.filter(template => template._id !== id);
-    setTemplateList(templates);
-    clearSelected();
-    setTemplateFormOpen(false);
-  };
 
-  // const applyTemplate = (summary, description, starttime, endtime) => {
-  //   //creates new date and isolates timezone offset
-  //   let date = new Date().toString().split("GMT");
-  //   //takes the first few characters of offset with + or - to be slotted in the start and end times
-  //   let zone = date[1].split(' ')[0].slice(0, 3);
-  //   const eventList = selected.map(e => ({
-  //     end: { dateTime: `${e}T${endtime}:00${zone}:00` },
-  //     start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-  //     summary: summary,
-  //     description: description
-  //   }));
-    
-  //   eventList.forEach(event => {
-     
-  //     api.addEvent(event)
-  //   });
-  //   setSelected([]);
-  //   reloadPage()
-  // };
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm} = useContext(MobileContext);
+
+  
 
 
   const clearSelected = () => {
@@ -78,7 +17,7 @@ const MobileChooseDateForm = ({
   }
 
 
-
+  //sets the summary and time displayed on event page
   useEffect(()=>{
     setSumm(summary);
     if (starttime){
@@ -90,7 +29,7 @@ const MobileChooseDateForm = ({
   },[starttime, endtime])
   
 
-
+  //sets the summary and starttime of the event actually being applied
   const handleCalendarView = () =>{
     setSumm(summary);
     if (starttime){
@@ -100,54 +39,98 @@ const MobileChooseDateForm = ({
       setConEnd(endtime)
     }
     setNavState(0)
-    setTemplateFormOpen(!templateFormOpen)
-    setFormOpen(!formOpen)
-    setToggleNav(!toggleNav)
+    setTemplateFormOpen(true)
+    setFormOpen(true)
+    setToggleNav(false)
   }
 
 
   return (
-    <Flex direction="column" align="center" justify="center" my={2} onClick={handleCalendarView}>
-      <Heading fontSize="m" fontWeight="normal">
-        {summary}
-      </Heading>
-      <Heading fontSize="m" fontWeight="normal">
-        {conStart}-{conEnd}
-      </Heading>
+    <Container onClick={handleCalendarView}>
+      <EventDiv>
+        <Title>
+          {summary}
+        </Title>
+        <Time fontSize="m" fontWeight="normal">
+          {conStart}-{conEnd}
+        </Time>
+      </EventDiv>
+      <ArrowDiv>
+        >
+      </ArrowDiv>
 
-    </Flex>
+    </Container>
   );
 };
 
 
 
+export default MobileChooseDateForm;
 
-    const convertTime = (time)=>{
-      // code converts response.data.starttime to number
-
-      
-      if (time){
-
-          let splitStartTime = time.split(':');
-          let joinStartTime = splitStartTime.join('');
-          let startTimeAsNumber = parseInt(joinStartTime, 10);
-      
-          // fn for converting response.data.starttime and/or endtime back to time string (from number)
-          function convertToTime(value, index) {
-            return value.substring(0, index) + ":" + value.substring(index);
-          }
-      
-          // converts times from 24 hour to 12 hour format
-          if (startTimeAsNumber >= 1300) {
-            startTimeAsNumber -= 1200;
-            let startTimeAsString = startTimeAsNumber.toString();
-            let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
-            return convertedStartTime + 'pm';
-          } else {
-            return time + 'am';
-          }
-      }
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    // flex-direction: column;
+    border-bottom: 1px solid #BDBDBD;
+    padding: 2% 3%;
+    background: white; 
+    &:hover{
+      background: #BDBDBD;
     }
 
+`;
 
-export default MobileChooseDateForm;
+const EventDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    font-size: 20px;
+    line-height: 27px;
+`;
+
+const Title = styled.p`
+    width: 90%;
+    // text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 27px;
+`;
+
+const Time = styled.p`
+    // width: 60%;
+    // text-align: center;
+    font-weight: bold;
+    font-size: .75rem;
+    line-height: 27px;
+`;
+
+
+
+const ArrowDiv = styled.div`
+    width: 10%;
+    display: flex;
+    align-items: center;
+    font-size: 210%;
+    color: #BDBDBD;
+    cursor: pointer;
+    &:hover{
+      color: white;
+    }
+
+`;
+
+const Btn = styled.div`
+    background: white;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #28807D;
+    border: 3px solid #28807D;
+    font-size: 40px;
+    cursor: pointer;
+    
+`;
+

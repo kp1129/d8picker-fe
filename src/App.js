@@ -12,6 +12,7 @@ import Welcome from './components/Welcome';
 import Dashboard from './components/dashboardComponents/Dashboard';
 import Loading from './components/Loading';
 import Mobile from './components/mobile/Mobile';
+import {DesktopContext} from './contexts/DesktopContexts'
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -24,10 +25,20 @@ function App() {
 
   const breakPoint = 768
 
-    const [dimensions, setDimensions] = useState({ 
+  const [dimensions, setDimensions] = useState({ 
       height: window.innerHeight,
       width: window.innerWidth
-    })
+      })
+
+  //state for determining if pic should be present in top right corner and if user should be redirected into the app when accessing home page (because they are already logged in)
+  const [userState, setUserState] = useState({})
+  
+  let currentUser = googleApi.currentUser
+
+  useEffect(()=>{
+    setUserState(currentUser)
+  },[currentUser])
+
     useEffect(() => {
       function handleResize() {
         setDimensions({
@@ -41,16 +52,7 @@ function App() {
       }
       },[])
 
-  const [userState, setUserState] = useState({})
-  let currentUser = googleApi.currentUser
-  useEffect(()=>{
-    setUserState(currentUser)
-  },[currentUser])
 
-
-  
-  
-  
   
   
   if (googleApi.isLoading) {
@@ -71,7 +73,10 @@ function App() {
               <Welcome />
             </Route>}
             <PrivateRoute path="/:id/dashboard">
-              <Dashboard setUserState={setUserState}/>
+            <DesktopContext.Provider value={{setUserState}}>
+              <Dashboard/>
+            </DesktopContext.Provider>
+
             </PrivateRoute>
           </Stack>
         );
@@ -92,10 +97,12 @@ function App() {
 
         )
       }
-} else if(dimensions.width <= breakPoint){
-  return(
-    <Mobile></Mobile>
-  )
-}
+
+  } else if(dimensions.width <= breakPoint){
+      return(
+        <Mobile/>
+      )
+  }
+
 }
 export default App;
