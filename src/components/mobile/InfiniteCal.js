@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext} from "react";
+import {MobileContext} from '../../contexts/MobileContexts';
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
@@ -53,9 +54,9 @@ const Row = ({ data, index, style }) => {
   );
 }
 
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries, setNavState}) {
+export default function NewInfCal({ items, api, events, eventDatesArr, summaries}) {
 
-  
+  const {templateFormOpen, setTemplateFormOpen, selected, setSelected, setNavState} = useContext(MobileContext);
   
     return (
       <Fragment>

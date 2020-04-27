@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
+import {MobileContext} from '../../contexts/MobileContexts';
 import { Box, Grid } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
@@ -10,7 +11,10 @@ import styled from 'styled-components'
 
 
 
-const Dashboard = ({setFormOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav, setNavState}) => {
+const Dashboard = () => {
+  
+ 
+  const {setSelected, toggleNav, setToggleNav, setNavState} = useContext(MobileContext);
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -107,20 +111,16 @@ const [items, setItems] = useState(nextMonth(50));
                   ))}
               </Grid>
             </Box>
-            {items.length > 0 && <InfiniteCal items={items}
-            api={api}
-            selected={selected}
-            setSelected={setSelected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-            events={events}
-            month={items}
-            monthList={items}
-            eventDatesArr={eventDatesArr}
-            summaries={summaries}
-            setNavState={setNavState}/>}
+            <MobileDashboardContext.Provider value={{api, events, eventDatesArr, summaries}}>
+              {items.length > 0 && <InfiniteCal items={items}
+              api={api}
+              events={events}
+              month={items}
+              eventDatesArr={eventDatesArr}
+              summaries={summaries}/>}
+            </MobileDashboardContext.Provider>
             
-            {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
+            {toggleNav === false && <ConfirmDatesBtn/>}
           </div>
         
           
