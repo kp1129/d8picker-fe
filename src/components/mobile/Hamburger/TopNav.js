@@ -3,6 +3,7 @@ import "./TopNav.css"
 import { useAuth } from '../../../contexts/auth';
 import styled from "styled-components"
 
+
 const Hamburger = () => {
   const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
