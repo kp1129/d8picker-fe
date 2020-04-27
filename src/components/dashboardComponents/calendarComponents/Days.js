@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DashboardContext} from '../../../contexts/DesktopContexts'
 import useDate from '../../../hooks/useDate';
 import Day from './Day'
 import DisabledDays from './DIsabledDays'
 
 
 
-const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
+const Days = ({date}) => {
+
+  const {events, selected, setSelected, templateFormOpen} = useContext(DashboardContext);
+
+
+
   const {
     daysInMonth,
     currentDay,
@@ -14,6 +20,8 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
     weekDayOfFirstDoM,
     weekDayOfLastDoM
   } = useDate(date);
+
+
 
   return (
     <>

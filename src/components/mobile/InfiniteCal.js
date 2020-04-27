@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext} from "react";
+import {MobileContext} from '../../contexts/MobileContexts';
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
@@ -31,16 +32,8 @@ const Row = ({ data, index, style }) => {
     label = <Calendar 
     style={style}
     key={index}
-    api={data.api}
     i={index}
-    selected={data.selected}
-    setSelected={data.setSelected}
-    templateFormOpen={data.templateFormOpen}
-    setTemplateFormOpen={data.setTemplateFormOpen}
-    events={data.events}
     month={data.items[index]}
-    eventDatesArr={data.eventDatesArr}
-    summaries={data.summaries}
     />
   
   } else {
@@ -53,9 +46,9 @@ const Row = ({ data, index, style }) => {
   );
 }
 
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries, setNavState}) {
+export default function NewInfCal({items}) {
 
-  
+  const {templateFormOpen, setNavState} = useContext(MobileContext);
   
     return (
       <Fragment>
@@ -74,7 +67,7 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={window.innerWidth}
-              itemData={{items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries}}
+              itemData={{items}}
             >
               {Row}
             </List>

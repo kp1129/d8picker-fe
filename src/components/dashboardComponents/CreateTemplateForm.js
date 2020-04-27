@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DashboardContext} from '../../contexts/DesktopContexts'
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
 import {addTemplate} from '../../utils/helperFunctions'
 
-const CreateTemplateForm = (props) => {
-  const { setFormOpen, setTemplateList, currentUser, formOpen } = props;
+const CreateTemplateForm = () => {
+
+  const {
+    formOpen,
+    setFormOpen,
+    setTemplateList,
+    currentUser} = useContext(DashboardContext);
+
+    
   const { register, handleSubmit } = useForm();
 
   // Submit for template form

@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {MobileContext} from '../../contexts/MobileContexts'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
 
 
-const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTemplateFormOpen, setFormOpen}) => {
+const ConfirmDatesBtn = () => {
+
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected} = useContext(MobileContext);
 
     const { api } = useAuth();
 
@@ -21,7 +24,6 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTemp
           api.addEvent(event)
         });
         setSelected([]);
-        // setToggleNav(true)
         setFormOpen(false);
         setTemplateFormOpen(false)
         console.log('event added')

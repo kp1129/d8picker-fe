@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {DashboardContext} from '../../contexts/DesktopContexts'
 import {Flex, Heading, Button} from '@chakra-ui/core';
 import ChooseDateForm from './ChooseDateForm.js';
 import CreateTemplateForm from './CreateTemplateForm'
@@ -7,17 +8,12 @@ import NewEventForm from '../mobile/eventComponents/NewEventForm';
 
 
 
-const TemplateContainer = (props) => {
+const TemplateContainer = () => {
+
     const {
-    setSelected,
-    selected,
-    templateFormOpen,
-    setTemplateFormOpen,
     formOpen,
     setFormOpen,
-    setTemplateList,
-    templateList,
-    currentUser} = props;
+    templateList} = useContext(DashboardContext);
 
 
   return (
@@ -42,12 +38,6 @@ const TemplateContainer = (props) => {
                   endtime={t.endtime}
                   summary={t.summary}
                   description={t.description}
-                  setSelected={setSelected}
-                  selected={selected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  setTemplateList={setTemplateList}
-                  templateList={templateList}
                 />
                 
               ))}
@@ -59,7 +49,7 @@ const TemplateContainer = (props) => {
             >
               Create Event Chain
             </Button>
-            {formOpen && <CreateTemplateForm setFormOpen={setFormOpen} setTemplateList={setTemplateList} currentUser={currentUser} formOpen={formOpen}/>}
+            {formOpen && <CreateTemplateForm/>}
           </Flex>
   );
 };

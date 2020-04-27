@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Flex, Heading, Image, Button} from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
+import {DesktopContext} from '../../contexts/DesktopContexts'
 
 
-const ProfileInfo = (props) => {
-    const {setUserState} = props;
+const ProfileInfo = () => {
+    const {setUserState} = useContext(DesktopContext);
     const { googleApi} = useAuth();
     const { currentUser, handleSignOut } = googleApi;
 

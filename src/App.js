@@ -12,6 +12,7 @@ import Welcome from './components/Welcome';
 import Dashboard from './components/dashboardComponents/Dashboard';
 import Loading from './components/Loading';
 import Mobile from './components/mobile/Mobile';
+import {DesktopContext} from './contexts/DesktopContexts'
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -29,6 +30,7 @@ function App() {
       width: window.innerWidth
       })
 
+  //state for determining if pic should be present in top right corner and if user should be redirected into the app when accessing home page (because they are already logged in)
   const [userState, setUserState] = useState({})
   
   let currentUser = googleApi.currentUser
@@ -71,7 +73,10 @@ function App() {
               <Welcome />
             </Route>}
             <PrivateRoute path="/:id/dashboard">
-              <Dashboard setUserState={setUserState}/>
+            <DesktopContext.Provider value={{setUserState}}>
+              <Dashboard/>
+            </DesktopContext.Provider>
+
             </PrivateRoute>
           </Stack>
         );

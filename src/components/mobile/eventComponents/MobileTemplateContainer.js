@@ -4,25 +4,10 @@ import styled from 'styled-components'
 
 
 
-const MobileTemplateContainer = (props) => {
-    const {
-    setSelected,
-    selected,
-    templateFormOpen,
-    setTemplateFormOpen,
-    formOpen,
-    setFormOpen,
-    setTemplateList,
-    templateList,
-    setNavState, 
-    setToggleNav, 
-    toggleNav,
-    conStart, 
-    setConStart, 
-    conEnd, 
-    setConEnd, 
-    summ, 
-    setSumm} = props;
+const MobileTemplateContainer = ({templateList}) => {
+
+
+
 
 
   return (
@@ -39,26 +24,7 @@ const MobileTemplateContainer = (props) => {
                   starttime={t.starttime}
                   endtime={t.endtime}
                   summary={t.summary}
-                  description={t.description}
-                  setSelected={setSelected}
-                  selected={selected}
-                  templateFormOpen={templateFormOpen}
-                  setTemplateFormOpen={setTemplateFormOpen}
-                  setTemplateList={setTemplateList}
-                  templateList={templateList}
-                  setNavState={setNavState}
-                  formOpen={formOpen}
-                  setFormOpen={setFormOpen}
-                  setToggleNav={setToggleNav} 
-                  toggleNav={toggleNav}
-                  conStart={conStart} 
-                  setConStart={setConStart} 
-                  conEnd={conEnd} 
-                  setConEnd={setConEnd} 
-                  summ={summ} 
-                  setSumm={setSumm}
-                  
-                />
+                  description={t.description}/>
                 
               ))}
               </EventDiv>

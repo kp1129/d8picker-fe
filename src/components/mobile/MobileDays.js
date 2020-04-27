@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {MobileContext} from '../../contexts/MobileContexts';
 import useDate from '../../hooks/useDate'
 import Day from './MobileDay'
 import DisabledDays from '../dashboardComponents/calendarComponents/DIsabledDays'
 
 
 
-const Days = ({ events, date, selected, setSelected, templateFormOpen, eventDatesArr, summaries }) => {
+const Days = ({date}) => {
+
+  const {templateFormOpen, selected, setSelected} = useContext(MobileContext);
+
+
   const {
     daysInMonth,
     currentDay,
@@ -54,9 +59,8 @@ const Days = ({ events, date, selected, setSelected, templateFormOpen, eventDate
           };
 
           
-
         return (
-          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events} eventDatesArr={eventDatesArr} summaries={summaries}/>
+          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date}/>
         );
       })}
 

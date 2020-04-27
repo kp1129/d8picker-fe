@@ -1,23 +1,13 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
+import {MobileContext} from '../../../contexts/MobileContexts'
 import styled from 'styled-components'
 import {convertTime} from '../../../utils/helperFunctions'
 
 
-const MobileChooseDateForm = ({
-  starttime,
-  endtime,
-  summary,
-  setSelected,
-  setTemplateFormOpen,
-  setNavState,
-  setFormOpen,
-  setToggleNav, 
-  conStart, 
-  setConStart, 
-  conEnd, 
-  setConEnd, 
-  setSumm
-}) => {
+const MobileChooseDateForm = ({starttime, endtime, summary}) => {
+
+
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm} = useContext(MobileContext);
 
   
 
