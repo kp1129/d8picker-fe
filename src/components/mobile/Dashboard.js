@@ -3,7 +3,6 @@ import { Box, Grid } from '@chakra-ui/core';
 import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
-import InfiniteCalendar from './InfiniteCalendar'
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import NewInfCal from './NewInfCal'
 
