@@ -7,7 +7,7 @@ import styled from "styled-components"
 const Hamburger = () => {
   const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
-  console.log("In hamburger")
+
   const [img, setImg] = useState(currentUser.photoUrl);
 
   useEffect(()=>{

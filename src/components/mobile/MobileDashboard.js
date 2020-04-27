@@ -23,16 +23,21 @@ const getTemplateList = async ({ googleId }) => {
 };
 
 
-const Dashboard = () => {
+
+const Dashboard = (props) => {
   
- 
   const {setSelected, toggleNav, setToggleNav, setNavState, formOpen} = useContext(MobileContext);
 
   //google OAuth2
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
-
-
+  
+  useEffect(() => {
+    (async () => {
+      const templates = await getTemplateList(currentUser);
+      props.setTemplateList(templates);
+    })();
+  }, [currentUser, formOpen]);
 
 
   // state for full user objects from calendar api

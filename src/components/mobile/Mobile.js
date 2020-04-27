@@ -29,22 +29,22 @@ const Mobile = () => {
         setColors(newColors)
     },[navState])
 
-
+    console.log("From Mobile.js", templateList)
 
     return(
         
         <MobileContext.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm}}>
             
-            {navState===0 && <Dashboard/>}
+            {navState===0 && <Dashboard setTemplateList={setTemplateList}/>}
         
             {navState===1 && <>
-                <MobileEvents formOpen={formOpen}></MobileEvents>
+                <MobileEvents formOpen={formOpen} setTemplateList={setTemplateList} templateList={templateList}></MobileEvents>
             </>}
 
             {navState===2 && <Groups/>}
 
 
-            {navState===3 && <NewEventForm setTemplateList={setTemplateList} setToggleNav={setToggleNav} setNavState={setNavState} setSumm={setSumm} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
+            {navState===3 && <NewEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setSumm={setSumm} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
         </MobileContext.Provider>

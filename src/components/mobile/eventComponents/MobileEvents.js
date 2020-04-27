@@ -17,17 +17,10 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = ({formOpen}) => {
-
-
-  
+const MobileEvents = ({formOpen, setTemplateList, templateList}) => {
 
     const { googleApi, api } = useAuth();
-
-    const [templateList, setTemplateList] = useState([]);
     const { currentUser} = googleApi;
-
-
 
     useEffect(() => {
         (async () => {
