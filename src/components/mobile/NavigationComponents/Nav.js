@@ -1,18 +1,28 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from 'styled-components'
 
 
-const Nav = ({setNavState, colors}) => {
+const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTemplateFormOpen}) => {
 
 
 
     const handleChange = (num) => {
         setNavState(num)
+        setFormOpen(false)
+        setTemplateFormOpen(false)
+        setSelected([])
+        setToggleNav(true)
+        if(num===1){
+            setToggleNav(false)
+        }
     }
 
            return( <div>
                 <Container>
-                    <IconDiv onClick={()=>handleChange(0)}>
+                    <IconDiv onClick={()=>{
+                        setToggleNav(true);
+                        handleChange(0)
+                    }}>
                         <i className="far fa-calendar-alt" style={{ fontSize: '1.5rem', color: colors[0] }}></i>
                         <Label style={{color: colors[0]}}>Calendar</Label>
                     </IconDiv>

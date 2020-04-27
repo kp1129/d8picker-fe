@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventDatesArr, summaries }) => {
 
 
+  //checks the current Day's date (being mapped by parent Days) matches a date of an event from the google calendar api. If so, render an event indicator for each matching event.
   const matchTheEvents = () => {
     
     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
@@ -42,18 +43,21 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventDat
   } = useDate(date);
 
   
-
+  //sets the background color of the calendar day when clicked in date selection mode to red if in the past or blue if present or future so it is clear to the user which dates an event can be added to.
   const setBackgroundColor = ()=>{
 
       if(isPicked === true){  
             let index = i+1;
             let newDate = new Date()
             let thisYear = newDate.getYear() + 1900;
+          //if the date is in the past (the month before this month, but still in the current year) and any date in that month is clicked, make it red
           if(currentMonth < dayjs().$M && currentYear === thisYear){
               return '#FC8181'
           } 
+          //if the date is in the current month and the current year but the day is before today, and it is clicked, make it red
           else if (date.$D > index && currentMonth === dayjs().$M && currentYear === thisYear){
                 return '#FC8181'
+          //otherwise, given current functionality, it is possible to add an event to that day so make it blue
           }else {
               return 'brand.blue_primary';
           }
@@ -94,7 +98,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventDat
               </Box>
               <div>
                 {eventDatesArr && matchTheEvents()}
-
               </div>
             </Flex>
           </Cell>

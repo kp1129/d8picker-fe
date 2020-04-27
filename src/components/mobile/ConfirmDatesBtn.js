@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 
 
-const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setToggleNav, setTemplateFormOpen, setFormOpen}) => {
+const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTemplateFormOpen, setFormOpen}) => {
 
-    const { googleApi, api } = useAuth();
+    const { api } = useAuth();
 
     //takes input from date selection and add template form and sends to google calendar api
     const applyTemplate = (summary, description, starttime, endtime) => {
@@ -28,8 +28,9 @@ const ConfirmDatesBtn = ({conStart, conEnd, summ, selected, setSelected, setTogg
         // setToggleNav(true)
         setFormOpen(false);
         setTemplateFormOpen(false)
+        console.log('event added')
         //necessary so that event is sent to api before the page reloads. Page must reload to show new event list that contains the added events
-        setTimeout(()=>{window.location.reload(false)}, 500)
+        setTimeout(()=>{window.location.reload(false)}, 500);
       };
 
     const handleClick = (e) =>{
