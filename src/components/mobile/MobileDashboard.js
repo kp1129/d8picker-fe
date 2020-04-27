@@ -101,7 +101,7 @@ const [items, setItems] = useState(nextMonth(50));
       </Container>}
     <Box
       maxHeight="100vh"
-      style={{marginTop: window.innerHeight*.067}}
+      style={{marginTop: toggleNav ? 0 : window.innerHeight*.079}}
     >
       <Grid
         width="100%"
@@ -153,7 +153,8 @@ const Container = styled.div`
   display: flex; 
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #BDBDBD;
+  // border-bottom: 1px solid #BDBDBD;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   padding: 5% 2.5% 2.5% 2.5%;
   position: fixed;
   top: 0;
