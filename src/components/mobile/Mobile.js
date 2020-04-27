@@ -43,7 +43,8 @@ const Mobile = () => {
 
             {navState===2 && <Groups/>}
 
-            {navState===3 && <NewEventForm setTemplateList={setTemplateList}/>}
+
+            {navState===3 && <NewEventForm setTemplateList={setTemplateList} setToggleNav={setToggleNav} setNavState={setNavState} setSumm={setSumm} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
         </MobileContext.Provider>
