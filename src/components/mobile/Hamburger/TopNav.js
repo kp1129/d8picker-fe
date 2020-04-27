@@ -1,30 +1,41 @@
 import React from 'react'
 import "./TopNav.css"
 import { useAuth } from '../../../contexts/auth';
+import styled from "styled-components"
 
 const Hamburger = () => {
-  const { googleApi} = useAuth();
+  const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
   console.log("In hamburger")
 
+  const ProfileImg = styled.img`
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: fixed;
+  margin: 1% 0% 0% 1%;
+  `
+
   return (
     <div>
-      <input type="checkbox" className="blue" id="menu"/>
-        <label htmlFor="menu" className="icon">
-          <div className="menu"></div>
-        </label>
+      <input type="checkbox" className="blue" id="menu" />
+      <ProfileImg src={currentUser.photoUrl} alt="avatar"/>
+      <label htmlFor="menu" className="icon">
+        <div className="menu"></div>
+      </label>
 
-        <nav className = "burger-container">
-          <ul>
-            <li onClick={() => {
-              handleSignOut();
-              window.location.reload();
-              console.log("sign out")
-            }}>
-              <a href="#">Sign Out</a>
-            </li>
-          </ul>
-        </nav>
+      <nav className="burger-container">
+
+        <ul>
+          <li onClick={() => {
+            handleSignOut();
+            window.location.reload();
+            console.log("sign out")
+          }}>
+            <a href="#">Sign Out</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   )
 }
