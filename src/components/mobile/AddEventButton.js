@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const AddEventButton = ({setNavState}) => {
-    return <Btn onClick={()=>setNavState(1)}>+</Btn>
+    return <Btn onClick={()=>setNavState(3)}>+</Btn>
 }
 
 export default AddEventButton;

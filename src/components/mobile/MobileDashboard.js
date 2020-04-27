@@ -8,17 +8,32 @@ import InfiniteCal from './InfiniteCal'
 import Cell from '../dashboardComponents/calendarComponents/Cell'
 import styled from 'styled-components'
 import Hamburger from './Hamburger/TopNav'
+import axios from 'axios'
 
 
+const getTemplateList = async ({ googleId }) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 const Dashboard = () => {
   
  
-  const {setSelected, toggleNav, setToggleNav, setNavState} = useContext(MobileContext);
+  const {setSelected, toggleNav, setToggleNav, setNavState, formOpen} = useContext(MobileContext);
 
   //google OAuth2
   const { googleApi, api } = useAuth();
+  const { currentUser } = googleApi;
+
+
+
 
   // state for full user objects from calendar api
   const [events, setEvents] = useState(null);
@@ -54,6 +69,8 @@ const Dashboard = () => {
       }
     })();
   }, [api]);
+
+  
 
 
   //helper function to loop through and create months in the future based on number passed into the function
