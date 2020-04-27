@@ -51,10 +51,6 @@ function App() {
       },[])
 
 
-
-  
-  
-  
   
   
   if (googleApi.isLoading) {
@@ -96,10 +92,12 @@ function App() {
 
         )
       }
+
   } else if(dimensions.width <= breakPoint){
       return(
         <Mobile/>
       )
   }
+
 }
 export default App;

@@ -7,7 +7,7 @@ import Groups from './Groups'
 
 const Mobile = () => {
     // 0 = calendar, 1 = events, 2 = groups
-    const [navState, setNavState] = useState(0) 
+    const [navState, setNavState] = useState(2) 
     const [formOpen, setFormOpen] = useState(false);
     const [templateFormOpen, setTemplateFormOpen] = useState(false);
     const [conStart, setConStart] = useState("");
@@ -25,6 +25,7 @@ const Mobile = () => {
         newColors[navState] = "#28807D";
         setColors(newColors)
     },[navState])
+
 
 
     return(
