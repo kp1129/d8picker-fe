@@ -7,7 +7,6 @@ import styled from "styled-components"
 const Hamburger = () => {
   const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
-  console.log("In hamburger")
 
   const ProfileImg = styled.img`
   border-radius: 50%;
