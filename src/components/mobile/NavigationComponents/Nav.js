@@ -5,6 +5,7 @@ import styled from 'styled-components'
 const Nav = ({setNavState, colors}) => {
 
 
+
     const handleChange = (num) => {
         setNavState(num)
     }
@@ -15,6 +16,7 @@ const Nav = ({setNavState, colors}) => {
                         <i className="far fa-calendar-alt" style={{ fontSize: '1.5rem', color: colors[0] }}></i>
                         <Label style={{color: colors[0]}}>Calendar</Label>
                     </IconDiv>
+
     
                     <IconDiv onClick={()=>handleChange(1)}>
                         <i className="fas fa-bars" style={{ fontSize: '1.5rem', color: colors[1]  }}></i>
