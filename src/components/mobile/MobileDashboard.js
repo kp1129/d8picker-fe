@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {MobileContext} from '../../contexts/MobileContexts';
+import {MobileContext, MobileDashboardContext} from '../../contexts/MobileContexts';
 import { Box, Grid } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
@@ -112,12 +112,7 @@ const [items, setItems] = useState(nextMonth(50));
               </Grid>
             </Box>
             <MobileDashboardContext.Provider value={{api, events, eventDatesArr, summaries}}>
-              {items.length > 0 && <InfiniteCal items={items}
-              api={api}
-              events={events}
-              month={items}
-              eventDatesArr={eventDatesArr}
-              summaries={summaries}/>}
+              {items.length > 0 && <InfiniteCal items={items}/>}
             </MobileDashboardContext.Provider>
             
             {toggleNav === false && <ConfirmDatesBtn/>}

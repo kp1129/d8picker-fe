@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import {MobileContext, MobileDashboardContext} from '../../contexts/MobileContexts';
 import dayjs from 'dayjs';
-import { Heading, Flex, Grid, Box } from '@chakra-ui/core';
+import {Flex, Grid, Box } from '@chakra-ui/core';
 import Days from './MobileDays';
 import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
 
+//need month and i
+const Calendar = ({month, i}) => {
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventDatesArr, summaries}) => {
+  const {events, eventDatesArr, summaries} = useContext(MobileDashboardContext);
 
+
+  const {templateFormOpen, selected, setSelected} = useContext(MobileContext);
  
 
   const currentDay = dayjs();
@@ -49,21 +54,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
           style={{ width: '100%'}}
         >
           
-          <Days
-            events={events}
-            date={date}
-            templateFormOpen={templateFormOpen}
-            selected={selected}
-            setSelected={setSelected}
-            weekDayOfFirstDay={weekDayOfFirstDoM}
-            weekDayOfLastDay={weekDayOfLastDoM}
-            daysInMonth={daysInMonth}
-            currentDay={currentDay}
-            currentMonth={currentMonth}
-            currentYear={currentYear}
-            eventDatesArr={eventDatesArr}
-            summaries={summaries}
-          />
+          <Days date={date}/>
         </Grid>
       </Box>
     );

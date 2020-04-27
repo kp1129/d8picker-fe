@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import MobileTemplateContainer from './MobileTemplateContainer.js'
 import styled from 'styled-components'
-
 import axios from 'axios';
 import { useAuth } from '../../../contexts/auth';
 
@@ -18,14 +17,15 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, templateFormOpen, setToggleNav, toggleNav, conStart,setConStart, conEnd, setConEnd, summ, setSumm, selected, setSelected}) => {
+const MobileEvents = ({formOpen}) => {
+
 
   
 
     const { googleApi, api } = useAuth();
 
     const [templateList, setTemplateList] = useState([]);
-    const { currentUser, handleSignOut } = googleApi;
+    const { currentUser} = googleApi;
 
 
 
@@ -36,6 +36,7 @@ const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, 
         })();
       }, [currentUser, formOpen]);
 
+      //???
       const [events, setEvents] = useState(null);
 
       // get events from api and set to state
@@ -51,32 +52,9 @@ const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, 
       }, [api]);
 
 
-  
-
-    
-
     return(
           <FixedMobile>
-            <MobileTemplateContainer
-            setSelected={setSelected}
-            selected={selected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setNavState={setNavState}
-            formOpen={formOpen}
-            setFormOpen={setFormOpen}
-            setTemplateList={setTemplateList}
-            currentUser={currentUser}
-            templateList={templateList}
-            setToggleNav={setToggleNav} 
-            toggleNav={toggleNav}
-            conStart={conStart} 
-            setConStart={setConStart} 
-            conEnd={conEnd} 
-            setConEnd={setConEnd} 
-            summ={summ} 
-            setSumm={setSumm}
-          />
+            <MobileTemplateContainer templateList={templateList}/>
             </FixedMobile>
     )
 

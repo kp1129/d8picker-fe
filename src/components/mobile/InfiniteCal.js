@@ -32,16 +32,8 @@ const Row = ({ data, index, style }) => {
     label = <Calendar 
     style={style}
     key={index}
-    api={data.api}
     i={index}
-    selected={data.selected}
-    setSelected={data.setSelected}
-    templateFormOpen={data.templateFormOpen}
-    setTemplateFormOpen={data.setTemplateFormOpen}
-    events={data.events}
     month={data.items[index]}
-    eventDatesArr={data.eventDatesArr}
-    summaries={data.summaries}
     />
   
   } else {
@@ -54,9 +46,9 @@ const Row = ({ data, index, style }) => {
   );
 }
 
-export default function NewInfCal({ items, api, events, eventDatesArr, summaries}) {
+export default function NewInfCal({items}) {
 
-  const {templateFormOpen, setTemplateFormOpen, selected, setSelected, setNavState} = useContext(MobileContext);
+  const {templateFormOpen, setNavState} = useContext(MobileContext);
   
     return (
       <Fragment>
@@ -75,7 +67,7 @@ export default function NewInfCal({ items, api, events, eventDatesArr, summaries
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={window.innerWidth}
-              itemData={{items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries}}
+              itemData={{items}}
             >
               {Row}
             </List>
