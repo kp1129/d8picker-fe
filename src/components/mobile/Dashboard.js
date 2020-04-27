@@ -5,6 +5,9 @@ import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
+import Cell from '../../components/dashboardComponents/calendarComponents/Cell'
+import TopNav from './NavigationComponents/TopNav'
+
 
 
 //gets event templates from backend
@@ -19,7 +22,7 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
+const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav, setNavState}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -90,14 +93,18 @@ const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen
 
 const [items, setItems] = useState(nextMonth(50));
 
-
+const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   return (
+    <>
+    <TopNav/>
     <Box
-      pos="relative"
-      backgroundColor="brand.lightgray"
+      // pos="relative"
+      // backgroundColor="brand.lightgray"
       // p={[4, 16]}
       maxHeight="100vh"
+      style={{marginTop: window.innerHeight*.067}}
     >
+      
       
       <Grid
         width="100%"
@@ -105,9 +112,27 @@ const [items, setItems] = useState(nextMonth(50));
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
-        <Box className="calendarArea" gridArea="main">
+        <Box className="calendarArea" gridArea="main" backgroundColor="white">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
+        <Box className="calendar" backgroundColor="#F8F8F8"  style={{width: "100%", height: '40px'}}>
+        <Grid
+          className="weekdays-grid"
+          templateColumns="repeat(7, 1fr)"
+          textAlign="right"
+        >
+        {weekDays.map(d => (
+            <Cell
+              className="weekdays-item"
+              fontSize={['lg', '3xl']}
+              height="auto"
+              key={d}
+            >
+              {d}
+            </Cell>
+          ))}
+        </Grid>
+        </Box>
         {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
@@ -118,7 +143,8 @@ const [items, setItems] = useState(nextMonth(50));
         month={items}
         monthList={items}
         eventDatesArr={eventDatesArr}
-        summaries={summaries}/>}
+        summaries={summaries}
+        setNavState={setNavState}/>}
         
         {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
@@ -127,6 +153,7 @@ const [items, setItems] = useState(nextMonth(50));
         </Box>
       </Grid>
     </Box>
+    </>
   );
 };
 

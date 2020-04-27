@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box } from '@chakra-ui/core';
 import Days from './MobileDays';
-import Cell from '../dashboardComponents/calendarComponents/Cell'
 import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
+
 
 
 
@@ -36,35 +36,19 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
   },[])
 
     return (
-      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px" style={{margin: '4%'}}>
+      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px">
         <Flex className="header" align="center" justify="center" py={4}>
           <MonthNameContainer>
-            <Heading className="heading">{month.format('MMMM')} {date.format('YYYY')}</Heading>
+            <MonthName className="heading">{month.format('MMMM')} {date.format('YYYY')}</MonthName>
           </MonthNameContainer>
         </Flex>
         <Grid
-          className="weekdays-grid"
-          templateColumns="repeat(7, 1fr)"
-          textAlign="right"
-          borderBottomWidth="1px"
-          borderBottomColor="gray.200"
-        >
-          {weekDays.map(d => (
-            <Cell
-              className="weekdays-item"
-              fontSize={['lg', '3xl']}
-              height="auto"
-              key={d}
-            >
-              {d}
-            </Cell>
-          ))}
-        </Grid>
-        <Grid
           className="calendar-days-grid"
-          templateColumns="repeat(7, 1fr)"
+          templateColumns="repeat(7, 0fr)"
           textAlign="right"
+          style={{ width: '100%'}}
         >
+          
           <Days
             events={events}
             date={date}
@@ -88,6 +72,13 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, e
 const MemoizedCal = React.memo(Calendar);
 export default MemoizedCal;
 
+const MonthName = styled.h2`
+  color: #28807D;
+  font-weight: bold;
+
+  font-size: 1.2rem;
+  line-height: 19px;
+`;
 
 
 const MonthNameContainer = styled.div`

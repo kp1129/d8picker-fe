@@ -23,18 +23,18 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
                         setToggleNav(true);
                         handleChange(0)
                     }}>
-                        <i className="far fa-calendar-alt" style={{ fontSize: '1.5rem', color: colors[0] }}></i>
+                        <i className="far fa-calendar-alt" style={{ fontSize: '2rem', color: colors[0] }}></i>
                         <Label style={{color: colors[0]}}>Calendar</Label>
                     </IconDiv>
 
     
                     <IconDiv onClick={()=>handleChange(1)}>
-                        <i className="fas fa-bars" style={{ fontSize: '1.5rem', color: colors[1]  }}></i>
+                        <i className="fas fa-bars" style={{ fontSize: '2rem', color: colors[1]  }}></i>
                         <Label style={{color: colors[1]}}>Events</Label>
                     </IconDiv>
     
                     <IconDiv onClick={()=>handleChange(2)}>
-                        <i className="fas fa-users" style={{ fontSize: '1.5rem', color: colors[2]  }}></i>
+                        <i className="fas fa-users" style={{ fontSize: '2rem', color: colors[2]  }}></i>
                         <Label style={{color: colors[2]}}>Groups</Label>
                     </IconDiv>
                 </Container>
@@ -66,7 +66,7 @@ const IconDiv = styled.div`
 `;
 
 const Label = styled.p`
-    font-size: 10px;
+    font-size: 12px;
     font-family: Open Sans;
 `;
 

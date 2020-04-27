@@ -70,14 +70,16 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventDat
   return (
           <Cell
             className="calendar-days-item"
-            borderBottomWidth="10px"
-            borderBottomColor="gray.200"
+            // borderBottomWidth="10px"
+            // borderBottomColor="gray.200"
             height="120px"
             key={i}
-            width={window.innerWidth/8}
+            width={window.innerWidth/7}
+            
           >
             <Flex
               direction="column"
+              style={{border: '.5px solid #E0E0E0'}}
               align="center"
               justify="space-between"
               h="100%"
