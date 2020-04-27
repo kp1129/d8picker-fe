@@ -1,28 +1,23 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
 import useDate from '../../../hooks/useDate';
 import dayjs from 'dayjs';
 
-
+   
 
 const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
+  
   const {
     currentMonth,
     currentYear,
   } = useDate(date);
-//   console.log('dayjs', dayjs())
-
-
 
   
   const setBackgroundColor = ()=>{
       if(isPicked === true){
             let index = i+1;
-            let newDate = new Date()
-            let str = newDate.toUTCString();
-            console.log(str)
           if(currentMonth < dayjs().$M){
               return '#FC8181'
           } 
@@ -42,6 +37,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
             borderBottomColor="gray.200"
             height="120px"
             key={i}
+            width={window.innerWidth/8}
           >
             <Flex
               direction="column"
@@ -49,7 +45,6 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
               justify="space-between"
               h="100%"
               py={[1, 8]}
-            //   backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
               backgroundColor={setBackgroundColor()}
               color={isPicked ? 'white' : 'inherit'}
               onClick={()=>{
@@ -68,6 +63,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
                 events.map(event => (
                   <div key={event.id}>
                     <EventsIndicator
+                      key={event.id}
                       event={event}
                       day={day}
                       currentMonth={currentMonth}

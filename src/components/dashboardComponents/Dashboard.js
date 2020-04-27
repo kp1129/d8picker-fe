@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/auth';
 import Calendar from './calendarComponents/Calendar.js';
 import ProfileInfo from './ProfileInfo'
 import TemplateContainer from './TemplateContainer'
+import {DashboardContext} from '../../contexts/DesktopContexts'
+
 
 const getTemplateList = async ({ googleId }) => {
   try {
@@ -18,7 +20,7 @@ const getTemplateList = async ({ googleId }) => {
 };
 
 
-const Dashboard = ({ setUserState }) => {
+const Dashboard = () => {
   const { googleApi, api } = useAuth();
 
   const [templateList, setTemplateList] = useState([]);
@@ -27,8 +29,7 @@ const Dashboard = ({ setUserState }) => {
   const [selected, setSelected] = useState([]);
   const [shadow, setShadow] = useState("");
   const { currentUser, handleSignOut } = googleApi;
-  console.log(templateList)
-  console.log('formOpen', formOpen);
+
 
   useEffect(() => {
     (async () => {
@@ -67,6 +68,7 @@ const Dashboard = ({ setUserState }) => {
 
 
   return (
+    <DashboardContext.Provider value={{formOpen, setFormOpen, templateList, selected, setSelected, templateFormOpen, setTemplateFormOpen, setTemplateList, currentUser, events}}>
     <Box
       pos="relative"
       backgroundColor="brand.lightgray"
@@ -85,19 +87,8 @@ const Dashboard = ({ setUserState }) => {
           direction="column"
           align="center"
         >
-          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} setUserState={setUserState} />
-          <TemplateContainer
-            setSelected={setSelected}
-            selected={selected}
-            templateFormOpen={templateFormOpen}
-            setTemplateFormOpen={setTemplateFormOpen}
-
-            formOpen={formOpen}
-            setFormOpen={setFormOpen}
-            setTemplateList={setTemplateList}
-            currentUser={currentUser}
-            templateList={templateList}
-          />
+          <ProfileInfo currentUser={currentUser} handleSignOut={handleSignOut} />
+          <TemplateContainer/>
         </Flex>
         <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
           <Calendar
@@ -111,6 +102,7 @@ const Dashboard = ({ setUserState }) => {
         </Box>
       </Grid>
     </Box>
+    </DashboardContext.Provider>
   );
 };
 

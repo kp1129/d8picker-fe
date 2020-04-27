@@ -9,11 +9,11 @@ const DisabledDays = ({ days }) => {
       {[...Array(days).keys()].map(i => (
         <Cell
           className="calendar-days-item faded"
-          borderBottomWidth="1px"
-          borderBottomColor="gray.200"
+          // borderBottomWidth="1px"
+          // borderBottomColor="#E0E0E0"
           key={i}
         >
-          <Box backgroundColor="gray.100" h="100%" />
+          <Box backgroundColor="white" h="100%" />
         </Cell>
       ))}
     </>

@@ -1,6 +1,6 @@
 {
  "name": "school-calendar-fe",
- "homepage": "",
+ "homepage": "d8picker.com",
  "version": "0.1.0",
  "private": true,
  "scripts": {
@@ -52,6 +52,9 @@
   "react-hook-form": "^4.10.1",
   "react-router-dom": "^5.1.2",
   "react-scripts": "3.4.0",
+  "react-virtualized-auto-sizer": "^1.0.2",
+  "react-window": "^1.8.5",
+  "react-window-infinite-loader": "^1.0.5",
   "styled-components": "^5.0.1"
  },
  "devDependencies": {
@@ -62,6 +65,7 @@
   "enzyme": "^3.11.0",
   "enzyme-adapter-react-16": "^1.15.2",
   "enzyme-to-json": "^3.4.4",
+  "mutationobserver-shim": "^0.3.5",
   "prettier": "^1.19.1",
   "react-test-renderer": "^16.12.0"
  },

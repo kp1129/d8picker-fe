@@ -1,15 +1,14 @@
 import React, {useContext} from 'react';
-import {DashboardContext} from '../../../contexts/DesktopContexts'
-import useDate from '../../../hooks/useDate';
-import Day from './Day'
-import DisabledDays from './DIsabledDays'
+import {MobileContext} from '../../contexts/MobileContexts';
+import useDate from '../../hooks/useDate'
+import Day from './MobileDay'
+import DisabledDays from '../dashboardComponents/calendarComponents/DIsabledDays'
 
 
 
 const Days = ({date}) => {
 
-  const {events, selected, setSelected, templateFormOpen} = useContext(DashboardContext);
-
+  const {templateFormOpen, selected, setSelected} = useContext(MobileContext);
 
 
   const {
@@ -60,9 +59,8 @@ const Days = ({date}) => {
           };
 
           
-
         return (
-          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date} events={events}/>
+          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date}/>
         );
       })}
 

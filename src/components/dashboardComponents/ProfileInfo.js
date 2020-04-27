@@ -3,10 +3,9 @@ import {Flex, Heading, Image, Button} from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 
 
-const ProfileInfo = (props) => {
-    // const {currentUser, handleSignOut} = props;
-    const {setUserState} = props;
-    const { googleApi, api } = useAuth();
+
+const ProfileInfo = () => {
+    const { googleApi} = useAuth();
     const { currentUser, handleSignOut } = googleApi;
 
 
@@ -35,7 +34,6 @@ const ProfileInfo = (props) => {
             </Heading>
             <Button variantColor="red" onClick={()=>{
               handleSignOut();
-              setUserState();
             }} mb={2}>
               Sign out
             </Button>

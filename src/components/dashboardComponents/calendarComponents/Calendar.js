@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
 import Days from './Days';
@@ -6,21 +6,14 @@ import Cell from './Cell';
 import useDate from '../../../hooks/useDate';
 import styled from 'styled-components';
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen }) => {
-  const currentDay = dayjs();
+const Calendar = () => {
+
 
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
   
 
-  const {
-    currentMonth,
-    currentYear,
-    daysInMonth,
-    weekDayOfFirstDoM,
-    weekDayOfLastDoM,
-    weekDays
-  } = useDate(date);
+  const {weekDays} = useDate(date);
 
   const handlePrev = () => {
     setDate(date.subtract(1, 'month'));
@@ -77,19 +70,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen }) => {
         templateColumns="repeat(7, 1fr)"
         textAlign="right"
       >
-        <Days
-          events={events}
-          date={date}
-          templateFormOpen={templateFormOpen}
-          selected={selected}
-          setSelected={setSelected}
-          weekDayOfFirstDay={weekDayOfFirstDoM}
-          weekDayOfLastDay={weekDayOfLastDoM}
-          daysInMonth={daysInMonth}
-          currentDay={currentDay}
-          currentMonth={currentMonth}
-          currentYear={currentYear}
-        />
+        <Days date={date}/>
       </Grid>
     </Box>
   );
