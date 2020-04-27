@@ -7,6 +7,7 @@ import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
 import Cell from '../dashboardComponents/calendarComponents/Cell'
 import styled from 'styled-components'
+import Hamburger from './Hamburger/TopNav'
 
 
 
@@ -69,6 +70,7 @@ const [items, setItems] = useState(nextMonth(50));
 
   return (
     <>
+    {toggleNav && <Hamburger />}
     {/*toggle nav toggles off nav to indicate in date selection mode, this changes the header to reflect this*/}
     {toggleNav === false && <Container>
           <Cancel onClick={()=>{
