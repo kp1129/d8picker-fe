@@ -13,7 +13,8 @@ const Hamburger = () => {
   height: 40px;
   width: 40px;
   position: fixed;
-  margin: 1% 0% 0% 1%;
+  margin: 2.5% 0% 0% 2.5%;
+  z-index: 201;
   `
 
   return (
