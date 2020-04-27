@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useContext} from "react";
+import {MobileContext} from '../../../contexts/MobileContexts'
 import { useForm } from 'react-hook-form';
 import { Button, Input } from '@chakra-ui/core';
 import { useAuth} from '../../../contexts/auth';
@@ -19,14 +20,22 @@ const NewEventHead = styled.div`
 `
 
 
+
+
 const NewEventForm = props => {
-    const { setFormOpen, setTemplateList, currentUser, formOpen } = props;
+    const {setTemplateList} = props;
+
+
+    const {setFormOpen, formOpen} = useContext(MobileContext);
+
     const { googleApi, api } = useAuth();
+    const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
 
     // Submit for template form
     const onSubmit = async formData => {
-        const template = addTemplate(formData, currentUser);
+        const template = await addTemplate(formData, currentUser);
+        console.log('template', template)
         await setTemplateList(prevTemplates => [...prevTemplates, template]);
         setFormOpen(!formOpen);
     };

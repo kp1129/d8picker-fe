@@ -6,12 +6,14 @@ import MobileEvents from './eventComponents/MobileEvents'
 import Nav from './NavigationComponents/Nav'
 import NewEventForm from './eventComponents/NewEventForm';
 import Groups from './Groups'
+import NewEventForm from './eventComponents/NewEventForm'
 
 const Mobile = () => {
     // 0 = calendar, 1 = events, 2 = groups
     const [navState, setNavState] = useState(0) 
     const [formOpen, setFormOpen] = useState(false);
     const [templateFormOpen, setTemplateFormOpen] = useState(false);
+    const [templateList, setTemplateList] = useState([]);
     const [conStart, setConStart] = useState("");
     const [conEnd, setConEnd] = useState("");
     const [summ, setSumm] = useState("")
@@ -41,6 +43,8 @@ const Mobile = () => {
             </>}
 
             {navState===2 && <Groups/>}
+
+            {navState===3 && <NewEventForm setTemplateList={setTemplateList}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
         </MobileContext.Provider>
