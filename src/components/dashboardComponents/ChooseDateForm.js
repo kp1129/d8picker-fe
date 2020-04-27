@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {DashboardContext} from '../../contexts/DesktopContexts'
 import {
   Flex,
   ButtonGroup,
@@ -20,14 +21,17 @@ const ChooseDateForm = ({
   endtime,
   summary,
   description,
-  selected,
-  setSelected,
-  templateFormOpen,
-  setTemplateFormOpen,
-  setTemplateList,
-  templateList
 }) => {
 
+  const {
+    setSelected,
+    selected,
+    templateFormOpen,
+    setTemplateFormOpen,
+    setTemplateList,
+    templateList} = useContext(DashboardContext);
+
+    
   const { api } = useAuth();
 
 
