@@ -12,6 +12,7 @@ import Welcome from './components/Welcome';
 import Dashboard from './components/dashboardComponents/Dashboard';
 import Loading from './components/Loading';
 import Mobile from './components/mobile/Mobile';
+import DesktopContext from './contexts/DesktopContext'
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -75,7 +76,10 @@ function App() {
               <Welcome />
             </Route>}
             <PrivateRoute path="/:id/dashboard">
+            <DesktopContext.Provider value={{setUserState}}>
               <Dashboard setUserState={setUserState}/>
+            </DesktopContext.Provider>
+
             </PrivateRoute>
           </Stack>
         );
