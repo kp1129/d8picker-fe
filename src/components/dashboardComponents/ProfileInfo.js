@@ -4,7 +4,6 @@ import { useAuth } from '../../contexts/auth';
 
 
 const ProfileInfo = (props) => {
-    // const {currentUser, handleSignOut} = props;
     const {setUserState} = props;
     const { googleApi} = useAuth();
     const { currentUser, handleSignOut } = googleApi;

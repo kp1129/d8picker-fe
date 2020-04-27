@@ -1,7 +1,6 @@
 
 import React, {useState, useEffect} from 'react'
-import TopNav from './NavigationComponents/TopNav'
-import Dashboard from './Dashboard'
+import Dashboard from './MobileDashboard'
 import MobileEvents from './eventComponents/MobileEvents'
 import Nav from './NavigationComponents/Nav'
 import Groups from './Groups'

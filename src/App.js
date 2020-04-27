@@ -24,10 +24,19 @@ function App() {
 
   const breakPoint = 768
 
-    const [dimensions, setDimensions] = useState({ 
+  const [dimensions, setDimensions] = useState({ 
       height: window.innerHeight,
       width: window.innerWidth
-    })
+      })
+
+  const [userState, setUserState] = useState({})
+  
+  let currentUser = googleApi.currentUser
+
+  useEffect(()=>{
+    setUserState(currentUser)
+  },[currentUser])
+
     useEffect(() => {
       function handleResize() {
         setDimensions({
@@ -41,11 +50,6 @@ function App() {
       }
       },[])
 
-  const [userState, setUserState] = useState({})
-  let currentUser = googleApi.currentUser
-  useEffect(()=>{
-    setUserState(currentUser)
-  },[currentUser])
 
   
   
@@ -88,43 +92,12 @@ function App() {
 
         )
       }
-} else if(dimensions.width <= breakPoint){
 
-  if(googleApi.currentUser){
-    return (
-      <Stack pos="relative" w="100%" minHeight="100vh">
-            {/* <Header userState={userState} /> */}
-            <Route path="/">
-              <Authenticate />
-            </Route>
-            {googleApi.currentUser && <Route exact path="/">
-              <Welcome />
-            </Route>}
-            <PrivateRoute path="/:id/dashboard">
-              <Mobile setUserState={setUserState}/>
-            </PrivateRoute>
-          </Stack>
-    )
-  } else {
-
+  } else if(dimensions.width <= breakPoint){
+      return(
+        <Mobile/>
+      )
   }
 
-  return(
-
-    <Stack pos="relative" w="100%" minHeight="100vh">
-            <Header />
-            <Route path="/authenticate/google">
-              <Authenticate />
-            </Route>
-            <Route exact path="/">
-              <Welcome />
-            </Route>
-            <PrivateRoute path="/:id/dashboard">
-              <Dashboard />
-            </PrivateRoute>
-          </Stack>
-
-  )
-}
 }
 export default App;
