@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box } from '@chakra-ui/core';
-import Days from '../dashboardComponents/calendarComponents/Days';
-import Cell from '../dashboardComponents/calendarComponents/Cell';
+import Days from './MobileDays';
+import Cell from '../dashboardComponents/calendarComponents/Cell'
 import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, i}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month, i, eventNameArr, summaries}) => {
 
  
 
@@ -18,9 +17,8 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   const [date, setDate] = useState(dayjs());
 
 
-
-
-
+  
+  
   const {
     currentMonth,
     currentYear,
@@ -29,18 +27,18 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
     weekDayOfLastDoM,
     weekDays
   } = useDate(date);
+  
 
   
 
   useEffect(()=>{
     setDate(month)
-  },[monthList])
+  },[])
 
     return (
-      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px" style={{border: '1px solid red', margin: '4%'}}>
+      <Box id={i} className="calendar" backgroundColor="white" borderRadius="10px" style={{margin: '4%'}}>
         <Flex className="header" align="center" justify="center" py={4}>
           <MonthNameContainer>
-            {/* <Heading className="heading">{date.format('MMMM')} {date.format('YYYY')}</Heading> */}
             <Heading className="heading">{month.format('MMMM')} {date.format('YYYY')}</Heading>
           </MonthNameContainer>
         </Flex>
@@ -79,13 +77,16 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             currentDay={currentDay}
             currentMonth={currentMonth}
             currentYear={currentYear}
+            eventNameArr={eventNameArr}
+            summaries={summaries}
           />
         </Grid>
       </Box>
     );
 };
 
-export default Calendar;
+const MemoizedCal = React.memo(Calendar);
+export default MemoizedCal;
 
 
 

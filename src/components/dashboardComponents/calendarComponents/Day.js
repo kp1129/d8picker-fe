@@ -39,6 +39,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
             borderBottomColor="gray.200"
             height="120px"
             key={i}
+            width={window.innerWidth/8}
           >
             <Flex
               direction="column"

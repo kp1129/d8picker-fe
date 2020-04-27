@@ -53,9 +53,7 @@ const MobileEvents = ({setNavState, setFormOpen, formOpen, setTemplateFormOpen, 
 
   
 
-    const FixedMobile = styled.div`
-    border: 5px black;
-    `
+    
 
     return(
           <FixedMobile>

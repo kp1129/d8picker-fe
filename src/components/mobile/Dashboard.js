@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
-import NewInfCal from './NewInfCal'
+import InfiniteCal from './InfiniteCal'
+
 
 //gets event templates from backend
 const getTemplateList = async ({ googleId }) => {
@@ -18,21 +19,18 @@ const getTemplateList = async ({ googleId }) => {
   }
 };
 
-const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
+const Dashboard = ({setFormOpen, formOpen, templateFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav}) => {
 
   //google OAuth2
   const { googleApi, api } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
 
   const [templateList, setTemplateList] = useState([]);
-  // const [templateFormOpen, setTemplateFormOpen] = useState(false);
   
   // state to show users events
   const [events, setEvents] = useState(null);
 
-
-  //shadow to indicate select date mode is enabled
-  const [shadow, setShadow] = useState("");
+  const [eventNameArr, setEventNameArr] = useState([])
   
   //sets initial number of months to display
   const [numOfMonths, setNumOfMonths] = useState(24);
@@ -51,21 +49,11 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
       setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
-
-  //highlights calendar based on whether choose dates button is active or not
-  useEffect(() => {
-    if (templateFormOpen) {
-      setShadow("0px 0px 19px 7px rgba(99,179,237,1)")
-    } else {
-      setShadow("");
-    }
-  }, [templateFormOpen])
   
 
   //dynamically sets the state of months based on the state numOfMonths
   useEffect(()=>{
     setMonths(nextMonth(numOfMonths));
-    // console.log('months', nextMonth(numOfMonths))
   },[templateFormOpen])
   
   //helper function to loop create months in the future based on numOfMonths
@@ -78,13 +66,22 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   }
 
 
-
+  const [summaries, setSummaries] = useState([]);
   // get events from api and set to state
   useEffect(() => {
     (async () => {
       try {
         const data = await api.listEvents();
         setEvents(data);
+        let summariesArr = [];
+        let formattedEvents = data.map(event=>{
+          summariesArr.push(event.summary)
+          return event.start.dateTime.substring(0,10)
+        })
+        setSummaries(summariesArr)
+        setEventNameArr(formattedEvents);
+
+
       } catch (error) {
         console.log(error);
       }
@@ -92,46 +89,9 @@ const Dashboard = ({ setUserState, setFormOpen, formOpen, templateFormOpen, setT
   }, [api]);
 
 
- //infinite loading stuff
 const [items, setItems] = useState(nextMonth(50));
-// const [moreItemsLoading, setMoreItemsLoading] = useState(false);
-// const [hasNextPage, setHasNextPage] = useState(true);
-// const [isNextPageLoading, setIsNextPageLoading] = useState(false);
 
 
-
-const LOADING = 1;
-const LOADED = 2;
-let itemStatusMap = {};
-
-const loadMore = (startIndex, stopIndex) => {
-  for (let index = startIndex; index <= stopIndex; index++) {
-    itemStatusMap[index] = LOADING;
-  }
-  return new Promise(resolve =>
-    setTimeout(() => {
-      for (let index = startIndex; index <= stopIndex; index++) {
-        itemStatusMap[index] = LOADED;
-      }
-      resolve();
-    }, 2500)
-  );
-};
-
-// const loadMore = () => {
-//   console.log('loading more');
-//   setIsNextPageLoading(true);
-//   setTimeout(()=>{setNumOfMonths(numOfMonths + 1); 
-//     setItems([...nextMonth(numOfMonths +1)])
-//     console.log('num of months from loadmore', numOfMonths)
-//     setIsNextPageLoading(false);}, 5000)
-//   // setMoreItemsLoading(false);
-
-// }
-
- //end infinite loading stuff
-
-  // const [items, setItems] = useState(["fire", "water", "earth", "heart"])
   return (
     <Box
       pos="relative"
@@ -146,15 +106,10 @@ const loadMore = (startIndex, stopIndex) => {
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
-        <Box className="calendarArea" gridArea="main" style={{ boxShadow: shadow }}>
+        <Box className="calendarArea" gridArea="main">
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-        {/* {months.length > 0 && 
-        <InfiniteCalendar
-        items={items}
-        moreItemsLoading={moreItemsLoading}
-        loadMore={loadMore}
-        hasNextPage={hasNextPage}
+        {items.length > 0 && <InfiniteCal items={items}
         api={api}
         selected={selected}
         setSelected={setSelected}
@@ -163,23 +118,10 @@ const loadMore = (startIndex, stopIndex) => {
         events={events}
         month={items}
         monthList={items}
-        isItemLoaded={isItemLoaded}
-        numOfMonths={numOfMonths}
-        indexes={indexes}
-        setIndexes={setIndexes}
-        />
+        eventNameArr={eventNameArr}
+        summaries={summaries}/>}
         
-        } */}
-        {items.length > 0 && <NewInfCal items={items}
-        api={api}
-        selected={selected}
-        setSelected={setSelected}
-        templateFormOpen={templateFormOpen}
-        setTemplateFormOpen={setTemplateFormOpen}
-        events={events}
-        month={items}
-        monthList={items}/>}
-      {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
+        {toggleNav === false && <ConfirmDatesBtn conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen}/>}
       </div>
       {/* <button>load more months</button> */}
         
