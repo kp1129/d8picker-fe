@@ -38,7 +38,7 @@ const Row = ({ data, index, style }) => {
     setTemplateFormOpen={data.setTemplateFormOpen}
     events={data.events}
     month={data.items[index]}
-    eventNameArr={data.eventNameArr}
+    eventDatesArr={data.eventDatesArr}
     summaries={data.summaries}
     />
   
@@ -52,7 +52,7 @@ const Row = ({ data, index, style }) => {
   );
 }
 
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventNameArr, summaries}) {
+export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries}) {
 
   
   
@@ -72,7 +72,7 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
               onItemsRendered={onItemsRendered}
               ref={ref}
               width={window.innerWidth}
-              itemData={{items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventNameArr, summaries}}
+              itemData={{items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventDatesArr, summaries}}
             >
               {Row}
             </List>

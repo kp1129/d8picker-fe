@@ -110,6 +110,7 @@ function App() {
   }
 
   return(
+
     <Stack pos="relative" w="100%" minHeight="100vh">
             <Header />
             <Route path="/authenticate/google">
@@ -122,6 +123,7 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           </Stack>
+
   )
 }
 }
