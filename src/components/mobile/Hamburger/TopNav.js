@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import "./TopNav.css"
+import {Image} from '@chakra-ui/core';
+
 import { useAuth } from '../../../contexts/auth';
 import styled from "styled-components"
 
