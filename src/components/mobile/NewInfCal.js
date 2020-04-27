@@ -26,7 +26,7 @@ const loadMoreItems = (startIndex, stopIndex) => {
 
 
 
-export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month}) {
+export default function NewInfCal({ items, api, selected, setSelected, templateFormOpen, setTemplateFormOpen, events, month, eventNameArr, summaries}) {
 
   
   
@@ -62,6 +62,8 @@ export default function NewInfCal({ items, api, selected, setSelected, templateF
                   events={events}
                   month={items[index]}
                   monthList={month}
+                  eventNameArr={eventNameArr}
+                  summaries={summaries}
                   />
                 
                 } else {

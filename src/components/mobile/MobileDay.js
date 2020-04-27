@@ -1,13 +1,13 @@
 import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
-import Cell from './Cell';
-import EventsIndicator from './EventsIndicator';
-import useDate from '../../../hooks/useDate';
+import Cell from '../dashboardComponents/calendarComponents/Cell'
+import EventsIndicator from './MobileEventIndicator'
+import useDate from '../../hooks/useDate'
 import dayjs from 'dayjs';
 
    
 
-const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
+const Day = ({ events, date, isPicked, handleSelected, isToday, day, i, eventNameArr, summaries }) => {
   const {
     currentMonth,
     currentYear,
@@ -30,6 +30,25 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
           }
       }
 
+  }
+
+  const mapTheEvents = (eventNameArr) => {
+    let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
+      1}-${day < 10 ? 0 : ''}${day}`;
+    if(eventNameArr.includes(formattedDate)){
+      // let formattedEvent = event[i].start.dateTime.substring(0,10)
+      let eventSummary = summaries[eventNameArr.indexOf(formattedDate)];
+      return <EventsIndicator
+            key={formattedDate}
+            event={formattedDate}
+            events={events}
+            day={day}
+            currentMonth={currentMonth}
+            currentYear={currentYear}
+            eventSummary={eventSummary}
+            fontSize="2px"
+          />
+    }
   }
 
   return (
@@ -62,7 +81,7 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
               >
                 {day}
               </Box>
-              {events &&
+              {/* {events &&
                 events.map(event => (
                   <div key={event.id}>
                     <EventsIndicator
@@ -74,7 +93,8 @@ const Day = ({ events, date, isPicked, handleSelected, isToday, day, i }) => {
                       fontSize="2px"
                     />
                   </div>
-                ))}
+                ))} */}
+                {eventNameArr && mapTheEvents(eventNameArr)}
             </Flex>
           </Cell>
         );

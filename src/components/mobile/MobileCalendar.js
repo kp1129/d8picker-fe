@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
 import dayjs from 'dayjs';
 import { Heading, Flex, Grid, Box } from '@chakra-ui/core';
-import Days from '../dashboardComponents/calendarComponents/Days';
-import Cell from '../dashboardComponents/calendarComponents/Cell';
+import Days from './MobileDays';
+import Cell from '../dashboardComponents/calendarComponents/Cell'
 import useDate from '../../hooks/useDate';
 import styled from 'styled-components';
 
 
 
-const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, i}) => {
+const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  monthList, i, eventNameArr, summaries}) => {
 
  
 
@@ -18,7 +17,7 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
   const [date, setDate] = useState(dayjs());
 
 
-
+console.log('calendar')
 
 
   const {
@@ -78,6 +77,8 @@ const Calendar = ({ events, selected, setSelected, templateFormOpen, month,  mon
             currentDay={currentDay}
             currentMonth={currentMonth}
             currentYear={currentYear}
+            eventNameArr={eventNameArr}
+            summaries={summaries}
           />
         </Grid>
       </Box>
