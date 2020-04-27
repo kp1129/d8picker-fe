@@ -8,6 +8,7 @@ import {addTemplate} from '../../../utils/helperFunctions'
 
 const EventForm = styled.div`
     background-color: #AFC9D9;
+    width: 100%;
 `
 const NewEventHead = styled.div`
     background-color: white;
@@ -32,54 +33,61 @@ const NewEventForm = props => {
 
     return (
         <EventForm>
-            <NewEventHead>
-                <h2 style={{ textAlign: 'center' }}>New event</h2>
-            </NewEventHead>
+            <div style={{ background: 'white', marginBottom: '5%', paddingTop: '25%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
+                <p style={{ paddingLeft: '2%', color: '#28807D' }}>Cancel</p>
+                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
+            </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <label htmlFor="event-name">Event name</label>
+                    <div style={{ paddingLeft: '5%' }}>Event name</div>
                     <Input
                         type="text"
                         name="event-name"
+                        placeholder="Event name"
                         ref={register({ maxLength: 80, required: true })}
-                        style={{ marginBottom: '15%' }}
+                        style={{ marginBottom: '5%' }}
                     />  
                 </div>
 
                 <div>
-                    <label htmlFor="event-description">Description</label>
+                <div style={{ paddingLeft: '5%' }}>Description</div>
                     <Input
                         type="text"
                         name="event-description"
+                        placeholder="Event description"
                         ref={register({ maxLength: 100 })}
+                        style={{ marginBottom: '5%' }}
                     />
                 </div>
 
                 <div>
-                    <h3>Time</h3>
-                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between' }}>
-                        <p>starts</p>
+                <div style={{ paddingLeft: '5%' }}>Time</div>
+                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid grey', paddingTop: '3%', paddingBottom: '3%' }}>
+                        <p style={{ paddingLeft: '5%' }}>starts</p>
                         <Input
                             type="time"
                             name="starttime"
                             ref={register({ required: true })}
-                            style={{ width: '65%' }}
+                            style={{ width: '65%', border: 'none' }}
                         />
                     </div>
 
-                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between' }}>
-                        <p>ends</p>
+                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', paddingTop: '3%' }}>
+                        <p style={{ paddingLeft: '5%' }}>ends</p>
                         <Input
                             type="time"
                             name="endttime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', marginBottom: '30%' }}
+                            style={{ width: '65%', border: 'none', marginBottom: '3%' }}
                         />
                     </div>
                 </div>
 
-                <Button type="submit" style={{ background: '#28807D', color: 'white', marginLeft: 'auto', marginRight: 'auto', borderRadius: '10px' }}>Select Dates</Button>
+                <div style={{ width: '100%', textAlign: 'center' }}>
+                <Button type="submit" style={{ width: '90%', background: '#28807D', color: 'white', textAlign: 'center', marginTop: '8%', marginBottom: '8%', paddingLeft: 'auto', paddingRight: 'auto', borderRadius: '10px' }}>Select dates</Button>
+                </div>
+
             </form>
         </EventForm>
     )

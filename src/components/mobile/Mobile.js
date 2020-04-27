@@ -4,6 +4,7 @@ import {MobileContext} from '../../contexts/MobileContexts'
 import Dashboard from './MobileDashboard'
 import MobileEvents from './eventComponents/MobileEvents'
 import Nav from './NavigationComponents/Nav'
+import NewEventForm from './eventComponents/NewEventForm';
 import Groups from './Groups'
 
 const Mobile = () => {
