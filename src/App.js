@@ -12,7 +12,6 @@ import Welcome from './components/Welcome';
 import Dashboard from './components/dashboardComponents/Dashboard';
 import Loading from './components/Loading';
 import Mobile from './components/mobile/Mobile';
-import {DesktopContext} from './contexts/DesktopContexts'
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -25,20 +24,10 @@ function App() {
 
   const breakPoint = 768
 
-  const [dimensions, setDimensions] = useState({ 
+    const [dimensions, setDimensions] = useState({ 
       height: window.innerHeight,
       width: window.innerWidth
-      })
-
-  //state for determining if pic should be present in top right corner and if user should be redirected into the app when accessing home page (because they are already logged in)
-  const [userState, setUserState] = useState({})
-  
-  let currentUser = googleApi.currentUser
-
-  useEffect(()=>{
-    setUserState(currentUser)
-  },[currentUser])
-
+    })
     useEffect(() => {
       function handleResize() {
         setDimensions({
@@ -52,6 +41,11 @@ function App() {
       }
       },[])
 
+  const [userState, setUserState] = useState({})
+  let currentUser = googleApi.currentUser
+  useEffect(()=>{
+    setUserState(currentUser)
+  },[currentUser])
 
   
   
@@ -73,10 +67,7 @@ function App() {
               <Welcome />
             </Route>}
             <PrivateRoute path="/:id/dashboard">
-            <DesktopContext.Provider value={{setUserState}}>
-              <Dashboard/>
-            </DesktopContext.Provider>
-
+              <Dashboard setUserState={setUserState}/>
             </PrivateRoute>
           </Stack>
         );
@@ -97,12 +88,41 @@ function App() {
 
         )
       }
+} else if(dimensions.width <= breakPoint){
 
-  } else if(dimensions.width <= breakPoint){
-      return(
-        <Mobile/>
-      )
+  if(googleApi.currentUser){
+    return (
+      <Stack pos="relative" w="100%" minHeight="100vh">
+            {/* <Header userState={userState} /> */}
+            <Route path="/">
+              <Authenticate />
+            </Route>
+            {googleApi.currentUser && <Route exact path="/">
+              <Welcome />
+            </Route>}
+            <PrivateRoute path="/:id/dashboard">
+              <Mobile setUserState={setUserState}/>
+            </PrivateRoute>
+          </Stack>
+    )
+  } else {
+
   }
 
+  return(
+    <Stack pos="relative" w="100%" minHeight="100vh">
+            <Header />
+            <Route path="/authenticate/google">
+              <Authenticate />
+            </Route>
+            <Route exact path="/">
+              <Welcome />
+            </Route>
+            <PrivateRoute path="/:id/dashboard">
+              <Dashboard />
+            </PrivateRoute>
+          </Stack>
+  )
+}
 }
 export default App;
