@@ -60,8 +60,7 @@ export default function NewInfCal({items}) {
           {({ onItemsRendered, ref }) => (
             <List
               className="List"
-              // style={{border: '1px solid blue'}}
-              height={window.innerHeight-115}
+              height={window.innerHeight-130}
               itemCount={50}
               itemSize={817}
               onItemsRendered={onItemsRendered}
