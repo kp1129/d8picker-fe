@@ -88,7 +88,6 @@ const NewEventForm = props => {
                         placeholder="Event description"
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
-                        
                     />
                 </div>
 
