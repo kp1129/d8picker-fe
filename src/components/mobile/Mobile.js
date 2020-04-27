@@ -4,6 +4,8 @@ import BotNav from './NavigationComponents/BotNav'
 import MobileEvents from './eventComponents/MobileEvents'
 import styled from 'styled-components'
 import Dashboard from './Dashboard'
+import NewEventButton from './NavigationComponents/NewEventButton'
+import NewEventForm from './eventComponents/NewEventForm'
 
 const Mobile = () => {
 
@@ -27,7 +29,9 @@ const Mobile = () => {
 
 
         <div >
+            
             <Dashboard formOpen={formOpen} setFormOpen={setFormOpen} setTemplateFormOpen={setTemplateFormOpen} templateFormOpen={templateFormOpen} conStart={conStart} conEnd={conEnd} summ={summ} selected={selected} setSelected={setSelected} toggleNav={toggleNav} setToggleNav={setToggleNav}/>
+            <NewEventButton setNavState={setNavState} />
             <NavBar>
             {toggleNav && <BotNav NavState={NavState} setNavState={setNavState}></BotNav>}
             </NavBar>
@@ -47,6 +51,12 @@ const Mobile = () => {
         return(
             <div>hello im groups
             <Nav NavState={NavState} setNavState={setNavState} />
+        </div>
+        )
+    } else if(NavState === 3){
+        return(
+            <div>hello im new event form
+            <NewEventForm />
         </div>
         )
     }

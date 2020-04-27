@@ -5,12 +5,12 @@ const Hamburger = () => {
 
   return (
     <div>
-      <input type="checkbox" class="blue" id="menu"/>
-        <label for="menu" class="icon">
-          <div class="menu"></div>
+      <input type="checkbox" className="blue" id="menu"/>
+        <label htmlFor="menu" className="icon">
+          <div className="menu"></div>
         </label>
 
-        <nav>
+        <nav className = "burger-container">
           <ul>
             <li>
               <a href="#">Sign Out</a>
