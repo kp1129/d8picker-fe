@@ -2,12 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const AddEventButton = ({setNavState}) => {
-    return <Btn onClick={()=>setNavState(3)}>+</Btn>
-}
 
-export default AddEventButton;
+    let bottom = 100 - Math.floor(window.innerHeight * .099) 
 
-const Btn = styled.div`
+
+    const Btn = styled.div`
     background: #28807D;
     border-radius: 100%;
     width: 46px;
@@ -18,7 +17,8 @@ const Btn = styled.div`
     color: white;
     font-size: 50px;
     position: absolute;
-    top: 70%;
+    bottom: ${bottom}%;
+    
     left: 85%;
     cursor: pointer;
     &:hover{
@@ -26,3 +26,10 @@ const Btn = styled.div`
     }
     
 `;
+
+
+    return <Btn onClick={()=>setNavState(3)}>+</Btn>
+}
+
+export default AddEventButton;
+
