@@ -3,6 +3,7 @@ import MobileTemplateContainer from './MobileTemplateContainer.js'
 import styled from 'styled-components'
 import axios from 'axios';
 import { useAuth } from '../../../contexts/auth';
+import AddEventButton from '../AddEventButton'
 
 
 const getTemplateList = async ({ googleId }) => {
@@ -48,7 +49,8 @@ const MobileEvents = ({formOpen, setTemplateList, templateList}) => {
     return(
           <FixedMobile>
             <MobileTemplateContainer templateList={templateList}/>
-            </FixedMobile>
+            <AddEventButton/>
+          </FixedMobile>
     )
 }
 
