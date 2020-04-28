@@ -21,9 +21,11 @@ const Hamburger = () => {
   height: 40px;
   width: 40px;
   position: fixed;
-  margin: 2.5% 0% 0% 2.5%;
+  // margin: 2.5% 0% 0% 2.5%;
   z-index: 201;
   `
+
+  console.log('windowheight', window.innerHeight);
 
   return (
     <div>
@@ -42,8 +44,9 @@ const Hamburger = () => {
               src={img}
               alt="avatar"
               // mb={2}
-              style={{marginTop: window.innerHeight*-.072, marginLeft: "2%", marginBottom: "2%"}}
+              style={{position: 'fixed', marginTop: '-50px', marginLeft: "2%", marginBottom: "2%"}}
             />
+            {/* <ProfileImg src={img}/> */}
           <ul>
             <li onClick={() => {
               handleSignOut();
