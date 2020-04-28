@@ -1,28 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
+import btn from './NavigationComponents/NavImgs/addeventbtn.png'
+import {MobileContext} from '../../contexts/MobileContexts'
 
-const AddEventButton = ({setNavState}) => {
-    return <Btn onClick={()=>setNavState(3)}>+</Btn>
+const AddEventButton = () => {
+    const {setNavState} = useContext(MobileContext);
+    return <Img src={btn} onClick={()=>setNavState(3)}/>
 }
 
 export default AddEventButton;
 
-const Btn = styled.div`
-    background: #28807D;
-    border-radius: 100%;
-    width: 46px;
-    height: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 50px;
-    position: absolute;
-    top: 70%;
-    left: 85%;
-    cursor: pointer;
-    &:hover{
-        background: #1f605d;
-    }
-    
-`;
+
+
+    const Img = styled.img`
+    position: fixed;
+    bottom: 20%;
+    left: 80%; 
+    cursor: pointer;    
+    `;
+

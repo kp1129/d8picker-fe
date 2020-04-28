@@ -16,24 +16,17 @@ const Hamburger = () => {
     setImg(currentUser.photoUrl)
   },[])
 
-  const ProfileImg = styled.img`
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  position: fixed;
-  margin: 2.5% 0% 0% 2.5%;
-  z-index: 201;
-  `
+
 
   return (
     <div>
      
       <input type="checkbox" className="blue" id="menu"/>
       
-        <label htmlFor="menu" className="icon">
+        <Label htmlFor="menu" className="icon">
         
           <div className="menu"></div>
-        </label>
+        </Label>
        
         <nav className = "burger-container">
         <Image
@@ -41,16 +34,15 @@ const Hamburger = () => {
               size="45px"
               src={img}
               alt="avatar"
-              // mb={2}
-              style={{marginTop: window.innerHeight*-.072, marginLeft: "2%", marginBottom: "2%"}}
+              style={{position: 'fixed', marginTop: '-50px', marginLeft: "15px", marginBottom: "20px"}}
             />
-          <ul>
+          <ul >
             <li onClick={() => {
               handleSignOut();
               window.location.reload();
               console.log("sign out")
             }}>
-              <a href="#">Sign Out</a>
+              <SignOut href="#">Sign Out</SignOut>
             </li>
           </ul>
         </nav>
@@ -59,3 +51,15 @@ const Hamburger = () => {
 }
 
 export default Hamburger;
+
+const SignOut = styled.a`
+  background: #FC8181;
+  padding: 2%;
+  border-radius: 5px;
+  color: white;
+`;
+
+//stops checkbox highlighting blue when triggered
+const Label = styled.label`
+-webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+`;

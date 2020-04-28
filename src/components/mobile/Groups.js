@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'; 
+import btn from './NavigationComponents/NavImgs/addgroupbtn.png'
 
 const Groups = () => {
     return(
@@ -7,7 +8,7 @@ const Groups = () => {
             <Cancel>Cancel</Cancel>
             <Title>Choose Group</Title>
             <BtnDiv>
-                <Btn>+</Btn>
+                <Btn src={btn}></Btn>
             </BtnDiv>
         </Container>
     )
@@ -52,18 +53,6 @@ const BtnDiv = styled.div`
 
 `;
 
-const Btn = styled.div`
-    background: white;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #28807D;
-    border: 3px solid #28807D;
-    font-size: 40px;
-    cursor: pointer;
-
-    
+const Btn = styled.img`
+    cursor: pointer; 
 `;

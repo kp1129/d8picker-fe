@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {MobileContext} from '../../../contexts/MobileContexts'
 import styled from 'styled-components'
 import {convertTime, handleDelete, deleteTemplate} from '../../../utils/helperFunctions'
+import './MobileChooseDateForm.css'
 
 
 const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
@@ -45,15 +46,25 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
   }
 
   const [del, setDel] = useState(false)
+  const [eventClass, setEventClass] = useState('')
+  const [delClass, setDelClass] = useState('hide')
 
   const handleTouch = e => {
     e.stopPropagation()
-    setTimeout(()=>{console.log('touched long time'); setDel(!del)},1000)
+    setTimeout(()=>{setDel(!del)
+      if(!del){
+        setEventClass('deleting')
+        setDelClass('show')
+      } else {
+        setEventClass('')
+        setDelClass('hide')
+      }
+
+    },1000)
+    
   }
 
-  const setBackground = () => {
-    return del ? "#FC8181" : "white"
-  }
+
 
   const handleMobileDelete = e => {
     e.stopPropagation();
@@ -63,8 +74,11 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
 
   return (
-    <Container onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}}>
-      {del && <Delete onClick={(e)=>handleMobileDelete(e)}>X</Delete>}
+    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
+      <DeleteDiv className={delClass} onClick={(e)=>handleMobileDelete(e)}>
+       <Delete>X</Delete>
+
+      </DeleteDiv>
       <EventDiv>
         <Title>
           {summary}
@@ -88,10 +102,8 @@ export default MobileChooseDateForm;
 const Container = styled.div`
     width: 100%;
     display: flex;
-    // flex-direction: column;
     border-bottom: 1px solid #BDBDBD;
     padding: 2% 3%;
-    // background: white; 
 
 
 `;
@@ -106,15 +118,12 @@ const EventDiv = styled.div`
 
 const Title = styled.p`
     width: 90%;
-    // text-align: center;
     font-weight: bold;
     font-size: 1rem;
     line-height: 27px;
 `;
 
 const Time = styled.p`
-    // width: 60%;
-    // text-align: center;
     font-weight: bold;
     font-size: .75rem;
     line-height: 27px;
@@ -136,12 +145,15 @@ const ArrowDiv = styled.div`
 `;
 
 const Delete = styled.div`
-    // background: red;
+    width: 100%;
+    height: 100%;
     color: white;
-    width: 10%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;    
+`;
+
+const DeleteDiv = styled.div`
+    width: 10%;
 `;
 

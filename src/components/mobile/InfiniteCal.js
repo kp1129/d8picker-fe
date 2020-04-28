@@ -4,7 +4,7 @@ import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
 import AddEventButton from './AddEventButton'
-
+import Loading from './CalendarLoading'
 
 const LOADING = 1;
 const LOADED = 2;
@@ -37,7 +37,7 @@ const Row = ({ data, index, style }) => {
     />
   
   } else {
-    label = "Loading...";
+    label = <Loading/>
   }
   return (
     <div className="ListItem" style={style}>
@@ -48,7 +48,7 @@ const Row = ({ data, index, style }) => {
 
 export default function NewInfCal({items}) {
 
-  const {templateFormOpen, setNavState} = useContext(MobileContext);
+  const {templateFormOpen} = useContext(MobileContext);
   
     return (
       <Fragment>
@@ -72,7 +72,7 @@ export default function NewInfCal({items}) {
             </List>
           )}
         </InfiniteLoader>
-          {!templateFormOpen && <AddEventButton setNavState={setNavState}/>}
+          {!templateFormOpen && <AddEventButton/>}
       </Fragment>
     );
   }
