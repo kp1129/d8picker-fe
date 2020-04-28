@@ -21,6 +21,7 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
     
     let formattedDate = `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
       1}-${day < 10 ? 0 : ''}${day}`;
+      //if there an event from google exists which matches this day's date create an event indicator (blue box with event name) for each
     if(eventDatesArr.includes(formattedDate)){
       let eventSummary;
       return eventDatesArr.map((eventName, i) => {
@@ -53,7 +54,7 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
             let index = i+1;
             let newDate = new Date()
             let thisYear = newDate.getYear() + 1900;
-          //if the date is in the past (the month before this month, but still in the current year) and any date in that month is clicked, make it red
+          //if the date is in the past (the month before this month, but still in the current year) and any date in that month is clicked, make it red. Only really useful if future groups plan to add browsing past months.
           if(currentMonth < dayjs().$M && currentYear === thisYear){
               return '#FC8181'
           } 
@@ -73,8 +74,6 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
   return (
           <Cell
             className="calendar-days-item"
-            // borderBottomWidth="10px"
-            // borderBottomColor="gray.200"
             height="120px"
             key={i}
             width={window.innerWidth/7}

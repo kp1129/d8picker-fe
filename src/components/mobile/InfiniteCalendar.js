@@ -3,7 +3,7 @@ import { FixedSizeList } from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
 
-
+//THIS COMPONENT CAN BE DELETED, IT IS NOT BEING USED BUT KEEPS POPPING UP NONETHELESS
 const InfiniteCalendar = ({ isItemLoaded, items, moreItemsLoading, loadMore, hasNextPage, events, selected, setSelected, templateFormOpen, api, setTemplateFormOpen, month, numOfMonths, indexes, setIndexes})=>{
 
   

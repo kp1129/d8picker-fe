@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 
 
-//need month and i
 const Calendar = ({month, i}) => {
 
 
@@ -39,6 +38,7 @@ const Calendar = ({month, i}) => {
     );
 };
 
+//not sure that this is strictly necessary. did this while tracking down the weird infinite calendar refresh bug.
 const MemoizedCal = React.memo(Calendar);
 export default MemoizedCal;
 

@@ -9,15 +9,29 @@ import Groups from './Groups'
 
 const Mobile = () => {
     // 0 = calendar, 1 = events, 2 = groups
-    const [navState, setNavState] = useState(0) 
+    const [navState, setNavState] = useState(0)
+    
+    //deals with toggling event selection mode, naming convention a hold-over from desktop
     const [formOpen, setFormOpen] = useState(false);
     const [templateFormOpen, setTemplateFormOpen] = useState(false);
+
+    //list of event templates from backend
     const [templateList, setTemplateList] = useState([]);
+
+    //holds the start and end time of currently selected event. naming convention a holdover from when it held the time converted from military time
     const [conStart, setConStart] = useState("");
     const [conEnd, setConEnd] = useState("");
+
+    //holds the current summary (event name), naming convention from google
     const [summ, setSumm] = useState("")
+
+    //toggles whether the nav is shown or not, also controls the confirm dates button
     const [toggleNav, setToggleNav] = useState(true);
+
+    //holds dates selected before confirming and sending to calendar api
     const [selected, setSelected] = useState([]);
+
+    //controls state of nav button colors
     const [colors, setColors] = useState(["#BDBDBD", "#BDBDBD", "#BDBDBD"])
     
 
@@ -29,7 +43,6 @@ const Mobile = () => {
         setColors(newColors)
     },[navState])
 
-    console.log("From Mobile.js", templateList)
 
     return(
         

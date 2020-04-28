@@ -45,10 +45,16 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
     setToggleNav(false)
   }
 
+  //sets state based on whether user has long-pressed an event (to delete)
   const [del, setDel] = useState(false)
+
+  //controls classlist for the event object to control the red highlight transition
   const [eventClass, setEventClass] = useState('')
+
+  //controls the hiding and showing of the actual delete button through toggling a class
   const [delClass, setDelClass] = useState('hide')
 
+  //long-touch to delete an event
   const handleTouch = e => {
     e.stopPropagation()
     setTimeout(()=>{setDel(!del)
@@ -64,17 +70,16 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
     
   }
 
-
-
+  //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
   const handleMobileDelete = e => {
     e.stopPropagation();
-    console.log('deleted')
     handleDelete(id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
   }
 
 
   return (
     <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
+      
       <DeleteDiv className={delClass} onClick={(e)=>handleMobileDelete(e)}>
        <Delete>X</Delete>
 

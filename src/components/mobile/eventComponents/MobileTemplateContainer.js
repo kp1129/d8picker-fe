@@ -6,9 +6,6 @@ import styled from 'styled-components'
 
 const MobileTemplateContainer = ({templateList}) => {
 
-  console.log(templateList)
-
-
 
   return (
           <>

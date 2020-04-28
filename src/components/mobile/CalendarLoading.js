@@ -1,6 +1,8 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/core';
 
+
+//spacing to get near the center for this loader is slightly different than the general loader used for logging in/out
 const Loading = () => {
   return (
     <Flex

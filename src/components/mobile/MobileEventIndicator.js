@@ -3,15 +3,14 @@ import styled from 'styled-components';
 
 
 
-// Displays circle icon if day has an event
+// Displays blue box with name of event
 const EventIndicator = ({ event, eventSummary}) => {
  
   const [summ, setSumm] = useState("")
 
+  //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
-
       eventSummary.length > 5 ? setSumm(eventSummary.substring(0,5)) : setSumm(eventSummary)
-
   },[])
   
   return event ? (

@@ -10,8 +10,10 @@ const Hamburger = () => {
   const { googleApi } = useAuth();
   const { currentUser, handleSignOut } = googleApi;
 
+  //state to hold current profile image
   const [img, setImg] = useState(currentUser.photoUrl);
 
+  //attempt to fix issue where profile image url would be undefined
   useEffect(()=>{
     setImg(currentUser.photoUrl)
   },[])
