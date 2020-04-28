@@ -48,7 +48,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
   const handleTouch = e => {
     e.stopPropagation()
-    setTimeout(()=>{console.log('touched long time'); setDel(!del)},1000)
+    setTimeout(()=>{setDel(!del)},1000)
   }
 
   const setBackground = () => {
@@ -63,7 +63,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
 
   return (
-    <Container onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}}>
+    <Container onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}} onContextMenu={(e)=> e.preventDefault()}>
       {del && <Delete onClick={(e)=>handleMobileDelete(e)}>X</Delete>}
       <EventDiv>
         <Title>
