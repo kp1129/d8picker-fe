@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {MobileContext} from '../../../contexts/MobileContexts'
 import styled from 'styled-components'
 import {convertTime, handleDelete, deleteTemplate} from '../../../utils/helperFunctions'
+import './MobileChooseDateForm.css'
 
 
 const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
@@ -45,14 +46,27 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
   }
 
   const [del, setDel] = useState(false)
+  const [eventClass, setEventClass] = useState('')
+  const [delClass, setDelClass] = useState('hide')
 
   const handleTouch = e => {
     e.stopPropagation()
-    setTimeout(()=>{setDel(!del)},1000)
+    setTimeout(()=>{setDel(!del)
+      if(!del){
+        setEventClass('deleting')
+        setDelClass('show')
+      } else {
+        setEventClass('')
+        setDelClass('hide')
+      }
+
+    },1000)
+    
   }
 
   const setBackground = () => {
-    return del ? "#FC8181" : "white"
+    // return del ? "#FC8181" : "white"
+
   }
 
   const handleMobileDelete = e => {
@@ -63,8 +77,11 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
 
   return (
-    <Container onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}} onContextMenu={(e)=> e.preventDefault()}>
-      {del && <Delete onClick={(e)=>handleMobileDelete(e)}>X</Delete>}
+    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}} onContextMenu={(e)=> e.preventDefault()}>
+      <DeleteDiv className={delClass} onClick={(e)=>handleMobileDelete(e)}>
+       <Delete>X</Delete>
+
+      </DeleteDiv>
       <EventDiv>
         <Title>
           {summary}
@@ -136,12 +153,15 @@ const ArrowDiv = styled.div`
 `;
 
 const Delete = styled.div`
-    // background: red;
+    width: 100%;
+    height: 100%;
     color: white;
-    width: 10%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;    
+`;
+
+const DeleteDiv = styled.div`
+    width: 10%;
 `;
 

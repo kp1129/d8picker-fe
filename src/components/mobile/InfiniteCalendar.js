@@ -1,12 +1,7 @@
 import React from 'react'
 import { FixedSizeList } from 'react-window';
 import InfiniteLoader from "react-window-infinite-loader";
-<<<<<<< HEAD
-import Calendar from './Calendar';
-
-=======
 import Calendar from './MobileCalendar';
->>>>>>> 8ef606506a71f60a58b3ca0450f8e10b73f3aa04
 
 
 const InfiniteCalendar = ({ isItemLoaded, items, moreItemsLoading, loadMore, hasNextPage, events, selected, setSelected, templateFormOpen, api, setTemplateFormOpen, month, numOfMonths, indexes, setIndexes})=>{

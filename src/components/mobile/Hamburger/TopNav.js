@@ -34,9 +34,9 @@ const Hamburger = () => {
               size="45px"
               src={img}
               alt="avatar"
-              style={{position: 'fixed', marginTop: '-50px', marginLeft: "15px", marginBottom: "2%"}}
+              style={{position: 'fixed', marginTop: '-50px', marginLeft: "15px", marginBottom: "20px"}}
             />
-          <ul>
+          <ul >
             <li onClick={() => {
               handleSignOut();
               window.location.reload();
