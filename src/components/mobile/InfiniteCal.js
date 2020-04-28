@@ -4,7 +4,7 @@ import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import Calendar from './MobileCalendar';
 import AddEventButton from './AddEventButton'
-
+import Loading from './CalendarLoading'
 
 const LOADING = 1;
 const LOADED = 2;
@@ -37,7 +37,7 @@ const Row = ({ data, index, style }) => {
     />
   
   } else {
-    label = "Loading...";
+    label = <Loading/>
   }
   return (
     <div className="ListItem" style={style}>

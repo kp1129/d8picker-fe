@@ -4,11 +4,11 @@ import { Flex } from '@chakra-ui/core';
 const Loading = () => {
   return (
     <Flex
-      pos="absolute"
+      pos="fixed"
       align="center"
       justify="center"
       w="100%"
-      h="100%"
+      h="70%"
       
     >
       <svg
