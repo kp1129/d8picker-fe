@@ -105,7 +105,7 @@ const [items, setItems] = useState(nextMonth(50));
           </BtnDiv>
       </Container>}
     <Box
-      maxHeight="100vh"
+      maxHeight="90vh"
       style={{marginTop: toggleNav ? 0 : window.innerHeight*.079}}
     >
       <Grid
