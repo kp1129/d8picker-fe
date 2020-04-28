@@ -36,7 +36,7 @@ const Hamburger = () => {
               alt="avatar"
               style={{position: 'fixed', marginTop: '-50px', marginLeft: "15px", marginBottom: "2%"}}
             />
-          <ul style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <ul>
             <li onClick={() => {
               handleSignOut();
               window.location.reload();
@@ -54,8 +54,7 @@ export default Hamburger;
 
 const SignOut = styled.a`
   background: #FC8181;
-  padding: 6%;
-  // padding: 2%;
+  padding: 2%;
   border-radius: 5px;
   color: white;
 `;
