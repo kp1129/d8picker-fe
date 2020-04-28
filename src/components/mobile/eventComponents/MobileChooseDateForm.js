@@ -114,6 +114,11 @@ const EventDiv = styled.div`
     width: 90%;
     font-size: 20px;
     line-height: 27px;
+    -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
 `;
 
 const Title = styled.p`
