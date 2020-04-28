@@ -64,10 +64,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
     
   }
 
-  const setBackground = () => {
-    // return del ? "#FC8181" : "white"
 
-  }
 
   const handleMobileDelete = e => {
     e.stopPropagation();
@@ -77,7 +74,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
 
   return (
-    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} style={{background:setBackground()}} onContextMenu={(e)=> e.preventDefault()}>
+    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
       <DeleteDiv className={delClass} onClick={(e)=>handleMobileDelete(e)}>
        <Delete>X</Delete>
 
@@ -105,10 +102,8 @@ export default MobileChooseDateForm;
 const Container = styled.div`
     width: 100%;
     display: flex;
-    // flex-direction: column;
     border-bottom: 1px solid #BDBDBD;
     padding: 2% 3%;
-    // background: white; 
 
 
 `;
@@ -123,15 +118,12 @@ const EventDiv = styled.div`
 
 const Title = styled.p`
     width: 90%;
-    // text-align: center;
     font-weight: bold;
     font-size: 1rem;
     line-height: 27px;
 `;
 
 const Time = styled.p`
-    // width: 60%;
-    // text-align: center;
     font-weight: bold;
     font-size: .75rem;
     line-height: 27px;
