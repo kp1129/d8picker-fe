@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { MobileContext } from '../../../contexts/MobileContexts'
 import { useForm } from 'react-hook-form';
-import { Button, Input } from '@chakra-ui/core';
+import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../../contexts/auth';
 import styled from 'styled-components';
 import { addTemplate } from '../../../utils/helperFunctions'
@@ -14,13 +14,7 @@ const EventForm = styled.div`
     width: 100%;
     height: 100vh;
 `
-const NewEventHead = styled.div`
-    background-color: white;
-    margin-bottom: 10%;
-    border: 1px dashed black;
-    padding-top: 15%;
-    padding-bottom: 4%;
-`
+
 
 
 
@@ -32,7 +26,7 @@ const NewEventForm = props => {
 
     const { formOpen } = useContext(MobileContext);
 
-    const { googleApi, api } = useAuth();
+    const { googleApi} = useAuth();
     const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
     const [input, setInput] = useState({
@@ -101,7 +95,6 @@ const NewEventForm = props => {
                     <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Time</div>
                     <div style={{
                         backgroundColor: 'white', display: 'flex', justifyContent: 'space-between',
-                        // borderBottom: '1px solid #E5E5E5',
                         paddingTop: '3%', paddingBottom: '3%', marginBottom: '1%'
                     }}>
                         <p style={{ paddingLeft: '5%' }}>starts</p>

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../../../contexts/auth';
 import AddEventButton from '../AddEventButton'
 
-
+//gets template list from backend
 const getTemplateList = async ({ googleId }) => {
     try {
       const response = await axios.get(

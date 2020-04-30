@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+
 const handleSignIn = gapi => async () => {
   try {
     await gapi.auth2.getAuthInstance().signIn();
@@ -37,6 +38,7 @@ const gapiLoad = ({
   setIsLoading,
   opts
 }) =>
+  //loads appended script on line 76 with above props to authenticate user.
   window.gapi.load('client:auth2', async () => {
     try {
       await window.gapi.client.init({

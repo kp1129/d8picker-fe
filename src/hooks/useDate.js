@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 
+//custom hook to grab a bunch of custom formatted dates and date-related variables to be used throughout the application
 const useDate = (date, setDate) => {
   const currentDay = dayjs();
   const currentYear = date.year();

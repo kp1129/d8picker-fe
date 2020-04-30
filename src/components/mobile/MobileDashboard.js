@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import Hamburger from './Hamburger/TopNav'
 import axios from 'axios'
 
-
+//gets list of templates from backend
 const getTemplateList = async ({ googleId }) => {
   try {
     const response = await axios.get(
@@ -32,6 +32,7 @@ const Dashboard = (props) => {
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
   
+  //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary on mobile given new organization of components
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
@@ -87,7 +88,7 @@ const Dashboard = (props) => {
     return arr;
   }
 
-//sets array of months based on number passed in to give to the infinite list as a starting number (items name chosen as suggested by react-window examples)
+//sets array of months based on number passed in to give to the infinite list as a starting number (items naming convention from react-window)
 const [items, setItems] = useState(nextMonth(50));
 
   return (

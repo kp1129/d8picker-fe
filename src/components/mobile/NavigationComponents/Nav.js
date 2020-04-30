@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTemplateFormOpen}) => {
 
 
-
+    //closes date selection more when a navigation to a new page, and empties date selection
     const handleChange = (num) => {
         setNavState(num)
         setFormOpen(false)
@@ -13,7 +13,7 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
         setSelected([])
         setToggleNav(true)
     }
-
+            //icon and label colors change based on navState
            return( <div>
                 <Container>
                     <IconDiv onClick={()=>{

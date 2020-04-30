@@ -4,6 +4,7 @@ import calendarApi from '../utils/calendarApi';
 
 const AuthContext = createContext();
 
+//This is where the useGapi hook is being utilized and passed the correct options to authenticate the user. Then this component returns the context containing googleApi (itself containing the currentUser and helper functions like signin and out ) and the calendar api. The implementtion is strange but it works, so... you can avoid a lot of heartache by just leaving it be. Trust me, we tried.
 function AuthProvider({ children }) {
   const [api, setApi] = useState(null);
   const googleApi = useGapi({

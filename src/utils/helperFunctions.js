@@ -1,9 +1,8 @@
 import axios from 'axios';
 
+//converts a given time (in google-acceptable format) from military time to 12-hour time
 export const convertTime = (time)=>{
     // code converts response.data.starttime to number
-
-    
     if (time){
 
         let splitStartTime = time.split(':');
@@ -27,6 +26,7 @@ export const convertTime = (time)=>{
     }
 }
 
+//adds an event template to the backend
 export const addTemplate = async (data, { googleId }) => {
   const template = { ...data, googleId };
   try {
@@ -42,7 +42,7 @@ export const addTemplate = async (data, { googleId }) => {
 
 
 
-
+//converts event to user's correct timezone
 export const convertEvents = (selected, starttime, endtime, zone, summary, description) => {
   return selected.map(e => ({
     end: { dateTime: `${e}T${endtime}:00${zone}:00` },
@@ -52,6 +52,7 @@ export const convertEvents = (selected, starttime, endtime, zone, summary, descr
   }));
 }
 
+//deletes event template from the backend
 export const deleteTemplate = async id => {
   try {
     const response = await axios.delete(
@@ -63,6 +64,7 @@ export const deleteTemplate = async id => {
   }
 };
 
+//deletes event templates from backend, updates templateList state to reflect this. It also clears whatever dates were currently selected and turns of date selection mode, although these are probably irrelevant on mobile due to component restructure.
 export const handleDelete = async (id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen) => {
   await deleteTemplate(id);
   const templates = templateList.filter(template => template._id !== id);

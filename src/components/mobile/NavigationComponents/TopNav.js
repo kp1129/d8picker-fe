@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'; 
 
+//I think this is not in use. A former implementation of the top navigation.
 const TopNav = () => {
     return(
         <Container>
