@@ -11,7 +11,7 @@ const getTemplateList = async ({ googleId }) => {
       const response = await axios.get(
         `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
       );
-      return response.data;
+      return response.data.templates;
     } catch (error) {
       console.log(error);
     }

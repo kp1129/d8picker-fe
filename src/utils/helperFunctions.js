@@ -29,13 +29,13 @@ export const convertTime = (time)=>{
 }
 
 //adds an event template to the backend
-export const addTemplate = async (data, { googleId }, token) => {
+export const addTemplate = async (data, { googleId, token }) => {
   const template = { ...data, googleId };
-  console.log('addTemplate token?: ', token);
   try {
-    const response = await axiosWithAuth(token)
-    .post(`/api/template`, template)
-    console.log('axiosWithAuth res: ', response)
+    const response = await axiosWithAuth(token).post(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
+      template
+    );
     return response.data;
   } catch (error) {
     console.log(error.message);
