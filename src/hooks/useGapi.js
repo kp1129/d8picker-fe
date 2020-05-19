@@ -52,7 +52,7 @@ const gapiLoad = ({
       });
       const auth = window.gapi.auth2.getAuthInstance();
       setIDToken(auth.currentUser.get().getAuthResponse().id_token);
-      console.log('just another console.log', auth.currentUser.get().getAuthResponse());
+      // console.log('just another console.log', auth.currentUser.get().getAuthResponse());
       auth.isSignedIn.listen(() => {
         setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(opts.scope));
       });

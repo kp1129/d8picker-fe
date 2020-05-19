@@ -29,7 +29,7 @@ const TemplateContainer = () => {
             borderRadius="10px"
           >
             <Heading as="h2">Events</Heading>
-            {/* {templateList &&
+            {templateList &&
               templateList.map(t => (
                 <ChooseDateForm
                   key={t._id}
@@ -40,7 +40,7 @@ const TemplateContainer = () => {
                   description={t.description}
                 />
                 
-              ))} */}
+              ))}
             <Button
               id="createEventChain"
               my={4}

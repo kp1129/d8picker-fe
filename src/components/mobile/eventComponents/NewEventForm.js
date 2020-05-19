@@ -30,7 +30,7 @@ const NewEventForm = props => {
     const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
     const [input, setInput] = useState({
-        summary: "",
+        title: "",
         starttime: "",
         endtime: ""
     });
@@ -45,17 +45,19 @@ const NewEventForm = props => {
     // Submit for template form
     const onSubmit = async (formData) => {
         console.log("formdata", formData)
-        
+        console.log('googleApi: ', googleApi);
         setToggleNav(false);
         setTemplateFormOpen(true)
         setFormOpen(true)
-        setSumm(input.summary)
+        setSumm(input.title)
         setConStart(input.starttime);
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser);
-        setTemplateList([...templateList, template]);
+        const template = addTemplate(formData, currentUser, googleApi.IDToken);
+        console.log('template?: ', template);
+        console.log('templateList: ', templateList);
+        setTemplateList([...templateList.templates, template]);
         setFormOpen(!formOpen);
     };
 
@@ -71,21 +73,21 @@ const NewEventForm = props => {
                     <div style={{ paddingLeft: '5%' }}>Event name</div>
                     <Input
                         type="text"
-                        name="summary"
+                        name="title"
                         placeholder="Event name"
                         ref={register({ maxLength: 80, required: true })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
-                        value={input.summary}
+                        value={input.title}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div>
-                    <div style={{ paddingLeft: '5%' }}>Description</div>
+                    <div style={{ paddingLeft: '5%' }}>Notes</div>
                     <Input
                         type="text"
-                        name="description"
-                        placeholder="Event description"
+                        name="notes"
+                        placeholder="Event notes"
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
                     />

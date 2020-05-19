@@ -1,4 +1,6 @@
 import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
+
 
 //converts a given time (in google-acceptable format) from military time to 12-hour time
 export const convertTime = (time)=>{
@@ -27,13 +29,13 @@ export const convertTime = (time)=>{
 }
 
 //adds an event template to the backend
-export const addTemplate = async (data, { googleId }) => {
+export const addTemplate = async (data, { googleId }, token) => {
   const template = { ...data, googleId };
+  console.log('addTemplate token?: ', token);
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
-      template
-    );
+    const response = await axiosWithAuth(token)
+    .post(`/api/template`, template)
+    console.log('axiosWithAuth res: ', response)
     return response.data;
   } catch (error) {
     console.log(error.message);

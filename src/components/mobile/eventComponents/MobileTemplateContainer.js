@@ -20,8 +20,8 @@ const MobileTemplateContainer = ({templateList}) => {
                   id={t._id}
                   starttime={t.starttime}
                   endtime={t.endtime}
-                  summary={t.summary}
-                  description={t.description}
+                  title={t.title}
+                  notes={t.notes}
                   templateList={templateList}/>
                 
               ))}

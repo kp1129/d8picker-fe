@@ -29,15 +29,15 @@ const onSubmit = async formData => {
         <Input
           type="text"
           placeholder="title"
-          name="summary"
-          id="summary"
+          name="title"
+          id="title"
           ref={register({ maxLength: 80, required: true })}
         />
         <Input
           type="text"
           placeholder="notes"
-          name="description"
-          id="description"
+          name="notes"
+          id="notes"
           ref={register({ maxLength: 100 })}
         />
         <Input
