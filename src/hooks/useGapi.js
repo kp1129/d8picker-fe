@@ -36,6 +36,7 @@ const gapiLoad = ({
   setIsAuthenticated,
   setCurrentUser,
   setIsLoading,
+  setIDToken,
   opts
 }) =>
   //loads appended script on line 76 with above props to authenticate user.
@@ -50,6 +51,8 @@ const gapiLoad = ({
         redirect_uri: opts.redirect_uri
       });
       const auth = window.gapi.auth2.getAuthInstance();
+      setIDToken(auth.currentUser.get().getAuthResponse().id_token);
+      console.log('just another console.log', auth.currentUser.get().getAuthResponse());
       auth.isSignedIn.listen(() => {
         setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(opts.scope));
       });
@@ -70,6 +73,7 @@ function useGapi(opts) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [IDToken, setIDToken] = useState(undefined);
 
   useEffect(() => {
     // Create script tag, initialize gapi, append script to document
@@ -81,6 +85,7 @@ function useGapi(opts) {
         setIsAuthenticated,
         setCurrentUser,
         setIsLoading,
+        setIDToken,
         opts
       });
 
@@ -92,7 +97,8 @@ function useGapi(opts) {
     currentUser,
     isAuthenticated,
     handleSignIn: handleSignIn(gapi),
-    handleSignOut: handleSignOut(gapi)
+    handleSignOut: handleSignOut(gapi),
+    IDToken
   };
 }
 
