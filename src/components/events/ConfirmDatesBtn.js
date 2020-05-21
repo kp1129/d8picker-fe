@@ -7,18 +7,18 @@ import {convertTime, convertEvents} from '../../utils/helperFunctions'
 
 const ConfirmDatesBtn = () => {
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected} = useContext(Context);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, selected, setSelected} = useContext(Context);
 
     const { api } = useAuth();
 
     //takes input from date selection and add template form and sends to google calendar api
-    const applyTemplate = (summary, description, starttime, endtime) => {
+    const applyTemplate = (title, description, starttime, endtime) => {
         //creates new date and isolates timezone offset
         let date = new Date().toString().split("GMT");
         //takes the first few characters of offset with + or - to be slotted in the start and end times
         let zone = date[1].split(' ')[0].slice(0, 3);
         //converts events to user's timezone
-        const eventList = convertEvents(selected, starttime, endtime, zone, summary, description);
+        const eventList = convertEvents(selected, starttime, endtime, zone, title, description);
         
         //add events to google calendar, clear currently selected dates, ends date selection mode (formOpen and templateFormOpen)
         eventList.forEach(event => {
@@ -36,24 +36,24 @@ const ConfirmDatesBtn = () => {
         e.preventDefault();
         
         //no state setup yet for the description, so it is set to be blank
-        applyTemplate(summ, "", conStart, conEnd);
+        applyTemplate(title, "", conStart, conEnd);
     }
 
-    const[shortSumm, setShortSumm] = useState(summ)
+    const[shortTitle, setShortTitle] = useState(title)
 
     //truncates the name of an event to fit on the confrim dates button based on a percentage of the inner width of the window
     useEffect(()=>{
-      if(summ.length > (window.innerWidth*.04)){
-        setShortSumm(`${summ.substring(0,Math.floor((window.innerWidth*.04))-3)}...`)
+      if(title.length > (window.innerWidth*.04)){
+        setShortTitle(`${title.substring(0,Math.floor((window.innerWidth*.04))-3)}...`)
       }
     
-    },[summ])
+    },[title])
 
     //shows shortened event name and time converted into 12-hour format on the button. Time should NOT be sent to calendar api in 12-hour format, it should only be shown as such in the UI.
     return(
         <ButtonContainer>
             <EventDiv>
-                <Title>{shortSumm}</Title>
+                <Title>{shortTitle}</Title>
                 <Time>{convertTime(conStart)}-{convertTime(conEnd)}</Time>
             </EventDiv>
             <Button onClick={handleClick}>Confirm Dates</Button>

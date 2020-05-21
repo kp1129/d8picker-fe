@@ -4,18 +4,18 @@ import styled from 'styled-components';
 
 
 // Displays blue box with name of event
-const EventIndicator = ({ event, eventSummary}) => {
+const EventIndicator = ({ event, eventTitle}) => {
  
-  const [summ, setSumm] = useState("")
+  const [title, setTitle] = useState("")
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
-      eventSummary.length > 5 ? setSumm(eventSummary.substring(0,5)) : setSumm(eventSummary)
+      eventTitle.length > 5 ? setTitle(eventTitle.substring(0,5)) : setTitle(eventTitle)
   },[])
   
   return event ? (
     <EventContainer>
-      <Event>{summ}</Event>
+      <Event>{title}</Event>
     </EventContainer>
   ) : null;
 };

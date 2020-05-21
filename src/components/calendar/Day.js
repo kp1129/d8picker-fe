@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 
 const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
 
-  const {eventDatesArr, summaries} = useContext(DashboardContext);
+  const {eventDatesArr, titles} = useContext(DashboardContext);
 
 
   //checks the current Day's date (being mapped by parent Days) matches a date of an event from the google calendar api. If so, render an event indicator for each matching event.
@@ -23,14 +23,16 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
       1}-${day < 10 ? 0 : ''}${day}`;
       //if there an event from google exists which matches this day's date create an event indicator (blue box with event name) for each
     if(eventDatesArr.includes(formattedDate)){
-      let eventSummary;
+      let eventTitle;
+      console.log('HI', eventDatesArr, titles);
       return eventDatesArr.map((eventName, i) => {
+        console.log('THERE', eventName);
         if(eventName === formattedDate){
-          eventSummary = summaries[i];
+          eventTitle = titles[i];
           return <EventsIndicator
                 key={i}
                 event={formattedDate}
-                eventSummary={eventSummary}
+                eventTitle='dummy' /// Change me when you figure out
                 fontSize="2px"
               />
         }

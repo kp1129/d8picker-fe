@@ -21,7 +21,7 @@ const EventForm = styled.div`
 
 
 const NewEventForm = props => {
-    const { setTemplateList, templateList, setToggleNav, setNavState, setSumm, setConStart, setConEnd, setTemplateFormOpen,
+    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
     const { formOpen } = useContext(Context);
@@ -49,7 +49,7 @@ const NewEventForm = props => {
         setToggleNav(false);
         setTemplateFormOpen(true)
         setFormOpen(true)
-        setSumm(input.title)
+        setTitle(input.title)
         setConStart(input.starttime);
         setConEnd(input.endtime);
         setNavState(0);

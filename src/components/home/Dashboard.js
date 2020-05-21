@@ -16,7 +16,7 @@ const getTemplateList = async ({ googleId }) => {
     const response = await axios.get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
-    return response.data;
+    return response.data.templates;
   } catch (error) {
     console.log(error);
   }
@@ -48,7 +48,7 @@ const Dashboard = (props) => {
   const [eventDatesArr, setEventDatesArr] = useState([])
   
   //array of only event name strings from calendar api
-  const [summaries, setSummaries] = useState([]);
+  const [titles, setTitles] = useState([]);
 
   //array of weekdays which sits at top of calendar
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -61,12 +61,12 @@ const Dashboard = (props) => {
       try {
         const data = await api.listEvents();
         setEvents(data);
-        let summariesArr = [];
+        let titlesArray = [];
         let formattedEvents = data.map(event=>{
-          summariesArr.push(event.summary)
+          titlesArray.push(event.title)
           return event.start.dateTime.substring(0,10)
         })
-        setSummaries(summariesArr)
+        setTitles(titlesArray)
         setEventDatesArr(formattedEvents);
 
 
@@ -136,7 +136,7 @@ const [items, setItems] = useState(nextMonth(50));
                   ))}
               </Grid>
             </Box>
-            <DashboardContext.Provider value={{api, events, eventDatesArr, summaries}}>
+            <DashboardContext.Provider value={{api, events, eventDatesArr, titles}}>
               {items.length > 0 && <InfiniteCal items={items}/>}
             </DashboardContext.Provider>
             

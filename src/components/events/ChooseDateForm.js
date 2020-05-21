@@ -1,16 +1,18 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Context} from '../../contexts/Contexts'
 import styled from 'styled-components'
+import { useAuth } from '../../contexts/auth';
 import {convertTime, handleDelete, deleteTemplate} from '../../utils/helperFunctions'
 import './ChooseDateForm.css'
 
 
-const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
+const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
 
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList} = useContext(Context);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
 
-  
+  const { googleApi} = useAuth();
+  const { currentUser } = googleApi;
 
 
   const clearSelected = () => {
@@ -18,9 +20,9 @@ const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
   }
 
 
-  //sets the summary and time displayed on event page
+  //sets the title and time displayed on event page
   useEffect(()=>{
-    setSumm(summary);
+    setTitle(title);
     if (starttime){
       setConStart(convertTime(starttime))
     }
@@ -30,9 +32,9 @@ const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
   },[starttime, endtime])
   
 
-  //sets the summary and starttime of the event actually being applied
+  //sets the title and starttime of the event actually being applied
   const handleCalendarView = () =>{
-    setSumm(summary);
+    setTitle(title);
     if (starttime){
       setConStart(starttime)
     }
@@ -73,7 +75,7 @@ const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
   //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
   const handleDelete = e => {
     e.stopPropagation();
-    handleDelete(id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
+    handleDelete(id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
   }
 
 
@@ -86,7 +88,7 @@ const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
       </DeleteDiv>
       <EventDiv>
         <Title>
-          {summary}
+          {title}
         </Title>
         <Time fontSize="m" fontWeight="normal">
           {conStart}-{conEnd}

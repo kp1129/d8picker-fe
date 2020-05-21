@@ -45,19 +45,19 @@ export const addTemplate = async (data, { googleId, token }) => {
 
 
 //converts event to user's correct timezone
-export const convertEvents = (selected, starttime, endtime, zone, summary, description) => {
+export const convertEvents = (selected, starttime, endtime, zone, title, notes) => {
   return selected.map(e => ({
     end: { dateTime: `${e}T${endtime}:00${zone}:00` },
     start: { dateTime: `${e}T${starttime}:00${zone}:00` },
-    summary: summary,
-    description: description
+    title: title,
+    notes: notes
   }));
 }
 
 //deletes event template from the backend
-export const deleteTemplate = async id => {
+export const deleteTemplate = async (id, {token}) => {
   try {
-    const response = await axios.delete(
+    const response = await axiosWithAuth(token).delete(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`
     );
     return response.data;
@@ -67,8 +67,8 @@ export const deleteTemplate = async id => {
 };
 
 //deletes event templates from backend, updates templateList state to reflect this. It also clears whatever dates were currently selected and turns of date selection mode, although these are probably irrelevant on mobile due to component restructure.
-export const handleDelete = async (id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen) => {
-  await deleteTemplate(id);
+export const handleDelete = async (id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen) => {
+  await deleteTemplate(id, currentUser);
   const templates = templateList.filter(template => template._id !== id);
   setTemplateList(templates);
   clearSelected();
