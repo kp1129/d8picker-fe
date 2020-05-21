@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import TemplateContainer from './TemplateContainer.js'
 import styled from 'styled-components'
-import axios from 'axios';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import AddEventButton from './AddEventButton'
 
 //gets template list from backend
-const getTemplateList = async ({ googleId }) => {
+const getTemplateList = async ({ googleId, token }) => {
     try {
-      const response = await axios.get(
+      const response = await axiosWithAuth(token).get(
         `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
       );
       return response.data.templates;
