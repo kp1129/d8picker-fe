@@ -24,15 +24,13 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
       //if there an event from google exists which matches this day's date create an event indicator (blue box with event name) for each
     if(eventDatesArr.includes(formattedDate)){
       let eventTitle;
-      console.log('HI', eventDatesArr, titles);
       return eventDatesArr.map((eventName, i) => {
-        console.log('THERE', eventName);
         if(eventName === formattedDate){
           eventTitle = titles[i];
           return <EventsIndicator
                 key={i}
                 event={formattedDate}
-                eventTitle='dummy' /// Change me when you figure out
+                eventTitle={eventTitle} /// Change me when you figure out
                 fontSize="2px"
               />
         }
