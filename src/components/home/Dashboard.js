@@ -93,7 +93,7 @@ const [items, setItems] = useState(nextMonth(50));
 
   return (
     <>
-    {toggleNav && <Hamburger />}
+    {/* {toggleNav && <Hamburger />} */}
     {/*toggle nav toggles off nav to indicate in date selection mode, this changes the header to reflect this*/}
     {toggleNav === false && <Container>
           <Cancel onClick={()=>{

@@ -23,12 +23,12 @@ const Hamburger = () => {
   return (
     <div>
      
-      <input type="checkbox" className="blue" id="menu"/>
+      <input type="checkbox" className="blue" id="menu" defaultChecked/>
       
-        <Label htmlFor="menu" className="icon">
+        {/* <Label htmlFor="menu" className="icon">
         
           <div className="menu"></div>
-        </Label>
+        </Label> */}
        
         <nav className = "burger-container">
         <Image
@@ -36,7 +36,7 @@ const Hamburger = () => {
               size="45px"
               src={img}
               alt="avatar"
-              style={{position: 'fixed', marginTop: '-50px', marginLeft: "15px", marginBottom: "20px"}}
+              style={{marginTop: '0px', marginLeft: "20px", marginBottom: "20px"}}
             />
           <ul >
             <li onClick={() => {
@@ -56,7 +56,7 @@ export default Hamburger;
 
 const SignOut = styled.a`
   background: #FC8181;
-  padding: 2%;
+  padding: 10%;
   border-radius: 5px;
   color: white;
 `;
