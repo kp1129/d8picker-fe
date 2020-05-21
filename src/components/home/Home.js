@@ -6,6 +6,20 @@ import Events from '../events/Events'
 import Nav from '../navigation/Nav'
 import NewEventForm from '../events/NewEventForm';
 import Groups from '../groups/Groups'
+import axiosWithAuth from '../../utils/axiosWithAuth'
+import { useAuth } from '../../contexts/auth';
+
+//gets list of templates from backend
+const getTemplateList = async ({ googleId, token }) => {
+  try {
+    const response = await axiosWithAuth(token).get(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
+    );
+    return response.data.templates;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const Home = () => {
     // 0 = calendar, 1 = events, 2 = groups
@@ -43,6 +57,17 @@ const Home = () => {
         setColors(newColors)
     },[navState])
 
+  //google OAuth2
+  const { googleApi, api } = useAuth();
+  const { currentUser } = googleApi;
+  
+  //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
+  useEffect(() => {
+    (async () => {
+      const templates = await getTemplateList(currentUser);
+      setTemplateList(templates);
+    })();
+  }, [currentUser, formOpen]);
 
     return(
         
