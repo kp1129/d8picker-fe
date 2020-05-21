@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {MobileDashboardContext} from '../../contexts/MobileContexts'
 import { Flex, Box } from '@chakra-ui/core';
-import Cell from '../dashboardComponents/calendarComponents/Cell'
+import Cell from '../calendarComponents/Cell.js'
 import EventsIndicator from './MobileEventIndicator'
 import useDate from '../../hooks/useDate'
 import dayjs from 'dayjs';

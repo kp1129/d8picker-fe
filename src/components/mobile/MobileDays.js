@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {MobileContext} from '../../contexts/MobileContexts';
 import useDate from '../../hooks/useDate'
 import Day from './MobileDay'
-import DisabledDays from '../dashboardComponents/calendarComponents/DIsabledDays'
+import DisabledDays from '../calendarComponents/DisabledDays.js'
 
 
 

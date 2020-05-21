@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
 import ConfirmDatesBtn from './ConfirmDatesBtn'
 import InfiniteCal from './InfiniteCal'
-import Cell from '../dashboardComponents/calendarComponents/Cell'
+import Cell from '../calendarComponents/Cell.js'
 import styled from 'styled-components'
 import Hamburger from './Hamburger/TopNav'
 import axios from 'axios'
