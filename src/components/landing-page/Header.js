@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Link as StyledLink, Flex, Box, Image } from '@chakra-ui/core';
 
-import logo from '../img/logo.svg';
+import logo from '../../img/logo.svg';
 
 const Header = ({userState}) => {
   return (

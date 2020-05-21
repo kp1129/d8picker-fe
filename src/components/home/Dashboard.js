@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext} from 'react';
-import {MobileContext, MobileDashboardContext} from '../../contexts/MobileContexts';
+import {Context, DashboardContext} from '../../contexts/Contexts';
 import { Box, Grid } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import dayjs from 'dayjs';
-import ConfirmDatesBtn from './ConfirmDatesBtn'
-import InfiniteCal from './InfiniteCal'
-import Cell from '../calendarComponents/Cell.js'
+import ConfirmDatesBtn from '../events/ConfirmDatesBtn'
+import InfiniteCal from '../calendar/InfiniteCal'
+import Cell from '../calendar/Cell.js'
 import styled from 'styled-components'
-import Hamburger from './Hamburger/TopNav'
+import Hamburger from '../navigation/Hamburger/TopNav'
 import axios from 'axios'
 
 //gets list of templates from backend
@@ -26,13 +26,13 @@ const getTemplateList = async ({ googleId }) => {
 
 const Dashboard = (props) => {
   
-  const {setSelected, toggleNav, setToggleNav, setNavState, formOpen} = useContext(MobileContext);
+  const {setSelected, toggleNav, setToggleNav, setNavState, formOpen} = useContext(Context);
 
   //google OAuth2
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
   
-  //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary on mobile given new organization of components
+  //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
@@ -136,9 +136,9 @@ const [items, setItems] = useState(nextMonth(50));
                   ))}
               </Grid>
             </Box>
-            <MobileDashboardContext.Provider value={{api, events, eventDatesArr, summaries}}>
+            <DashboardContext.Provider value={{api, events, eventDatesArr, summaries}}>
               {items.length > 0 && <InfiniteCal items={items}/>}
-            </MobileDashboardContext.Provider>
+            </DashboardContext.Provider>
             
             {toggleNav === false && <ConfirmDatesBtn/>}
           </div>

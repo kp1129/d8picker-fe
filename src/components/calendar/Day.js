@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import {MobileDashboardContext} from '../../contexts/MobileContexts'
+import {DashboardContext} from '../../contexts/Contexts'
 import { Flex, Box } from '@chakra-ui/core';
-import Cell from '../calendarComponents/Cell.js'
-import EventsIndicator from './MobileEventIndicator'
+import Cell from '../calendar/Cell.js'
+import EventsIndicator from '../events/EventIndicator'
 import useDate from '../../hooks/useDate'
 import dayjs from 'dayjs';
 
@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 
 const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
 
-  const {eventDatesArr, summaries} = useContext(MobileDashboardContext);
+  const {eventDatesArr, summaries} = useContext(DashboardContext);
 
 
   //checks the current Day's date (being mapped by parent Days) matches a date of an event from the google calendar api. If so, render an event indicator for each matching event.

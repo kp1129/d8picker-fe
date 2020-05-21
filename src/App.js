@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react';
 import { Route } from 'react-router-dom';
 // import ReactGA from 'react-ga';
 import { Stack } from '@chakra-ui/core';
-import Authenticate from './components/Authenticate';
+import Authenticate from './components/landing-page/Authenticate';
 import { useAuth } from './contexts/auth';
-import Header from './components/Header';
-import PrivateRoute from './components/PrivateRoute';
-import Welcome from './components/Welcome';
-import Loading from './components/Loading';
-import Mobile from './components/mobile/Mobile';
-import MobileDashboard from './components/mobile/MobileDashboard.js';
+import Header from './components/landing-page/Header';
+import PrivateRoute from './components/home/PrivateRoute';
+import Welcome from './components/landing-page/Welcome';
+import Loading from './components/landing-page/Loading';
+import Home from './components/home/Home';
+import Dashboard from './components/home/Dashboard.js';
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -45,7 +45,7 @@ function App() {
               <Welcome />
             </Route>}
             <PrivateRoute path="/:id/dashboard">
-              <Mobile setUserState={setUserState}/>
+              <Home setUserState={setUserState}/>
             </PrivateRoute>
           </Stack>
     )
@@ -62,7 +62,7 @@ function App() {
                 <Welcome />
               </Route>
               <PrivateRoute path="/:id/dashboard">
-                <MobileDashboard />
+                <Dashboard />
               </PrivateRoute>
             </Stack>
     )

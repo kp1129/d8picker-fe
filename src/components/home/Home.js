@@ -1,13 +1,13 @@
 
 import React, {useState, useEffect} from 'react'
-import {MobileContext} from '../../contexts/MobileContexts'
-import Dashboard from './MobileDashboard'
-import MobileEvents from './eventComponents/MobileEvents'
-import Nav from './NavigationComponents/Nav'
-import NewEventForm from './eventComponents/NewEventForm';
-import Groups from './Groups'
+import {Context} from '../../contexts/Contexts'
+import Dashboard from './Dashboard'
+import Events from '../events/Events'
+import Nav from '../navigation/Nav'
+import NewEventForm from '../events/NewEventForm';
+import Groups from '../groups/Groups'
 
-const Mobile = () => {
+const Home = () => {
     // 0 = calendar, 1 = events, 2 = groups
     const [navState, setNavState] = useState(0)
     
@@ -46,12 +46,12 @@ const Mobile = () => {
 
     return(
         
-        <MobileContext.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList}}>
+        <Context.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, summ, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList}}>
             
             {navState===0 && <Dashboard setTemplateList={setTemplateList}/>}
         
             {navState===1 && <>
-                <MobileEvents formOpen={formOpen} setTemplateList={setTemplateList} templateList={templateList}></MobileEvents>
+                <Events formOpen={formOpen} setTemplateList={setTemplateList} templateList={templateList} />
             </>}
 
             {navState===2 && <Groups/>}
@@ -60,13 +60,13 @@ const Mobile = () => {
             {navState===3 && <NewEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setSumm={setSumm} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
-        </MobileContext.Provider>
+        </Context.Provider>
     )
 
 
     
 }
 
-export default Mobile
+export default Home
 
 

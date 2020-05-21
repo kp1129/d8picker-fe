@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import MobileTemplateContainer from './MobileTemplateContainer.js'
+import TemplateContainer from './TemplateContainer.js'
 import styled from 'styled-components'
 import axios from 'axios';
-import { useAuth } from '../../../contexts/auth';
-import AddEventButton from '../AddEventButton'
+import { useAuth } from '../../contexts/auth';
+import AddEventButton from './AddEventButton'
 
 //gets template list from backend
 const getTemplateList = async ({ googleId }) => {
@@ -18,7 +18,7 @@ const getTemplateList = async ({ googleId }) => {
   };
 
 
-const MobileEvents = ({formOpen, setTemplateList, templateList}) => {
+const Events = ({formOpen, setTemplateList, templateList}) => {
 
     const { googleApi, api } = useAuth();
     const { currentUser} = googleApi;
@@ -47,17 +47,17 @@ const MobileEvents = ({formOpen, setTemplateList, templateList}) => {
 
 
     return(
-          <FixedMobile>
-            <MobileTemplateContainer templateList={templateList}/>
+          <Fixed>
+            <TemplateContainer templateList={templateList}/>
             <AddEventButton/>
-          </FixedMobile>
+          </Fixed>
     )
 }
 
-export default MobileEvents
+export default Events
 
 
-const FixedMobile = styled.div`
+const Fixed = styled.div`
     border: 5px black;
     `
 

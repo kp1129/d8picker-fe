@@ -1,9 +1,9 @@
 import React from 'react';
-import {useAuth} from '../contexts/auth'
+import {useAuth} from '../../contexts/auth'
 import { Heading, Text, Flex, Grid, Image, Button } from '@chakra-ui/core';
 
 
-import graphic from '../img/undraw_calendar_dutt.svg';
+import graphic from '../../img/undraw_calendar_dutt.svg';
 
 export const LoginButton = () => {
   const { googleApi } = useAuth();

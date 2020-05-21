@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {MobileContext} from '../../contexts/MobileContexts'
+import {Context} from '../../contexts/Contexts'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
@@ -7,7 +7,7 @@ import {convertTime, convertEvents} from '../../utils/helperFunctions'
 
 const ConfirmDatesBtn = () => {
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected} = useContext(MobileContext);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, summ, selected, setSelected} = useContext(Context);
 
     const { api } = useAuth();
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import MobileChooseDateForm from './MobileChooseDateForm';
+import ChooseDateForm from './ChooseDateForm';
 import styled from 'styled-components'
 
 
 
-const MobileTemplateContainer = ({templateList}) => {
+const TemplateContainer = ({templateList}) => {
 
 
   return (
@@ -15,7 +15,7 @@ const MobileTemplateContainer = ({templateList}) => {
             <EventDiv>
             {templateList &&
               templateList.map(t => (
-                <MobileChooseDateForm
+                <ChooseDateForm
                   key={t._id}
                   id={t._id}
                   starttime={t.starttime}
@@ -30,7 +30,7 @@ const MobileTemplateContainer = ({templateList}) => {
   );
 };
 
-export default MobileTemplateContainer;
+export default TemplateContainer;
 
 
 

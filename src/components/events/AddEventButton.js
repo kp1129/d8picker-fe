@@ -1,11 +1,11 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import btn from './NavigationComponents/NavImgs/addeventbtn.png'
-import {MobileContext} from '../../contexts/MobileContexts'
+import btn from '../navigation/NavImgs/addeventbtn.png'
+import {Context} from '../../contexts/Contexts'
 
 //redirects user to new event form
 const AddEventButton = () => {
-    const {setNavState} = useContext(MobileContext);
+    const {setNavState} = useContext(Context);
     return <Img src={btn} onClick={()=>setNavState(3)}/>
 }
 

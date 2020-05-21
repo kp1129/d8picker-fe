@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'; 
-import btn from './NavigationComponents/NavImgs/addgroupbtn.png'
+import btn from '../navigation/NavImgs/addgroupbtn.png'
 
 const Groups = () => {
     return(

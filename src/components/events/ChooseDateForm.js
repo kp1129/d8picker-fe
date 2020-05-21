@@ -1,14 +1,14 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {MobileContext} from '../../../contexts/MobileContexts'
+import {Context} from '../../contexts/Contexts'
 import styled from 'styled-components'
-import {convertTime, handleDelete, deleteTemplate} from '../../../utils/helperFunctions'
-import './MobileChooseDateForm.css'
+import {convertTime, handleDelete, deleteTemplate} from '../../utils/helperFunctions'
+import './ChooseDateForm.css'
 
 
-const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
+const ChooseDateForm = ({starttime, endtime, summary, id, templateList}) => {
 
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList} = useContext(MobileContext);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setSumm, setTemplateList} = useContext(Context);
 
   
 
@@ -71,7 +71,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
   }
 
   //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
-  const handleMobileDelete = e => {
+  const handleDelete = e => {
     e.stopPropagation();
     handleDelete(id, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
   }
@@ -80,7 +80,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
   return (
     <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
       
-      <DeleteDiv className={delClass} onClick={(e)=>handleMobileDelete(e)}>
+      <DeleteDiv className={delClass} onClick={(e)=>handleDelete(e)}>
        <Delete>X</Delete>
 
       </DeleteDiv>
@@ -102,7 +102,7 @@ const MobileChooseDateForm = ({starttime, endtime, summary, id, templateList}) =
 
 
 
-export default MobileChooseDateForm;
+export default ChooseDateForm;
 
 const Container = styled.div`
     width: 100%;

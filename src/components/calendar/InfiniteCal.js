@@ -1,11 +1,11 @@
 import React, { Fragment, useContext} from "react";
-import {MobileContext} from '../../contexts/MobileContexts';
+import {Context} from '../../contexts/Contexts';
 //had to set a fixed itemSize for a FixedSizeList. Look into the VariableSizeList to make it so there aren't such big gaps between some calendar components
 import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
-import Calendar from './MobileCalendar';
-import AddEventButton from './AddEventButton'
-import Loading from './CalendarLoading'
+import Calendar from './Calendar';
+import AddEventButton from '../events/AddEventButton'
+import Loading from '../home/CalendarLoading'
 
 //creates an object which keeps track of whether the calendar component has been rendered before
 const LOADING = 1;
@@ -58,7 +58,7 @@ const Row = ({ data, index, style }) => {
 //It currently will dynamically load a large number of components while only actually rendering the ones visible to the user (this is from react-window). Props passed in here must be given to the itemData attribute of the List component. Then they may be accessed above through "data" in Row, then pass it as a prop like so: data.whateverthepropnameis . DO NOT put Row directly inside the list inline. This causes a weird refresh bug that will be impossible to track down for a week. Not that I would know.
 export default function NewInfCal({items}) {
 
-  const {templateFormOpen} = useContext(MobileContext);
+  const {templateFormOpen} = useContext(Context);
   
     return (
       <Fragment>

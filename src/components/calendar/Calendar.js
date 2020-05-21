@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import dayjs from 'dayjs';
 import {Flex, Grid, Box } from '@chakra-ui/core';
-import Days from './MobileDays';
+import Days from './Days';
 import styled from 'styled-components';
 
 

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-import { MobileContext } from '../../../contexts/MobileContexts'
+import {Context } from '../../contexts/Contexts'
 import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
-import { useAuth } from '../../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { addTemplate } from '../../../utils/helperFunctions'
+import { addTemplate } from '../../utils/helperFunctions'
 
 
 
@@ -24,7 +24,7 @@ const NewEventForm = props => {
     const { setTemplateList, templateList, setToggleNav, setNavState, setSumm, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
-    const { formOpen } = useContext(MobileContext);
+    const { formOpen } = useContext(Context);
 
     const { googleApi} = useAuth();
     const { currentUser } = googleApi;

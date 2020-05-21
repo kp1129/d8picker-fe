@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
-import {MobileContext} from '../../contexts/MobileContexts';
+import {Context} from '../../contexts/Contexts';
 import useDate from '../../hooks/useDate'
-import Day from './MobileDay'
-import DisabledDays from '../calendarComponents/DisabledDays.js'
+import Day from './Day'
+import DisabledDays from './DisabledDays.js'
 
 
 
 const Days = ({date}) => {
 
-  const {templateFormOpen, selected, setSelected} = useContext(MobileContext);
+  const {templateFormOpen, selected, setSelected} = useContext(Context);
 
 
   const {
