@@ -8,12 +8,12 @@ import InfiniteCal from '../calendar/InfiniteCal'
 import Cell from '../calendar/Cell.js'
 import styled from 'styled-components'
 import Hamburger from '../navigation/Hamburger/TopNav'
-import axios from 'axios'
+import axiosWithAuth from '../../utils/axiosWithAuth'
 
 //gets list of templates from backend
-const getTemplateList = async ({ googleId }) => {
+const getTemplateList = async ({ googleId, token }) => {
   try {
-    const response = await axios.get(
+    const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
     return response.data.templates;
