@@ -1,5 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
+import AddEventButton from '../AddEventButton'
 
 
 const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTemplateFormOpen}) => {
@@ -33,6 +34,9 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
                     <IconDiv onClick={()=>handleChange(2)}>
                         <i className="fas fa-users" style={{ fontSize: '2rem', color: colors[2]  }}></i>
                         <Label style={{color: colors[2]}}>Groups</Label>
+                    </IconDiv>
+                    <IconDiv>
+                        <AddEventButton />
                     </IconDiv>
                 </Container>
             </div>)
