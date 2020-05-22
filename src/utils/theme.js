@@ -18,7 +18,7 @@ const theme = {
     black: '#16161D',
     brand: {
       yellow: '#F0EB70',
-      blue_primary: '#6CA1C1',
+      blue_primary: '#1E85C3',
       blue_accent: '#7690B9',
       lightgray: '#ebf1f1'
     }

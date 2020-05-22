@@ -96,7 +96,7 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
                 as="span"
                 fontSize={['xs', 'm']}
                 fontWeight={700}
-                color={isToday ? 'brand.blue_primary' : 'inherit'}
+                color={isToday ? 'brand.blue_primary' : '#999898'}
               >
                 {day}
               </Box>

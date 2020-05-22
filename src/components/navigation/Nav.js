@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
 import Hamburger from './Hamburger/TopNav.js';
+import AddEventButton from "../events/AddEventButton.js";
 
 const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTemplateFormOpen}) => {
     const [navToggle, setNavToggle] = useState(false)
@@ -32,8 +33,11 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
                         <Label style={{color: colors[2]}}>Groups</Label>
                     </IconDiv>
                     <IconDiv onClick={() => setNavToggle(!navToggle)}>
-                        <i class="fas fa-th" style={{ fontSize: '2rem', color: colors[2] }}></i>
+                        <i class="fas fa-th" style={{ fontSize: '2rem', color: colors[2]}}></i>
                         <Label style={{color: colors[2]}}>Settings</Label>
+                    </IconDiv>
+                    <IconDiv onClick={() => setNavToggle(!navToggle)}>
+                        <AddEventButton />
                     </IconDiv>
                 </NavContainer>
                 {navToggle===true && <Hamburger />}
