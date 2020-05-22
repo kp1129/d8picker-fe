@@ -46,7 +46,7 @@ const Home = () => {
     const [selected, setSelected] = useState([]);
 
     //controls state of nav button colors
-    const [colors, setColors] = useState(["#BDBDBD", "#BDBDBD", "#BDBDBD"])
+    const [colors, setColors] = useState(["#999898", "#999898", "#999898"])
     
 
     //changes the color of the nav icons depending on which components are rendered

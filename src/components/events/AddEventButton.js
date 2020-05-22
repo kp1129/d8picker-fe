@@ -14,9 +14,8 @@ export default AddEventButton;
 
 
     const Img = styled.img`
-    position: fixed;
-    bottom: 20%;
-    left: 80%; 
-    cursor: pointer;    
-    `;
+    width: 2.6rem;
+    &:hover {
+        cursor: pointer;
+    }`;
 
