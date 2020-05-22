@@ -4,7 +4,11 @@ body {
   margin: 0;
 }
 .burger-container{
+  display: flex;
   position: sticky;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
 }
 .blue{
 background: blue;
