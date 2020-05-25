@@ -60,14 +60,13 @@ const Dashboard = (props) => {
     (async () => {
       try {
         const data = await api.listEvents();
+        console.log(data);
         setEvents(data);
         let titlesArray = [];
         let formattedEvents = data.map(event=>{
-          console.log('*', event);
           titlesArray.push(event.summary) // Do not change this to title - coming as summary from GAPI
           return event.start.dateTime.substring(0,10)
         })
-        console.log('hello', titlesArray);
         setTitles(titlesArray)
         setEventDatesArr(formattedEvents);
 

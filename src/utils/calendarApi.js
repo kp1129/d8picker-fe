@@ -1,5 +1,6 @@
 // TODO: make calendarId dynamic to allows user to choose which calendar to use
 const calendarApi = gapi => ({
+  // get all events from google calendar api
   listEvents: async () => {
     const data = await gapi.calendar.events.list({
       calendarId: 'primary', // controls which calendar to show
@@ -10,10 +11,12 @@ const calendarApi = gapi => ({
     });
     return data.result.items;
   },
+  // add events to google calendar api
   addEvent: resource => {
     // renaming the fields to fit gapi format
     resource.summary = resource.title;
     resource.description = resource.notes;
+    console.log('adding event', resource);
     // inserting created event to gapi
     const data = gapi.calendar.events.insert({
       calendarId: 'primary', // controls which calendar to show
@@ -22,7 +25,22 @@ const calendarApi = gapi => ({
     return data.execute(resource => {
       console.log('from addEvent', resource);
     });
-  }
+  },
+  // edit event from google calendar api
+  editEvent: resource => {
+    resource.summary = resource.title;
+    resource.description = resource.notes;
+    const request = gapi.calendar.events.patch({
+      calendarId: 'primary',
+      ruleId: resource.id,
+      resource
+    });
+    return request.execute(response => {
+      console.log('from editEvent', response);
+    });
+  },
+
+  // delete event from google calendar api
 });
 
 export default calendarApi;

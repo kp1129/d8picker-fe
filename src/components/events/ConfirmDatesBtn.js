@@ -7,19 +7,18 @@ import {convertTime, convertEvents} from '../../utils/helperFunctions'
 
 const ConfirmDatesBtn = () => {
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, selected, setSelected} = useContext(Context);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected} = useContext(Context);
 
     const { api } = useAuth();
 
     //takes input from date selection and add template form and sends to google calendar api
-    const applyTemplate = (title, description, starttime, endtime) => {
+    const applyTemplate = (title, notes, starttime, endtime) => {
         //creates new date and isolates timezone offset
         let date = new Date().toString().split("GMT");
         //takes the first few characters of offset with + or - to be slotted in the start and end times
         let zone = date[1].split(' ')[0].slice(0, 3);
         //converts events to user's timezone
-        const eventList = convertEvents(selected, starttime, endtime, zone, title, description);
-        
+        const eventList = convertEvents(selected, starttime, endtime, zone, title, notes);
         //add events to google calendar, clear currently selected dates, ends date selection mode (formOpen and templateFormOpen)
         eventList.forEach(event => {
           api.addEvent(event)
@@ -28,15 +27,15 @@ const ConfirmDatesBtn = () => {
         setFormOpen(false);
         setTemplateFormOpen(false)
 
-        //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
+        // //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
         setTimeout(()=>{window.location.reload(false)}, 500);
       };
 
     const handleClick = (e) =>{
         e.preventDefault();
         
-        //no state setup yet for the description, so it is set to be blank
-        applyTemplate(title, "", conStart, conEnd);
+        //no state setup yet for the notes, so it is set to be blank
+        applyTemplate(title, notes, conStart, conEnd);
     }
 
     const[shortTitle, setShortTitle] = useState(title)

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import {Context } from '../../contexts/Contexts'
+import { Context } from '../../contexts/Contexts'
 import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
@@ -15,23 +15,17 @@ const EventForm = styled.div`
     height: 100vh;
 `
 
-
-
-
-
-
-const NewEventForm = props => {
-    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setNotes, setConStart, setConEnd, setTemplateFormOpen,
+const EditEventForm = props => {
+    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
     const { formOpen } = useContext(Context);
 
-    const { googleApi} = useAuth();
+    const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
     const [input, setInput] = useState({
         title: "",
-        notes:"",
         starttime: "",
         endtime: ""
     });
@@ -51,7 +45,6 @@ const NewEventForm = props => {
         setTemplateFormOpen(true)
         setFormOpen(true)
         setTitle(input.title)
-        setNotes(input.notes)
         setConStart(input.starttime);
         setConEnd(input.endtime);
         setNavState(0);
@@ -92,8 +85,6 @@ const NewEventForm = props => {
                         placeholder="Event notes"
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
-                        value={input.notes}
-                        onChange={handleChange}
                     />
                 </div>
 

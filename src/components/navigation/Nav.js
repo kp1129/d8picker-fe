@@ -32,7 +32,7 @@ const Nav = ({setNavState, colors, setFormOpen, setSelected, setToggleNav, setTe
                         <Label style={{color: colors[2]}}>Groups</Label>
                     </IconDiv>
                     <IconDiv onClick={() => setNavToggle(!navToggle)}>
-                        <i class="fas fa-th" style={{ fontSize: '2rem', color: colors[2] }}></i>
+                        <i className="fas fa-th" style={{ fontSize: '2rem', color: colors[2] }}></i>
                         <Label style={{color: colors[2]}}>Settings</Label>
                     </IconDiv>
                 </NavContainer>

@@ -4,8 +4,7 @@ import styled from 'styled-components';
 
 
 // Displays blue box with name of event
-const EventIndicator = ({ event, eventTitle}) => {
- 
+const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const [title, setTitle] = useState("")
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
@@ -13,7 +12,7 @@ const EventIndicator = ({ event, eventTitle}) => {
       eventTitle.length > 5 ? setTitle(eventTitle.substring(0,5)) : setTitle(eventTitle)
   },[])
   
-  return event ? (
+  return eventDate ? (
     <EventContainer>
       <Event>{title}</Event>
     </EventContainer>
