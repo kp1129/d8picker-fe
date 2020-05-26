@@ -9,7 +9,7 @@ import './ChooseDateForm.css'
 const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
 
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
+  const { setTemplateIdToUpdate, setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
 
   const { googleApi} = useAuth();
   const { currentUser } = googleApi;
@@ -72,6 +72,8 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
     
   }
 
+ 
+
   //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
   const handleDeleteClick = e => {
     e.stopPropagation();
@@ -83,6 +85,7 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
   const handleUpdate = e => {
     e.stopPropagation();
     setNavState(4);
+    setTemplateIdToUpdate(id);
   }
 
 

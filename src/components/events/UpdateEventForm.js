@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { addTemplate } from '../../utils/helperFunctions'
+import { updateTemplate } from '../../utils/helperFunctions'
 import { useToasts } from 'react-toast-notifications'
 
 
@@ -20,15 +20,19 @@ const UpdateEventForm = props => {
     const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
-    const { formOpen } = useContext(Context);
-
+    const { formOpen, templateIdToUpdate } = useContext(Context);
+    console.log('template id of the template to update', templateIdToUpdate);
     const { googleApi} = useAuth();
     const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
+    const [[templateToUpdate], setTemplateToUpdate] = useState(templateList.filter(each => each.id === templateIdToUpdate));
+    console.log('is the template undefined or empty?', templateToUpdate);
+
     const [input, setInput] = useState({
-        title: "",
-        starttime: "",
-        endtime: ""
+        title: templateToUpdate.title,
+        notes: templateToUpdate.notes,
+        starttime: templateToUpdate.starttime,
+        endtime: templateToUpdate.endtime
     });
     const { addToast } = useToasts();
 
@@ -56,7 +60,7 @@ const UpdateEventForm = props => {
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser, googleApi.IDToken);
+        const template = updateTemplate(templateIdToUpdate, formData, currentUser, googleApi.IDToken);
         console.log('template?: ', template);
         console.log('templateList: ', templateList);
         setTemplateList([...templateList, template]);

@@ -43,7 +43,7 @@ export const addTemplate = async (data, { googleId, token }) => {
 
 //updates an event template on the backend
 export const updateTemplate = async (id, data, { googleId, token }) => {
-  const template = { ...data, googleId, id };
+  const template = { ...data, googleId };
   try {
     const response = await axiosWithAuth(token).put(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`,
