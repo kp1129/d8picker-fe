@@ -16,7 +16,7 @@ const EventForm = styled.div`
     height: 100vh;
 `
 
-const NewEventForm = props => {
+const UpdateEventForm = props => {
     const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
@@ -41,11 +41,13 @@ const NewEventForm = props => {
 
     // Submit for template form
     const onSubmit = async (formData) => {
-        addToast('Event created. Pick dates on the calendar to apply the event.', {
+        addToast('Event Updated!', {
              appearance: 'info',
              autoDismiss: true,
              autoDismissTimeout: 6000
             })
+        console.log("formdata", formData)
+        console.log('googleApi: ', googleApi);
         setToggleNav(false);
         setTemplateFormOpen(true)
         setFormOpen(true)
@@ -54,10 +56,9 @@ const NewEventForm = props => {
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser, googleApi.IDToken); 
-        console.log('template', template);
-        console.log('templateList', templateList);
-        console.log('destructured template list', ...templateList);
+        const template = addTemplate(formData, currentUser, googleApi.IDToken);
+        console.log('template?: ', template);
+        console.log('templateList: ', templateList);
         setTemplateList([...templateList, template]);
         setFormOpen(!formOpen);
     };
@@ -66,7 +67,7 @@ const NewEventForm = props => {
         <EventForm>
             <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
                 <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={() => setNavState(0)}>Cancel</p>
-                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
+                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>Update Event</h2>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -135,4 +136,4 @@ const NewEventForm = props => {
     )
 }
 
-export default NewEventForm;
+export default UpdateEventForm;

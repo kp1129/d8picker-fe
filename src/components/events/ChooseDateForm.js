@@ -73,19 +73,26 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
   }
 
   //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
-  const handleDelete = e => {
+  const handleDeleteClick = e => {
     e.stopPropagation();
-    handleDelete(id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen)
+    console.log('whats the id?', id);
+    handleDelete(id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen);
+    
+  }
+
+  const handleUpdate = e => {
+    e.stopPropagation();
+    setNavState(4);
   }
 
 
   return (
     <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
       
-      <DeleteDiv className={delClass} onClick={(e)=>handleDelete(e)}>
+      {/* <DeleteDiv className={delClass} onClick={(e)=>handleDelete(e)}>
        <Delete>X</Delete>
 
-      </DeleteDiv>
+      </DeleteDiv> */}
       <EventDiv>
         <Title>
           {title}
@@ -93,10 +100,14 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
         <Time fontSize="m" fontWeight="normal">
           {conStart}-{conEnd}
         </Time>
+        
       </EventDiv>
-      <ArrowDiv>
+      <UpdateBtn type="button" onClick={handleUpdate}>update</UpdateBtn>
+      <DeleteBtn type="button" onClick={handleDeleteClick}>delete</DeleteBtn>
+      
+      {/* <ArrowDiv>
         >
-      </ArrowDiv>
+      </ArrowDiv> */}
 
     </Container>
   );
@@ -156,16 +167,41 @@ const ArrowDiv = styled.div`
 
 `;
 
-const Delete = styled.div`
-    width: 100%;
-    height: 100%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
+// const Delete = styled.div`
+//     width: 100%;
+//     height: 100%;
+//     color: white;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;    
+// `;
+
+// const DeleteDiv = styled.div`
+//     width: 10%;
+// `;
+
+const UpdateBtn = styled.div`
+color: palevioletred;
+background-color: white;
+font-size: 1em;
+margin: 1em;
+padding: 0.25em 1em;
+border: 2px solid palevioletred;
+border-radius: 3px;
+&:hover{
+  cursor: pointer;
+}
 `;
 
-const DeleteDiv = styled.div`
-    width: 10%;
+const DeleteBtn = styled.div`
+color: white;
+background-color: palevioletred;
+font-size: 1em;
+margin: 1em;
+padding: 0.25em 1em;
+border: 2px solid palevioletred;
+border-radius: 3px;
+&:hover{
+  cursor: pointer;
+}
 `;
-

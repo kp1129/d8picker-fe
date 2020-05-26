@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 
@@ -42,6 +41,21 @@ export const addTemplate = async (data, { googleId, token }) => {
   }
 };
 
+//updates an event template on the backend
+export const updateTemplate = async (id, data, { googleId, token }) => {
+  const template = { ...data, googleId, id };
+  try {
+    const response = await axiosWithAuth(token).put(
+      `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${id}`,
+      template
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
 
 
 //converts event to user's correct timezone
@@ -68,8 +82,9 @@ export const deleteTemplate = async (id, {token}) => {
 
 //deletes event templates from backend, updates templateList state to reflect this. It also clears whatever dates were currently selected and turns of date selection mode, although these are probably irrelevant on mobile due to component restructure.
 export const handleDelete = async (id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen) => {
+  console.log('did i get this far?', id);
   await deleteTemplate(id, currentUser);
-  const templates = templateList.filter(template => template._id !== id);
+  const templates = templateList.filter(template => template.id !== id);
   setTemplateList(templates);
   clearSelected();
   setTemplateFormOpen(false);

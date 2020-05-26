@@ -5,6 +5,7 @@ import Dashboard from './Dashboard'
 import Events from '../events/Events'
 import Nav from '../navigation/Nav'
 import NewEventForm from '../events/NewEventForm';
+import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups'
 import axiosWithAuth from '../../utils/axiosWithAuth'
 import { useAuth } from '../../contexts/auth';
@@ -83,6 +84,8 @@ const Home = () => {
 
 
             {navState===3 && <NewEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setTitle={setTitle} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
+
+            {navState===4 && <UpdateEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setTitle={setTitle} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {toggleNav && <Nav navState={navState} setNavState={setNavState} colors={colors} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen} setSelected={setSelected} setToggleNav={setToggleNav}/>}
         </Context.Provider>
