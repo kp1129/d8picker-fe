@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom'
+import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 
 
@@ -6,6 +8,8 @@ import styled from 'styled-components';
 // Displays blue box with name of event
 const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const [title, setTitle] = useState("")
+  const { googleApi } = useAuth();
+  const { currentUser } = googleApi;
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
@@ -14,7 +18,11 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   
   return eventDate ? (
     <EventContainer>
-      <Event>{title}</Event>
+      <Event>
+        <Link to={`/${currentUser.googleId}/events/${event.id}`}>
+          {title}  
+        </Link>  
+      </Event>
     </EventContainer>
   ) : null;
 };

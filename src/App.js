@@ -10,6 +10,7 @@ import Welcome from './components/landing-page/Welcome';
 import Loading from './components/landing-page/Loading';
 import Home from './components/home/Home';
 import Dashboard from './components/home/Dashboard.js';
+import EventPage from './components/events/EventPage.js';
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -46,6 +47,9 @@ function App() {
             </Route>}
             <PrivateRoute path="/:id/dashboard">
               <Home setUserState={setUserState}/>
+            </PrivateRoute>
+            <PrivateRoute path='/:id/events/:eventId'>
+              <EventPage />
             </PrivateRoute>
           </Stack>
     )

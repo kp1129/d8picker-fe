@@ -11,6 +11,14 @@ const calendarApi = gapi => ({
     });
     return data.result.items;
   },
+  // get particular event
+  getEvent: async (eventId) => {
+    const event = await gapi.calendar.events.get({
+      calendarId: 'primary',
+      eventId
+    })
+    return event.result;
+  },
   // add events to google calendar api
   addEvent: resource => {
     // renaming the fields to fit gapi format
@@ -27,12 +35,12 @@ const calendarApi = gapi => ({
     });
   },
   // edit event from google calendar api
-  editEvent: resource => {
+  editEvent: (eventId, resource) => {
     resource.summary = resource.title;
     resource.description = resource.notes;
     const request = gapi.calendar.events.patch({
       calendarId: 'primary',
-      ruleId: resource.id,
+      eventId,
       resource
     });
     return request.execute(response => {

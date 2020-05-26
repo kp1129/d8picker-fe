@@ -56,7 +56,7 @@ const NewEventForm = props => {
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser, googleApi.IDToken);
+        const template = addTemplate(formData, currentUser);
         console.log('template?: ', template);
         console.log('templateList: ', templateList);
         setTemplateList([...templateList, template]);
