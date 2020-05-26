@@ -5,6 +5,7 @@ import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { addTemplate } from '../../utils/helperFunctions'
+import { useToasts } from 'react-toast-notifications'
 
 
 
@@ -14,11 +15,6 @@ const EventForm = styled.div`
     width: 100%;
     height: 100vh;
 `
-
-
-
-
-
 
 const NewEventForm = props => {
     const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
@@ -34,6 +30,7 @@ const NewEventForm = props => {
         starttime: "",
         endtime: ""
     });
+    const { addToast } = useToasts();
 
     const handleChange = (e) => {
         setInput({
@@ -44,6 +41,11 @@ const NewEventForm = props => {
 
     // Submit for template form
     const onSubmit = async (formData) => {
+        addToast('Event created. Pick dates on the calendar to apply the event.', {
+             appearance: 'info',
+             autoDismiss: true,
+             autoDismissTimeout: 6000
+            })
         console.log("formdata", formData)
         console.log('googleApi: ', googleApi);
         setToggleNav(false);
