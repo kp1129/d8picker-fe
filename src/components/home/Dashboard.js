@@ -63,6 +63,8 @@ const Dashboard = (props) => {
         setEvents(data);
         let titlesArray = [];
         let formattedEvents = data.map(event=>{
+
+
           titlesArray.push(event.summary) // Do not change this to title - coming as summary from GAPI
           return event.start.dateTime.substring(0,10)
         })

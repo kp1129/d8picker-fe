@@ -3,15 +3,17 @@ import {Context} from '../../contexts/Contexts';
 import useDate from '../../hooks/useDate'
 import Day from './Day'
 import DisabledDays from './DisabledDays.js'
+import dayjs from 'dayjs'
 
 
 
-const Days = ({date}) => {
+const Days = ({date, month}) => {
 
   const {templateFormOpen, selected, setSelected} = useContext(Context);
 
 
   const {
+    cDate,
     daysInMonth,
     currentDay,
     currentMonth,
@@ -19,6 +21,11 @@ const Days = ({date}) => {
     weekDayOfFirstDoM,
     weekDayOfLastDoM
   } = useDate(date);
+
+  // console.log('month: ', month.format('MM'))
+  // console.log('daysInMonth: ', daysInMonth)
+  // console.log('currentDay: ', currentDay)
+  // console.log('cDate: ', cDate)
 
 
 
@@ -36,7 +43,6 @@ const Days = ({date}) => {
           day === currentDay.date() &&
           currentMonth === currentDay.month() &&
           currentYear === currentDay.year();
-
 
         const isPicked = selected.includes(
           `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
@@ -60,7 +66,7 @@ const Days = ({date}) => {
 
           
         return (
-          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} isToday={isToday} day={day} date={date}/>
+          <Day key={i} i={i} isPicked={isPicked} handleSelected={handleSelected} month={month} cDate={cDate} isToday={isToday} day={day} date={date}/>
         );
       })}
 
