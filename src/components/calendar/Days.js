@@ -22,7 +22,7 @@ const Days = ({date, month}) => {
     weekDayOfLastDoM
   } = useDate(date);
 
-  console.log('month: ', month.format('MM'))
+  // console.log('month: ', month.format('MM'))
   // console.log('daysInMonth: ', daysInMonth)
   // console.log('currentDay: ', currentDay)
   // console.log('cDate: ', cDate)
