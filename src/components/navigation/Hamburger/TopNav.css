@@ -6,9 +6,9 @@ body {
 .burger-container{
   display: flex;
   position: sticky;
-  justify-items: center;
-  justify-content: center;
-  align-items: center;
+  justify-items: flex-start;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 .blue{
 background: blue;
@@ -87,7 +87,7 @@ nav {
   box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
   height: 10px;
   width: 100%;
-  padding-top: 60px;
+  padding-top: 20px;
   position: fixed;
   transition: height ease .6s;
   z-index: 100;
