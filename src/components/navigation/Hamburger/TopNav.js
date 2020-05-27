@@ -36,7 +36,7 @@ const Hamburger = () => {
               size="45px"
               src={img}
               alt="avatar"
-              style={{marginTop: '0px', marginLeft: "20px", marginBottom: "20px"}}
+              style={{marginTop: '0px', marginLeft: "20px", marginBottom: "0px"}}
             />
           <ul >
             <li onClick={() => {
@@ -56,8 +56,9 @@ export default Hamburger;
 
 const SignOut = styled.a`
   background: #FC8181;
-  padding: 10%;
+  padding: 6%;
   border-radius: 5px;
+  margin-right: 35px;
   color: white;
 `;
 
