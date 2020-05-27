@@ -35,6 +35,8 @@ function AuthProvider({ children }) {
 
 const useAuth = () => {
   const context = useContext(AuthContext);
+  // console.log('context', context);
+  // console.log('IDTOKEN WOOT HOOT PARTAY', context.googleApi.IDToken);
   if (context === undefined) {
     throw new Error('useAuth must be used within a AuthProvider');
   }

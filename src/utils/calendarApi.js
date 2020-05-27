@@ -11,6 +11,10 @@ const calendarApi = gapi => ({
     return data.result.items;
   },
   addEvent: resource => {
+    // renaming the fields to fit gapi format
+    resource.summary = resource.title;
+    resource.description = resource.notes;
+    // inserting created event to gapi
     const data = gapi.calendar.events.insert({
       calendarId: 'primary', // controls which calendar to show
       resource

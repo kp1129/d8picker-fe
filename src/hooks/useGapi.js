@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-
-
 const handleSignIn = gapi => async () => {
   try {
     await gapi.auth2.getAuthInstance().signIn();
@@ -9,7 +7,6 @@ const handleSignIn = gapi => async () => {
     throw new Error('Google API not loaded', error);
   }
 };
-
 const handleSignOut = gapi => async () => {
   try {
     await gapi.auth2.getAuthInstance().signOut();
@@ -18,7 +15,6 @@ const handleSignOut = gapi => async () => {
     throw new Error('Google API not loaded', error);
   }
 };
-
 const getProfile = (auth, setCurrentUser) => {
   const userInfo = auth.currentUser.get().getBasicProfile();
   return setCurrentUser(
@@ -26,11 +22,11 @@ const getProfile = (auth, setCurrentUser) => {
       name: userInfo.getName(),
       email: userInfo.getEmail(),
       photoUrl: userInfo.getImageUrl(),
-      googleId: userInfo.getId()
+      googleId: userInfo.getId(),
+      token: auth.currentUser.get().getAuthResponse().id_token
     }
   );
 };
-
 const gapiLoad = ({
   setGapi,
   setIsAuthenticated,
@@ -63,14 +59,12 @@ const gapiLoad = ({
       console.log(error);
     }
   });
-
 // Custom hook to initialize and use the Google API
 function useGapi(opts) {
   const [gapi, setGapi] = useState(undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     // Create script tag, initialize gapi, append script to document
     const script = document.createElement('script');
@@ -83,10 +77,8 @@ function useGapi(opts) {
         setIsLoading,
         opts
       });
-
     document.body.appendChild(script);
   }, [gapi]);
-
   return {
     isLoading,
     currentUser,
@@ -95,5 +87,4 @@ function useGapi(opts) {
     handleSignOut: handleSignOut(gapi)
   };
 }
-
 export default useGapi;
