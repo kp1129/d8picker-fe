@@ -82,7 +82,8 @@ export default function NewInfCal({items}) {
             </List>
           )}
         </InfiniteLoader>
-          {!templateFormOpen && <AddEventButton/>}
+          {!templateFormOpen}
+          {/* && <AddEventButton/> */}
       </Fragment>
     );
   }
