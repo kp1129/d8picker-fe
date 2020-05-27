@@ -21,6 +21,10 @@ export const convertTime = (time)=>{
           let startTimeAsString = startTimeAsNumber.toString();
           let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
           return convertedStartTime + 'pm';
+        } else if (startTimeAsNumber >= 1200 && startTimeAsNumber < 1300) {
+          let startTimeAsString = startTimeAsNumber.toString();
+          let convertedStartTime = convertToTime(startTimeAsString, startTimeAsString.length - 2);
+          return convertedStartTime + 'pm';
         } else {
           return time + 'am';
         }

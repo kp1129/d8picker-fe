@@ -77,7 +77,7 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
   //stops a tap/click on delete button from re-routing immediately to date selection, and deletes the event template
   const handleDeleteClick = e => {
     e.stopPropagation();
-    console.log('whats the id?', id);
+  
     handleDelete(id, currentUser, deleteTemplate, templateList, setTemplateList, clearSelected, setTemplateFormOpen);
     
   }
@@ -87,6 +87,7 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
     setNavState(4);
     setTemplateIdToUpdate(id);
   }
+
 
 
   return (
@@ -101,7 +102,7 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
           {title}
         </Title>
         <Time fontSize="m" fontWeight="normal">
-          {conStart}-{conEnd}
+          {convertTime(starttime)}-{convertTime(endtime)}
         </Time>
         
       </EventDiv>

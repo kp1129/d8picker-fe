@@ -94,6 +94,8 @@ const UpdateEventForm = props => {
                         type="text"
                         name="notes"
                         placeholder="Event notes"
+                        value={input.notes}
+                        onChange={handleChange}
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
                     />
