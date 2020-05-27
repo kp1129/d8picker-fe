@@ -16,14 +16,13 @@ const TemplateContainer = ({templateList}) => {
             {templateList &&
               templateList.map(t => (
                 <ChooseDateForm
-                  key={t._id}
-                  id={t._id}
+                  key={t.id}
+                  id={t.id}
                   starttime={t.starttime}
                   endtime={t.endtime}
                   title={t.title}
                   notes={t.notes}
-                  templateList={templateList}/>
-                
+                  templateList={templateList}/>                
               ))}
               </EventDiv>
           </>
