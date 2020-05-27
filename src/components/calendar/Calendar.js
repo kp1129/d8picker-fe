@@ -7,11 +7,10 @@ import styled from 'styled-components';
 
 
 const Calendar = ({month, i}) => {
-
-
-
   // state to display cuurent date
   const [date, setDate] = useState(dayjs());
+
+  // console.log('date: ', date)
 
 
   useEffect(()=>{
@@ -32,7 +31,7 @@ const Calendar = ({month, i}) => {
           style={{ width: '100%'}}
         >
           
-          <Days date={date}/>
+          <Days month={month} date={date}/>
         </Grid>
       </Box>
     );
