@@ -155,7 +155,6 @@ const ButtonsDiv = styled.div`
     justify-content: flex-end;
 `
 
-
 const ArrowDiv = styled.div`
     width: 10%;
     display: flex;
@@ -168,7 +167,6 @@ const ArrowDiv = styled.div`
       color: #28807D;
     }
 `;
-
 
 const EditBtn = styled.div`
 color: #28807D;

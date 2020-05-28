@@ -62,7 +62,7 @@ const UpdateEventForm = props => {
     return (
         <EventForm>
             <div style={{ textAlign: 'center', background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%',  width: '100%' }}>                
-                <h2 >Update Event</h2>
+                <h2 style={{ fontWeight: "bold" }} >Update Event</h2>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -150,7 +150,7 @@ const SaveBtn = styled.div`
     font-size: 1.25rem;
     padding: 4%;
     margin: 8% auto;
-    border: 1px solid #28807D;
+    border: 2px solid #28807D;
     border-radius: 5rem;
     &:hover{
         cursor: pointer;
