@@ -1,13 +1,9 @@
-import React, { useState, useContext } from "react";
-import {Context } from '../../contexts/Contexts'
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { addTemplate } from '../../utils/helperFunctions'
-import { useToasts } from 'react-toast-notifications'
-
-
+import { addTemplate, convertEvents } from '../../utils/helperFunctions'
 
 const EventForm = styled.div`
     // background-color: #AFC9D9;
@@ -16,22 +12,19 @@ const EventForm = styled.div`
     height: 100vh;
 `
 
-const NewEventForm = props => {
-    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setNotes, setConStart, setConEnd, setTemplateFormOpen,
-        setFormOpen } = props;
+const EditEventForm = props => {
+    const { event, setIsEditing } = props
 
-    const { formOpen } = useContext(Context);
-
-    const { googleApi} = useAuth();
+    const { googleApi, api} = useAuth();
     const { currentUser } = googleApi;
+
     const { register, handleSubmit } = useForm();
     const [input, setInput] = useState({
-        title: "",
-        notes:"",
-        starttime: "",
-        endtime: ""
+        title: event.title,
+        notes: event.notes,
+        starttime: event.starttime,
+        endtime: event.endtime
     });
-    const { addToast } = useToasts();
 
     const handleChange = (e) => {
         setInput({
@@ -40,68 +33,83 @@ const NewEventForm = props => {
         })
     }
 
+    const handleCancelButton = e => {
+        e.preventDefault();
+        setIsEditing(false);
+    }
+
+    const handleSaveButton = async (e) =>{
+        e.preventDefault();
+        let date = new Date().toString().split("GMT");
+
+        //takes the first few characters of offset with + or - to be slotted in the start and end times
+        let zone = date[1].split(' ')[0].slice(0, 3);
+
+        //converts events to user's timezone
+        const newEvent = convertEvents([event.date], input.starttime, input.endtime, zone, input.title, input.notes);
+        await api.editEvent(event.id, newEvent);
+  
+        //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
+        setTimeout(()=>{window.location.reload(false)}, 500);
+    }
     // Submit for template form
     const onSubmit = async (formData) => {
-        addToast('Event created. Pick dates on the calendar to apply the event.', {
-             appearance: 'info',
-             autoDismiss: true,
-             autoDismissTimeout: 6000
-            })
-        setToggleNav(false);
-        setTemplateFormOpen(true)
-        setFormOpen(true)
-        setTitle(input.title)
-        setNotes(input.notes)
-        setConStart(input.starttime);
-        setConEnd(input.endtime);
-        setNavState(0);
+        // console.log("formdata", formData)
+        // console.log('googleApi: ', googleApi);
+        // setToggleNav(false);
+        // setTemplateFormOpen(true)
+        // setFormOpen(true)
+        // setTitle(input.title)
+        // setNotes(input.notes)
+        // setConStart(input.starttime);
+        // setConEnd(input.endtime);
+        // setNavState(0);
 
-        const template = addTemplate(formData, currentUser); 
-        console.log('template', template);
-        console.log('templateList', templateList);
-        console.log('destructured template list', ...templateList);
-        setTemplateList([...templateList, template]);
-        setFormOpen(!formOpen);
+        addTemplate(formData, currentUser);
+        // console.log('template?: ', template);
+        // console.log('templateList: ', templateList);
+        // setTemplateList([...templateList, template]);
+        // setFormOpen(!formOpen);
     };
 
     return (
         <EventForm>
-            <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
+            {/* <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
                 <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={() => setNavState(0)}>Cancel</p>
                 <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
-            </div>
+            </div> */}
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
-                    <div style={{ paddingLeft: '5%' }}>Event name</div>
+                    <div style={{ color: 'black', paddingLeft: '5%' }}>Event name</div>
                     <Input
                         type="text"
                         name="title"
                         placeholder="Event name"
                         ref={register({ maxLength: 80, required: true })}
-                        style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
+                        style={{ marginBottom: '5%', background: "black", paddingLeft: '5%' }}
                         value={input.title}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div>
-                    <div style={{ paddingLeft: '5%' }}>Notes</div>
+                    <div style={{ color: 'black', paddingLeft: '5%' }}>Notes</div>
                     <Input
                         type="text"
                         name="notes"
                         placeholder="Event notes"
                         ref={register({ maxLength: 100 })}
-                        style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
+                        style={{ marginBottom: '5%', background: "black", paddingLeft: '5%' }}
                         value={input.notes}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div style={{ background: 'white' }}>
-                    <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Time</div>
+                    <div style={{ paddingLeft: '5%', background: 'black' }}>Time</div>
                     <div style={{
-                        backgroundColor: 'white', display: 'flex', justifyContent: 'space-between',
+                        backgroundColor: 'black', display: 'flex', justifyContent: 'space-between',
                         paddingTop: '3%', paddingBottom: '3%', marginBottom: '1%'
                     }}>
                         <p style={{ paddingLeft: '5%' }}>starts</p>
@@ -109,19 +117,19 @@ const NewEventForm = props => {
                             type="time"
                             name="starttime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', background: "white", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', background: "black", paddingLeft: '5%' }}
                             value={input.starttime}
                             onChange={handleChange}
                         />
                     </div>
                     <hr style={{ width: '90%', margin: "0 auto" }} />
-                    <div style={{ backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', paddingTop: '3%', marginBottom: '1%' }}>
+                    <div style={{ backgroundColor: 'black', display: 'flex', justifyContent: 'space-between', paddingTop: '3%', marginBottom: '1%' }}>
                         <p style={{ paddingLeft: '5%' }}>ends</p>
                         <Input
                             type="time"
                             name="endtime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "white", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "black", paddingLeft: '5%' }}
                             value={input.endtime}
                             onChange={handleChange}
                         />
@@ -131,7 +139,9 @@ const NewEventForm = props => {
                 <div style={{ width: '100%', textAlign: 'center' }}>
                     <button type="submit" style={{ width: '70%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}
 
-                    >Select dates</button>
+                    >Change Dates</button>
+                    <button onClick={handleSaveButton}>Save Changes</button>
+                    <button onClick={handleCancelButton}>Cancel</button>
                 </div>
 
             </form>
@@ -139,4 +149,4 @@ const NewEventForm = props => {
     )
 }
 
-export default NewEventForm;
+export default EditEventForm;
