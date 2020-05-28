@@ -49,6 +49,15 @@ const calendarApi = gapi => ({
   },
 
   // delete event from google calendar api
+  deleteEvent: (eventId) => {
+    const request = gapi.calendar.events.delete({
+      calendarId: 'primary',
+      eventId
+    });
+    return request.execute(response => {
+      console.log('from deleteEvent', response)
+    });
+  }
 });
 
 export default calendarApi;

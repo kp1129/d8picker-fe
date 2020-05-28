@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom'
+import React, {useState, useEffect, useContext} from 'react';
 import { useAuth } from '../../contexts/auth';
+import {DashboardContext} from '../../contexts/Contexts'
 import styled from 'styled-components';
 
 
@@ -8,20 +8,28 @@ import styled from 'styled-components';
 // Displays blue box with name of event
 const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const [title, setTitle] = useState("")
-  const { googleApi } = useAuth();
-  const { currentUser } = googleApi;
+  const {setEvent, setEventDisplay} = useContext(DashboardContext);
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
       eventTitle.length > 5 ? setTitle(eventTitle.substring(0,5)) : setTitle(eventTitle)
   },[])
+
+  const loadEventComponent = e => {
+    e.preventDefault();
+    setEventDisplay(true);
+    event.title = event.summary;
+    event.notes = event.description;
+    event.date = event.start.dateTime.substring(0,10);
+    event.starttime = event.start.dateTime.substring(11,19);
+    event.endtime = event.end.dateTime.substring(11,19);
+    setEvent(event);
+  }
   
   return eventDate ? (
     <EventContainer>
       <Event>
-        <Link to={`/${currentUser.googleId}/events/${event.id}`}>
-          {title}  
-        </Link>  
+        <button onClick={loadEventComponent}>{title}</button> 
       </Event>
     </EventContainer>
   ) : null;

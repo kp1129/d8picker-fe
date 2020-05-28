@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/auth';
 import EditEventForm from './EditEventForm';
 import styled from 'styled-components';
+import { useToasts } from 'react-toast-notifications';
 
 
 const Event = styled.div`
@@ -15,27 +16,13 @@ const Event = styled.div`
 
 
 // component for event display
-const EventPage = () => {
+const EventPage = ({event}) => {
     const { api } = useAuth();
+    const history = useHistory();
+    
+    const {addToast} = useToasts();
 
-    const [event, setEvent] = useState({});
-    const {eventId} = useParams();
-
-    useEffect(() => {
-        api.getEvent(eventId)
-            .then(response => {
-                console.log('fetching event', response)
-                response.title = response.summary;
-                response.notes = response.description;
-                response.date = response.start.dateTime.substring(0,10);
-                response.starttime = response.start.dateTime.substring(11,19);
-                response.endtime = response.end.dateTime.substring(11,19);
-                setEvent(response);
-            })
-    }, [eventId]);
-
-
-    console.log('***', eventId, event);
+    console.log('***', event);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -46,14 +33,21 @@ const EventPage = () => {
 
     const handleDeleteButton = async e => {
         e.preventDefault();
-        await alert('Are you sure you want to delete the event?');
-        console.log('event was deleted successfully');
+        const deleteConfirmation = window.confirm('Are you sure you want to delete the event?');
+        if(deleteConfirmation) {
+            await api.deleteEvent(event.id);
+            addToast(`${event.title} was deleted successfully`, {
+                appearance: 'info',
+                autoDismiss: true,
+                autoDismissTimeout: 6000
+               })
+        }
     }
 
     return (
         <Event>
             <div className='event-name'>
-                <h1>Event Page</h1>
+                <h1 style={{fontSize: '3rem', fontWeight: 'bold'}}>Event Page</h1>
             </div>
             {isEditing 
                 ? (
@@ -64,12 +58,14 @@ const EventPage = () => {
                 )
                 : (
                     <div className='eventInfo' key={event.id}>
-                        <h1>{event.title}</h1>
-                        <h2>{event.notes}</h2>
-                        <h2>Start time: {event.starttime}</h2>
-                        <h2>End time: {event.endtime}</h2>
-                        <button onClick={handleEditButton}>Edit</button>
-                        <button onClick={handleDeleteButton}>Delete</button>
+                        <h1 style={{fontSize: '2rem', fontWeight: 'bold'}}>{event.title}</h1>
+                        <h2 style={{fontSize: '2rem', fontWeight: 'bold'}}>{event.notes}</h2>
+                        <h2 style={{fontSize: '1.5rem', fontWeight: 'bold'}}>Start time: {event.starttime}</h2>
+                        <h2 style={{fontSize: '1.5rem', fontWeight: 'bold'}}>End time: {event.endtime}</h2>
+                        <div className='button-div' style={{fontSize: '1rem', fontWeight: 'bold', width: '70%', margin: 'auto', padding: '2%', display:'flex', justifyContent: 'center'}}>
+                            <button style={{fontSize: '1rem', fontWeight: 'bold', backgroundColor: 'white', color: '#1E85C4', margin: '4%', padding: '2%', width: '40%'}} onClick={handleEditButton} >Edit</button>
+                            <button style={{fontSize: '1rem', fontWeight: 'bold', backgroundColor: 'red', color: 'white', margin: '4%', padding: '2%', width: '40%'}} onClick={handleDeleteButton}>Delete</button>
+                        </div>
                     </div>
                 )
         }

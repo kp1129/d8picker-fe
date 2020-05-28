@@ -9,7 +9,7 @@ const EventForm = styled.div`
     // background-color: #AFC9D9;
     background-color: #E5E5E5;
     width: 100%;
-    height: 100vh;
+    margin: 10%;
 `
 
 const EditEventForm = props => {
@@ -23,7 +23,8 @@ const EditEventForm = props => {
         title: event.title,
         notes: event.notes,
         starttime: event.starttime,
-        endtime: event.endtime
+        endtime: event.endtime,
+        eventDate: event.start.dateTime.substring(0,10)
     });
 
     const handleChange = (e) => {
@@ -46,7 +47,7 @@ const EditEventForm = props => {
         let zone = date[1].split(' ')[0].slice(0, 3);
 
         //converts events to user's timezone
-        const newEvent = convertEvents([event.date], input.starttime, input.endtime, zone, input.title, input.notes);
+        const newEvent = convertEvents([input.date], input.starttime, input.endtime, zone, input.title, input.notes);
         await api.editEvent(event.id, newEvent);
   
         //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
@@ -137,11 +138,11 @@ const EditEventForm = props => {
                 </div>
 
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                    <button type="submit" style={{ width: '70%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}
+                    {/* <button type="submit" style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}
 
-                    >Change Dates</button>
-                    <button onClick={handleSaveButton}>Save Changes</button>
-                    <button onClick={handleCancelButton}>Cancel</button>
+                    >Change Dates</button> */}
+                    <button onClick={handleSaveButton} style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', margin: '8%', padding: '4%', borderRadius: '10px' }}>Save Changes</button>
+                    <button onClick={handleCancelButton} style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', margin: '8%', padding: '4%', borderRadius: '10px' }}>Cancel</button>
                 </div>
 
             </form>
