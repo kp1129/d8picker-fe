@@ -17,6 +17,7 @@ const getTemplateList = async ({ googleId, token }) => {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
+    console.log('what we are getting from backend', response.data.templates)
     return response.data.templates;
   } catch (error) {
     console.log(error);
@@ -38,6 +39,7 @@ const Dashboard = (props) => {
     (async () => {
       const templates = await getTemplateList(currentUser);
       props.setTemplateList(templates);
+      console.log('dashboard templates that we are setting to templatelist', templates )
     })();
   }, [currentUser, formOpen]);
 

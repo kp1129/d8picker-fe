@@ -3,7 +3,6 @@ import TemplateContainer from './TemplateContainer.js'
 import styled from 'styled-components'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
-import AddEventButton from './AddEventButton'
 
 //gets template list from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -49,7 +48,6 @@ const Events = ({formOpen, setTemplateList, templateList}) => {
     return(
           <Fixed>
             <TemplateContainer templateList={templateList}/>
-            <AddEventButton/>
           </Fixed>
     )
 }
