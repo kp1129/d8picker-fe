@@ -47,7 +47,7 @@ const Day = ({cDate, month, date, isPicked, handleSelected, isToday, day, i}) =>
   // console.log('day: ', day)
   // console.log('cDate: ', cDate)
 
-  const {eventDatesArr, titles} = useContext(DashboardContext);
+  const {events, eventDatesArr, titles} = useContext(DashboardContext);
 
 
   //checks the current Day's date (being mapped by parent Days) matches a date of an event from the google calendar api. If so, render an event indicator for each matching event.
@@ -58,12 +58,15 @@ const Day = ({cDate, month, date, isPicked, handleSelected, isToday, day, i}) =>
       //if there an event from google exists which matches this day's date create an event indicator (blue box with event name) for each
     if(eventDatesArr.includes(formattedDate)){
       let eventTitle;
-      return eventDatesArr.map((eventName, i) => {
-        if(eventName === formattedDate){
-          eventTitle = titles[i];
+      let event;
+      return eventDatesArr.map((eventDate, i) => {
+        if(eventDate === formattedDate){
+          eventTitle = titles[i] ? titles[i] : 'no name';
+          event = events[i];
           return <EventsIndicator
                 key={i}
-                event={formattedDate}
+                eventDate={formattedDate}
+                event={event}
                 eventTitle={eventTitle} /// Change me when you figure out
                 fontSize="2px"
               />

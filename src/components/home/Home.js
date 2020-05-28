@@ -40,6 +40,9 @@ const Home = () => {
     //holds the current title (event name)
     const [title, setTitle] = useState("")
 
+    //holds the current notes (event description)
+    const [notes, setNotes] = useState("")
+
     //toggles whether the nav is shown or not, also controls the confirm dates button
     const [toggleNav, setToggleNav] = useState(true);
 
@@ -75,7 +78,7 @@ const Home = () => {
 
     return(
         
-        <Context.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, title, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setTemplateList, templateIdToUpdate, setTemplateIdToUpdate}}>
+        <Context.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, title, notes, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setNotes, setTemplateList}}>
             
             {navState===0 && <Dashboard setTemplateList={setTemplateList}/>}
         
@@ -86,7 +89,7 @@ const Home = () => {
             {navState===2 && <Groups/>}
 
 
-            {navState===3 && <NewEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setTitle={setTitle} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
+            {navState===3 && <NewEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setTitle={setTitle} setNotes={setNotes} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}/>}
 
             {navState===4 && <UpdateEventForm setTemplateList={setTemplateList} templateList={templateList} setToggleNav={setToggleNav} setNavState={setNavState} setTitle={setTitle} setConStart={setConStart} setConEnd={setConEnd} setTemplateFormOpen={setTemplateFormOpen} setFormOpen={setFormOpen}  />}
 

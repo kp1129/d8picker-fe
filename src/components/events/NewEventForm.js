@@ -17,7 +17,7 @@ const EventForm = styled.div`
 `
 
 const NewEventForm = props => {
-    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
+    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setNotes, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
     const { formOpen } = useContext(Context);
@@ -27,6 +27,7 @@ const NewEventForm = props => {
     const { register, handleSubmit } = useForm();
     const [input, setInput] = useState({
         title: "",
+        notes:"",
         starttime: "",
         endtime: ""
     });
@@ -50,11 +51,12 @@ const NewEventForm = props => {
         setTemplateFormOpen(true)
         setFormOpen(true)
         setTitle(input.title)
+        setNotes(input.notes)
         setConStart(input.starttime);
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser, googleApi.IDToken); 
+        const template = addTemplate(formData, currentUser); 
         console.log('template', template);
         console.log('templateList', templateList);
         console.log('destructured template list', ...templateList);
@@ -91,6 +93,8 @@ const NewEventForm = props => {
                         placeholder="Event notes"
                         ref={register({ maxLength: 100 })}
                         style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
+                        value={input.notes}
+                        onChange={handleChange}
                     />
                 </div>
 

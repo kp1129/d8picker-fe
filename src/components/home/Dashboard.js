@@ -8,6 +8,7 @@ import InfiniteCal from '../calendar/InfiniteCal'
 import Cell from '../calendar/Cell.js'
 import styled from 'styled-components'
 import Hamburger from '../navigation/Hamburger/TopNav'
+import EventPage from '../events/EventPage'
 import axiosWithAuth from '../../utils/axiosWithAuth'
 
 //gets list of templates from backend
@@ -43,6 +44,7 @@ const Dashboard = (props) => {
 
   // state for full user objects from calendar api
   const [events, setEvents] = useState(null);
+  const [event, setEvent] = useState({});
 
   //array of only the formatted date strings of events from calendar api
   const [eventDatesArr, setEventDatesArr] = useState([])
@@ -53,6 +55,9 @@ const Dashboard = (props) => {
   //array of weekdays which sits at top of calendar
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+  // event display flag
+  const [eventDisplay, setEventDisplay] = useState(false);
+
   
   
   // get events from api and set to state
@@ -60,11 +65,10 @@ const Dashboard = (props) => {
     (async () => {
       try {
         const data = await api.listEvents();
+        console.log(data);
         setEvents(data);
         let titlesArray = [];
         let formattedEvents = data.map(event=>{
-
-
           titlesArray.push(event.summary) // Do not change this to title - coming as summary from GAPI
           return event.start.dateTime.substring(0,10)
         })
@@ -138,7 +142,8 @@ const [items, setItems] = useState(nextMonth(50));
                   ))}
               </Grid>
             </Box>
-            <DashboardContext.Provider value={{api, events, eventDatesArr, titles}}>
+            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
+              {eventDisplay && <Event><EventPage event={event} /></Event>}
               {items.length > 0 && <InfiniteCal items={items}/>}
             </DashboardContext.Provider>
             
@@ -190,3 +195,13 @@ const BtnDiv = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+const Event = styled.div`
+  font-size: 90%;
+  top: 10%;
+  // margin: 10%;
+  padding: 5%;
+  background: #1E85C4;
+  color: white;
+  border-radius: 5px;
+`

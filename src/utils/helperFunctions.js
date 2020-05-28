@@ -34,6 +34,7 @@ export const convertTime = (time)=>{
 //adds an event template to the backend
 export const addTemplate = async (data, { googleId, token }) => {
   const template = { ...data, googleId };
+  console.log(template);
   try {
     const response = await axiosWithAuth(token).post(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template`,
