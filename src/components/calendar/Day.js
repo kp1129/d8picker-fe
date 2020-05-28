@@ -11,7 +11,41 @@ import dayjs from 'dayjs';
 
 
 
-const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
+const Day = ({cDate, month, date, isPicked, handleSelected, isToday, day, i}) => {
+
+  function isDateLaterThanCDate(intDate, intMonth,  cDate) {
+    //input date format: dd/mm/yyyy
+    // console.log('date: ', date)
+    // console.log('intMonth: ', intMonth.format('MM'))
+    // console.log('cDate: ', cDate)
+    let cDateSplit = cDate.split("/");
+    //=====================
+    let cdd = parseInt(cDateSplit[0]);
+    let cmm = parseInt(cDateSplit[1]);
+    let cyyyy = parseInt(cDateSplit[2]);
+    //======================
+    let stringDate = `${intDate}/${intMonth.format('MM')}/${date.format('YYYY')}`;
+    // console.log('stringDate: ', stringDate)
+    let dateSplit = stringDate.split("/");
+    // console.log('dateSplit: ', dateSplit)
+    //=====================
+    let dd = parseInt(dateSplit[0]);
+    let mm = parseInt(dateSplit[1]);
+    let yyyy = parseInt(dateSplit[2]);
+    //====================
+    if(yyyy === cyyyy && mm === cmm && dd > cdd){
+      return '#999898'
+    } else if (yyyy === cyyyy && mm > cmm){
+      return '#999898'
+    } else if (yyyy > cyyyy) {
+      return '#999898'
+    } else {
+      return '#E0E0E0'
+    }
+}
+
+  // console.log('day: ', day)
+  // console.log('cDate: ', cDate)
 
   const {events, eventDatesArr, titles} = useContext(DashboardContext);
 
@@ -99,7 +133,7 @@ const Day = ({date, isPicked, handleSelected, isToday, day, i}) => {
                 as="span"
                 fontSize={['xs', 'm']}
                 fontWeight={700}
-                color={isToday ? 'brand.blue_primary' : 'inherit'}
+                color={isToday ? 'brand.blue_primary' : isDateLaterThanCDate(day, month, cDate)}
               >
                 {day}
               </Box>

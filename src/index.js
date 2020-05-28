@@ -7,6 +7,7 @@ import theme from './utils/theme';
 import App from './App';
 import { AuthProvider } from './contexts/auth';
 import {createBrowserHistory} from 'history';
+import { ToastProvider } from 'react-toast-notifications'
 
 ReactGA.initialize("UA-157827018-1")
 const  history = createBrowserHistory();
@@ -24,7 +25,9 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <CSSReset />
         <ColorModeProvider>
+        <ToastProvider>
           <App />
+        </ToastProvider>
         </ColorModeProvider>
       </ThemeProvider>
       </Router>

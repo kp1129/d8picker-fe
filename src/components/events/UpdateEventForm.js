@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { addTemplate } from '../../utils/helperFunctions'
+import { updateTemplate } from '../../utils/helperFunctions'
 import { useToasts } from 'react-toast-notifications'
 
 
@@ -16,20 +16,23 @@ const EventForm = styled.div`
     height: 100vh;
 `
 
-const NewEventForm = props => {
-    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setNotes, setConStart, setConEnd, setTemplateFormOpen,
+const UpdateEventForm = props => {
+    const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
 
-    const { formOpen } = useContext(Context);
-
+    const { formOpen, templateIdToUpdate } = useContext(Context);
+    console.log('template id of the template to update', templateIdToUpdate);
     const { googleApi} = useAuth();
     const { currentUser } = googleApi;
     const { register, handleSubmit } = useForm();
+    const [[templateToUpdate], setTemplateToUpdate] = useState(templateList.filter(each => each.id === templateIdToUpdate));
+    console.log('is the template undefined or empty?', templateToUpdate);
+
     const [input, setInput] = useState({
-        title: "",
-        notes:"",
-        starttime: "",
-        endtime: ""
+        title: templateToUpdate.title,
+        notes: templateToUpdate.notes,
+        starttime: templateToUpdate.starttime,
+        endtime: templateToUpdate.endtime
     });
     const { addToast } = useToasts();
 
@@ -42,24 +45,24 @@ const NewEventForm = props => {
 
     // Submit for template form
     const onSubmit = async (formData) => {
-        addToast('Event created. Pick dates on the calendar to apply the event.', {
+        addToast('Event Updated!', {
              appearance: 'info',
              autoDismiss: true,
              autoDismissTimeout: 6000
             })
+        console.log("formdata", formData)
+        console.log('googleApi: ', googleApi);
         setToggleNav(false);
         setTemplateFormOpen(true)
         setFormOpen(true)
         setTitle(input.title)
-        setNotes(input.notes)
         setConStart(input.starttime);
         setConEnd(input.endtime);
         setNavState(0);
 
-        const template = addTemplate(formData, currentUser, googleApi.IDToken); 
-        console.log('template', template);
-        console.log('templateList', templateList);
-        console.log('destructured template list', ...templateList);
+        const template = updateTemplate(templateIdToUpdate, formData, currentUser, googleApi.IDToken);
+        console.log('template?: ', template);
+        console.log('templateList: ', templateList);
         setTemplateList([...templateList, template]);
         setFormOpen(!formOpen);
     };
@@ -68,7 +71,7 @@ const NewEventForm = props => {
         <EventForm>
             <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
                 <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={() => setNavState(0)}>Cancel</p>
-                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
+                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>Update Event</h2>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -91,10 +94,10 @@ const NewEventForm = props => {
                         type="text"
                         name="notes"
                         placeholder="Event notes"
-                        ref={register({ maxLength: 100 })}
-                        style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
                         value={input.notes}
                         onChange={handleChange}
+                        ref={register({ maxLength: 100 })}
+                        style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
                     />
                 </div>
 
@@ -139,4 +142,4 @@ const NewEventForm = props => {
     )
 }
 
-export default NewEventForm;
+export default UpdateEventForm;

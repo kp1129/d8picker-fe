@@ -3,6 +3,7 @@ import {Context} from '../../contexts/Contexts'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
+import { useToasts } from 'react-toast-notifications'
 
 
 const ConfirmDatesBtn = () => {
@@ -10,6 +11,7 @@ const ConfirmDatesBtn = () => {
   const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected} = useContext(Context);
 
     const { api } = useAuth();
+    const { addToast } = useToasts();
 
     //takes input from date selection and add template form and sends to google calendar api
     const applyTemplate = (title, notes, starttime, endtime) => {
@@ -33,8 +35,11 @@ const ConfirmDatesBtn = () => {
 
     const handleClick = (e) =>{
         e.preventDefault();
-        
-        //no state setup yet for the notes, so it is set to be blank
+        addToast('Event created!', {
+          appearance: 'success',
+          autoDismiss: 3000
+        })
+        //no state setup yet for the description, so it is set to be blank
         applyTemplate(title, notes, conStart, conEnd);
     }
 
