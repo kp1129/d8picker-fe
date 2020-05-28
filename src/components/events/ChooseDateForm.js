@@ -91,28 +91,24 @@ const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
 
 
   return (
-    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>
-      
-      {/* <DeleteDiv className={delClass} onClick={(e)=>handleDelete(e)}>
-       <Delete>X</Delete>
-
-      </DeleteDiv> */}
+    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>     
       <EventDiv>
         <Title>
           {title}
         </Title>
         <Time fontSize="m" fontWeight="normal">
           {convertTime(starttime)}-{convertTime(endtime)}
-        </Time>
-        
+        </Time>        
       </EventDiv>
-      <UpdateBtn type="button" onClick={handleUpdate}>update</UpdateBtn>
-      <DeleteBtn type="button" onClick={handleDeleteClick}>delete</DeleteBtn>
-      
-      {/* <ArrowDiv>
-        >
-      </ArrowDiv> */}
 
+      <ButtonsDiv>
+        <EditBtn type="button" onClick={handleUpdate}>Edit</EditBtn>
+        <DeleteBtn type="button" onClick={handleDeleteClick}>Delete</DeleteBtn>
+      </ButtonsDiv>
+
+      <ArrowDiv>
+        >
+      </ArrowDiv>
     </Container>
   );
 };
@@ -126,16 +122,15 @@ const Container = styled.div`
     display: flex;
     border-bottom: 1px solid #BDBDBD;
     padding: 2% 3%;
-
-
+    justify-content: space-between;
 `;
 
 const EventDiv = styled.div`
     display: flex;
     flex-direction: column;
-    width: 90%;
-    font-size: 20px;
-    line-height: 27px;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 40%;
     -moz-user-select: none;
    -khtml-user-select: none;
    -webkit-user-select: none;
@@ -144,54 +139,47 @@ const EventDiv = styled.div`
 `;
 
 const Title = styled.p`
-    width: 90%;
     font-weight: bold;
     font-size: 1rem;
-    line-height: 27px;
 `;
 
 const Time = styled.p`
     font-weight: bold;
     font-size: .75rem;
-    line-height: 27px;
 `;
 
+const ButtonsDiv = styled.div`
+    width: 40%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+`
 
 
 const ArrowDiv = styled.div`
     width: 10%;
     display: flex;
+    justify-content: center;
     align-items: center;
     font-size: 210%;
     color: #BDBDBD;
     cursor: pointer;
     &:hover{
-      color: white;
+      color: #28807D;
     }
-
 `;
 
-// const Delete = styled.div`
-//     width: 100%;
-//     height: 100%;
-//     color: white;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;    
-// `;
 
-// const DeleteDiv = styled.div`
-//     width: 10%;
-// `;
-
-const UpdateBtn = styled.div`
-color: palevioletred;
+const EditBtn = styled.div`
+color: #28807D;
 background-color: white;
 font-size: 1em;
+width: 9em;
+text-align: center;
 margin: 1em;
 padding: 0.25em 1em;
-border: 2px solid palevioletred;
-border-radius: 3px;
+border: 2px solid #28807D;
+border-radius: 1em;
 &:hover{
   cursor: pointer;
 }
@@ -199,12 +187,14 @@ border-radius: 3px;
 
 const DeleteBtn = styled.div`
 color: white;
-background-color: palevioletred;
+background-color: #28807D;
 font-size: 1em;
+width: 9em;
+text-align: center;
 margin: 1em;
 padding: 0.25em 1em;
-border: 2px solid palevioletred;
-border-radius: 3px;
+border: 2px solid #28807D;
+border-radius: 1em;
 &:hover{
   cursor: pointer;
 }
