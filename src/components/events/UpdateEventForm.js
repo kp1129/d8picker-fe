@@ -9,11 +9,7 @@ import { useToasts } from 'react-toast-notifications'
 
 // this component is to update event templates - in the events tab
 
-const EventForm = styled.div`
-    // background-color: #AFC9D9;
-    background-color: #E5E5E5;
-    width: 100%;
-    height: 100vh;
+
 `
 
 
