@@ -112,7 +112,7 @@ const [items, setItems] = useState(nextMonth(50));
     >
       <Grid
         width="100%"
-        gap={2}
+        gap={4}
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]} 
       >
