@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { convertEvents } from '../../utils/helperFunctions'
 
-
+// this component is to edit individual event from calendar
 const EditEventForm = props => {
     const { event, setIsEditing } = props
 

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { updateTemplate } from '../../utils/helperFunctions'
 import { useToasts } from 'react-toast-notifications'
 
-
+// this component is to update event templates - in the events tab
 
 const EventForm = styled.div`
     // background-color: #AFC9D9;
