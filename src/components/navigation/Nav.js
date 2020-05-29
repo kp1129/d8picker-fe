@@ -18,7 +18,9 @@ const Nav = ({
 }) => {
   const [navToggle, setNavToggle] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [arrowToggle, setArrowToggle] = useState(false);
+  // this controls the add event icon 
+  const [hidden, setHidden] = useState(true);
+ 
 
   //closes date selection more when a navigation to a new page, and empties date selection
   const handleChange = num => {
@@ -27,18 +29,27 @@ const Nav = ({
     setTemplateFormOpen(false);
     setSelected([]);
     setToggleNav(true);
+    setHidden(false);
   };
 
-  const handleClick = () => {
-    if (visible) {
-        setArrowToggle(true);
-        setVisible(false);
-    } else {
-        setVisible(true);
+//   const handleClick = () => {
+//     if (visible) {
+//         setVisible(false);
+//     } else {
+//         setVisible(true);
+//     }
+// };
+    const arrowUp = <i className="fas fa-chevron-up"></i>
+    const arrowDown = <i className="fas fa-chevron-down"></i>
+
+
+    const handleClick = (arrowId) =>{
+      var element = document.getElementById(arrowId);
+      setVisible(true);
+      element.classList.remove("fa-chevron-down");
+     element.classList.add("fa-chevron-up");
+      
     }
-};
-    const arrowUp = <i class="fas fa-chevron-up"></i>
-    const arrowDown = <i class="fas fa-chevron-down"></i>
 
   //icon and label colors change based on navState
   return (
@@ -52,12 +63,12 @@ const Nav = ({
         >
           <Img src={calendarBtnInactive} />
           <Label style={{ color: colors[2] }}>Calendar</Label>
-          <Arrow onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
+          <Arrow  onClick={() => handleClick("arrow1")}> <i id="arrow1" className="fas fa-chevron-down"></i> </Arrow>
         </IconDiv>
         <IconDiv className='eventsIcon' onClick={() => handleChange(1)}>
           <Img src={eventsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
           <Label style={{ color: colors[1] }}>Events</Label>
-          <Arrow onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
+          <Arrow id="arrow2" onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
         </IconDiv>
         <IconDiv className='groupIcon' onClick={() => handleChange(2)}>
             <Img src={groupsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
@@ -66,10 +77,10 @@ const Nav = ({
         </IconDiv>
         <IconDiv className='settingsIcon' onClick={() => setNavToggle(!navToggle)}>
             <Img src={settingsBtnInactive} />
-          <Label style={{ color: colors[2],  }}>Settings</Label>
+          <Label style={{ color: colors[2] }}>Settings</Label>
           <Arrow onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
         </IconDiv>
-        <IconDiv className='addEventIcon'>
+        <IconDiv className={hidden ? "eventBtn" : "addEventIcon"}>
             <AddEventButton />
           <Label style={{ color: colors[2], marginTop: '6px'}}>Add Event</Label>
         </IconDiv>
@@ -103,6 +114,9 @@ const NavContainer = styled.div`
         height: 80%;
         padding-top: 15vh;
 
+        .eventBtn {
+            display: none !important;
+        }
     }
 `;
 const Container = styled.div`
@@ -138,6 +152,8 @@ const Container = styled.div`
         .addEventIcon {
             order: 2
         }
+
+        
     }
 `;
 const IconDiv = styled.div`
@@ -158,7 +174,6 @@ const IconDiv = styled.div`
             .groupsText {
                 padding: 
             }
-            
             
     }
 `;
