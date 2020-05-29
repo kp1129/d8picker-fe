@@ -143,7 +143,7 @@ const [items, setItems] = useState(nextMonth(50));
               </Grid>
             </Box>
             <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
-              {eventDisplay && <Event><EventPage event={event} /></Event>}
+              {eventDisplay && <EventBoxContainer><EventPage event={event} /></EventBoxContainer>}
               {items.length > 0 && <InfiniteCal items={items}/>}
             </DashboardContext.Provider>
             
@@ -196,12 +196,10 @@ const BtnDiv = styled.div`
   justify-content: flex-end;
 `;
 
-const Event = styled.div`
-  font-size: 90%;
-  top: 10%;
-  // margin: 10%;
-  padding: 5%;
-  background: #1E85C4;
-  color: white;
-  border-radius: 5px;
+const EventBoxContainer = styled.div`
+  height: 40%;
+  width: 40%;
+  position: absolute; 
+  z-index: 1;
+  margin: auto;
 `

@@ -53,7 +53,7 @@ const Nav = ({
         </IconDiv>
         <IconDiv onClick={() => setNavToggle(!navToggle)}>
           <i
-            class="fas fa-th"
+            className="fas fa-th"
             style={{ fontSize: '2rem', color: colors[2] }}
           ></i>
           <Label style={{ color: colors[2] }}>Settings</Label>
