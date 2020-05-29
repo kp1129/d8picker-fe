@@ -59,11 +59,15 @@ const Dashboard = (props) => {
   // event display flag
   const [eventDisplay, setEventDisplay] = useState(false);
 
+  // events updated flag
+  const[eventsUpdated, setEventsUpdated] = useState(false);
+
   
-  
+
   // get events from api and set to state
   useEffect(() => {
-    (async () => {
+    const loadEvents = async () => {
+      await console.log('reloading events from gapi');
       try {
         const data = await api.listEvents();
         console.log(data);
@@ -75,13 +79,21 @@ const Dashboard = (props) => {
         })
         setTitles(titlesArray)
         setEventDatesArr(formattedEvents);
-
-
+  
+  
       } catch (error) {
         console.log(error);
       }
-    })();
-  }, [api]);
+    }
+    loadEvents();
+    const reloadEvents = async() => {
+      if(eventsUpdated) {
+        await loadEvents();
+        setEventsUpdated(false);
+      }
+    }
+    reloadEvents();
+  }, [eventsUpdated]);
 
   
 
@@ -154,12 +166,13 @@ const [items, setItems] = useState(nextMonth(50));
                 ))}
               </Grid>
             </Box>
-            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
+            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, setEventsUpdated, eventDatesArr, titles}}>
               {eventDisplay && <EventBoxContainer><EventPage event={event} /></EventBoxContainer>}
               {items.length > 0 && <InfiniteCal items={items}/>}
+              {toggleNav === false && <ConfirmDatesBtn/>}
             </DashboardContext.Provider>
             
-            {toggleNav === false && <ConfirmDatesBtn/>}
+            {/* {toggleNav === false && <ConfirmDatesBtn/>} */}
           </div>
         
           
