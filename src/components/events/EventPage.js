@@ -105,38 +105,38 @@ const EventDate = styled.div`
     width: 80%;
     font-style: normal;
     font-weight: 600;
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: 1.5em;
+    line-height: 2em;
     color: #999898;
 `
 const EventName = styled.div`
     font-style: normal;
     font-weight: bold;
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: 1.5em;
+    line-height: 2em;
     color: #2E5780;
 `
 const EventTime = styled.div`
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 1.8em;
     color: #2E5780;
 `
 const EventNotes = styled.div`
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 2em;
     color: #2E5780;
     margin-top: 5%;
 `
 const ButtonsDiv = styled.div`
     display: flex;
     justify-content: space-around;
-    width: 80%;
+    width: 100%;
     margin: 10% auto;
 `
 const EditButton = styled.button`
     background: #FFFFFF;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 2em;
     color: #28807D;
     padding: 2% 10%;
     border: 2px solid #28807D;
@@ -145,8 +145,8 @@ const EditButton = styled.button`
 `
 const DeleteButton = styled.button`
     background: #28807D;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 2em;
     color: #FFFFFF;
     padding: 2% 10%;
     border: 2px solid #28807D;
@@ -155,7 +155,7 @@ const DeleteButton = styled.button`
 `
 const CloseButton = styled.button`
     background: #28807D;
-    font-size: 1.5rem;
+    font-size: 1em;
     color: #FFFFFF;
     font-weight: bold;
     padding: 1%;

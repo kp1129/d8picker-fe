@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '@chakra-ui/core';
+import { Input, Textarea } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { convertEvents } from '../../utils/helperFunctions'
@@ -16,8 +16,8 @@ const EditEventForm = props => {
     const [input, setInput] = useState({
         title: event.title,
         notes: event.notes,
-        starttime: event.starttime,
-        endtime: event.endtime,
+        starttime: event.starttime.substring(0,5),
+        endtime: event.endtime.substring(0,5),
         eventDate: event.start.dateTime.substring(0,10)
     });
 
@@ -43,7 +43,8 @@ const EditEventForm = props => {
         let zone = date[1].split(' ')[0].slice(0, 3);
 
         // converts events to user's timezone
-        const newEvent = convertEvents([input.date], input.starttime, input.endtime, zone, input.title, input.notes);
+        const newEvent = convertEvents([input.eventDate], input.starttime, input.endtime, zone, input.title, input.notes)[0];
+        
         // edit the event through gapi
         await api.editEvent(event.id, newEvent);
   
@@ -61,7 +62,7 @@ const EditEventForm = props => {
                             name="title"
                             placeholder="Event name"
                             ref={register({ maxLength: 80, required: true })}
-                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
+                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%', fontSize: '1em' }}
                             value={input.title}
                             onChange={handleChange}
                         />
@@ -79,7 +80,7 @@ const EditEventForm = props => {
                             type="time"
                             name="starttime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', background: "white", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', background: "white", paddingLeft: '5%', fontSize: '1em' }}
                             value={input.starttime}
                             onChange={handleChange}
                         />
@@ -91,7 +92,7 @@ const EditEventForm = props => {
                             type="time"
                             name="endtime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "white", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "white", paddingLeft: '5%', fontSize: '1em' }}
                             value={input.endtime}
                             onChange={handleChange}
                         />
@@ -106,7 +107,7 @@ const EditEventForm = props => {
                             name="notes"
                             placeholder="Event notes"
                             ref={register({ maxLength: 100 })}
-                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%', height: 'auto' }}
+                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%', fontSize: '1em', lineHeight: '1.5em' }}
                             value={input.notes}
                             onChange={handleChange}
                         />
@@ -136,8 +137,8 @@ const EventForm = styled.div`
 const EventInfo = styled.div`
     font-style: normal;
     font-weight: bold;
-    font-size: 2rem;
-    line-height: 3rem;
+    font-size: 1.5em;
+    line-height: 2em;
     color: #2E5780;
 `
 
@@ -149,8 +150,8 @@ const ButtonsDiv = styled.div`
 `
 const SaveButton = styled.button`
     background: #FFFFFF;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 2em;
     color: #28807D;
     padding: 2% 10%;
     border: 2px solid #28807D;
@@ -159,8 +160,8 @@ const SaveButton = styled.button`
 `
 const CancelButton = styled.button`
     background: #28807D;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
+    font-size: 1.2em;
+    line-height: 2em;
     color: #FFFFFF;
     padding: 2% 10%;
     border: 2px solid #28807D;

@@ -197,9 +197,13 @@ const BtnDiv = styled.div`
 `;
 
 const EventBoxContainer = styled.div`
-  height: 40%;
-  width: 40%;
+  height: 50%;
+  width: 80%;
   position: absolute; 
   z-index: 1;
   margin: auto;
+  @media(min-width: 500px) {
+    height: 40%;
+    width: 40%;
+  }
 `
