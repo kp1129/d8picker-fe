@@ -16,6 +16,7 @@ const EventForm = styled.div`
     height: 100vh;
 `
 
+
 const UpdateEventForm = props => {
     const { setTemplateList, templateList, setToggleNav, setNavState, setTitle, setConStart, setConEnd, setTemplateFormOpen,
         setFormOpen } = props;
@@ -69,9 +70,8 @@ const UpdateEventForm = props => {
 
     return (
         <EventForm>
-            <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
-                <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={() => setNavState(0)}>Cancel</p>
-                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>Update Event</h2>
+            <div style={{ textAlign: 'center', background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%',  width: '100%' }}>                
+                <h2 style={{ fontWeight: "bold" }} >Update Event</h2>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -132,9 +132,8 @@ const UpdateEventForm = props => {
                 </div>
 
                 <div style={{ width: '100%', textAlign: 'center' }}>
-                    <button type="submit" style={{ width: '70%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}
-
-                    >Select dates</button>
+                <SaveBtn onClick={handleSubmit(onSubmit)} type="submit">Save</SaveBtn>
+                <CancelBtn onClick={() => setNavState(0)} type="button">Cancel</CancelBtn>           
                 </div>
 
             </form>
@@ -143,3 +142,42 @@ const UpdateEventForm = props => {
 }
 
 export default UpdateEventForm;
+
+const EventForm = styled.div`
+    // background-color: #AFC9D9;
+    background-color: #E5E5E5;
+    width: 100%;
+    height: 100vh;
+`
+
+const SaveBtn = styled.div`
+    width: 70%;
+    color: #28807D;
+    background: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 4%;
+    margin: 8% auto;
+    border: 2px solid #28807D;
+    border-radius: 5rem;
+    &:hover{
+        cursor: pointer;
+      }
+`
+
+const CancelBtn = styled.div`
+    width: 70%;
+    background: #28807D;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding: 4%;
+    margin: 8% auto;
+    border: 1px solid #28807D;
+    border-radius: 5rem;
+    &:hover{
+        cursor: pointer;
+      }
+`
