@@ -8,7 +8,7 @@ import { useToasts } from 'react-toast-notifications'
 
 const ConfirmDatesBtn = () => {
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected} = useContext(Context);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected, setToggleNav} = useContext(Context);
 
   const { setEventsUpdated } = useContext(DashboardContext);
     const { api } = useAuth();
@@ -30,6 +30,7 @@ const ConfirmDatesBtn = () => {
         setFormOpen(false);
         setTemplateFormOpen(false);
         setEventsUpdated(true);
+        setToggleNav(true);
 
         // //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
         // setTimeout(()=>{window.location.reload(false)}, 500);
