@@ -58,7 +58,7 @@ const Nav = ({
           ></i>
           <Label style={{ color: colors[2] }}>Settings</Label>
         </IconDiv>
-        <IconDiv onClick={() => setNavToggle(!navToggle)}>
+        <IconDiv>
           <AddEventButton />
         </IconDiv>
       </NavContainer>

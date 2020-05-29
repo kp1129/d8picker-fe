@@ -111,18 +111,18 @@ const Day = ({cDate, month, date, isPicked, handleSelected, isToday, day, i}) =>
   return (
           <Cell
             className="calendar-days-item"
-            height="120px"
+            height="80px"
             key={i}
             width={window.innerWidth/7}
             
           >
             <Flex
-              direction="column"
+              direction="row"
               style={{border: '.5px solid #E0E0E0'}}
-              align="center"
-              justify="space-between"
+              // align="center"
+              justify="flex-start"
               h="100%"
-              py={[1, 8]}
+              // p={2}
               backgroundColor={setBackgroundColor()}
               color={isPicked ? 'white' : 'inherit'}
               onClick={()=>{
@@ -133,6 +133,7 @@ const Day = ({cDate, month, date, isPicked, handleSelected, isToday, day, i}) =>
                 as="span"
                 fontSize={['xs', 'm']}
                 fontWeight={700}
+                m={[0, 2]}
                 color={isToday ? 'brand.blue_primary' : isDateLaterThanCDate(day, month, cDate)}
               >
                 {day}

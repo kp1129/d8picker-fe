@@ -54,6 +54,7 @@ const Dashboard = (props) => {
 
   //array of weekdays which sits at top of calendar
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const weekDaysDesktop = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   // event display flag
   const [eventDisplay, setEventDisplay] = useState(false);
@@ -117,8 +118,8 @@ const [items, setItems] = useState(nextMonth(50));
     >
       <Grid
         width="100%"
-        gap={4}
-        templateColumns={['1fr', '250px 1fr']}
+        // gap={4}
+        templateColumns={window.innerWidth <= 768 ? ['1fr', '250px 1fr'] : ['1fr', '0px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" backgroundColor="white">
@@ -130,7 +131,8 @@ const [items, setItems] = useState(nextMonth(50));
                 templateColumns="repeat(7, 1fr)"
                 textAlign="right"
               >
-                {weekDays.map(d => (
+                {window.innerWidth <= 768
+                ?weekDays.map(d => (
                     <Cell
                       className="weekdays-item"
                       fontSize={['lg', '3xl']}
@@ -139,7 +141,17 @@ const [items, setItems] = useState(nextMonth(50));
                     >
                       {d}
                     </Cell>
-                  ))}
+                  ))
+                : weekDaysDesktop.map(d => (
+                  <Cell
+                    className="weekdays-item"
+                    fontSize={['lg', '3xl']}
+                    height="auto"
+                    key={d}
+                  >
+                    {d}
+                  </Cell>
+                ))}
               </Grid>
             </Box>
             <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
