@@ -1,5 +1,6 @@
-import React, { useState} from 'react';
+import React, { useState, useContext } from 'react';
 import { useAuth } from '../../contexts/auth';
+import { DashboardContext } from '../../contexts/Contexts'
 import EditEventForm from './EditEventForm';
 import styled from 'styled-components';
 import { useToasts } from 'react-toast-notifications';
@@ -9,32 +10,54 @@ import { useToasts } from 'react-toast-notifications';
 const EventPage = ({event}) => {
     const { api } = useAuth();
     
+    const { setEventDisplay } = useContext(DashboardContext);
     const {addToast} = useToasts();
 
     console.log('***', event);
 
     const [isEditing, setIsEditing] = useState(false);
 
+    // handle close button
+    const handleCloseButton = e => {
+        e.preventDefault();
+        setEventDisplay(false);
+    }
+    // sets the editing flag
     const handleEditButton = e => {
         e.preventDefault();
         setIsEditing(true);
     }
 
+    // handle delete feature
     const handleDeleteButton = async e => {
         e.preventDefault();
+        // user confirmation for delete
         const deleteConfirmation = window.confirm('Are you sure you want to delete the event?');
+        // delete event if confirmed
         if(deleteConfirmation) {
+            // api call for delete event
             await api.deleteEvent(event.id);
+            // set event display to false
+            setEventDisplay(false);
+            // toast notification for user feedback
             addToast(`${event.title} was deleted successfully`, {
                 appearance: 'info',
                 autoDismiss: true,
                 autoDismissTimeout: 6000
-               })
+               });
+            // reload window to reflect changes
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         }
     }
 
     return (
         <EventContainer>
+            <EventHeader>
+                <EventDate>{event.start.dateTime.substring(0,10)} </EventDate>
+                <CloseButton onClick={handleCloseButton}>X</CloseButton>
+            </EventHeader>
             {isEditing 
                 ? (
                     <EditEventForm 
@@ -44,7 +67,6 @@ const EventPage = ({event}) => {
                 )
                 : (
                     <div className='eventInfo' key={event.id}>
-                        <EventDate>{event.start.dateTime.substring(0,10)} </EventDate>
                         <EventName>{event.title}</EventName>
                         <EventTime>{event.starttime} - {event.endtime}</EventTime>
                         <EventNotes>{event.notes}</EventNotes>
@@ -66,18 +88,24 @@ const EventContainer = styled.div`
   background: #E0E0E0;
   border: 2px solid #999898;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: white;
   border-radius: 7px;
   display: flex;
   flex-direction: column;
-  padding: 2% 5%;
+  padding: 5%;
 `
+
+const EventHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5%
+`
+
 const EventDate = styled.div`
-    margin: 2%;
-    text-align: right;
+    width: 80%;
     font-style: normal;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 3rem;
     color: #999898;
 `
@@ -102,9 +130,8 @@ const EventNotes = styled.div`
 const ButtonsDiv = styled.div`
     display: flex;
     justify-content: space-around;
-    width: 100%;
-    margin: 5% 2%;
-    bottom: 10%;
+    width: 80%;
+    margin: 10% auto;
 `
 const EditButton = styled.button`
     background: #FFFFFF;
@@ -125,4 +152,14 @@ const DeleteButton = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+`
+const CloseButton = styled.button`
+    background: #28807D;
+    font-size: 1.5rem;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 1%;
+    width: 10%;
+    border-radius: 5px;
+    margin-left: auto;
 `

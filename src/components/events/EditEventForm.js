@@ -3,22 +3,16 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { addTemplate, convertEvents } from '../../utils/helperFunctions'
+import { convertEvents } from '../../utils/helperFunctions'
 
-const EventForm = styled.div`
-    // background-color: #AFC9D9;
-    background-color: #E5E5E5;
-    width: 100%;
-    margin: 10%;
-`
 
 const EditEventForm = props => {
     const { event, setIsEditing } = props
 
-    const { googleApi, api} = useAuth();
-    const { currentUser } = googleApi;
+    const { api } = useAuth();
 
     const { register, handleSubmit } = useForm();
+
     const [input, setInput] = useState({
         title: event.title,
         notes: event.notes,
@@ -34,116 +28,95 @@ const EditEventForm = props => {
         })
     }
 
+    // handles cancel button - go back to event display
     const handleCancelButton = e => {
         e.preventDefault();
         setIsEditing(false);
     }
 
+    // save event changes
     const handleSaveButton = async (e) =>{
         e.preventDefault();
         let date = new Date().toString().split("GMT");
 
-        //takes the first few characters of offset with + or - to be slotted in the start and end times
+        // takes the first few characters of offset with + or - to be slotted in the start and end times
         let zone = date[1].split(' ')[0].slice(0, 3);
 
-        //converts events to user's timezone
+        // converts events to user's timezone
         const newEvent = convertEvents([input.date], input.starttime, input.endtime, zone, input.title, input.notes);
+        // edit the event through gapi
         await api.editEvent(event.id, newEvent);
   
         //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
         setTimeout(()=>{window.location.reload(false)}, 500);
     }
-    // Submit for template form
-    const onSubmit = async (formData) => {
-        // console.log("formdata", formData)
-        // console.log('googleApi: ', googleApi);
-        // setToggleNav(false);
-        // setTemplateFormOpen(true)
-        // setFormOpen(true)
-        // setTitle(input.title)
-        // setNotes(input.notes)
-        // setConStart(input.starttime);
-        // setConEnd(input.endtime);
-        // setNavState(0);
-
-        addTemplate(formData, currentUser);
-        // console.log('template?: ', template);
-        // console.log('templateList: ', templateList);
-        // setTemplateList([...templateList, template]);
-        // setFormOpen(!formOpen);
-    };
 
     return (
         <EventForm>
-            {/* <div style={{ background: 'white', marginBottom: '5%', paddingTop: '8%', paddingBottom: '4%', display: 'flex', width: '100%' }}>
-                <p style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }} onClick={() => setNavState(0)}>Cancel</p>
-                <h2 style={{ textAlign: 'right', position: 'relative', left: '30%' }}>New event</h2>
-            </div> */}
-
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <div>
-                    <div style={{ color: 'black', paddingLeft: '5%' }}>Event name</div>
-                    <Input
-                        type="text"
-                        name="title"
-                        placeholder="Event name"
-                        ref={register({ maxLength: 80, required: true })}
-                        style={{ marginBottom: '5%', background: "black", paddingLeft: '5%' }}
-                        value={input.title}
-                        onChange={handleChange}
-                    />
+                    <EventInfo>Event Name
+                        <Input
+                            type="text"
+                            name="title"
+                            placeholder="Event name"
+                            ref={register({ maxLength: 80, required: true })}
+                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%' }}
+                            value={input.title}
+                            onChange={handleChange}
+                        />
+                    </EventInfo>
                 </div>
 
                 <div>
-                    <div style={{ color: 'black', paddingLeft: '5%' }}>Notes</div>
-                    <Input
-                        type="text"
-                        name="notes"
-                        placeholder="Event notes"
-                        ref={register({ maxLength: 100 })}
-                        style={{ marginBottom: '5%', background: "black", paddingLeft: '5%' }}
-                        value={input.notes}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div style={{ background: 'white' }}>
-                    <div style={{ paddingLeft: '5%', background: 'black' }}>Time</div>
+                    <EventInfo>Time
                     <div style={{
-                        backgroundColor: 'black', display: 'flex', justifyContent: 'space-between',
+                        display: 'flex', justifyContent: 'space-between',
                         paddingTop: '3%', paddingBottom: '3%', marginBottom: '1%'
                     }}>
-                        <p style={{ paddingLeft: '5%' }}>starts</p>
+                        <p style={{ paddingLeft: '5%', fontWeight: 'normal' }}>starts</p>
                         <Input
                             type="time"
                             name="starttime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', background: "black", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', background: "white", paddingLeft: '5%' }}
                             value={input.starttime}
                             onChange={handleChange}
                         />
                     </div>
                     <hr style={{ width: '90%', margin: "0 auto" }} />
-                    <div style={{ backgroundColor: 'black', display: 'flex', justifyContent: 'space-between', paddingTop: '3%', marginBottom: '1%' }}>
-                        <p style={{ paddingLeft: '5%' }}>ends</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '3%', marginBottom: '1%' }}>
+                        <p style={{ paddingLeft: '5%', fontWeight: 'normal' }}>ends</p>
                         <Input
                             type="time"
                             name="endtime"
                             ref={register({ required: true })}
-                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "black", paddingLeft: '5%' }}
+                            style={{ width: '65%', border: 'none', marginBottom: '3%', background: "white", paddingLeft: '5%' }}
                             value={input.endtime}
                             onChange={handleChange}
                         />
                     </div>
+                    </EventInfo>
                 </div>
 
-                <div style={{ width: '100%', textAlign: 'center' }}>
-                    {/* <button type="submit" style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', marginTop: '8%', marginBottom: '8%', padding: '4%', borderRadius: '10px' }}
-
-                    >Change Dates</button> */}
-                    <button onClick={handleSaveButton} style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', margin: '8%', padding: '4%', borderRadius: '10px' }}>Save Changes</button>
-                    <button onClick={handleCancelButton} style={{ width: '30%', background: '#28807D', color: 'white', textAlign: 'center', fontWeight: "bold", fontSize: '1.1rem', margin: '8%', padding: '4%', borderRadius: '10px' }}>Cancel</button>
+                <div>
+                    <EventInfo>Notes
+                        <Input
+                            type="text"
+                            name="notes"
+                            placeholder="Event notes"
+                            ref={register({ maxLength: 100 })}
+                            style={{ marginBottom: '5%', background: "white", paddingLeft: '5%', height: 'auto' }}
+                            value={input.notes}
+                            onChange={handleChange}
+                        />
+                    </EventInfo>
                 </div>
+
+                <ButtonsDiv>
+                    <SaveButton onClick={handleSaveButton} >Save</SaveButton>
+                    <CancelButton onClick={handleCancelButton}>Cancel</CancelButton>
+                </ButtonsDiv>
 
             </form>
         </EventForm>
@@ -151,3 +124,46 @@ const EditEventForm = props => {
 }
 
 export default EditEventForm;
+
+// Event Form styling
+
+const EventForm = styled.div`
+  font-size: 90%;
+  background: #E0E0E0;
+  display: flex;
+  flex-direction: column;
+`
+const EventInfo = styled.div`
+    font-style: normal;
+    font-weight: bold;
+    font-size: 2rem;
+    line-height: 3rem;
+    color: #2E5780;
+`
+
+const ButtonsDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10% auto;
+`
+const SaveButton = styled.button`
+    background: #FFFFFF;
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+    color: #28807D;
+    padding: 2% 10%;
+    border: 2px solid #28807D;
+    box-sizing: border-box;
+    border-radius: 15px;
+`
+const CancelButton = styled.button`
+    background: #28807D;
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+    color: #FFFFFF;
+    padding: 2% 10%;
+    border: 2px solid #28807D;
+    box-sizing: border-box;
+    border-radius: 15px;
+`
