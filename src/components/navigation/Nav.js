@@ -18,9 +18,14 @@ const Nav = ({
 }) => {
   const [navToggle, setNavToggle] = useState(false);
   const [visible, setVisible] = useState(false);
-  // this controls the add event icon 
+    // this controls the add event icon 
   const [hidden, setHidden] = useState(true);
- 
+   // this controls the arrow toggles in desktop
+  const [calendarIcon, setCalendarIcon] = useState(false);
+  const [eventsIcon, setEventsIcon] = useState(false);
+  const [groupsIcon, setGroupsIcon] = useState(false);
+  const [settingsIcon, setSettingsIcon] = useState(false);
+
 
   //closes date selection more when a navigation to a new page, and empties date selection
   const handleChange = num => {
@@ -32,24 +37,31 @@ const Nav = ({
     setHidden(false);
   };
 
-//   const handleClick = () => {
-//     if (visible) {
-//         setVisible(false);
-//     } else {
-//         setVisible(true);
-//     }
-// };
-    const arrowUp = <i className="fas fa-chevron-up"></i>
-    const arrowDown = <i className="fas fa-chevron-down"></i>
+    function handleCalendar() {
+        setCalendarIcon({
+            clicked1: !calendarIcon.clicked1
+        })
+    };
+    function handleEvents() {
+        setEventsIcon({
+            clicked2: !eventsIcon.clicked2
+        })
+    };
+    function handleGroups() {
+        setGroupsIcon({
+            clicked3: !groupsIcon.clicked3
+        })
+    };
+    function handleSettings() {
+        setSettingsIcon({
+            clicked4: !settingsIcon.clicked4
+        })
+    };
 
-
-    const handleClick = (arrowId) =>{
-      var element = document.getElementById(arrowId);
-      setVisible(true);
-      element.classList.remove("fa-chevron-down");
-     element.classList.add("fa-chevron-up");
-      
-    }
+    var clicked1 = calendarIcon.clicked1
+    var clicked2 = eventsIcon.clicked2
+    var clicked3 = groupsIcon.clicked3
+    var clicked4 = settingsIcon.clicked4
 
   //icon and label colors change based on navState
   return (
@@ -63,22 +75,22 @@ const Nav = ({
         >
           <Img src={calendarBtnInactive} />
           <Label style={{ color: colors[2] }}>Calendar</Label>
-          <Arrow  onClick={() => handleClick("arrow1")}> <i id="arrow1" className="fas fa-chevron-down"></i> </Arrow>
+          <Arrow onClick={() => handleCalendar()} className={clicked1 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
         </IconDiv>
         <IconDiv className='eventsIcon' onClick={() => handleChange(1)}>
           <Img src={eventsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
           <Label style={{ color: colors[1] }}>Events</Label>
-          <Arrow id="arrow2" onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
+          <Arrow onClick={() => handleEvents()} className={clicked2 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
         </IconDiv>
         <IconDiv className='groupIcon' onClick={() => handleChange(2)}>
             <Img src={groupsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
           <Label style={{ color: colors[2] }}>Groups</Label>
-          <Arrow onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
+          <Arrow onClick={() => handleGroups()} className={clicked3 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
         </IconDiv>
         <IconDiv className='settingsIcon' onClick={() => setNavToggle(!navToggle)}>
             <Img src={settingsBtnInactive} />
           <Label style={{ color: colors[2] }}>Settings</Label>
-          <Arrow onClick={handleClick}> {visible ? arrowDown : arrowUp } </Arrow>
+          <Arrow onClick={() => handleSettings()} className={clicked4 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
         </IconDiv>
         <IconDiv className={hidden ? "eventBtn" : "addEventIcon"}>
             <AddEventButton />
@@ -135,7 +147,6 @@ const Container = styled.div`
         width: 18%;
         height: 100%;
         left: 0;
-        border: 2px solid red;
 
         .eventsIcon {
             order: 1 
@@ -152,8 +163,6 @@ const Container = styled.div`
         .addEventIcon {
             order: 2
         }
-
-        
     }
 `;
 const IconDiv = styled.div`
