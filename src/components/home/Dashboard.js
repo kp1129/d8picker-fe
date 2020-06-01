@@ -7,8 +7,6 @@ import ConfirmDatesBtn from '../events/ConfirmDatesBtn'
 import InfiniteCal from '../calendar/InfiniteCal'
 import Cell from '../calendar/Cell.js'
 import styled from 'styled-components'
-import Hamburger from '../navigation/Hamburger/TopNav'
-import EventPage from '../events/EventPage'
 import axiosWithAuth from '../../utils/axiosWithAuth'
 
 //gets list of templates from backend
@@ -44,7 +42,6 @@ const Dashboard = (props) => {
 
   // state for full user objects from calendar api
   const [events, setEvents] = useState(null);
-  const [event, setEvent] = useState({});
 
   //array of only the formatted date strings of events from calendar api
   const [eventDatesArr, setEventDatesArr] = useState([])
@@ -56,9 +53,6 @@ const Dashboard = (props) => {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const weekDaysDesktop = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-  // event display flag
-  const [eventDisplay, setEventDisplay] = useState(false);
-
   
   
   // get events from api and set to state
@@ -66,13 +60,14 @@ const Dashboard = (props) => {
     (async () => {
       try {
         const data = await api.listEvents();
-        console.log(data);
         setEvents(data);
         let titlesArray = [];
         let formattedEvents = data.map(event=>{
+          console.log('*', event);
           titlesArray.push(event.summary) // Do not change this to title - coming as summary from GAPI
           return event.start.dateTime.substring(0,10)
         })
+        console.log('hello', titlesArray);
         setTitles(titlesArray)
         setEventDatesArr(formattedEvents);
 
@@ -118,19 +113,20 @@ const [items, setItems] = useState(nextMonth(50));
     >
       <Grid
         width="100%"
+
         // gap={4}
         templateColumns={window.innerWidth <= 768 ? ['1fr', '250px 1fr'] : ['1fr', '0px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" backgroundColor="white">
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-
+          
             <Box className="calendar" backgroundColor="#F8F8F8"  style={{width: "100%", height: '40px'}}>
               <Grid
                 className="weekdays-grid"
                 templateColumns="repeat(7, 1fr)"
                 textAlign="right"
-              >
+
                 {window.innerWidth <= 768
                 ?weekDays.map(d => (
                     <Cell
@@ -154,6 +150,7 @@ const [items, setItems] = useState(nextMonth(50));
                 ))}
               </Grid>
             </Box>
+
             <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
               {eventDisplay && <EventBoxContainer><EventPage event={event} /></EventBoxContainer>}
               {items.length > 0 && <InfiniteCal items={items}/>}
@@ -207,6 +204,7 @@ const BtnDiv = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
 
 const EventBoxContainer = styled.div`
   height: 50%;
