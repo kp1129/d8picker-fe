@@ -51,6 +51,7 @@ const Dashboard = (props) => {
 
   //array of weekdays which sits at top of calendar
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const weekDaysDesktop = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
   
   
@@ -112,9 +113,10 @@ const [items, setItems] = useState(nextMonth(50));
     >
       <Grid
         width="100%"
-        gap={4}
-        templateColumns={['1fr', '250px 1fr']}
-        gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]} 
+
+        // gap={4}
+        templateColumns={window.innerWidth <= 768 ? ['1fr', '250px 1fr'] : ['1fr', '0px 1fr']}
+        gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
         <Box className="calendarArea" gridArea="main" backgroundColor="white">
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
@@ -124,8 +126,9 @@ const [items, setItems] = useState(nextMonth(50));
                 className="weekdays-grid"
                 templateColumns="repeat(7, 1fr)"
                 textAlign="right"
-              > 
-                {weekDays.map(d => (
+
+                {window.innerWidth <= 768
+                ?weekDays.map(d => (
                     <Cell
                       className="weekdays-item"
                       fontSize={['lg', '3xl']}
@@ -134,10 +137,22 @@ const [items, setItems] = useState(nextMonth(50));
                     >
                       {d}
                     </Cell>
-                  ))}
+                  ))
+                : weekDaysDesktop.map(d => (
+                  <Cell
+                    className="weekdays-item"
+                    fontSize={['lg', '3xl']}
+                    height="auto"
+                    key={d}
+                  >
+                    {d}
+                  </Cell>
+                ))}
               </Grid>
             </Box>
-            <DashboardContext.Provider value={{api, events, eventDatesArr, titles}}>
+
+            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
+              {eventDisplay && <EventBoxContainer><EventPage event={event} /></EventBoxContainer>}
               {items.length > 0 && <InfiniteCal items={items}/>}
             </DashboardContext.Provider>
             
@@ -189,3 +204,16 @@ const BtnDiv = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+
+const EventBoxContainer = styled.div`
+  height: 50%;
+  width: 80%;
+  position: absolute; 
+  z-index: 1;
+  margin: auto;
+  @media(min-width: 500px) {
+    height: 40%;
+    width: 40%;
+  }
+`

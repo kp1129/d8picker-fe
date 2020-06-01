@@ -77,12 +77,14 @@ const Nav = ({
         </IconDiv>
         <IconDiv className='settingsIcon' onClick={handleSettings}>
             <Img src={settingsBtnInactive} />
+
           <Label style={{ color: colors[2] }}>Settings</Label>
           <Arrow className={isDisplayingSettings ? "fas fa-chevron-down" : "fas fa-chevron-up"}></Arrow>
         </IconDiv>
         <IconDiv className={isDisplayingEvents ? "addEventIcon" : "eventBtn"}>
             <AddEventButton />
           <Label style={{ color: colors[2], marginTop: '6px'}}>Add Event</Label>
+
         </IconDiv>
       </NavContainer>
       {navToggle === true && <Hamburger />}

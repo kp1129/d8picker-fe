@@ -78,7 +78,7 @@ const Home = () => {
 
     return(
         
-        <Context.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, title, notes, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setNotes, setTemplateList}}>
+        <Context.Provider value={{formOpen, setFormOpen, setTemplateFormOpen, templateFormOpen, conStart, conEnd, title, notes, selected, setSelected, toggleNav, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setNotes, setTemplateList, templateIdToUpdate, setTemplateIdToUpdate}}>
             
             {navState===0 && <Dashboard setTemplateList={setTemplateList}/>}
         
