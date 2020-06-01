@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 
 import EventPage from '../events/EventPage';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -31,6 +32,8 @@ const Dashboard = props => {
     setNavState,
     formOpen
   } = useContext(Context);
+
+  const { height, width } = useWindowDimensions();
 
   //google OAuth2
   const { googleApi, api } = useAuth();
@@ -142,7 +145,7 @@ const Dashboard = props => {
           width="100%"
           // gap={4}
           templateColumns={
-            window.innerWidth <= 768 ? ['1fr', '250px 1fr'] : ['1fr', '0px 1fr']
+            width <= 768 ? ['1fr', '250px 1fr'] : ['1fr', '0px 1fr']
           }
           gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
         >
