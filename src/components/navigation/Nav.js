@@ -26,6 +26,11 @@ const Nav = ({
   const [groupsIcon, setGroupsIcon] = useState(false);
   const [settingsIcon, setSettingsIcon] = useState(false);
 
+  const [isDisplayingEvents, setIsDisplayingEvents] = useState(false);
+  const [isDisplayingGroups, setIsDisplayingGroups] = useState(false);
+  const [isDisplayingCalendar, setIsDisplayingCalendar] = useState(false);
+  const [isDisplayingSettings, setIsDisplayingSettings] = useState(false);
+
 
   //closes date selection more when a navigation to a new page, and empties date selection
   const handleChange = num => {
@@ -37,62 +42,45 @@ const Nav = ({
     setHidden(false);
   };
 
-    function handleCalendar() {
-        setCalendarIcon({
-            clicked1: !calendarIcon.clicked1
-        })
+    const handleCalendar = () => {
+        setIsDisplayingCalendar(!isDisplayingCalendar);
     };
-    function handleEvents() {
-        setEventsIcon({
-            clicked2: !eventsIcon.clicked2
-        })
+    const handleEvents = () => {
+        setIsDisplayingEvents(!isDisplayingEvents);
     };
-    function handleGroups() {
-        setGroupsIcon({
-            clicked3: !groupsIcon.clicked3
-        })
+    const handleGroups = () => {
+      setIsDisplayingGroups(!isDisplayingGroups);
     };
-    function handleSettings() {
-        setSettingsIcon({
-            clicked4: !settingsIcon.clicked4
-        })
+    const handleSettings = () => {
+      setIsDisplayingSettings(!isDisplayingSettings);
     };
 
-    var clicked1 = calendarIcon.clicked1
-    var clicked2 = eventsIcon.clicked2
-    var clicked3 = groupsIcon.clicked3
-    var clicked4 = settingsIcon.clicked4
 
   //icon and label colors change based on navState
   return (
     <Container>
       <NavContainer>
-        <IconDiv className='calendarIcon'
-          onClick={() => {
-            setToggleNav(true);
-            handleChange(0);
-          }}
-        >
+        <IconDiv className='calendarIcon' onClick={handleCalendar}>
           <Img src={calendarBtnInactive} />
           <Label style={{ color: colors[2] }}>Calendar</Label>
-          <Arrow onClick={() => handleCalendar()} className={clicked1 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
+          <Arrow className={isDisplayingCalendar ? "fas fa-chevron-down" : "fas fa-chevron-up"}></Arrow>
         </IconDiv>
-        <IconDiv className='eventsIcon' onClick={() => handleChange(1)}>
+        <IconDiv className='eventsIcon' onClick={handleEvents}>
           <Img src={eventsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
           <Label style={{ color: colors[1] }}>Events</Label>
-          <Arrow onClick={() => handleEvents()} className={clicked2 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
+          <Arrow className={isDisplayingEvents ? "fas fa-chevron-down" : "fas fa-chevron-up"}></Arrow>
         </IconDiv>
-        <IconDiv className='groupIcon' onClick={() => handleChange(2)}>
+        <IconDiv className='groupIcon' onClick={handleGroups}>
             <Img src={groupsBtnInactive} style={{ fontSize: '2rem', color: colors[0] }} />
           <Label style={{ color: colors[2] }}>Groups</Label>
-          <Arrow onClick={() => handleGroups()} className={clicked3 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
+          <Arrow className={isDisplayingGroups ? "fas fa-chevron-down" : "fas fa-chevron-up"}></Arrow>
         </IconDiv>
-        <IconDiv className='settingsIcon' onClick={() => setNavToggle(!navToggle)}>
+        <IconDiv className='settingsIcon' onClick={handleSettings}>
             <Img src={settingsBtnInactive} />
           <Label style={{ color: colors[2] }}>Settings</Label>
-          <Arrow onClick={() => handleSettings()} className={clicked4 ? "fas fa-chevron-up" : "fas fa-chevron-down"}></Arrow>
+          <Arrow className={isDisplayingSettings ? "fas fa-chevron-down" : "fas fa-chevron-up"}></Arrow>
         </IconDiv>
-        <IconDiv className={hidden ? "eventBtn" : "addEventIcon"}>
+        <IconDiv className={isDisplayingEvents ? "addEventIcon" : "eventBtn"}>
             <AddEventButton />
           <Label style={{ color: colors[2], marginTop: '6px'}}>Add Event</Label>
         </IconDiv>
