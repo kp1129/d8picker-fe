@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {Context} from '../../contexts/Contexts'
+import {Context, DashboardContext} from '../../contexts/Contexts'
 import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
@@ -8,8 +8,9 @@ import { useToasts } from 'react-toast-notifications'
 
 const ConfirmDatesBtn = () => {
 
-  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected} = useContext(Context);
+  const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected, setToggleNav} = useContext(Context);
 
+  const { setEventsUpdated } = useContext(DashboardContext);
     const { api } = useAuth();
     const { addToast } = useToasts();
 
@@ -27,10 +28,12 @@ const ConfirmDatesBtn = () => {
         });
         setSelected([]);
         setFormOpen(false);
-        setTemplateFormOpen(false)
+        setTemplateFormOpen(false);
+        setEventsUpdated(true);
+        setToggleNav(true);
 
         // //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
-        setTimeout(()=>{window.location.reload(false)}, 500);
+        // setTimeout(()=>{window.location.reload(false)}, 500);
       };
 
     const handleClick = (e) =>{

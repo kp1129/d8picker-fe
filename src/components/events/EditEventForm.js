@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DashboardContext } from '../../contexts/Contexts'
 import { useForm } from 'react-hook-form';
 import { Input, Textarea } from '@chakra-ui/core';
 import { useAuth } from '../../contexts/auth';
@@ -8,6 +9,8 @@ import { convertEvents } from '../../utils/helperFunctions'
 // this component is to edit individual event from calendar
 const EditEventForm = props => {
     const { event, setIsEditing } = props
+
+    const { setEventsUpdated, setEventDisplay } = useContext(DashboardContext);
 
     const { api } = useAuth();
 
@@ -49,7 +52,9 @@ const EditEventForm = props => {
         await api.editEvent(event.id, newEvent);
   
         //necessary so that event is sent to api before the page reloads. As of now, page must reload to show new event list that contains the added events
-        setTimeout(()=>{window.location.reload(false)}, 500);
+        // setTimeout(()=>{window.location.reload(false)}, 500);
+        await setEventsUpdated(true);
+        setEventDisplay(false);
     }
 
     return (

@@ -10,7 +10,7 @@ import { useToasts } from 'react-toast-notifications';
 const EventPage = ({event}) => {
     const { api } = useAuth();
     
-    const { setEventDisplay } = useContext(DashboardContext);
+    const { setEventDisplay, setEventsUpdated } = useContext(DashboardContext);
     const {addToast} = useToasts();
 
     console.log('***', event);
@@ -45,10 +45,11 @@ const EventPage = ({event}) => {
                 autoDismiss: true,
                 autoDismissTimeout: 6000
                });
+            setEventsUpdated(true);
             // reload window to reflect changes
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
         }
     }
 

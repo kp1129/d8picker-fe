@@ -53,11 +53,17 @@ const Dashboard = (props) => {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const weekDaysDesktop = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-  
-  
+  // event display flag
+  const [eventDisplay, setEventDisplay] = useState(false);
+
+  // events updated flag
+  const[eventsUpdated, setEventsUpdated] = useState(false);
+
+
   // get events from api and set to state
   useEffect(() => {
-    (async () => {
+    const loadEvents = async () => {
+      await console.log('reloading events from gapi');
       try {
         const data = await api.listEvents();
         setEvents(data);
@@ -70,13 +76,21 @@ const Dashboard = (props) => {
         console.log('hello', titlesArray);
         setTitles(titlesArray)
         setEventDatesArr(formattedEvents);
-
-
+  
+  
       } catch (error) {
         console.log(error);
       }
-    })();
-  }, [api]);
+    }
+    loadEvents();
+    const reloadEvents = async() => {
+      if(eventsUpdated) {
+        await loadEvents();
+        setEventsUpdated(false);
+      }
+    }
+    reloadEvents();
+  }, [eventsUpdated]);
 
   
 
@@ -150,13 +164,14 @@ const [items, setItems] = useState(nextMonth(50));
                 ))}
               </Grid>
             </Box>
+            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, setEventsUpdated, eventDatesArr, titles}}>
 
-            <DashboardContext.Provider value={{api, events, event, setEvent, eventDisplay, setEventDisplay, eventDatesArr, titles}}>
               {eventDisplay && <EventBoxContainer><EventPage event={event} /></EventBoxContainer>}
               {items.length > 0 && <InfiniteCal items={items}/>}
+              {toggleNav === false && <ConfirmDatesBtn/>}
             </DashboardContext.Provider>
             
-            {toggleNav === false && <ConfirmDatesBtn/>}
+            {/* {toggleNav === false && <ConfirmDatesBtn/>} */}
           </div>
         
           

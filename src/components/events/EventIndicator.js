@@ -13,7 +13,7 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
       eventTitle.length > 5 ? setTitle(eventTitle.substring(0,5)) : setTitle(eventTitle)
-  },[])
+  },[eventTitle])
 
   const loadEventComponent = e => {
     e.preventDefault();
