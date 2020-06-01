@@ -119,7 +119,7 @@ const Dashboard = props => {
   const [items, setItems] = useState(nextMonth(50));
 
   return (
-    <>
+    <Div>
       {/* {toggleNav && <Hamburger />} */}
       {/*toggle nav toggles off nav to indicate in date selection mode, this changes the header to reflect this*/}
       {toggleNav === false && (
@@ -139,7 +139,7 @@ const Dashboard = props => {
       )}
       <Box
         maxHeight="90vh"
-        style={{ marginTop: toggleNav ? 0 : window.innerHeight * 0.079 }}
+        style={{ border: "solid green 1px", marginTop: toggleNav ? 0 : window.innerHeight * 0.079 }}
       >
         <Grid
           width="100%"
@@ -218,7 +218,7 @@ const Dashboard = props => {
           </Box>
         </Grid>
       </Box>
-    </>
+    </Div>
   );
 };
 
@@ -268,4 +268,9 @@ const EventBoxContainer = styled.div`
     height: 40%;
     width: 40%;
   }
+`;
+
+const Div = styled.div`
+  width: 75%;
+  border: 2px solid pink;
 `;

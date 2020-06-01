@@ -71,11 +71,11 @@ export default function NewInfCal({items}) {
             <List
               className="List"
               height={window.innerHeight-130}
-              itemCount={50}
+              itemCount={24}
               itemSize={817}
               onItemsRendered={onItemsRendered}
               ref={ref}
-              width={window.innerWidth}
+              width={"100%"}
               itemData={{items}}
             >
               {Row}
