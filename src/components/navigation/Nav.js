@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import Hamburger from './Hamburger/TopNav.js';
 import AddEventButton from '../events/AddEventButton.js';
 import calendarBtnInactive from '../navigation/NavImgs/Calendar Button-Inactive.png';
+import calendarBtnActive from '../navigation/NavImgs/Calendar Button-Active.png';
 import settingsBtnActive from '../navigation/NavImgs/Settings Button-Active.png';
 import settingsBtnInactive from '../navigation/NavImgs/Settings Button-Inactive.png';
 import groupsBtnInactive from '../navigation/NavImgs/Group Button-Inactive.png';
+import groupsBtnActive from '../navigation/NavImgs/Group Button-Active.png';
 import eventsBtnInactive from '../navigation/NavImgs/Events Button-Inactive.png';
+import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const Nav = ({
@@ -44,16 +47,43 @@ const Nav = ({
   };
 
   const handleCalendar = () => {
-    setIsDisplayingCalendar(!isDisplayingCalendar);
+    
+    if(width >= 768){
+      setIsDisplayingCalendar(!isDisplayingCalendar);
+      setNavState(0);
+    } else {
+      setIsDisplayingCalendar(false);
+      setNavState(0);
+    }
   };
   const handleEvents = () => {
-    setIsDisplayingEvents(!isDisplayingEvents);
+    if(width >= 768) {
+      setIsDisplayingEvents(!isDisplayingEvents);
+      setNavState(0);
+    } else {
+      setIsDisplayingEvents(false);
+      setNavState(1);
+    }    
   };
   const handleGroups = () => {
-    setIsDisplayingGroups(!isDisplayingGroups);
+    if(width >= 768){
+      setIsDisplayingGroups(!isDisplayingGroups);
+      setNavState(0);
+    } else {
+      setIsDisplayingGroups(false);
+      setNavState(2);
+    }    
   };
   const handleSettings = () => {
-    setIsDisplayingSettings(!isDisplayingSettings);
+    
+    if (width >= 768){
+      setIsDisplayingSettings(!isDisplayingSettings);
+      setNavToggle(!navToggle);
+    } else {
+      setIsDisplayingSettings(false);
+      setNavToggle(!navToggle);
+    }
+    
   };
 
   //icon and label colors change based on navState
@@ -64,6 +94,7 @@ const Nav = ({
           height: {height}, width: {width}
         </div>
         <IconDiv className="calendarIcon" onClick={handleCalendar}>
+        <div>
           <Img src={calendarBtnInactive} />
           <Label style={{ color: colors[2] }}>Calendar</Label>
           <Arrow
@@ -71,8 +102,11 @@ const Nav = ({
               isDisplayingCalendar ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
             }
           ></Arrow>
+        </div>
+        {isDisplayingCalendar && <CalendarPlaceholder>calendar placeholder</CalendarPlaceholder > }
         </IconDiv>
         <IconDiv className="eventsIcon" onClick={handleEvents}>
+          <div>
           <Img
             src={eventsBtnInactive}
             style={{ fontSize: '2rem', color: colors[0] }}
@@ -83,8 +117,11 @@ const Nav = ({
               isDisplayingEvents ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
             }
           ></Arrow>
+          </div>
+          {isDisplayingEvents && <EventsPlaceholder>events placeholder</EventsPlaceholder>}
         </IconDiv>
         <IconDiv className="groupIcon" onClick={handleGroups}>
+          <div>
           <Img
             src={groupsBtnInactive}
             style={{ fontSize: '2rem', color: colors[0] }}
@@ -95,8 +132,11 @@ const Nav = ({
               isDisplayingGroups ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
             }
           ></Arrow>
+          </div>
+          {isDisplayingGroups && <GroupPlaceholder>groups placeholder</GroupPlaceholder>}
         </IconDiv>
         <IconDiv className="settingsIcon" onClick={handleSettings}>
+          <div>
           <Img src={settingsBtnInactive} />
 
           <Label style={{ color: colors[2] }}>Settings</Label>
@@ -105,6 +145,7 @@ const Nav = ({
               isDisplayingSettings ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
             }
           ></Arrow>
+          </div>
         </IconDiv>
         <IconDiv className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}>
           <AddEventButton />
@@ -125,6 +166,21 @@ const size = {
 const device = {
   desktop: `(min-width: ${size.desktop})`
 };
+
+const CalendarPlaceholder = styled.div`
+  width: 90%;
+  border: 1px solid gray;
+`;
+
+const EventsPlaceholder = styled.div`
+  width: 90%;
+  border: 1px solid gray;
+`;
+
+const GroupPlaceholder = styled.div`
+  width: 90%;
+  border: 1px solid gray;
+`;
 
 const NavContainer = styled.div`
   width: 100%;
@@ -190,8 +246,12 @@ const IconDiv = styled.div`
   align-items: center;
 
   @media ${device.desktop} {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
+    div {
+      display: flex;
+      align-items: center;
+    }
 
     .addEventText {
       margin-left: 20px;
@@ -226,7 +286,7 @@ const Arrow = styled.i`
     display: block !important;
     color: gray;
     font-size: 1.4rem;
-    margin-left: 85%;
+    margin-left: 30%;
   }
 `;
 export default Nav;
