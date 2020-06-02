@@ -166,7 +166,6 @@ export default Home;
 const Div = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  border: 1px solid red;
 
   @media (max-width: 768px) {
     justify-content: center;
