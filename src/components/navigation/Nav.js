@@ -100,7 +100,7 @@ const Nav = ({
           <Label style={{ color: colors[2] }}>Calendar</Label>
           <Arrow
             className={
-              isDisplayingCalendar ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingCalendar ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
         </div>
@@ -115,7 +115,7 @@ const Nav = ({
           <Label style={{ color: colors[1] }}>Events</Label>
           <Arrow
             className={
-              isDisplayingEvents ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingEvents ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
@@ -130,7 +130,7 @@ const Nav = ({
           <Label style={{ color: colors[2] }}>Groups</Label>
           <Arrow
             className={
-              isDisplayingGroups ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingGroups ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
@@ -143,7 +143,7 @@ const Nav = ({
           <Label style={{ color: colors[2] }}>Settings</Label>
           <Arrow
             className={
-              isDisplayingSettings ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingSettings ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
@@ -242,12 +242,15 @@ const Container = styled.div`
   }
 `;
 const IconDiv = styled.div`
-  width: 100%;
+  width: fit-content;
   // height: 55px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 
   @media ${device.desktop} {
     flex-direction: column;
