@@ -77,86 +77,86 @@ const Home = () => {
 
   return (
     <Div>
-    <Context.Provider
-      value={{
-        formOpen,
-        setFormOpen,
-        setTemplateFormOpen,
-        templateFormOpen,
-        conStart,
-        conEnd,
-        title,
-        notes,
-        selected,
-        setSelected,
-        toggleNav,
-        setToggleNav,
-        setNavState,
-        setConStart,
-        setConEnd,
-        setTitle,
-        setNotes,
-        templateList,
-        setTemplateList,
-        templateIdToUpdate,
-        setTemplateIdToUpdate
-      }}
-    >
-      {navState === 0 && <Dashboard setTemplateList={setTemplateList} />}
+      <Context.Provider
+        value={{
+          formOpen,
+          setFormOpen,
+          setTemplateFormOpen,
+          templateFormOpen,
+          conStart,
+          conEnd,
+          title,
+          notes,
+          selected,
+          setSelected,
+          toggleNav,
+          setToggleNav,
+          setNavState,
+          setConStart,
+          setConEnd,
+          setTitle,
+          setNotes,
+          templateList,
+          setTemplateList,
+          templateIdToUpdate,
+          setTemplateIdToUpdate
+        }}
+      >
+        {navState === 0 && <Dashboard setTemplateList={setTemplateList} />}
 
-      {navState === 1 && (
-        <>
-          <Events
-            formOpen={formOpen}
+        {navState === 1 && (
+          <>
+            <Events
+              formOpen={formOpen}
+              setTemplateList={setTemplateList}
+              templateList={templateList}
+            />
+          </>
+        )}
+
+        {navState === 2 && <Groups />}
+
+        {navState === 3 && (
+          <NewEventForm
             setTemplateList={setTemplateList}
             templateList={templateList}
+            setToggleNav={setToggleNav}
+            setNavState={setNavState}
+            setTitle={setTitle}
+            setNotes={setNotes}
+            setConStart={setConStart}
+            setConEnd={setConEnd}
+            setTemplateFormOpen={setTemplateFormOpen}
+            setFormOpen={setFormOpen}
           />
-        </>
-      )}
+        )}
 
-      {navState === 2 && <Groups />}
+        {navState === 4 && (
+          <UpdateEventForm
+            setTemplateList={setTemplateList}
+            templateList={templateList}
+            setToggleNav={setToggleNav}
+            setNavState={setNavState}
+            setTitle={setTitle}
+            setConStart={setConStart}
+            setConEnd={setConEnd}
+            setTemplateFormOpen={setTemplateFormOpen}
+            setFormOpen={setFormOpen}
+          />
+        )}
 
-      {navState === 3 && (
-        <NewEventForm
-          setTemplateList={setTemplateList}
-          templateList={templateList}
-          setToggleNav={setToggleNav}
-          setNavState={setNavState}
-          setTitle={setTitle}
-          setNotes={setNotes}
-          setConStart={setConStart}
-          setConEnd={setConEnd}
-          setTemplateFormOpen={setTemplateFormOpen}
-          setFormOpen={setFormOpen}
-        />
-      )}
-
-      {navState === 4 && (
-        <UpdateEventForm
-          setTemplateList={setTemplateList}
-          templateList={templateList}
-          setToggleNav={setToggleNav}
-          setNavState={setNavState}
-          setTitle={setTitle}
-          setConStart={setConStart}
-          setConEnd={setConEnd}
-          setTemplateFormOpen={setTemplateFormOpen}
-          setFormOpen={setFormOpen}
-        />
-      )}
-
-      {toggleNav && (
-        <Nav
-          navState={navState}
-          setNavState={setNavState}
-          colors={colors}
-          setTemplateFormOpen={setTemplateFormOpen}
-          setFormOpen={setFormOpen}
-          setSelected={setSelected}
-          setToggleNav={setToggleNav}
-        />
-      )}
-    </Context.Provider>
+        {toggleNav && (
+          <Nav
+            navState={navState}
+            setNavState={setNavState}
+            colors={colors}
+            setTemplateFormOpen={setTemplateFormOpen}
+            setFormOpen={setFormOpen}
+            setSelected={setSelected}
+            setToggleNav={setToggleNav}
+          />
+        )}
+      </Context.Provider>
     </Div>
   );
 };
@@ -167,4 +167,8 @@ const Div = styled.div`
   display: flex;
   flex-direction: row-reverse;
   border: 1px solid red;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
