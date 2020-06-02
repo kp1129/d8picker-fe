@@ -48,8 +48,7 @@ const Nav = ({
   };
 
   const handleCalendar = () => {
-    
-    if(width >= 768){
+    if (width >= 768) {
       setIsDisplayingCalendar(!isDisplayingCalendar);
       setNavState(0);
     } else {
@@ -58,94 +57,104 @@ const Nav = ({
     }
   };
   const handleEvents = () => {
-    if(width >= 768) {
+    if (width >= 768) {
       setIsDisplayingEvents(!isDisplayingEvents);
       setNavState(0);
     } else {
       setIsDisplayingEvents(false);
       setNavState(1);
-    }    
+    }
   };
   const handleGroups = () => {
-    if(width >= 768){
+    if (width >= 768) {
       setIsDisplayingGroups(!isDisplayingGroups);
       setNavState(0);
     } else {
       setIsDisplayingGroups(false);
       setNavState(2);
-    }    
+    }
   };
   const handleSettings = () => {
-    
-    if (width >= 768){
+    if (width >= 768) {
       setIsDisplayingSettings(!isDisplayingSettings);
       setNavToggle(!navToggle);
     } else {
       setIsDisplayingSettings(false);
       setNavToggle(!navToggle);
     }
-    
   };
 
   //icon and label colors change based on navState
   return (
     <Container>
       <NavContainer>
-        <div>
+        {/* <div>
           height: {height}, width: {width}
-        </div>
+        </div> */}
         <IconDiv className="calendarIcon" onClick={handleCalendar}>
-        <div className="popout-div">
-          <Img src={calendarBtnInactive} />
-          <Label style={{ color: colors[2] }}>Calendar</Label>
-          <Arrow
-            className={
-              isDisplayingCalendar ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
-            }
-          ></Arrow>
-        </div>
-        {isDisplayingCalendar && <CalendarPlaceholder>calendar placeholder</CalendarPlaceholder > }
+          <div className="popout-div">
+            <Img src={calendarBtnInactive} />
+            <Label style={{ color: colors[2] }}>Calendar</Label>
+            <Arrow
+              className={
+                isDisplayingCalendar
+                  ? 'fas fa-chevron-up'
+                  : 'fas fa-chevron-down'
+              }
+            ></Arrow>
+          </div>
+          {isDisplayingCalendar && (
+            <CalendarPlaceholder>calendar placeholder</CalendarPlaceholder>
+          )}
         </IconDiv>
         <IconDiv className="eventsIcon" onClick={handleEvents}>
           <div className="popout-div">
-          <Img
-            src={eventsBtnInactive}
-            style={{ fontSize: '2rem', color: colors[0] }}
-          />
-          <Label style={{ color: colors[1] }}>Events</Label>
-          <Arrow
-            className={
-              isDisplayingEvents ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
-            }
-          ></Arrow>
+            <Img
+              src={eventsBtnInactive}
+              style={{ fontSize: '2rem', color: colors[0] }}
+            />
+            <Label style={{ color: colors[1] }}>Events</Label>
+            <Arrow
+              className={
+                isDisplayingEvents ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
+              }
+            ></Arrow>
           </div>
-          {isDisplayingEvents && <EventsPlaceholder><TemplateContainer /></EventsPlaceholder>}
+          {isDisplayingEvents && (
+            <EventsPlaceholder>
+              <TemplateContainer />
+            </EventsPlaceholder>
+          )}
         </IconDiv>
         <IconDiv className="groupIcon" onClick={handleGroups}>
-          <div className='popout-div'>
-          <Img
-            src={groupsBtnInactive}
-            style={{ fontSize: '2rem', color: colors[0] }}
-          />
-          <Label style={{ color: colors[2] }}>Groups</Label>
-          <Arrow
-            className={
-              isDisplayingGroups ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
-            }
-          ></Arrow>
+          <div className="popout-div">
+            <Img
+              src={groupsBtnInactive}
+              style={{ fontSize: '2rem', color: colors[0] }}
+            />
+            <Label style={{ color: colors[2] }}>Groups</Label>
+            <Arrow
+              className={
+                isDisplayingGroups ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
+              }
+            ></Arrow>
           </div>
-          {isDisplayingGroups && <GroupPlaceholder>groups placeholder</GroupPlaceholder>}
+          {isDisplayingGroups && (
+            <GroupPlaceholder>groups placeholder</GroupPlaceholder>
+          )}
         </IconDiv>
         <IconDiv className="settingsIcon" onClick={handleSettings}>
           <div className="popout-div">
-          <Img src={settingsBtnInactive} />
+            <Img src={settingsBtnInactive} />
 
-          <Label style={{ color: colors[2] }}>Settings</Label>
-          <Arrow
-            className={
-              isDisplayingSettings ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
-            }
-          ></Arrow>
+            <Label style={{ color: colors[2] }}>Settings</Label>
+            <Arrow
+              className={
+                isDisplayingSettings
+                  ? 'fas fa-chevron-up'
+                  : 'fas fa-chevron-down'
+              }
+            ></Arrow>
           </div>
         </IconDiv>
         <IconDiv className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}>
@@ -213,7 +222,6 @@ const Container = styled.div`
   bottom: 0;
   border-top: 1px solid #f2f2f2;
   background: white;
-  border: 1px solid aqua;
 
   @media ${device.desktop} {
     position: static;
@@ -255,9 +263,7 @@ const IconDiv = styled.div`
   @media ${device.desktop} {
     flex-direction: column;
     justify-content: space-around;
-    border: 1px solid blue;
     margin-bottom: 8%;
-
 
     .popout-div {
       display: flex;

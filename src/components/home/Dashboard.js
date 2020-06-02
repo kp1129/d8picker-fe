@@ -139,7 +139,9 @@ const Dashboard = props => {
       )}
       <Box
         maxHeight="90vh"
-        style={{ border: "solid green 1px", marginTop: toggleNav ? 0 : window.innerHeight * 0.079 }}
+        style={{
+          marginTop: toggleNav ? 0 : window.innerHeight * 0.079
+        }}
       >
         <Grid
           width="100%"
@@ -272,5 +274,4 @@ const EventBoxContainer = styled.div`
 
 const Div = styled.div`
   width: 75%;
-  border: 2px solid pink;
 `;
