@@ -8,6 +8,7 @@ import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
+import styled from 'styled-components';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -75,6 +76,7 @@ const Home = () => {
   }, [currentUser, formOpen]);
 
   return (
+    <Div>
     <Context.Provider
       value={{
         formOpen,
@@ -94,6 +96,7 @@ const Home = () => {
         setConEnd,
         setTitle,
         setNotes,
+        templateList,
         setTemplateList,
         templateIdToUpdate,
         setTemplateIdToUpdate
@@ -154,7 +157,14 @@ const Home = () => {
         />
       )}
     </Context.Provider>
+    </Div>
   );
 };
 
 export default Home;
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid red;
+`;

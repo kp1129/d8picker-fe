@@ -1,17 +1,24 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Context} from '../../contexts/Contexts';
 import ChooseDateForm from './ChooseDateForm';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
 
 
-const TemplateContainer = ({templateList}) => {
+
+const TemplateContainer = () => {
+  const {templateList} = useContext(Context);
+  const { height, width } = useWindowDimensions();
+
 
 
   return (
           <>
-          <Container>
+          {width >= 768}
+         
             <Title as="h2">Events</Title>
-            </Container>
+       
             <EventDiv>
             {templateList &&
               templateList.map(t => (
@@ -32,21 +39,8 @@ const TemplateContainer = ({templateList}) => {
 export default TemplateContainer;
 
 
-
-const Container = styled.div`
-    width: 100%;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
-    padding: 5% 2.5% 2.5% 2.5%;
-    position: fixed;
-    top: 0;
-    background: white; 
-`;
-
 const Title = styled.h1`
-    width: 60%;
+    width: 100%;
     text-align: center;
     font-weight: bold;
     font-size: 1.25rem;

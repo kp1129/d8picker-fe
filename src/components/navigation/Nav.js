@@ -11,6 +11,7 @@ import groupsBtnActive from '../navigation/NavImgs/Group Button-Active.png';
 import eventsBtnInactive from '../navigation/NavImgs/Events Button-Inactive.png';
 import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import TemplateContainer from '../events/TemplateContainer';
 
 const Nav = ({
   setNavState,
@@ -94,19 +95,19 @@ const Nav = ({
           height: {height}, width: {width}
         </div>
         <IconDiv className="calendarIcon" onClick={handleCalendar}>
-        <div>
+        <div className="popout-div">
           <Img src={calendarBtnInactive} />
           <Label style={{ color: colors[2] }}>Calendar</Label>
           <Arrow
             className={
-              isDisplayingCalendar ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingCalendar ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
         </div>
         {isDisplayingCalendar && <CalendarPlaceholder>calendar placeholder</CalendarPlaceholder > }
         </IconDiv>
         <IconDiv className="eventsIcon" onClick={handleEvents}>
-          <div>
+          <div className="popout-div">
           <Img
             src={eventsBtnInactive}
             style={{ fontSize: '2rem', color: colors[0] }}
@@ -114,14 +115,14 @@ const Nav = ({
           <Label style={{ color: colors[1] }}>Events</Label>
           <Arrow
             className={
-              isDisplayingEvents ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingEvents ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
-          {isDisplayingEvents && <EventsPlaceholder>events placeholder</EventsPlaceholder>}
+          {isDisplayingEvents && <EventsPlaceholder><TemplateContainer /></EventsPlaceholder>}
         </IconDiv>
         <IconDiv className="groupIcon" onClick={handleGroups}>
-          <div>
+          <div className='popout-div'>
           <Img
             src={groupsBtnInactive}
             style={{ fontSize: '2rem', color: colors[0] }}
@@ -129,20 +130,20 @@ const Nav = ({
           <Label style={{ color: colors[2] }}>Groups</Label>
           <Arrow
             className={
-              isDisplayingGroups ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingGroups ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
           {isDisplayingGroups && <GroupPlaceholder>groups placeholder</GroupPlaceholder>}
         </IconDiv>
         <IconDiv className="settingsIcon" onClick={handleSettings}>
-          <div>
+          <div className="popout-div">
           <Img src={settingsBtnInactive} />
 
           <Label style={{ color: colors[2] }}>Settings</Label>
           <Arrow
             className={
-              isDisplayingSettings ? 'fas fa-chevron-down' : 'fas fa-chevron-up'
+              isDisplayingSettings ? 'fas fa-chevron-up' : 'fas fa-chevron-down'
             }
           ></Arrow>
           </div>
@@ -173,7 +174,7 @@ const CalendarPlaceholder = styled.div`
 `;
 
 const EventsPlaceholder = styled.div`
-  width: 90%;
+  width: 100%;
   border: 1px solid gray;
 `;
 
@@ -197,6 +198,7 @@ const NavContainer = styled.div`
     align-content: stretch;
     height: 80%;
     padding-top: 15vh;
+    justify-content: flex-start;
 
     .eventBtn {
       display: none !important;
@@ -211,12 +213,14 @@ const Container = styled.div`
   bottom: 0;
   border-top: 1px solid #f2f2f2;
   background: white;
+  border: 1px solid aqua;
 
   @media ${device.desktop} {
-    position: fixed;
+    position: static;
+    z-index: 100;
     border-top: 1px solid #f2f2f2;
     background: white;
-    width: 18%;
+    width: 25%;
     height: 100%;
     left: 0;
 
@@ -238,19 +242,27 @@ const Container = styled.div`
   }
 `;
 const IconDiv = styled.div`
-  width: 61px;
-  height: 55px;
+  width: fit-content;
+  // height: 55px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
 
   @media ${device.desktop} {
     flex-direction: column;
     justify-content: space-around;
-    div {
+    border: 1px solid blue;
+    margin-bottom: 8%;
+
+
+    .popout-div {
       display: flex;
       align-items: center;
+      margin-bottom: 3%;
     }
 
     .addEventText {
