@@ -20,80 +20,84 @@ const Nav = ({
   setSelected,
   setToggleNav,
   setTemplateFormOpen
-}) => {
-  const [navToggle, setNavToggle] = useState(false);
-  const [visible, setVisible] = useState(false);
-  // this controls the add event icon
-  const [hidden, setHidden] = useState(true);
-  // this controls the arrow toggles in desktop
-  const [calendarIcon, setCalendarIcon] = useState(false);
-  const [eventsIcon, setEventsIcon] = useState(false);
-  const [groupsIcon, setGroupsIcon] = useState(false);
-  const [settingsIcon, setSettingsIcon] = useState(false);
-
+}) => {  
+  // this controls how to display the arrows (up or down) and
+  // whether or not to display the pop-out divs in desktop view
   const [isDisplayingEvents, setIsDisplayingEvents] = useState(false);
   const [isDisplayingGroups, setIsDisplayingGroups] = useState(false);
   const [isDisplayingCalendar, setIsDisplayingCalendar] = useState(false);
   const [isDisplayingSettings, setIsDisplayingSettings] = useState(false);
+  // this allows the app to display components either in
+  // desktop or mobile view, depending on user viewport
   const { height, width } = useWindowDimensions();
 
-  //closes date selection more when a navigation to a new page, and empties date selection
-  const handleChange = num => {
-    setNavState(num);
-    setFormOpen(false);
-    setTemplateFormOpen(false);
-    setSelected([]);
-    setToggleNav(true);
-    setHidden(false);
-  };
-
+// handles behavior of the Calendar tab
   const handleCalendar = () => {
+    // controls how the tab behaves in desktop view
     if (width >= 768) {
+      // toggle
+      // arrows and pop-out div depend on this state
       setIsDisplayingCalendar(!isDisplayingCalendar);
+      // set the view to the right of the sidebar
       setNavState(0);
+    // controls how the tab behaves in mobile view
     } else {
+      // no toggle
       setIsDisplayingCalendar(false);
+      // set the view on the page
       setNavState(0);
     }
   };
+
+  // handles behavior of the Events tab
   const handleEvents = () => {
+    // controls how the tab behaves in desktop view
     if (width >= 768) {
+      // toggle
+      // arrows and pop-out div depend on this state
       setIsDisplayingEvents(!isDisplayingEvents);
+      // set the view to the right of the sidebar
       setNavState(0);
+    // controls how the tab behaves in mobile view  
     } else {
+      // no toggle
       setIsDisplayingEvents(false);
+      // set the view on the page
       setNavState(1);
     }
   };
+
+  // handles behavior of the Groups tab
   const handleGroups = () => {
+    // controls how the tab behaves in desktop view
     if (width >= 768) {
+      // toggle
+      // arrows and pop-out div depend on this state
       setIsDisplayingGroups(!isDisplayingGroups);
+      // set the view to the right of the sidebar
       setNavState(0);
+    // controls how the tab behaves in mobile view
     } else {
+      // no toggle
       setIsDisplayingGroups(false);
+      // set the view on the page
       setNavState(2);
     }
   };
+
+  // handles behavior of the Settings tab
   const handleSettings = () => {
-    if (width >= 768) {
       setIsDisplayingSettings(!isDisplayingSettings);
-      setNavToggle(!navToggle);
-    } else {
-      setIsDisplayingSettings(false);
-      setNavToggle(!navToggle);
-    }
   };
 
   //icon and label colors change based on navState
   return (
     <Container>
       <NavContainer>
-        {/* <div>
-          height: {height}, width: {width}
-        </div> */}
+        {/* calendar tab */}
         <IconDiv className="calendarIcon" onClick={handleCalendar}>
           <div className="popout-div">
-            <Img src={calendarBtnInactive} />
+            <Img src={isDisplayingCalendar ? calendarBtnActive : calendarBtnInactive} />
             <Label style={{ color: colors[2] }}>Calendar</Label>
             <Arrow
               className={
@@ -107,10 +111,11 @@ const Nav = ({
             <CalendarPlaceholder>calendar placeholder</CalendarPlaceholder>
           )}
         </IconDiv>
+        {/* events tab */}
         <IconDiv className="eventsIcon" onClick={handleEvents}>
           <div className="popout-div">
             <Img
-              src={eventsBtnInactive}
+              src={isDisplayingEvents ? eventsBtnActive : eventsBtnInactive}
               style={{ fontSize: '2rem', color: colors[0] }}
             />
             <Label style={{ color: colors[1] }}>Events</Label>
@@ -126,10 +131,11 @@ const Nav = ({
             </EventsPlaceholder>
           )}
         </IconDiv>
+        {/* groups tab */}
         <IconDiv className="groupIcon" onClick={handleGroups}>
           <div className="popout-div">
             <Img
-              src={groupsBtnInactive}
+              src={isDisplayingGroups ? groupsBtnActive : groupsBtnInactive}
               style={{ fontSize: '2rem', color: colors[0] }}
             />
             <Label style={{ color: colors[2] }}>Groups</Label>
@@ -143,9 +149,10 @@ const Nav = ({
             <GroupPlaceholder>groups placeholder</GroupPlaceholder>
           )}
         </IconDiv>
+        {/* settings tab */}
         <IconDiv className="settingsIcon" onClick={handleSettings}>
           <div className="popout-div">
-            <Img src={settingsBtnInactive} />
+            <Img src={isDisplayingSettings ? settingsBtnActive : settingsBtnInactive} />
 
             <Label style={{ color: colors[2] }}>Settings</Label>
             <Arrow
@@ -164,11 +171,12 @@ const Nav = ({
           </Label>
         </IconDiv>
       </NavContainer>
-      {navToggle === true && <Hamburger />}
+      {isDisplayingSettings && <Hamburger />}
     </Container>
   );
 };
 
+// styled components
 const size = {
   tablet: '768px',
   desktop: '1024px'
