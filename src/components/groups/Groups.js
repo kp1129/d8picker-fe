@@ -1,14 +1,18 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'; 
 import btn from '../navigation/NavImgs/addgroupbtn.png'
+import { useForm } from 'react-hook-form';
+import { useAuth } from '../../contexts/auth';
+import { useToasts } from 'react-toast-notifications'
 
-const Groups = () => {
+const Groups = ({setNavState}) => {
+    
     return(
         <Container>
             <Cancel>Cancel</Cancel>
             <Title>Choose Group</Title>
             <BtnDiv>
-                <Btn src={btn}></Btn>
+                <Btn src={btn} onClick={()=>{setNavState(5)}}></Btn>
             </BtnDiv>
         </Container>
     )
