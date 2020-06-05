@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -7,56 +7,71 @@ const AddContactForm = () => {
   const onSubmit = data => console.log(data);
   console.log(errors);
 
+  const [isAdmin, setIsAdmin] = useState(true);
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Tag>Name</Tag>
-      <NameDiv>
-        <Label htmlFor="fn">First Name</Label>
+    <AddContact>
+      {!isAdmin && (
+        <Headline>
+          <Tag>You've been invited to join:</Tag>
+          <GroupName>Girls Junior Varsity Basketball</GroupName>
+        </Headline>
+      )}
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Tag>Name</Tag>
+        <NameDiv>
+          <Label htmlFor="fn">First Name</Label>
+          <Input
+            id="fn"
+            type="text"
+            placeholder="First name"
+            name="fn"
+            ref={register({ required: true, maxLength: 80 })}
+          />
+          <Label htmlFor="ln">Last Name</Label>
+          <Input
+            id="ln"
+            type="text"
+            placeholder="Last name"
+            name="ln"
+            ref={register({ required: true, maxLength: 100 })}
+          />
+        </NameDiv>
+        <Tag>Phone number</Tag>
+        <Label htmlFor="phoneNumber">Phone number</Label>
         <Input
-          id="fn"
-          type="text"
-          placeholder="First name"
-          name="fn"
-          ref={register({ required: true, maxLength: 80 })}
+          type="tel"
+          placeholder="(123) 456-7890"
+          name="phoneNumber"
+          id="phoneNumber"
+          ref={register({ required: true, maxLength: 14 })}
         />
-        <Label htmlFor="ln">First Name</Label>
+        <Tag>Email</Tag>
+        <Label htmlFor="email">Email</Label>
         <Input
-          id="ln"
           type="text"
-          placeholder="Last name"
-          name="ln"
-          ref={register({ required: true, maxLength: 100 })}
+          placeholder="Email address"
+          name="email"
+          id="email"
+          ref={register({ required: true, pattern: /^\S+@\S+$/i })}
         />
-      </NameDiv>
-      <Tag>Phone number</Tag>
-      <Label htmlFor="phoneNumber">First Name</Label>
-      <Input
-        type="tel"
-        placeholder="Phone number"
-        name="phoneNumber"
-        id="phoneNumber"
-        ref={register({ required: true, maxLength: 12 })}
-      />
-      <Tag>Email</Tag>
-      <Label htmlFor="email">First Name</Label>
-      <Input
-        type="text"
-        placeholder="Email"
-        name="email"
-        id="email"
-        ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-      />
-      <Tag>Group</Tag>
-      <Label htmlFor="group">First Name</Label>
-      <select name="group" id="group" ref={register({ required: true })}>
-        <option value="Group1">Group1</option>
-        <option value="Group2">Group2</option>
-      </select>
-      <ButtonDiv>
-        <CancelBtn>Cancel</CancelBtn>
-        <SaveBtn>Save</SaveBtn>
-      </ButtonDiv>
-    </Form>
+        {isAdmin && (
+          <GroupDiv>
+            <Tag>Group</Tag>
+            <Label htmlFor="group">Group</Label>
+            <select name="group" id="group" ref={register({ required: true })}>
+              <option value="Group1">Group1</option>
+              <option value="Group2">Group2</option>
+              <option value="Group3">Group3</option>
+            </select>
+          </GroupDiv>
+        )}
+        <ButtonDiv>
+          <CancelBtn>Cancel</CancelBtn>
+          <SaveBtn>Save</SaveBtn>
+        </ButtonDiv>
+      </Form>
+    </AddContact>
   );
 };
 
@@ -69,6 +84,16 @@ const device = {
   desktop: `(min-width: ${size.desktop})`
 };
 
+const AddContact = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: white;
+`;
+
+const Headline = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -87,6 +112,16 @@ const Tag = styled.p`
   margin: 1rem 0;
 `;
 
+const GroupName = styled.div`
+  font-size: 1.15rem;
+  width: 80%;
+  text-align: center;
+  border-radius: 5px;
+  color: #c70c00;
+  font-weight: bold;
+  background: #f8dfde;
+`;
+
 const NameDiv = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,6 +129,11 @@ const NameDiv = styled.div`
 
 const Input = styled.input`
   border-bottom: 1px solid gray;
+`;
+
+const GroupDiv = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const ButtonDiv = styled.div`
