@@ -7,12 +7,10 @@ import useGapi from '../../hooks/useGapi';
 
 const CreateNewGroup = ({setNavState}) => {
 
+    //needed variables for first axios call, current user object and token from currentUser object
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-
-    // console.log('googleApi: ', googleApi)
-    // console.log('currentUser: ', currentUser)
 
     const [newGroup, setNewGroup] = useState({
         groupName: '',
@@ -28,6 +26,8 @@ const CreateNewGroup = ({setNavState}) => {
         })
     }
 
+    //call will add or check fur the user in the database, return adminId,
+    //then add adminId as a value to newGroup object to be posted
     const handleSubmit = e => {
         e.preventDefault();
         if(!newGroup.groupName){
