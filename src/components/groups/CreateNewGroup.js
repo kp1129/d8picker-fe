@@ -2,19 +2,19 @@ import React, { useState, useContext } from 'react';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
-import useGapi from '../../hooks/useGapi';
 // import { useToasts } from 'react-toast-notifications';
 
-const CreateNewGroup = ({setNavState}) => {
+const CreateNewGroup = ({setNavState, setGroupList}) => {
 
     //needed variables for first axios call, current user object and token from currentUser object
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
-    const { token } = currentUser;
+    const { token, adminId } = currentUser;
 
     const [newGroup, setNewGroup] = useState({
         groupName: '',
         groupDescription: '',
+        adminId: adminId
     });
 
     const [message, setMessage] = useState('')
@@ -26,33 +26,22 @@ const CreateNewGroup = ({setNavState}) => {
         })
     }
 
-    //call will add or check fur the user in the database, return adminId,
-    //then add adminId as a value to newGroup object to be posted
     const handleSubmit = e => {
         e.preventDefault();
+        console.log('ADMIN ID: ', adminId)
         if(!newGroup.groupName){
             (setMessage('Please provide a name for your group'))
         }
+        console.log('newGroup: ', newGroup)
         axiosWithAuth(token)
-        .post('/api/admin', currentUser)
-        .then(res => {
-            console.log(res.data);
-            setNewGroup({
-                ...newGroup,
-                adminId: res.data.adminId
-            })
-            console.log('newGroup: ', newGroup)
-            axiosWithAuth(token)
-            .post('/api/groups', newGroup)
-            .then(res => {
-                console.log('RESPONSE: ', res.data)
-            })
-            .catch(err => {
-                console.log('ERROR 2: ', err)
-            })
+        .post(`/api/groups/${adminId}`, newGroup)
+        .then(async res => {
+            console.log(res.data.groups)
+            await setGroupList([...res.data.groups])
+            setNavState(2)
         })
         .catch(err => {
-            console.log('ERROR 1: ', err)
+            console.log('ERROR 2: ', err)
         })
     }
 
@@ -62,7 +51,7 @@ const CreateNewGroup = ({setNavState}) => {
                 <CancelBtn onClick={() => {setNavState(2)}}>Cancel</CancelBtn>
                 <Header>New Group</Header>
             </HeaderContainer>
-            <Form onSubmit={handleSubmit}>
+            <Form >
                 <Label htmlFor="groupName" style={{fontWeight: 'bold'}}> Group Name: 
                     <Input
                     type="text"
@@ -84,7 +73,7 @@ const CreateNewGroup = ({setNavState}) => {
                     onChange={handleChange}
                     />
                 </Label>
-                <SubmitBtn type="submit" label="submit">Submit</SubmitBtn>
+                <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>Submit</SubmitBtn>
             </Form>
             <p>{message}</p>
         </Container>
