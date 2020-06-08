@@ -6,6 +6,7 @@ import Nav from '../navigation/Nav';
 import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
+import CreateNewGroup from '../groups/CreateNewGroup';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -23,7 +24,7 @@ const getTemplateList = async ({ googleId, token }) => {
 };
 
 const Home = () => {
-  // 0 = calendar, 1 = events, 2 = groups
+  // 0 = calendar, 1 = events, 2 = groups, 5 = createNewGroup, 
   const [navState, setNavState] = useState(0);
 
   //deals with toggling event selection mode
@@ -114,7 +115,7 @@ const Home = () => {
           </>
         )}
 
-        {navState === 2 && <Groups />}
+        {navState === 2 && <Groups setNavState={setNavState} />}
 
         {navState === 3 && (
           <NewEventForm
@@ -143,6 +144,10 @@ const Home = () => {
             setTemplateFormOpen={setTemplateFormOpen}
             setFormOpen={setFormOpen}
           />
+        )}
+
+        {navState === 5 && (
+          < CreateNewGroup setNavState={setNavState}/>
         )}
 
         {toggleNav && (

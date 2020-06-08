@@ -22,7 +22,7 @@ const Days = ({ date, month }) => {
   // console.log('daysInMonth: ', daysInMonth)
   // console.log('currentDay: ', currentDay)
   // console.log('cDate: ', cDate)
-  console.log('weekDayOfFirstDoM', weekDayOfFirstDoM);
+  // console.log('weekDayOfFirstDoM', weekDayOfFirstDoM);
   return (
     <div
       style={{
