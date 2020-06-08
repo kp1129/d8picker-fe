@@ -18,7 +18,6 @@ const Groups = ({setNavState, groupList, setGroupList}) => {
         axiosWithAuth(token)
         .get(`/api/groups/${adminId}`)
         .then(res => {
-            console.log(res.data)
             sortedGroupList = [...res.data.groups]
             sortedGroupList.sort((a, b) => {
                 let nameA = a.groupName.toUpperCase();

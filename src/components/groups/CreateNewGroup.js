@@ -52,7 +52,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
                 <Header>New Group</Header>
             </HeaderContainer>
             <Form >
-                <Label htmlFor="groupName" style={{fontWeight: 'bold'}}> Group Name: 
+                <Label htmlFor="groupName"> Group Name: 
                     <Input
                     type="text"
                     placeholder="New Group Name"
@@ -64,7 +64,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
 
                 <br/>
 
-                <Label htmlFor="groupName" style={{fontWeight: 'bold'}}> Group Description: 
+                <Label htmlFor="groupName"> Group Description: 
                     <Input
                     type="text"
                     placeholder="New Group Description"
@@ -118,6 +118,7 @@ const Form = styled.form`
 const Label = styled.label`
     width: 100%;
     margin: 3% 0;
+    font-weight: bold;
 `
 
 const Input = styled.input`

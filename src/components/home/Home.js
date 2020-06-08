@@ -7,6 +7,7 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
+import AdminContactForm from '../groups/AdminContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -25,7 +26,7 @@ const getTemplateList = async ({ googleId, token }) => {
 
 const Home = () => {
   // 0 = calendar, 1 = events, 2 = groups, 5 = createNewGroup, 
-  const [navState, setNavState] = useState(0);
+  const [navState, setNavState] = useState(6);
 
   //deals with toggling event selection mode
   const [formOpen, setFormOpen] = useState(false);
@@ -149,7 +150,11 @@ const Home = () => {
         )}
 
         {navState === 5 && (
-          < CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
+          <CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
+        )}
+
+        {navState === 6 && (
+          <AdminContactForm setNavState={setNavState}/>
         )}
 
         {toggleNav && (
