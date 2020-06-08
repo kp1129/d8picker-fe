@@ -34,7 +34,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         }
         console.log('newGroup: ', newGroup)
         axiosWithAuth(token)
-        .post('/api/groups', newGroup)
+        .post(`/api/groups/${adminId}`, newGroup)
         .then(async res => {
             console.log(res.data.groups)
             await setGroupList([...res.data.groups])
