@@ -34,6 +34,8 @@ const Home = () => {
   //list of event templates from backend
   const [templateList, setTemplateList] = useState([]);
 
+  const [groupList, setGroupList] = useState([]);
+
   //holds the start and end time of currently selected event.
   const [conStart, setConStart] = useState('');
   const [conEnd, setConEnd] = useState('');
@@ -115,7 +117,7 @@ const Home = () => {
           </>
         )}
 
-        {navState === 2 && <Groups setNavState={setNavState} />}
+        {navState === 2 && <Groups setNavState={setNavState} groupList={groupList} setGroupList={setGroupList}/>}
 
         {navState === 3 && (
           <NewEventForm
@@ -147,7 +149,7 @@ const Home = () => {
         )}
 
         {navState === 5 && (
-          < CreateNewGroup setNavState={setNavState}/>
+          < CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
         )}
 
         {toggleNav && (
