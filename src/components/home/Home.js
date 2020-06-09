@@ -7,7 +7,7 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
-import AdminContactForm from '../groups/AdminContactForm';
+import InviteeAddContactForm from '../groups/InviteeAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -207,10 +207,11 @@ const Home = () => {
           <CreateNewGroup setNavState={setNavState} setGroupList={setGroupList} groupList={groupList}/>
         )}
 
-        {navState === 6 && (
-          <AdminContactForm setNavState={setNavState} groupList={groupList}/>
+{navState === 6 && (
+          <InviteeAddContactForm /> 
         )}
 
+       
         {toggleNav && (
           <Nav
             navState={navState}
