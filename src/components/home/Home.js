@@ -57,6 +57,9 @@ const Home = () => {
 
   // holds the id of the template to update
   const [templateIdToUpdate, setTemplateIdToUpdate] = useState(null);
+  
+  // holds the admin Info
+  const [adminInfo, setAdminInfo] = useState({});
 
   //changes the color of the nav icons depending on which components are rendered
   useEffect(() => {
@@ -70,6 +73,24 @@ const Home = () => {
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
 
+   // gets adminId from backend
+  useEffect(() => {
+    (async () => {
+      let adminDetails = await {
+        name: currentUser.name,
+        email: currentUser.email,
+        googleId: currentUser.googleId
+      };
+      axiosWithAuth(currentUser.token).post('/api/admin', adminDetails)
+        .then(res => {
+          setAdminInfo({...adminDetails, adminId: res.data.adminId});
+        })
+        .catch(err => {
+          console.log('error in fetching adminId', err);
+        })
+    })();
+  }, [currentUser]);
+  
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
