@@ -1,48 +1,68 @@
-import React, { useState, useContext } from 'react';
-import { useAuth } from '../../contexts/auth';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 
-const AdminContactForm = ({setNavState}) => {
+const AdminContactForm = ({setNavState, groupList}) => {
+
+    const [newContact, setNewContact] = useState({})
+
+    const handleChange = e => {
+        setNewContact({
+            ...newContact,
+            [e.target.name]: e.target.value
+        })
+    }
 
     return(
         <Container>
             <Form>
                 <div style={{fontWeight: 'bold'}}>Name:</div>
                 <NameContainer style={{margin: '1% 0 3%'}}>
-                    <FirstName htmlFor="">
+                    <FirstName htmlFor="firstName">
                         <Input
-                         type="text"
-                         placeholder="First name"
+                        type="text"
+                        placeholder="First name"
+                        name="firstName"
+                        value={newContact.firstName}
+                        onChange={handleChange}
                          />
                     </FirstName>
-                    <LastName htmlFor=""> 
+                    <LastName htmlFor="lastName"> 
                         <Input
                          type="text"
                          placeholder="Last name"
+                         name="lastName"
+                         value={newContact.lastName}
+                         onChange={handleChange}
                          />
                     </LastName>
                 </NameContainer>
-                <Label htmlFor="">Phone number: 
+                <Label htmlFor="phoneNumber">Phone number: 
                     <Input
                      type="text"
-                     placeholder="(123)456-7890"
+                     placeholder="Phone number"
+                     name="phoneNumber"
+                     value={newContact.phoneNumber}
+                     onChange={handleChange}
                      />
                 </Label>
-                <Label htmlFor="">Email: 
+                <Label htmlFor="email">Email: 
                     <Input
                      type="text"
-                     placeholder="Email address"
+                     placeholder="Email"
+                     name="email"
+                     value={newContact.email}
+                     onChange={handleChange}
                      />
                 </Label>
                 <Label htmlFor="">Group: 
                     <select name="" id="">
                         <option value="">Group name</option>
-                        {/* {groupList.map(group => {
+                        {groupList.map(group => {
                             return(
-                            <option value="">{group.groupName}</option>
+                            <option key={group.id} value="">{group.groupName}</option>
                             )
-                        })} */}
+                        })}
                     </select>
                 </Label>
                     <Btn onClick={()=>{setNavState(0)}}>Cancel</Btn>
