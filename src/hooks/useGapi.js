@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import {axiosWithAuth} from '../utils/axiosWithAuth';
 
 const handleSignIn = gapi => async () => {
   try {
@@ -17,30 +16,16 @@ const handleSignOut = gapi => async () => {
     throw new Error('Google API not loaded', error);
   }
 };
-const getProfile = async (auth, setCurrentUser) => {
+const getProfile = (auth, setCurrentUser) => {
   const userInfo = auth.currentUser.get().getBasicProfile();
-  let adminId;
-  // send admin info to the database
-  const adminInfo = {
-    name: userInfo.getName(),
-    email: userInfo.getEmail(),
-    googleId: userInfo.getId(),
-  }
-  // console.log('admin info here', adminInfo, auth.currentUser.get().getAuthResponse().id_token);
-  await axiosWithAuth(auth.currentUser.get().getAuthResponse().id_token).post('http://localhost:4000/api/admin/', adminInfo)
-  .then(res => {
-    console.log('admin posted', res.status, res.data.adminId)
-    adminId = res.data.adminId;
-  })
-  .catch(err => console.log(err));
+  
   return setCurrentUser(
     userInfo && {
       name: userInfo.getName(),
       email: userInfo.getEmail(),
       photoUrl: userInfo.getImageUrl(),
       googleId: userInfo.getId(),
-      token: auth.currentUser.get().getAuthResponse().id_token,
-      adminId: adminId
+      token: auth.currentUser.get().getAuthResponse().id_token
     }
   );
 };
@@ -69,7 +54,7 @@ const gapiLoad = ({
       // Load an API (ex. Calendar API) when client is loaded to the DOM
       opts.onLoaded(window.gapi.client);
       setIsAuthenticated(auth.currentUser.get().hasGrantedScopes(opts.scope));
-      await getProfile(auth, setCurrentUser);
+      getProfile(auth, setCurrentUser);
       setGapi(window.gapi);
       setIsLoading(false);
     } catch (error) {
