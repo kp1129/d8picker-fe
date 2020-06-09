@@ -1,49 +1,9 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect} from 'react';
 import styled from 'styled-components'; 
 import btn from '../navigation/NavImgs/addgroupbtn.png';
-import axiosWithAuth from '../../utils/axiosWithAuth';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
 
-const Groups = ({setNavState, groupList, setGroupList}) => {
-
-    const { googleApi } = useAuth();
-    const { currentUser } = googleApi;
-    const { token, adminId } = currentUser;
-
-    //sets groupList state to state and sorts aplphabetically
-    const getGroupList = () => {
-        let sortedGroupList = []
-        axiosWithAuth(token)
-        .get(`/api/groups/${adminId}`)
-        .then(res => {
-            console.log(res.data)
-            sortedGroupList = [...res.data.groups]
-            sortedGroupList.sort((a, b) => {
-                let nameA = a.groupName.toUpperCase();
-                let nameB = b.groupName.toUpperCase();
-
-                if (nameA < nameB) {
-                    return -1;
-                  }
-                  if (nameA > nameB) {
-                    return 1;
-                  }
-                  return 0;
-            })
-            setGroupList([...sortedGroupList])
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }
-    console.log('groupList: ', groupList)
-
-    useEffect(() => {
-        getGroupList()
-    }, [])
-    
+const Groups = ({setNavState, groupList}) => {
     return(
         <Container>
             <NavContainer>
