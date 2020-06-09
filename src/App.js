@@ -10,6 +10,7 @@ import Welcome from './components/landing-page/Welcome';
 import Loading from './components/landing-page/Loading';
 import Home from './components/home/Home';
 import Dashboard from './components/home/Dashboard.js';
+import AddContactForm from './components/groups/AddContactForm';
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
@@ -60,6 +61,9 @@ function App() {
               </Route>
               <Route exact path="/">
                 <Welcome />
+              </Route>
+              <Route exact path='/:groupInviteHash'>
+                <AddContactForm />
               </Route>
               <PrivateRoute path="/:id/dashboard">
                 <Dashboard />
