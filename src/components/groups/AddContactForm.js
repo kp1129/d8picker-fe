@@ -1,39 +1,137 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import {useParams} from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import {Context} from '../../contexts/Contexts';
+import {useAuth} from '../../contexts/auth';
+import axiosWithAuth from '../../utils/axiosWithAuth';
+import { useToasts } from 'react-toast-notifications';
 
 const AddContactForm = () => {
   const { register, handleSubmit, errors } = useForm();
-  const onSubmit = data => console.log(data);
+
+  const { addToast } = useToasts();
+
+  const {setNavState} = useContext(Context);
+  const {googleApi} = useAuth();
+  const {currentUser} = googleApi;
+  const [input, setInput] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    groupId: ''
+  });
+
+  const handleChange = e => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
+  };
+ 
+  
+  const onSubmit = data => {
+    // format phone number
+    const re = /\D/g;
+    let cleanPhoneNumber = data.phoneNumber.replace(re, "");    
+    const payload = {
+      ...input,
+      phoneNumber: cleanPhoneNumber,
+      adminId: adminInfo.adminId
+      // groupId: groupInfo.groupId
+    }   
+    // if the user is admin
+     axiosWithAuth(currentUser.token).post("/api/contacts/", payload)
+     .then(res => {
+       console.log("response from the post request", res);
+       if(res.status === 201){
+        //  notify the user that contact was successfully created
+        addToast('Contact added!', {
+          appearance: 'info',
+          autoDismiss: true,
+          autoDismissTimeout: 6000
+        });
+        // redirect the user
+        setNavState(1);
+       }
+      
+      })
+     .catch(err => console.log(err))
+
+    // if the user is not admin
+
+  };
+  
   console.log(errors);
 
-  const [isAdmin, setIsAdmin] = useState(true);
+  
+
+  // adminInfo and groupInfo
+  // const [adminInfo, setAdminInfo] = useState({});
+  const {adminInfo} = useContext(Context);
+  const [groupInfo, setGroupInfo] = useState({});
+  
+  // check to see if link is invalid
+  const [linkValidity, setLinkValidity] = useState(true);
+  // check to see if the user is admin
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const { groupInviteHash } = useParams();
+
+  useEffect(() => {
+    // check to see if the URL has groupInviteHash
+   if(groupInviteHash){
+      // also use verify endpoint in backend to verify the hash
+      // const response = axios call to backend with groupInviteHash
+      // // if verified, set isAdmin to false, store group and admin information
+        setIsAdmin(false);
+        // setLinkValidity(true);
+        // setAdminInfo(res.data.adminInfo);
+        // setGroupInfo(res.data.groupInfo);
+      // if not verified
+        // setLinkValidity(false);
+   } else { // else if no groupInviteHash in the link set isAdmin to true and adminInfo from context
+      setIsAdmin(true);
+      // setAdminInfo(useContext(Context).adminInfo)
+    }
+  }, [groupInviteHash]);
+
 
   return (
     <AddContact>
-      {!isAdmin && (
+      {!linkValidity && (
         <Headline>
+        <Tag>This link has expired</Tag>
+       </Headline>
+      )}
+      {linkValidity && !isAdmin && (
+        <Headline>
+        
           <Tag>You've been invited to join:</Tag>
           <GroupName>Girls Junior Varsity Basketball</GroupName>
         </Headline>
       )}
+      { linkValidity && (
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Tag>Name</Tag>
         <NameDiv>
-          <Label htmlFor="fn">First Name</Label>
+          <Label htmlFor="firstName">First Name</Label>
           <Input
-            id="fn"
+            id="firstName"
             type="text"
             placeholder="First name"
-            name="fn"
+            name="firstName"
+            onChange={handleChange}
             ref={register({ required: true, maxLength: 80 })}
           />
-          <Label htmlFor="ln">Last Name</Label>
+          <Label htmlFor="lastName">Last Name</Label>
           <Input
-            id="ln"
+            id="lastName"
             type="text"
             placeholder="Last name"
-            name="ln"
+            name="lastName"
+            onChange={handleChange}
             ref={register({ required: true, maxLength: 100 })}
           />
         </NameDiv>
@@ -41,36 +139,42 @@ const AddContactForm = () => {
         <Label htmlFor="phoneNumber">Phone number</Label>
         <Input
           type="tel"
-          placeholder="(123) 456-7890"
+          placeholder="1234567890"
           name="phoneNumber"
           id="phoneNumber"
-          ref={register({ required: true, maxLength: 14 })}
+          
+          ref={register({required: true, maxLength: 14, pattern: /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/i})} 
         />
+       
+
+        
         <Tag>Email</Tag>
         <Label htmlFor="email">Email</Label>
         <Input
-          type="text"
+          type="email"
           placeholder="Email address"
           name="email"
           id="email"
-          ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+          onChange={handleChange}
+          ref={register({ required: false, pattern: /^\S+@\S+$/i })}
         />
         {isAdmin && (
           <GroupDiv>
             <Tag>Group</Tag>
-            <Label htmlFor="group">Group</Label>
-            <select name="group" id="group" ref={register({ required: true })}>
-              <option value="Group1">Group1</option>
-              <option value="Group2">Group2</option>
-              <option value="Group3">Group3</option>
+            <Label htmlFor="groupId">Group</Label>
+            <select onChange={handleChange} name="groupId" id="groupId" ref={register({ required: true })}>
+              <option value="1">Group1</option>
+              <option value="2">Group2</option>
+              <option value="3">Group3</option>
             </select>
           </GroupDiv>
         )}
         <ButtonDiv>
           <CancelBtn>Cancel</CancelBtn>
-          <SaveBtn>Save</SaveBtn>
+          <SaveBtn><button type="submit">Save</button></SaveBtn>
         </ButtonDiv>
       </Form>
+      )}
     </AddContact>
   );
 };
@@ -100,8 +204,8 @@ const Form = styled.form`
   width: 90%;
   margin: 0 auto;
 
-  #fn,
-  #ln {
+  #firstName,
+  #lastName {
     width: 45%;
   }
 `;
