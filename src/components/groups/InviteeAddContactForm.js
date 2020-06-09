@@ -64,7 +64,7 @@ const InviteeAddContactForm = () => {
       groupId: groupInfo.groupId
     }   
     console.log("payload", payload);
-      axios.post('/api/inviteToGroup/addContact', payload)
+    axios.post(`${process.env.REACT_APP_ENDPOINT_URL}/api/inviteToGroup/addContact`, payload)
       .then(res => {
         console.log(res);
         if(res.status === 201){
