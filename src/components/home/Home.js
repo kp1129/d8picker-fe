@@ -103,6 +103,7 @@ const Home = () => {
     <Div>
       <Context.Provider
         value={{
+          adminInfo,
           formOpen,
           setFormOpen,
           setTemplateFormOpen,
