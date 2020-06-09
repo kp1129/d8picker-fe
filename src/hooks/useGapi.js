@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 const handleSignIn = gapi => async () => {
   try {
     await gapi.auth2.getAuthInstance().signIn();
@@ -17,6 +18,7 @@ const handleSignOut = gapi => async () => {
 };
 const getProfile = (auth, setCurrentUser) => {
   const userInfo = auth.currentUser.get().getBasicProfile();
+  
   return setCurrentUser(
     userInfo && {
       name: userInfo.getName(),
