@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/auth';
 import { Context } from '../../contexts/Contexts';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
-import {Image} from '@chakra-ui/core';
 
 const Contacts = ({ setNavState }) => {
 
@@ -13,20 +12,20 @@ const Contacts = ({ setNavState }) => {
     const { token } = currentUser;
     const { adminInfo } = useContext(Context);
 
-    //state to hold current profile image
-    const [img, setImg] = useState(currentUser.photoUrl);
-
-    // need to change to user profile 
-    useEffect(()=>{
-        setImg(currentUser.photoUrl)
-    },[])
-
     const [viewContacts, setViewContacts] = useState([]);
+    const [navToggle, setNavToggle] = useState(false);
 
     const handleChange = e => {
         setViewContacts([
             ...viewContacts
         ])
+        setNavState(7)
+        setNavToggle(true)
+    };
+
+    const handleGroups = e => {
+        setNavToggle(navToggle)
+        setNavState(2)
     };
 
     // retrieves all contacts and sorts by first name
@@ -62,23 +61,27 @@ const Contacts = ({ setNavState }) => {
 
     return(
         <Container>
-            <NavContainer >
-                <ContactTitle className='contacts' onClick={handleChange}>Contacts</ContactTitle>
-                <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={() => {setNavState(5)}}>Back</p>
+            <NavContainer>
+                <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
+              
+                <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={handleGroups}>Back</p>
+               
             </NavContainer>
-            <ContactDiv className='contacts' onClick={() => {setNavState(6)}}>
+             <TabsContainer>
+                    <Tabs onClick={handleGroups}>Groups</Tabs>
+                    <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
+                </TabsContainer>
+            <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
             {viewContacts.map((contact, index) => {
                 return(
                 <Contact key={index} >
-                     <Image
-                        square="full"
-                        size="45px"
-                        src={img}
-                        alt="avatar"
-                        style={{marginTop: '0px', marginLeft: "10px", marginBottom: "0px", borderRadius: '0 6px 6px 6px'}}
-                        />
+                    {/* Placeholder image */}
+                    <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
                     <div style={{ marginLeft: '15px'}}>
-                    <ContactNames>{contact.firstName}</ContactNames>
+                    <ContactNames>
+                        {contact.firstName} {''}
+                        {contact.lastName}
+                    </ContactNames>
                     <IconDiv>
                         <Icons className="fas fa-phone"></Icons>
                         <Icons className="fas fa-comment-medical"></Icons>
@@ -89,7 +92,7 @@ const Contacts = ({ setNavState }) => {
                 )
             })}
             <BtnDiv>
-                <img src={circleBtn} onClick={()=>{setNavState(6)}}></img>
+                <img src={circleBtn} onClick={()=>{setNavState(5)}}></img>
                 <Button>Add to group</Button>
             </BtnDiv>
             <BtnDiv>
@@ -113,11 +116,22 @@ const NavContainer = styled.div`
     width: 92%;
     display: flex; 
     flex-wrap: nowrap;
-    align-content: flex-start;
-    justify-content: space-around;
-    padding: 4% 8% 2% 3%;
-    position: fixed;
+    justify-content: flex-end;
+    padding: 4% 0 1% 3%;
     top: 0;
+`;
+const TabsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-items: flex-end;
+    margin-left: 75%;
+`;
+
+const Tabs = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
 `;
 const IconDiv= styled.div`
     width: 100%;
@@ -135,14 +149,14 @@ const ContactDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 10% 0 0 0;
+    margin-top: 2%;
 `
 const Contact = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    margin: 5%;
+    margin: 5% 2%;
 `
 const ContactTitle = styled.p`
     width: 92%;
@@ -183,3 +197,4 @@ const BtnContact2 = styled.button`
     border-radius: 9px;
     margin: 3% 0;
 `;
+
