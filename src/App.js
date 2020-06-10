@@ -62,7 +62,7 @@ function App() {
               <Route exact path="/">
                 <Welcome />
               </Route>
-              <Route exact path='/:groupInviteHash'>
+              <Route exact path='/invitee/:groupInviteHash'>
                 <InviteeAddContactForm />
               </Route>
               <PrivateRoute path="/:id/dashboard">
