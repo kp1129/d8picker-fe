@@ -1,18 +1,18 @@
 import React, { useState, useContext } from 'react';
-import { Context } from '../../contexts/Contexts'
+import { Context } from '../../contexts/Contexts';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import { axiosWithAuth } from '../../utils/axiosWithAuth';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
 const CreateNewGroup = ({setNavState, setGroupList}) => {
 
     //needed variables for first axios call, current user object and token from currentUser object
     const { googleApi } = useAuth();
-    const { currentUser } = googleApi;
+    const { currentUser }= googleApi;
+    const {adminInfo} = useContext(Context);
     const { token } = currentUser;
-    const { adminInfo } = useContext(Context)
+    // const { adminInfo } = useContext(Context)
 
     const colorOptions = ['#c70c00', '#ff2bae', '#ffcc77', '#9d6e1f', '#561302', '#8a0a01', '#2e5780', '#f65b1c', '#2f95f9', '#81c1ff', '#f19805', '#218047']
     const iconOptions = ['fas fa-star', 'fas fa-square', 'fas fa-circle']
@@ -35,11 +35,11 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         setNewGroup({
             ...newGroup,
             [e.target.name]: e.target.value
-        })
-    }
+        })};
 
     const handleSubmit = e => {
         e.preventDefault();
+        console.log('ADMIN ID: ', adminInfo.adminId)
         if(!newGroup.groupName){
             (setMessage('Please provide a name for your group'))
         }
@@ -54,6 +54,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
             console.log('ERROR 2: ', err)
         })
     }
+    
 
     return (
         <Container>
@@ -114,8 +115,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
             <p>{message}</p>
         </Container>
     )
-}
-
+    }
 export default CreateNewGroup
 
 const Container = styled.div`
