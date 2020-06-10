@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../../contexts/Contexts';
 import Dashboard from './Dashboard';
 import Events from '../events/Events';
@@ -7,6 +7,7 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
+import InviteeAddContactForm from '../groups/InviteeAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -24,7 +25,7 @@ const getTemplateList = async ({ googleId, token }) => {
 };
 
 const Home = () => {
-  // 0 = calendar, 1 = events, 2 = groups, 5 = createNewGroup, 
+  // 0 = calendar, 1 = events, 2 = groups, 5 = createNewGroup,
   const [navState, setNavState] = useState(0);
 
   //deals with toggling event selection mode
@@ -57,7 +58,7 @@ const Home = () => {
 
   // holds the id of the template to update
   const [templateIdToUpdate, setTemplateIdToUpdate] = useState(null);
-  
+
   // holds the admin Info
   const [adminInfo, setAdminInfo] = useState({});
 
@@ -73,7 +74,7 @@ const Home = () => {
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
 
-   // gets adminId from backend
+  // gets adminId from backend
   useEffect(() => {
     (async () => {
       let adminDetails = await {
@@ -81,16 +82,47 @@ const Home = () => {
         email: currentUser.email,
         googleId: currentUser.googleId
       };
-      axiosWithAuth(currentUser.token).post('/api/admin', adminDetails)
+      axiosWithAuth(currentUser.token)
+        .post('/api/admin', adminDetails)
         .then(res => {
-          setAdminInfo({...adminDetails, adminId: res.data.adminId});
+          setAdminInfo({ ...adminDetails, adminId: res.data.adminId });
         })
         .catch(err => {
           console.log('error in fetching adminId', err);
-        })
+        });
     })();
   }, [currentUser]);
-  
+
+  //fetches list of groups for current user
+  const getGroupList = () => {
+    let sortedGroupList = [];
+    axiosWithAuth(currentUser.token)
+      .get(`/api/groups/${adminInfo.adminId}`)
+      .then(res => {
+        sortedGroupList = [...res.data.groups];
+        sortedGroupList.sort((a, b) => {
+          let nameA = a.groupName.toUpperCase();
+          let nameB = b.groupName.toUpperCase();
+
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
+        setGroupList([...sortedGroupList]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getGroupList();
+  }, [adminInfo]);
+
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
@@ -103,6 +135,8 @@ const Home = () => {
     <Div>
       <Context.Provider
         value={{
+          groupList,
+          setGroupList,
           adminInfo,
           formOpen,
           setFormOpen,
@@ -139,7 +173,13 @@ const Home = () => {
           </>
         )}
 
-        {navState === 2 && <Groups setNavState={setNavState} groupList={groupList} setGroupList={setGroupList}/>}
+        {navState === 2 && (
+          <Groups
+            setNavState={setNavState}
+            groupList={groupList}
+            setGroupList={setGroupList}
+          />
+        )}
 
         {navState === 3 && (
           <NewEventForm
@@ -171,8 +211,14 @@ const Home = () => {
         )}
 
         {navState === 5 && (
-          < CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
+          <CreateNewGroup
+            setNavState={setNavState}
+            setGroupList={setGroupList}
+            groupList={groupList}
+          />
         )}
+
+        {navState === 6 && <InviteeAddContactForm />}
 
         {toggleNav && (
           <Nav
