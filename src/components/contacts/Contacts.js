@@ -15,7 +15,7 @@ const Contacts = ({ setNavState }) => {
     const [viewContacts, setViewContacts] = useState([]);
     const [navToggle, setNavToggle] = useState(false);
 
-    const handleChange = e => {
+    const handleChange = () => {
         setViewContacts([
             ...viewContacts
         ])
@@ -23,7 +23,7 @@ const Contacts = ({ setNavState }) => {
         setNavToggle(true)
     };
 
-    const handleGroups = e => {
+    const handleGroups = () => {
         setNavToggle(navToggle)
         setNavState(2)
     };
@@ -65,11 +65,10 @@ const Contacts = ({ setNavState }) => {
                 <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
               
                 <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={handleGroups}>Back</p>
-               
             </NavContainer>
              <TabsContainer>
-                    <Tabs onClick={handleGroups}>Groups</Tabs>
-                    <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
+                    <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
+                    <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
                 </TabsContainer>
             <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
             {viewContacts.map((contact, index) => {
@@ -111,34 +110,35 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     padding: 5% 5% 0 5%;
-`
+    font-size: 1.2rem;
+`;
 const NavContainer = styled.div`
-    width: 92%;
+    width: 100%;
     display: flex; 
     flex-wrap: nowrap;
     justify-content: flex-end;
     padding: 4% 0 1% 3%;
-    top: 0;
 `;
 const TabsContainer = styled.div`
-    width: 100%;
+    width: 92%;
     display: flex;
     justify-items: flex-end;
-    margin-left: 75%;
+    margin-left: 70%;
+    font-size: 1rem;
 `;
-
 const Tabs = styled.button`
+    border: 1px solid #AFC9D9;
+    border-radius: 10px 10px 0 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
+    justify-content: space-around;
+    padding: 3% 10%;
 `;
 const IconDiv= styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
 `;
-
 const Icons = styled.i`
     font-size: 1.4rem;
     color: #AFC9D9;
@@ -159,7 +159,7 @@ const Contact = styled.div`
     margin: 5% 2%;
 `
 const ContactTitle = styled.p`
-    width: 92%;
+    width: 100%;
     font-size: 1.2rem;
     display: flex;
     justify-content: flex-start;
@@ -170,31 +170,32 @@ const ContactNames = styled.p`
     padding-bottom: 2%;
 `;
 const Button = styled.button`
-    border: 4px solid #28807D;
-    background: #28807D;
-    color: white;
-    padding: 3px 50px;
+    background: white;
+    color: #28807D;
     border-radius: 9px;
 `;
 const BtnDiv = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 8% 3%;
+    justify-content: flex-start;
+    padding-top: 2%;
+    font-size: 1.2rem;
 `;
 
 const BtnContact1 = styled.button`
     border: 4px solid #28807D;
-    padding: 3px 50px;
+    padding: 3px 55px;
     border-radius: 9px;
-    margin: 3%;
+    margin: 3% 0 0 1%;
+    width: 50%;
 `;
 const BtnContact2 = styled.button`
     border: 4px solid #28807D;
     background: #28807D;
     color: white;
-    padding: 3px 50px;
+    padding: 3px 55px;
     border-radius: 9px;
-    margin: 3% 0;
+    margin: 3% 0 0 1%;
+    width: 50%;
 `;
 
