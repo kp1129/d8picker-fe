@@ -5,6 +5,7 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
+import Contacts from '../contacts/Contacts.js';
 
 const Groups = ({setNavState, groupList, setGroupList}) => {
 
@@ -64,6 +65,7 @@ const Groups = ({setNavState, groupList, setGroupList}) => {
                 )
             })}
             </GroupList>
+            {/* <Contacts /> */}
         </Container>
     )
 }
