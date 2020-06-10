@@ -15,6 +15,9 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
     const colorOptions = ['#c70c00', '#ff2bae', '#ffcc77', '#9d6e1f', '#561302', '#8a0a01', '#2e5780', '#f65b1c', '#2f95f9', '#81c1ff', '#f19805', '#218047']
     const iconOptions = ['fas fa-star', 'fas fa-square', 'fas fa-circle']
 
+    const [selectedColor, setSelectedColor] = useState('')
+    const [selectedIcon, setSelectedIcon] = useState('');
+
     const [newGroup, setNewGroup] = useState({
         groupName: '',
         groupDescription: '',
@@ -79,29 +82,30 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
                 </Label>
                 <ColorsContainer>
                     {colorOptions.map(color => {
-                        return(
-                            <div
-                             key={color}
-                             style={{width: '80px', height: '80px', background: `${color}`, margin: '1%', borderRadius: '5px'}}
-                             onClick={()=>{setNewGroup({...newGroup, groupColor: color})}}
-                            >
-                            </div>
-                        )
+                        if(selectedColor === color){
+                            return(
+                                <ColorOption key={color} onClick={()=>{setSelectedColor(color)}} color={`${color}`} border={`solid 2px red`} borderRadius={`5px`}/>
+                            )
+                        }else {
+                            return(
+                                <ColorOption key={color} onClick={()=>{setSelectedColor(color)}} color={`${color}`} />
+                            )
+                        }
                     })}
                 </ColorsContainer>
-                <IconContainer>
-                    {iconOptions.map(icon => {
-                        return(
-                            <i
-                             key={icon} 
-                             className={icon} 
-                             style={{fontSize: '5rem'}} 
-                             onClick={()=>{setNewGroup({...newGroup, groupIcon: icon})}}
-                            >
-                            </i>
-                        )
+                <IconsContainer>
+                    {iconOptions.map((icon) => {
+                        if(selectedIcon === icon){
+                            return(
+                            <Icon key={icon} onClick={()=>{setSelectedIcon(icon)}} className={icon} border={`solid 3px #FF0000`} borderRadius={`5px`} />
+                            )
+                        }else {
+                            return(
+                            <Icon key={icon} onClick={()=>{setSelectedIcon(icon)}} className={icon}></Icon>
+                            )
+                        }
                     })}
-                </IconContainer>
+                </IconsContainer>
                 <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>Submit</SubmitBtn>
             </Form>
             <p>{message}</p>
@@ -160,15 +164,6 @@ const Input = styled.input`
     outline: none
 `
 
-// const InputTextArea = styled.textarea`
-//     width: 100%;
-//     border: none;
-//     border-bottom: solid 2px #999898;
-//     background-color: #F4F8F9;
-//     margin: 1% 0;
-//     outline: none;
-// `
-
 const SubmitBtn = styled.button`
     width: 70%;
     background: #28807d;
@@ -184,14 +179,13 @@ const SubmitBtn = styled.button`
     cursor: pointer;
     }
 `
-
 const ColorsContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 `
-const IconContainer = styled.div`
+const IconsContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -199,6 +193,17 @@ const IconContainer = styled.div`
     margin: 5% 0;
 `
 
-// const Icon = styled.i`
-//     font-size: 5rem;
-// `
+const Icon = styled.i`
+    font-size: 5rem;
+    border: ${props => props.border};
+    border-radius: ${props => props.borderRadius};
+`
+
+const ColorOption = styled.div`
+    width: 80px;
+    height: 80px;
+    background: ${props => props.color};
+    margin: 1%;
+    border: ${props => props.border};
+    border-radius: 5px;
+`

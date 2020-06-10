@@ -7,7 +7,6 @@ import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
 
 const Groups = ({setNavState, groupList, setGroupList}) => {
-
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token, adminId } = currentUser;
@@ -38,7 +37,6 @@ const Groups = ({setNavState, groupList, setGroupList}) => {
             console.log(err)
         })
     }
-    console.log('groupList: ', groupList)
 
     useEffect(() => {
         getGroupList()
