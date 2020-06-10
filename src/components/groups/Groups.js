@@ -3,7 +3,43 @@ import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useToasts } from 'react-toast-notifications'
 
-const Groups = ({setNavState, groupList}) => {
+const Groups = ({setNavState, groupList, setGroupList}) => {
+    const { googleApi } = useAuth();
+    const { currentUser } = googleApi;
+    const { token, adminId } = currentUser;
+
+    //sets groupList state to state and sorts aplphabetically
+    const getGroupList = () => {
+        let sortedGroupList = []
+        axiosWithAuth(token)
+        .get(`/api/groups/${adminId}`)
+        .then(res => {
+            console.log(res.data)
+            sortedGroupList = [...res.data.groups]
+            sortedGroupList.sort((a, b) => {
+                let nameA = a.groupName.toUpperCase();
+                let nameB = b.groupName.toUpperCase();
+
+                if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+                  return 0;
+            })
+            setGroupList([...sortedGroupList])
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        getGroupList()
+    }, [])
+    
+
     return(
         <Container>
             <NavContainer>
@@ -17,7 +53,10 @@ const Groups = ({setNavState, groupList}) => {
             {groupList.map(group => {
                 return(
                 <Group key={group.id}>
-                    <GroupTitle>{group.groupName}</GroupTitle>
+                    <h1 style={{fontSize: '1.6rem', color: `${group.groupColor}` }}>
+                    <i className={group.groupIcon} style={{fontSize: '1.6rem', margin: '0 3% 0 0', color: `${group.groupColor}` }}></i>
+                        {group.groupName}
+                    </h1>
                     <GroupDescription>{group.groupDescription}</GroupDescription>
                 </Group>
 
@@ -84,7 +123,6 @@ const GroupList = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     margin: 22% 0 30%;
-    border: solid 2px red;
 `
 const Group = styled.div`
     width: 92%;
@@ -93,9 +131,9 @@ const Group = styled.div`
     margin: 2% 0;
 `
 
-const GroupTitle = styled.h1`
-    font-size: 1.6rem;
-`
+// const GroupTitle = styled.h1`
+//     font-size: 1.6rem;
+// `
 
 const GroupDescription = styled.h3`
     font-size: 1rem;
