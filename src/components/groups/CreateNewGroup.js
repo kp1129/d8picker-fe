@@ -3,6 +3,7 @@ import { Context } from '../../contexts/Contexts'
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { useToasts } from 'react-toast-notifications';
 
 const CreateNewGroup = ({setNavState, setGroupList}) => {
@@ -13,10 +14,19 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
     const { token } = currentUser;
     const { adminInfo } = useContext(Context)
 
+    const colorOptions = ['#c70c00', '#ff2bae', '#ffcc77', '#9d6e1f', '#561302', '#8a0a01', '#2e5780', '#f65b1c', '#2f95f9', '#81c1ff', '#f19805', '#218047']
+    const iconOptions = ['fas fa-star', 'fas fa-square', 'fas fa-circle']
+
+    const [selectedColor, setSelectedColor] = useState('')
+    const [selectedIcon, setSelectedIcon] = useState('');
+
     const [newGroup, setNewGroup] = useState({
         groupName: '',
         groupDescription: '',
-        adminId: adminInfo.adminId
+        groupColor: '',
+        groupIcon: '',
+        adminId: adminId
+
     });
 
     const [message, setMessage] = useState('')
@@ -37,7 +47,6 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         axiosWithAuth(token)
         .post(`/api/groups/${adminInfo.adminId}`, newGroup)
         .then(async res => {
-            console.log(res.data.groups)
             await setGroupList([...res.data.groups])
             setNavState(2)
         })
@@ -74,6 +83,32 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
                     onChange={handleChange}
                     />
                 </Label>
+                <ColorsContainer>
+                    {colorOptions.map(color => {
+                        if(selectedColor === color){
+                            return(
+                                <ColorOption key={color} onClick={()=>{setSelectedColor(color)}} color={`${color}`} border={`solid 2px red`} borderRadius={`5px`}/>
+                            )
+                        }else {
+                            return(
+                                <ColorOption key={color} onClick={()=>{setSelectedColor(color)}} color={`${color}`} />
+                            )
+                        }
+                    })}
+                </ColorsContainer>
+                <IconsContainer>
+                    {iconOptions.map((icon) => {
+                        if(selectedIcon === icon){
+                            return(
+                            <Icon key={icon} onClick={()=>{setSelectedIcon(icon)}} className={icon} border={`solid 3px #FF0000`} borderRadius={`5px`} />
+                            )
+                        }else {
+                            return(
+                            <Icon key={icon} onClick={()=>{setSelectedIcon(icon)}} className={icon}></Icon>
+                            )
+                        }
+                    })}
+                </IconsContainer>
                 <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>Submit</SubmitBtn>
             </Form>
             <p>{message}</p>
@@ -114,6 +149,7 @@ const Form = styled.form`
     display: flex;
     padding: 2%;
     flex-wrap: wrap;
+    margin: 0 0 10%;
 `
 
 const Label = styled.label`
@@ -132,15 +168,6 @@ const Input = styled.input`
     outline: none
 `
 
-// const InputTextArea = styled.textarea`
-//     width: 100%;
-//     border: none;
-//     border-bottom: solid 2px #999898;
-//     background-color: #F4F8F9;
-//     margin: 1% 0;
-//     outline: none;
-// `
-
 const SubmitBtn = styled.button`
     width: 70%;
     background: #28807d;
@@ -155,4 +182,32 @@ const SubmitBtn = styled.button`
     &:hover {
     cursor: pointer;
     }
+`
+const ColorsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`
+const IconsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 5% 0;
+`
+
+const Icon = styled.i`
+    font-size: 5rem;
+    border: ${props => props.border};
+    border-radius: ${props => props.borderRadius};
+`
+
+const ColorOption = styled.div`
+    width: 80px;
+    height: 80px;
+    background: ${props => props.color};
+    margin: 1%;
+    border: ${props => props.border};
+    border-radius: 5px;
 `
