@@ -64,7 +64,7 @@ const Contacts = ({ setNavState }) => {
         <Container>
             <NavContainer >
                 <ContactTitle className='contacts' onClick={handleChange}>Contacts</ContactTitle>
-                <p style={{ color: '#AFC9D9', marginLeft: '5%', fontSize: '1rem' }} onClick={() => {setNavState(5)}}>Back</p>
+                <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={() => {setNavState(5)}}>Back</p>
             </NavContainer>
             <ContactDiv className='contacts' onClick={() => {setNavState(6)}}>
             {viewContacts.map((contact, index) => {
@@ -107,7 +107,7 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 10% 5%;
+    padding: 5% 5% 0 5%;
 `
 const NavContainer = styled.div`
     width: 92%;
@@ -135,7 +135,7 @@ const ContactDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 15% 0 30% 0;
+    margin: 10% 0 0 0;
 `
 const Contact = styled.div`
     width: 100%;
@@ -170,18 +170,16 @@ const BtnDiv = styled.div`
 `;
 
 const BtnContact1 = styled.button`
-    width: 90%;
     border: 4px solid #28807D;
     padding: 3px 50px;
     border-radius: 9px;
     margin: 3%;
 `;
 const BtnContact2 = styled.button`
-    width: 90%;
     border: 4px solid #28807D;
     background: #28807D;
     color: white;
-    padding: 3px 30px;
+    padding: 3px 50px;
     border-radius: 9px;
-    margin: 3%;
+    margin: 3% 0;
 `;

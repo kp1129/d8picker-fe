@@ -10,7 +10,6 @@ import CreateNewGroup from '../groups/CreateNewGroup';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import Contacts from '../contacts/Contacts.js';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -36,8 +35,6 @@ const Home = () => {
   const [templateList, setTemplateList] = useState([]);
 
   const [groupList, setGroupList] = useState([]);
-
-  const [viewContacts, setViewContacts] = useState([]);
 
   //holds the start and end time of currently selected event.
   const [conStart, setConStart] = useState('');
@@ -127,9 +124,7 @@ const Home = () => {
           templateList,
           setTemplateList,
           templateIdToUpdate,
-          setTemplateIdToUpdate,
-          viewContacts,
-          setViewContacts
+          setTemplateIdToUpdate
         }}
       >
         {navState === 0 && <Dashboard setTemplateList={setTemplateList} />}
@@ -177,10 +172,6 @@ const Home = () => {
 
         {navState === 5 && (
           < CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
-        )}
-
-        {navState === 6 && (
-          <Contacts setNavState={setNavState} />
         )}
 
         {toggleNav && (
