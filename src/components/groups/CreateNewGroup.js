@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { useToasts } from 'react-toast-notifications';
 
 const CreateNewGroup = ({setNavState, setGroupList}) => {
@@ -11,9 +12,14 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
     const { currentUser } = googleApi;
     const { token, adminId } = currentUser;
 
+    const colorOptions = ['#c70c00', '#ff2bae', '#ffcc77', '#9d6e1f', '#561302', '#8a0a01', '#2e5780', '#f65b1c', '#2f95f9', '#81c1ff', '#f19805', '#218047']
+    const iconOptions = ['fas fa-star', 'fas fa-square', 'fas fa-circle']
+
     const [newGroup, setNewGroup] = useState({
         groupName: '',
         groupDescription: '',
+        groupColor: '',
+        groupIcon: '',
         adminId: adminId
     });
 
@@ -28,7 +34,6 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log('ADMIN ID: ', adminId)
         if(!newGroup.groupName){
             (setMessage('Please provide a name for your group'))
         }
@@ -36,7 +41,6 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         axiosWithAuth(token)
         .post(`/api/groups/${adminId}`, newGroup)
         .then(async res => {
-            console.log(res.data.groups)
             await setGroupList([...res.data.groups])
             setNavState(2)
         })
@@ -73,6 +77,31 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
                     onChange={handleChange}
                     />
                 </Label>
+                <ColorsContainer>
+                    {colorOptions.map(color => {
+                        return(
+                            <div
+                             key={color}
+                             style={{width: '80px', height: '80px', background: `${color}`, margin: '1%', borderRadius: '5px'}}
+                             onClick={()=>{setNewGroup({...newGroup, groupColor: color})}}
+                            >
+                            </div>
+                        )
+                    })}
+                </ColorsContainer>
+                <IconContainer>
+                    {iconOptions.map(icon => {
+                        return(
+                            <i
+                             key={icon} 
+                             className={icon} 
+                             style={{fontSize: '5rem'}} 
+                             onClick={()=>{setNewGroup({...newGroup, groupIcon: icon})}}
+                            >
+                            </i>
+                        )
+                    })}
+                </IconContainer>
                 <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>Submit</SubmitBtn>
             </Form>
             <p>{message}</p>
@@ -113,6 +142,7 @@ const Form = styled.form`
     display: flex;
     padding: 2%;
     flex-wrap: wrap;
+    margin: 0 0 10%;
 `
 
 const Label = styled.label`
@@ -154,3 +184,21 @@ const SubmitBtn = styled.button`
     cursor: pointer;
     }
 `
+
+const ColorsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`
+const IconContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 5% 0;
+`
+
+// const Icon = styled.i`
+//     font-size: 5rem;
+// `

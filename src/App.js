@@ -10,6 +10,9 @@ import Welcome from './components/landing-page/Welcome';
 import Loading from './components/landing-page/Loading';
 import Home from './components/home/Home';
 import Dashboard from './components/home/Dashboard.js';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
