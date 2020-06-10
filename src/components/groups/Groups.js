@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from 'react';
+import {Context} from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
-import { useToasts } from 'react-toast-notifications';
 import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
-
 import axiosWithAuth from '../../utils/axiosWithAuth';
 
 const Groups = ({ setNavState, groupList, setGroupList }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { token, adminId } = currentUser;
-
+  const { token } = currentUser;
+  const { adminInfo } = useContext(Context)
+  
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
     let sortedGroupList = [];
     axiosWithAuth(token)
-      .get(`/api/groups/${adminId}`)
+      .get(`/api/groups/${adminInfo.adminId}`)
       .then(res => {
         console.log(res.data);
         sortedGroupList = [...res.data.groups];

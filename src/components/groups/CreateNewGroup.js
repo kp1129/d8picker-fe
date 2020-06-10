@@ -112,10 +112,14 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
                 <ColorOption
                   key={color}
                   onClick={() => {
-                    setSelectedColor(color);
+                    setSelectedColor(color)
+                    setNewGroup({
+                      ...newGroup,
+                      groupColor: color
+                    })
                   }}
                   color={`${color}`}
-                  border={`solid 2px red`}
+                  border={`solid 3px black`}
                   borderRadius={`5px`}
                 />
               );
@@ -124,7 +128,11 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
                 <ColorOption
                   key={color}
                   onClick={() => {
-                    setSelectedColor(color);
+                    setSelectedColor(color)
+                    setNewGroup({
+                      ...newGroup,
+                      groupColor: color
+                    })
                   }}
                   color={`${color}`}
                 />
@@ -139,10 +147,14 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
                 <Icon
                   key={icon}
                   onClick={() => {
-                    setSelectedIcon(icon);
+                    setSelectedIcon(icon)
+                    setNewGroup({
+                      ...newGroup,
+                      groupIcon: icon
+                    })
                   }}
                   className={icon}
-                  border={`solid 3px #FF0000`}
+                  border={`solid 3px black`}
                   borderRadius={`5px`}
                 />
               );
@@ -151,7 +163,11 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
                 <Icon
                   key={icon}
                   onClick={() => {
-                    setSelectedIcon(icon);
+                    setSelectedIcon(icon)
+                    setNewGroup({
+                      ...newGroup,
+                      groupIcon: icon
+                    })
                   }}
                   className={icon}
                 ></Icon>
@@ -250,6 +266,7 @@ const IconsContainer = styled.div`
 
 const Icon = styled.i`
   font-size: 5rem;
+  paddin: 1%;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
 `;
@@ -259,6 +276,7 @@ const ColorOption = styled.div`
   height: 80px;
   background: ${props => props.color};
   margin: 1%;
+  paddin: 1%;
   border: ${props => props.border};
   border-radius: 5px;
 `;
