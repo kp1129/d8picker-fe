@@ -169,6 +169,7 @@ const Dashboard = props => {
                   className="weekdays-grid"
                   templateColumns="repeat(7, 1fr)"
                   textAlign="right"
+                  background='white'
                 >
                   {window.innerWidth <= 768
                     ? weekDays.map(d => (

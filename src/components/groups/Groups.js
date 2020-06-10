@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useToasts } from 'react-toast-notifications';
 import { useAuth } from '../../contexts/auth';
+import { useToasts } from 'react-toast-notifications'
+
 import axiosWithAuth from '../../utils/axiosWithAuth';
 
 const Groups = ({ setNavState, groupList, setGroupList }) => {
