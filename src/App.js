@@ -14,6 +14,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
+
 // function initializeAnalytics() {
 //   ReactGA.initialize('UA-157827018-1');
 //   ReactGA.pageview('/home');
@@ -63,6 +64,9 @@ function App() {
               </Route>
               <Route exact path="/">
                 <Welcome />
+              </Route>
+              <Route exact path='/:groupInviteHash'>
+                <AddContactForm />
               </Route>
               <PrivateRoute path="/:id/dashboard">
                 <Dashboard />

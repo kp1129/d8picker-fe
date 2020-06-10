@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Context } from '../../contexts/Contexts'
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
@@ -10,7 +11,8 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
     //needed variables for first axios call, current user object and token from currentUser object
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
-    const { token, adminId } = currentUser;
+    const { token } = currentUser;
+    const { adminInfo } = useContext(Context)
 
     const colorOptions = ['#c70c00', '#ff2bae', '#ffcc77', '#9d6e1f', '#561302', '#8a0a01', '#2e5780', '#f65b1c', '#2f95f9', '#81c1ff', '#f19805', '#218047']
     const iconOptions = ['fas fa-star', 'fas fa-square', 'fas fa-circle']
@@ -24,6 +26,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         groupColor: '',
         groupIcon: '',
         adminId: adminId
+
     });
 
     const [message, setMessage] = useState('')
@@ -42,7 +45,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
         }
         console.log('newGroup: ', newGroup)
         axiosWithAuth(token)
-        .post(`/api/groups/${adminId}`, newGroup)
+        .post(`/api/groups/${adminInfo.adminId}`, newGroup)
         .then(async res => {
             await setGroupList([...res.data.groups])
             setNavState(2)
@@ -59,7 +62,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
                 <Header>New Group</Header>
             </HeaderContainer>
             <Form >
-                <Label htmlFor="groupName" style={{fontWeight: 'bold'}}> Group Name: 
+                <Label htmlFor="groupName"> Group Name: 
                     <Input
                     type="text"
                     placeholder="New Group Name"
@@ -71,7 +74,7 @@ const CreateNewGroup = ({setNavState, setGroupList}) => {
 
                 <br/>
 
-                <Label htmlFor="groupName" style={{fontWeight: 'bold'}}> Group Description: 
+                <Label htmlFor="groupName"> Group Description: 
                     <Input
                     type="text"
                     placeholder="New Group Description"
@@ -152,6 +155,7 @@ const Form = styled.form`
 const Label = styled.label`
     width: 100%;
     margin: 3% 0;
+    font-weight: bold;
 `
 
 const Input = styled.input`

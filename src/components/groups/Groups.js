@@ -1,9 +1,6 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect} from 'react';
 import styled from 'styled-components'; 
 import btn from '../navigation/NavImgs/addgroupbtn.png';
-import axiosWithAuth from '../../utils/axiosWithAuth';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
 
 const Groups = ({setNavState, groupList, setGroupList}) => {
@@ -42,6 +39,7 @@ const Groups = ({setNavState, groupList, setGroupList}) => {
         getGroupList()
     }, [])
     
+
     return(
         <Container>
             <NavContainer>

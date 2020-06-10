@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../../contexts/Contexts';
 import Dashboard from './Dashboard';
 import Events from '../events/Events';
@@ -7,6 +7,7 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
+import AdminContactForm from '../groups/AdminContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -25,7 +26,7 @@ const getTemplateList = async ({ googleId, token }) => {
 
 const Home = () => {
   // 0 = calendar, 1 = events, 2 = groups, 5 = createNewGroup, 
-  const [navState, setNavState] = useState(0);
+  const [navState, setNavState] = useState(6);
 
   //deals with toggling event selection mode
   const [formOpen, setFormOpen] = useState(false);
@@ -57,6 +58,9 @@ const Home = () => {
 
   // holds the id of the template to update
   const [templateIdToUpdate, setTemplateIdToUpdate] = useState(null);
+  
+  // holds the admin Info
+  const [adminInfo, setAdminInfo] = useState({});
 
   //changes the color of the nav icons depending on which components are rendered
   useEffect(() => {
@@ -70,6 +74,54 @@ const Home = () => {
   const { googleApi, api } = useAuth();
   const { currentUser } = googleApi;
 
+   // gets adminId from backend
+  useEffect(() => {
+    (async () => {
+      let adminDetails = await {
+        name: currentUser.name,
+        email: currentUser.email,
+        googleId: currentUser.googleId
+      };
+      axiosWithAuth(currentUser.token).post('/api/admin', adminDetails)
+        .then(res => {
+          setAdminInfo({...adminDetails, adminId: res.data.adminId});
+        })
+        .catch(err => {
+          console.log('error in fetching adminId', err);
+        })
+    })();
+  }, [currentUser]);
+
+    //fetches list of groups for current user
+    const getGroupList = () => {
+      let sortedGroupList = []
+      axiosWithAuth(currentUser.token)
+      .get(`/api/groups/${adminInfo.adminId}`)
+      .then(res => {
+          sortedGroupList = [...res.data.groups]
+          sortedGroupList.sort((a, b) => {
+              let nameA = a.groupName.toUpperCase();
+              let nameB = b.groupName.toUpperCase();
+  
+              if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+                return 0;
+          })
+          setGroupList([...sortedGroupList])
+      })
+      .catch(err => {
+          console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    getGroupList()
+  }, [adminInfo])
+  
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
@@ -82,6 +134,9 @@ const Home = () => {
     <Div>
       <Context.Provider
         value={{
+          groupList,
+          setGroupList,
+          adminInfo,
           formOpen,
           setFormOpen,
           setTemplateFormOpen,
@@ -149,7 +204,11 @@ const Home = () => {
         )}
 
         {navState === 5 && (
-          < CreateNewGroup setNavState={setNavState} setGroupList={setGroupList}/>
+          <CreateNewGroup setNavState={setNavState} setGroupList={setGroupList} groupList={groupList}/>
+        )}
+
+        {navState === 6 && (
+          <AdminContactForm setNavState={setNavState} groupList={groupList}/>
         )}
 
         {toggleNav && (
