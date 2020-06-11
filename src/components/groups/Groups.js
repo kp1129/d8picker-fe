@@ -18,7 +18,6 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
   const [currentGroup, setCurrentGroup] = useState({})
 
   const fetchGroupData = (groupId, adminId, token) => {
-    console.log("HANDLE: ", groupId, adminId, token)
     let sortedGroupContacts = []
     console.log(`/api/groups/${adminId}/${groupId}`)
     axiosWithAuth(token)
