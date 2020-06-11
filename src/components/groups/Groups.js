@@ -1,16 +1,29 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {Context} from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
 import axiosWithAuth from '../../utils/axiosWithAuth';
+import Contacts from '../contacts/Contacts.js';
 
 const Groups = ({ setNavState, groupList, setGroupList }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
   const { adminInfo } = useContext(Context)
+
+  const [navToggle, setNavToggle] = useState(false);
+
+  const handleChange = () => {
+      setNavToggle(true);
+  }
+
+  const handleGroups = e => {
+    setNavToggle(false)
+    setNavState(5)
+}
+
   
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
@@ -54,6 +67,10 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           Cancel
         </Cancel>
         <Title>Choose Group</Title>
+            <TabsContainer>
+                    <Tabs className='groups' onClick={handleGroups}>Groups</Tabs>
+                    <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
+                </TabsContainer>
         <BtnDiv>
           <Btn
             src={btn}
@@ -83,6 +100,9 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           );
         })}
       </GroupList>
+      <div onClick={handleChange}> 
+      {navToggle && <Contacts />}
+      </div>
     </Container>
   );
 };
@@ -154,4 +174,19 @@ const Group = styled.div`
 
 const GroupDescription = styled.h3`
   font-size: 1rem;
+`;
+const TabsContainer = styled.div`
+    width: 92%;
+    display: flex;
+    justify-items: flex-end;
+    margin-left: 70%;
+    font-size: 1rem;
+`;
+const Tabs = styled.button`
+    border: 1px solid #AFC9D9;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px 10px;
 `;
