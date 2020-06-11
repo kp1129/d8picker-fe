@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const CreateNewGroup = ({ setNavState, setGroupList }) => {
+const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo } = useContext(Context);
+  const { adminInfo, width } = useContext(Context);
   const { token } = currentUser;
   // const { adminInfo } = useContext(Context)
 
@@ -67,13 +67,23 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
       });
   };
 
+  // controls Cancel behavior
+  const handleCancel = (e) => {
+    e.stopPropagation();
+    // if desktop view
+    if(width >= 768){
+      setAddGroup(false);
+    // if mobile view
+    } else {
+      setNavState(2);
+    }
+  }
+
   return (
     <Container>
       <HeaderContainer>
         <CancelBtn
-          onClick={() => {
-            setNavState(2);
-          }}
+          onClick={(e) => handleCancel(e)}
         >
           Cancel
         </CancelBtn>
@@ -185,6 +195,16 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
 };
 export default CreateNewGroup;
 
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -194,6 +214,13 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 2%;
+  @media ${device.desktop} {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+    }
+
 `;
 
 const Header = styled.h1`
@@ -201,6 +228,9 @@ const Header = styled.h1`
   text-align: right;
   font-size: 22px;
   font-weight: bold;
+  @media ${device.desktop} {
+    text-align: left;
+  }
 `;
 
 const CancelBtn = styled.p`
@@ -269,6 +299,9 @@ const Icon = styled.i`
   paddin: 1%;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
+  @media ${device.desktop} {
+    font-size: 40px;
+    }
 `;
 
 const ColorOption = styled.div`
@@ -279,4 +312,9 @@ const ColorOption = styled.div`
   paddin: 1%;
   border: ${props => props.border};
   border-radius: 5px;
+
+  @media ${device.desktop} {
+    height: 45px;
+    width: 45px;
+    }
 `;

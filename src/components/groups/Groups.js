@@ -6,14 +6,18 @@ import { useAuth } from '../../contexts/auth';
 import { useToasts } from 'react-toast-notifications'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
+import CreateNewGroup from './CreateNewGroup';
 
-const Groups = ({ setNavState, groupList, setGroupList }) => {
+
+const Groups = () => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo } = useContext(Context)
+  const { adminInfo, width, groupList, setGroupList, setNavState } = useContext(Context);
+ 
 
   const [navToggle, setNavToggle] = useState(false);
+  const [addGroup, setAddGroup] = useState(false);
 
   const handleChange = () => {
       setNavToggle(true);
@@ -24,6 +28,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
     setNavState(5)
 }
 
+ 
   
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
@@ -56,14 +61,17 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
     getGroupList();
   }, []);
 
+  // controls Add Group button behavior
+  const handleDesktopAddGroup = (e) => {
+    e.stopPropagation();
+    setAddGroup(true);
+  }
+
   return (
     <Container>
-      <NavContainer>
-        <Cancel
-          onClick={() => {
-            setNavState(0);
-          }}
-        >
+   { width <= 768 && (
+       <NavContainer>
+        <Cancel onClick={() => setNavState(0)}>
           Cancel
         </Cancel>
         <Title>Choose Group</Title>
@@ -79,27 +87,38 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
             }}
           ></Btn>
         </BtnDiv>
-      </NavContainer>
+      </NavContainer>)}
       <GroupList>
         {groupList.map(group => {
           return (
             <Group key={group.id}>
-              <h1 style={{ fontSize: '1.6rem', color: `${group.groupColor}` }}>
+              <GroupTitle style={{ color: `${group.groupColor}` }}>
+              
                 <i
                   className={group.groupIcon}
                   style={{
-                    fontSize: '1.6rem',
                     margin: '0 3% 0 0',
                     color: `${group.groupColor}`
                   }}
                 ></i>
                 {group.groupName}
-              </h1>
-              <GroupDescription>{group.groupDescription}</GroupDescription>
+
+                <Arrow
+              className={
+                
+                 'fas fa-chevron-down'
+              }
+            ></Arrow>
+                
+              </GroupTitle>
+              
+              {width <= 768 && (<GroupDescription>{group.groupDescription}</GroupDescription>)}
             </Group>
           );
         })}
       </GroupList>
+      {width >= 768 && (<AddGroupBtn onClick={(e) => handleDesktopAddGroup(e)}>Add group </AddGroupBtn>)}
+      {addGroup && <CreateNewGroup setAddGroup={setAddGroup} />}
       <div onClick={handleChange}> 
       {navToggle && <Contacts />}
       </div>
@@ -108,6 +127,15 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 };
 
 export default Groups;
+
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
 
 const Container = styled.div`
   width: 100%;
@@ -160,6 +188,13 @@ const GroupList = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin: 22% 0 30%;
+  @media ${device.desktop} {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+    }
+
 `;
 const Group = styled.div`
   width: 92%;
@@ -168,9 +203,38 @@ const Group = styled.div`
   margin: 2% 0;
 `;
 
-// const GroupTitle = styled.h1`
-//     font-size: 1.6rem;
-// `
+const AddGroupBtn = styled.div`
+  margin: 0 auto;
+  cursor: pointer;
+  width: 90%;
+  color:  #28807d;
+  font-weight: bold;
+  border: 2px solid  #28807d;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.25rem 1rem;
+`;
+
+const GroupTitle = styled.h1`
+    font-size: 1.6rem;
+    @media ${device.desktop} {
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 1.15rem;
+      justify-content: space-between;
+      }
+`;
+
+const Arrow = styled.i`
+  display: none;
+
+  @media ${device.desktop} {
+    display: inline-block !important;
+    color: gray;
+    font-size: 1.4rem;
+    // margin-left: 30%;
+  }
+`;
 
 const GroupDescription = styled.h3`
   font-size: 1rem;

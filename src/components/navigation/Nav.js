@@ -12,6 +12,7 @@ import eventsBtnInactive from '../navigation/NavImgs/Events Button-Inactive.png'
 import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import TemplateContainer from '../events/TemplateContainer';
+import Groups from '../groups/Groups';
 
 const Nav = ({
   setNavState,
@@ -185,7 +186,8 @@ const Nav = ({
             ></Arrow>
           </div>
           {groupsPopoutVisible && (
-            <GroupPlaceholder>groups placeholder</GroupPlaceholder>
+            
+           <GroupPlaceholder><Groups /></GroupPlaceholder>
           )}
         </IconDiv>
         {/* settings tab */}
@@ -235,8 +237,7 @@ const EventsPlaceholder = styled.div`
 `;
 
 const GroupPlaceholder = styled.div`
-  width: 90%;
-  border: 1px solid gray;
+  width: 250px;
 `;
 
 const NavContainer = styled.div`
@@ -275,7 +276,7 @@ const Container = styled.div`
     z-index: 100;
     border-top: 1px solid #f2f2f2;
     background: white;
-    width: 25%;
+    max-width: 25%;
     height: 100%;
     left: 0;
 
