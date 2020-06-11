@@ -14,6 +14,8 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
   const { adminInfo } = useContext(Context)
 
   const [navToggle, setNavToggle] = useState(false);
+  const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
+  const [displayGroup, setDisplayGroup] = useState([])
 
   const handleChange = () => {
       setNavToggle(true);
@@ -78,7 +80,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
         {groupList.map(group => {
           return (
             <Group key={group.id}>
-              <h1 style={{ fontSize: '1.6rem', color: `${group.groupColor}` }}>
+              <GroupTitle color={group.groupColor}>
                 <i
                   className={group.groupIcon}
                   style={{
@@ -88,8 +90,9 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
                   }}
                 ></i>
                 {group.groupName}
-              </h1>
-              <GroupDescription>{group.groupDescription}</GroupDescription>
+              </GroupTitle>
+              <Arrow className={isDisplayingGroup ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
+              {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
             </Group>
           );
         })}
@@ -168,18 +171,28 @@ const GroupList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 22% 0 30%;
+  margin: 22% 5% 30%;
 `;
 const Group = styled.div`
-  width: 92%;
+  width: 100%;
+  display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  margin: 2% 0;
+  justify-content: space-between;
+  margin: 3% 0;
 `;
 
-// const GroupTitle = styled.h1`
-//     font-size: 1.6rem;
-// `
+const GroupTitle = styled.h1`
+  width: 80%;
+  font-size: 1.6rem;
+  color: ${props => props.color}
+`
+const Arrow = styled.i`
+  width: 10%;
+  text-align: right;
+  color: gray;
+  font-size: 1.4rem;
+`;
+
 
 const GroupDescription = styled.h3`
   font-size: 1rem;
