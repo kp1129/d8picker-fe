@@ -15,10 +15,53 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
-  const [displayGroup, setDisplayGroup] = useState([])
+  const [currentGroup, setCurrentGroup] = useState({})
+
+  const fetchGroupData = (groupId, adminId, token) => {
+    console.log("HANDLE: ", groupId, adminId, token)
+    let sortedGroupContacts = []
+    console.log(`/api/groups/${adminId}/${groupId}`)
+    axiosWithAuth(token)
+    .get(`/api/groups/${adminId}/${groupId}`)
+    .then(res => {
+      sortedGroupContacts = [...res.data.contacts];
+      sortedGroupContacts.sort((a, b) => {
+        let groupA = a.groupName.toUpperCase();
+        let groupB = b.groupName.toUpperCase();
+        if (groupA < groupB) {
+          return -1;
+        }
+        if (groupA > groupB) {
+          return 1;
+        }
+        return 0;
+      });
+      setCurrentGroup({...res.data});
+    })
+    .catch(err => {
+      console.log('Error', err);
+    });
+}
+
+  const handleGroupDisplay = (groupId, adminId, token) => {
+    
+    setIsDisplayingGroup(!isDisplayingGroup)
+    if(isDisplayingGroup === true && groupId !== currentGroup.id){
+      fetchGroupData(groupId, adminId, token)
+      setIsDisplayingGroup(false)
+      setIsDisplayingGroup(true)
+      }else if(isDisplayingGroup === false){
+      fetchGroupData(groupId, adminId, token)
+      setIsDisplayingGroup(true)
+      }else{
+      setIsDisplayingGroup(false)
+    }
+  } 
+
+  console.log('currentGroup: ', currentGroup)
 
   const handleChange = () => {
-      setNavToggle(true);
+      setNavToggle(true)
   }
 
   const handleGroups = e => {
@@ -79,7 +122,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
       <GroupList>
         {groupList.map(group => {
           return (
-            <Group key={group.id}>
+            <Group key={group.id} onClick={()=>{handleGroupDisplay(group.id, adminInfo.adminId, token)}}>
               <GroupTitle color={group.groupColor}>
                 <i
                   className={group.groupIcon}
@@ -91,13 +134,12 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
                 ></i>
                 {group.groupName}
               </GroupTitle>
-              <Arrow className={isDisplayingGroup ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
+              <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
               {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
             </Group>
           );
         })}
-      </GroupList>
-      <BtnDiv>
+        <BtnDiv>
           <Btn
             src={btn}
             onClick={() => {
@@ -105,6 +147,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
             }}
           ></Btn>
         </BtnDiv>
+      </GroupList>
       <div onClick={handleChange}> 
       {navToggle && <Contacts />}
       </div>
@@ -156,13 +199,14 @@ const Title = styled.h1`
 `;
 
 const BtnDiv = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 `;
 
 const Btn = styled.img`
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 `;
 
