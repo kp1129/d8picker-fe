@@ -66,7 +66,7 @@ const Contacts = ({ setNavState }) => {
               
                 <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={handleGroups}>Back</p>
             </NavContainer>
-             <TabsContainer>
+             <TabsContainer style={{ justifyContent: 'flex-end'}}>
                     <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
                     <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
                 </TabsContainer>
@@ -132,7 +132,7 @@ const Tabs = styled.button`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 3% 10%;
+    padding: 5px 10px;
 `;
 const IconDiv= styled.div`
     width: 100%;

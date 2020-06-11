@@ -175,15 +175,18 @@ const Group = styled.div`
 const GroupDescription = styled.h3`
   font-size: 1rem;
 `;
-
 const TabsContainer = styled.div`
+    width: 92%;
     display: flex;
-    padding-top: 6%;
+    justify-items: flex-end;
+    margin-left: 70%;
+    font-size: 1rem;
 `;
-
-const Tabs = styled.p`
+const Tabs = styled.button`
+    border: 1px solid #AFC9D9;
+    border-radius: 10px 10px 0 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-
+    justify-content: space-around;
+    padding: 5px 10px;
 `;
