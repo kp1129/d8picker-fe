@@ -21,7 +21,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 
   const handleGroups = e => {
     setNavToggle(false)
-    setNavState(5)
+    setNavState(2)
 }
 
   
@@ -59,26 +59,20 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
   return (
     <Container>
       <NavContainer>
-        <Cancel
-          onClick={() => {
-            setNavState(0);
-          }}
-        >
-          Cancel
-        </Cancel>
-        <Title>Choose Group</Title>
-            <TabsContainer>
-                    <Tabs className='groups' onClick={handleGroups}>Groups</Tabs>
-                    <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
-                </TabsContainer>
-        <BtnDiv>
-          <Btn
-            src={btn}
+        <HeaderContainer>
+          <Title>Choose Group</Title>
+          <BackBtn
             onClick={() => {
-              setNavState(5);
+              setNavState(0);
             }}
-          ></Btn>
-        </BtnDiv>
+          >
+            Back
+          </BackBtn>
+        </HeaderContainer>
+        <TabsContainer>
+          <Tabs className='groups' onClick={handleGroups}>Groups</Tabs>
+          <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
+        </TabsContainer>
       </NavContainer>
       <GroupList>
         {groupList.map(group => {
@@ -100,6 +94,14 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           );
         })}
       </GroupList>
+      <BtnDiv>
+          <Btn
+            src={btn}
+            onClick={() => {
+              setNavState(5);
+            }}
+          ></Btn>
+        </BtnDiv>
       <div onClick={handleChange}> 
       {navToggle && <Contacts />}
       </div>
@@ -122,30 +124,37 @@ const NavContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 3% 2.5% 2.5% 2.5%;
+  padding: 3% 2.5% 0 2.5%;
   position: fixed;
   top: 0;
   background: white;
 `;
 
-const Cancel = styled.p`
-  width: 30%;
-  font-size: 20px;
+const HeaderContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`
+
+const BackBtn = styled.p`
+  width: 48%;
+  font-size: 1.2rem;
+  text-align: right;
   line-height: 27px;
   color: #28807d;
 `;
 
 const Title = styled.h1`
-  width: 30%;
-  text-align: center;
+  width: 48%;
   font-weight: bold;
   font-size: 20px;
   line-height: 27px;
 `;
 
 const BtnDiv = styled.div`
-  width: 30%;
-  height: 40%;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: flex-end;
 `;
@@ -176,10 +185,9 @@ const GroupDescription = styled.h3`
   font-size: 1rem;
 `;
 const TabsContainer = styled.div`
-    width: 92%;
+    width: 100%;
     display: flex;
-    justify-items: flex-end;
-    margin-left: 70%;
+    justify-content: flex-end;
     font-size: 1rem;
 `;
 const Tabs = styled.button`
