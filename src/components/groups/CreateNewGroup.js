@@ -43,6 +43,8 @@ const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
   const [message, setMessage] = useState('');
 
   const handleChange = e => {
+    e.preventDefault();
+    e.stopPropagation();
     setNewGroup({
       ...newGroup,
       [e.target.name]: e.target.value
@@ -98,23 +100,12 @@ const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
             placeholder="New Group Name"
             name="groupName"
             value={newGroup.groupName}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </Label>
 
         <br />
 
-        <Label htmlFor="groupName">
-          {' '}
-          Group Description:
-          <Input
-            type="text"
-            placeholder="New Group Description"
-            name="groupDescription"
-            value={newGroup.groupDescription}
-            onChange={handleChange}
-          />
-        </Label>
         <ColorsContainer>
           {colorOptions.map(color => {
             if (selectedColor === color) {
@@ -185,8 +176,19 @@ const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
             }
           })}
         </IconsContainer>
+        <Label htmlFor="groupName">
+          {' '}
+          Notes:
+          <Input
+            type="text"
+            placeholder="Bring uniforms, be ready to WIN!"
+            name="groupDescription"
+            value={newGroup.groupDescription}
+            onChange={(e) => handleChange(e)}
+          />
+        </Label>
         <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>
-          Submit
+          Select members
         </SubmitBtn>
       </Form>
       <p>{message}</p>
@@ -226,7 +228,7 @@ const HeaderContainer = styled.div`
 const Header = styled.h1`
   width: 60%;
   text-align: right;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   @media ${device.desktop} {
     text-align: left;
@@ -265,21 +267,18 @@ const Input = styled.input`
     outline: none
 `;
 
-const SubmitBtn = styled.button`
-  width: 70%;
-  background: #28807d;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.25rem;
-  padding: 4%;
-  margin: 8% auto;
-  border: 1px solid #28807d;
-  border-radius: 5rem;
-  &:hover {
-    cursor: pointer;
-  }
+const SubmitBtn = styled.div`
+margin: 0.5rem auto;
+cursor: pointer;
+width: 90%;
+color:  #28807d;
+font-weight: bold;
+border: 2px solid  #28807d;
+border-radius: 0.5rem;
+text-align: center;
+padding: 0.25rem 1rem;
 `;
+
 const ColorsContainer = styled.div`
   width: 100%;
   display: flex;
