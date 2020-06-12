@@ -65,7 +65,7 @@ const Days = ({ date, month }) => {
             ? selected.includes(newdate)
               ? setSelected(selected.filter(date => date !== newdate))
               : setSelected(selected.concat(newdate))
-            : alert('pick a template');
+            : console.log('pick a template');
         };
 
         return (
