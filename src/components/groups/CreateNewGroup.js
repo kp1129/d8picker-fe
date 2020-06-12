@@ -216,7 +216,7 @@ const Form = styled.form`
   display: flex;
   padding: 2%;
   flex-wrap: wrap;
-  margin: 0 0 10%;
+  margin: 0 0 16%;
 `;
 
 const Label = styled.label`

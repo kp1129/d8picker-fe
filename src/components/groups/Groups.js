@@ -141,7 +141,15 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
                   {currentGroup.contacts.map(contact => {
                     return(
                     <ContactDiv key={contact.id}>
-                      <Name>{`${contact.firstName} ${contact.lastName}`}</Name>
+                      <ContactIcon className="fas fa-user-alt"></ContactIcon>
+                      <ContactInfoContainer>
+                        <Name>{`${contact.firstName} ${contact.lastName}`}</Name>
+                        <IconContainer>
+                          <Icon className="fas fa-phone"></Icon>
+                          <Icon className="fas fa-comment-medical"></Icon>
+                          <Icon className="fas fa-envelope"></Icon>
+                        </IconContainer>
+                      </ContactInfoContainer>
                     </ContactDiv>
                     )
                   })}
@@ -216,12 +224,12 @@ const Title = styled.h1`
 const BtnDiv = styled.div`
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  margin: 2% 0 0;
 `;
 
 const Btn = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
 `;
 
@@ -229,7 +237,6 @@ const GroupList = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   margin: 22% 5% 30%;
 `;
 const Group = styled.div`
@@ -289,13 +296,34 @@ const ContactList = styled.div`
 `
 const ContactDiv = styled.div`
   width: 100%;
+  margin: 5% 0;
   display: flex;
-  margin: 1% 4%;
+  justfiy-content: space-between;
 `
-
+const ContactIcon = styled.i`
+  width: 20%;
+  margin: 2% 0 0 0;
+  font-size: 3rem;
+  color: #28807D;
+`
+const ContactInfoContainer = styled.div`
+  width: 70%
+  display: flex;
+  flex-wrap: wrap;
+`
 const Name = styled.h1`
   width: 100%;
   font-size: 1.4rem;
+`
+const IconContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+const Icon = styled.i`
+  width: 20%;
+  font-size: 1.4rem;
+  color: #AFC9D9;
 `
 const TabsContainer = styled.div`
     width: 100%;
