@@ -7,7 +7,7 @@ import { useToasts } from 'react-toast-notifications'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
 
-const Groups = ({ setNavState, groupList, setGroupList, setEventsUpdated }) => {
+const Groups = ({ setNavState, groupList, setGroupList }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
