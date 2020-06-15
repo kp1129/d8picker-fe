@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
+
+const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo, width } = useContext(Context);
+  const { adminInfo, setGroupList, width } = useContext(Context);
+
   const { token } = currentUser;
   // const { adminInfo } = useContext(Context)
 
@@ -53,6 +55,7 @@ const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log('submit fired');
     console.log('ADMIN ID: ', adminInfo.adminId);
     if (!newGroup.groupName) {
       setMessage('Please provide a name for your group');
@@ -62,7 +65,11 @@ const CreateNewGroup = ({ setNavState, setGroupList, setAddGroup }) => {
       .post(`/api/groups/${adminInfo.adminId}`, newGroup)
       .then(async res => {
         await setGroupList([...res.data.groups]);
-        setNavState(2);
+        if(width < 768){
+          setNavState(2);
+        } else {
+          setShowCreateNewGroup(false);
+        }
       })
       .catch(err => {
         console.log('ERROR 2: ', err);
@@ -248,7 +255,7 @@ const Form = styled.form`
   display: flex;
   padding: 2%;
   flex-wrap: wrap;
-  margin: 0 0 10%;
+  margin: 0 0 16%;
 `;
 
 const Label = styled.label`

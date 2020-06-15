@@ -13,7 +13,8 @@ import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import TemplateContainer from '../events/TemplateContainer';
 import Groups from '../groups/Groups';
-import CreateNewGroup from '../groups/CreateNewGroup';
+import GroupsContainer from '../groups/GroupsContainer';
+
 
 const Nav = ({
   setNavState,
@@ -188,8 +189,9 @@ const Nav = ({
             ></Arrow>
           </div>
           {groupsPopoutVisible && (
-            
-           <GroupPlaceholder><Groups /><CreateNewGroup /></GroupPlaceholder>
+            <GroupPlaceholder>
+              <GroupsContainer />
+            </GroupPlaceholder>
           )}
         </IconDiv>
         {/* settings tab */}

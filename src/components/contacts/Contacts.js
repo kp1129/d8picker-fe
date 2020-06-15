@@ -64,7 +64,7 @@ const Contacts = ({ setNavState }) => {
             <NavContainer>
                 <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
               
-                <p style={{ color: '#AFC9D9', fontSize: '1rem' }} onClick={handleGroups}>Back</p>
+                <BackBtn onClick={handleGroups}>Back</BackBtn>
             </NavContainer>
              <TabsContainer style={{ justifyContent: 'flex-end'}}>
                     <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
@@ -109,22 +109,21 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 5% 5% 0 5%;
     font-size: 1.2rem;
 `;
 const NavContainer = styled.div`
     width: 100%;
     display: flex; 
     flex-wrap: nowrap;
-    justify-content: flex-end;
-    padding: 4% 0 1% 3%;
+    justify-content: space-between;
+    padding: 3% 2.5% 0 2.5%;
 `;
 const TabsContainer = styled.div`
-    width: 92%;
+    width: 100%;
     display: flex;
-    justify-items: flex-end;
-    margin-left: 70%;
+    justify-content: flex-end;
     font-size: 1rem;
+    padding: 0 2.5% 0 0;
 `;
 const Tabs = styled.button`
     border: 1px solid #AFC9D9;
@@ -159,11 +158,18 @@ const Contact = styled.div`
     margin: 5% 2%;
 `
 const ContactTitle = styled.p`
-    width: 100%;
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: flex-start;
-`
+    width: 48%;
+    font-size: 20px;
+    line-height: 27px;
+    font-weight: bold;
+`;
+const BackBtn = styled.p`
+  width: 48%;
+  font-size: 1.2rem;
+  text-align: right;
+  line-height: 27px;
+  color: #28807d;
+`;
 const ContactNames = styled.p`
     font-size: 1rem;
     color: #2E5780;
