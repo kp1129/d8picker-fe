@@ -157,7 +157,7 @@ const ContactDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 2%;
+    margin: 2% 0 10%;
 `
 const Contact = styled.div`
     width: 100%;

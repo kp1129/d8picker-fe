@@ -7,13 +7,9 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
-<<<<<<< HEAD
-// import InviteeAddContactForm from '../groups/InviteeAddContactForm';
-=======
 import InviteeAddContactForm from '../groups/InviteeAddContactForm';
 import Contacts from '../contacts/Contacts.js';
 import EditGroupForm from '../groups/EditGroupForm';
->>>>>>> ccea2dadf7fb283f70d868ec8f849578642b7635
 import AdminAddContactForm from '../groups/AdminAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
