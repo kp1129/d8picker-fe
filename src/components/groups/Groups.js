@@ -113,16 +113,6 @@ const Groups = ({ setNavState, setGroupList }) => {
     getGroupList();
   }, []);
 
-  // controls Add Group button behavior
-  const handleDesktopAddGroup = e => {
-    e.stopPropagation();
-    setAddGroup(true);
-  };
-
-  const handleClickedGroup = (e, id) => {
-    e.stopPropagation();
-    setActiveGroup(id);
-  }
   return (
     <Container>
 
@@ -193,18 +183,21 @@ const Groups = ({ setNavState, setGroupList }) => {
           
         </BtnDiv>
       </GroupList>
-      {width >= 768 && (
-        <AddGroupBtn onClick={e => handleDesktopAddGroup(e)}>
-          Add group{' '}
-        </AddGroupBtn>
-      )}
-      {/* {addGroup && <CreateNewGroup setAddGroup={setAddGroup} />} */}
       {/* <div onClick={handleChange}>{navToggle && <Contacts />}</div> */}
     </Container>
   );
 };
 
 export default Groups;
+
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
 
 
 const Container = styled.div`
@@ -265,6 +258,11 @@ const GroupList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 22% 5% 30%;
+  @media ${device.desktop} {
+    width: 90%;
+    margin: 0 auto;
+    }
+
 `;
 const Group = styled.div`
   width: 100%;
@@ -277,7 +275,10 @@ const Group = styled.div`
 const GroupTitle = styled.h1`
   width: 80%;
   font-size: 1.6rem;
-  color: ${props => props.color}
+  color: ${props => props.color};
+  @media ${device.desktop} {
+    font-size: 1.25rem;
+    }
 `
 const BtnContainer = styled.div`
   width: 100%;

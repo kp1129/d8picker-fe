@@ -138,8 +138,6 @@ const Home = () => {
     })();
   }, [currentUser, formOpen]);
 
-  // keep track of window size
-  const { height, width } = useWindowDimensions();
 
   return (
     <Div>

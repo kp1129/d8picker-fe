@@ -77,11 +77,10 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
   };
 
   // controls Cancel behavior
-  const handleCancel = (e) => {
-    e.stopPropagation();
+  const handleCancel = () => {
     // if desktop view
     if(width >= 768){
-      setAddGroup(false);
+      setShowCreateNewGroup(false);
     // if mobile view
     } else {
       setNavState(2);
@@ -92,7 +91,7 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
     <Container>
       <HeaderContainer>
         <CancelBtn
-          onClick={(e) => handleCancel(e)}
+          onClick={handleCancel}
         >
           Cancel
         </CancelBtn>
