@@ -7,7 +7,7 @@ import { useToasts } from 'react-toast-notifications'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
 
-const Groups = ({ setNavState, groupList, setGroupList }) => {
+const Groups = ({ setNavState, groupList, setGroupList, setEventsUpdated }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
@@ -16,7 +16,6 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
   const [currentGroup, setCurrentGroup] = useState({});
-  const [deleteGroup, setDeleteGroup] = useState([]);
 
   //function to handle particular group data fetch
   const fetchGroupData = (groupId, adminId, token) => {
@@ -59,8 +58,6 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
     }
   } 
 
-  // console.log('currentGroup: ', currentGroup)
-
   const handleChange = () => {
       setNavToggle(true)
   }
@@ -69,19 +66,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
     setNavToggle(false)
     setNavState(2)
 }
-    // deletes group
-    const handleDelete = (groupId, adminId, token) => {
-        console.log(`/api/groups/${adminId}/${groupId}`)
-        axiosWithAuth(token, googleApi)
-            .delete(`/api/groups/${adminId}/${groupId}`)
-            .then(res => 
-                setDeleteGroup({
-                    ...deleteGroup,
-            }))
-        .catch(error => console.log(error.response))
-    } 
 
-  
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
     let sortedGroupList = [];
@@ -112,6 +97,18 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
   useEffect(() => {
     getGroupList();
   }, []);
+
+  // deletes group
+  const handleDelete = (groupId, adminId, token) => {
+    console.log(`/api/groups/${adminId}/${groupId}`, groupList)
+    axiosWithAuth(token, googleApi)
+        .delete(`/api/groups/${adminId}/${groupId}`, groupList)
+        .then(res => {
+            setGroupList([{ ...groupList }], getGroupList()) 
+        console.log('delete', res.data)
+      })
+    .catch(error => console.log(error.response)  
+  )};
 
   return (
     <Container>
@@ -149,7 +146,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
               {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
               {isDisplayingGroup === true && group.id === currentGroup.id && (
-                <ContactList>
+                <ContactList key={group.id}>
                   {currentGroup.contacts.map(contact => {
                     return(
                     <ContactDiv key={contact.id}>
@@ -167,7 +164,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
                   })}
                   <BtnContainer>
                     <EditBtn>Edit</EditBtn>
-                    <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
+                    <DeleteBtn onClick={() => handleDelete( group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                   </BtnContainer>
                 </ContactList>
               )}
