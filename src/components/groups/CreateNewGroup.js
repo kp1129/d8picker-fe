@@ -100,7 +100,7 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
       <Form>
         <Label htmlFor="groupName">
           {' '}
-          Group Name:
+          Group Name
           <Input
             type="text"
             placeholder="New Group Name"
@@ -111,7 +111,7 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
         </Label>
 
         <br />
-
+        <Label>Group color</Label> 
         <ColorsContainer>
           {colorOptions.map(color => {
             if (selectedColor === color) {
@@ -147,6 +147,7 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
             }
           })}
         </ColorsContainer>
+        <Label>Group icon</Label> 
         <IconsContainer>
           {iconOptions.map(icon => {
             if (selectedIcon === icon) {
@@ -184,7 +185,7 @@ const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
         </IconsContainer>
         <Label htmlFor="groupName">
           {' '}
-          Notes:
+          Notes
           <Input
             type="text"
             placeholder="Bring uniforms, be ready to WIN!"
@@ -296,12 +297,11 @@ const IconsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 5% 0;
+  margin: 3% 0;
 `;
 
 const Icon = styled.i`
-  font-size: 5rem;
-  paddin: 1%;
+  font-size: 3.5rem;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
   @media ${device.desktop} {
@@ -310,8 +310,8 @@ const Icon = styled.i`
 `;
 
 const ColorOption = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   background: ${props => props.color};
   margin: 1%;
   paddin: 1%;

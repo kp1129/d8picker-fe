@@ -8,11 +8,11 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
 import CreateNewGroup from './CreateNewGroup';
 
-const Groups = ({ setNavState, setGroupList }) => {
+const Groups = ({ setNavState }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo, groupList, width } = useContext(Context)
+  const { adminInfo, groupList, setGroupList, width } = useContext(Context)
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
@@ -75,10 +75,12 @@ const Groups = ({ setNavState, setGroupList }) => {
         console.log(`/api/groups/${adminId}/${groupId}`)
         axiosWithAuth(token, googleApi)
             .delete(`/api/groups/${adminId}/${groupId}`)
-            .then(res => 
-                setDeleteGroup({
-                    ...deleteGroup,
-            }))
+            .then(res => {
+                setGroupList(groupList.filter(g => g.id !== groupId));
+            //     setDeleteGroup({
+            //         ...deleteGroup,
+            // })
+          })
         .catch(error => console.log(error.response))
     } 
 
@@ -147,7 +149,6 @@ const Groups = ({ setNavState, setGroupList }) => {
                 {group.groupName}
               </GroupTitle>
               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-              {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
               {isDisplayingGroup === true && group.id === currentGroup.id && (
                 <ContactList>
                   {currentGroup.contacts.map(contact => {
@@ -313,10 +314,6 @@ const Arrow = styled.i`
   text-align: right;
   color: gray;
   font-size: 1.4rem;
-`;
-
-const GroupDescription = styled.h3`
-  font-size: 1rem;
 `;
 
 const ContactList = styled.div`
