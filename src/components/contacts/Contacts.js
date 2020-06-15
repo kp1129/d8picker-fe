@@ -5,15 +5,20 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = ({ setNavState }) => {
+const Contacts = ({navState}) => {
 
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo } = useContext(Context);
+    const { adminInfo, setNavState } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
     const [navToggle, setNavToggle] = useState(false);
+
+    const handleAddContact = () => {
+        console.log('click: ', navState)
+       setNavState(9)
+    }
 
     const handleChange = () => {
         setViewContacts([
@@ -28,13 +33,14 @@ const Contacts = ({ setNavState }) => {
         setNavState(2)
     };
 
+
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
         let sortAllContacts = []
         axiosWithAuth(token)
         .get(`/api/contacts/${adminInfo.adminId}`)
         .then(res => {
-            console.log(res.data.contacts)
+            // console.log(res.data.contacts)
             sortAllContacts = [...res.data.contacts]
             sortAllContacts.sort((a, b) => {
                 let name1 = a.firstName.toUpperCase();
@@ -53,11 +59,12 @@ const Contacts = ({ setNavState }) => {
             console.log(error)
         })
     }
-    console.log('Contacts,', viewContacts)
 
     useEffect(() => {
         getAllContacts()
-    }, [])
+        console.log('navState: ', navState)
+        // console.log('setNavState: ', setNavState)
+    }, [navState])
 
     return(
         <Container>
@@ -95,7 +102,7 @@ const Contacts = ({ setNavState }) => {
                 <Button>Add to group</Button>
             </BtnDiv>
             <BtnDiv>
-                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact1 onClick={handleAddContact} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
                 <BtnContact2>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
