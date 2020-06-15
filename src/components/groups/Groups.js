@@ -104,8 +104,7 @@ const Groups = ({ setNavState, groupList, setGroupList, setEventsUpdated }) => {
     axiosWithAuth(token, googleApi)
         .delete(`/api/groups/${adminId}/${groupId}`, groupList)
         .then(res => {
-            setGroupList([{ ...groupList }], getGroupList()) 
-        console.log('delete', res.data)
+            setGroupList([{ ...groupList }], getGroupList());
       })
     .catch(error => console.log(error.response)  
   )};
