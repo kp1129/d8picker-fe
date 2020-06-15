@@ -15,7 +15,7 @@ const AddContactForm = () => {
   const {currentUser} = googleApi;
 
   // get groupData
-  const {groupList} = useContext(Context);
+  const {groupList, navState, setNavState, adminInfo} = useContext(Context);
 
   const [input, setInput] = useState({
     firstName: '',
@@ -34,10 +34,10 @@ const AddContactForm = () => {
   
   console.log(errors);
 
-  const {adminInfo, setNavState} = useContext(Context);
 
 
-  const handleCancel = {
+
+  const handleCancel = () => {
     setNavState(1);
   }
   const onSubmit = data => {
@@ -83,6 +83,8 @@ const AddContactForm = () => {
           })
         .catch(err => console.log(err))
   };
+
+  console.log('our favorite navState', navState);
 
   return (
     <AddContact>

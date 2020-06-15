@@ -7,7 +7,8 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
-import InviteeAddContactForm from '../groups/InviteeAddContactForm';
+// import InviteeAddContactForm from '../groups/InviteeAddContactForm';
+import AdminAddContactForm from '../groups/AdminAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -148,6 +149,7 @@ const Home = () => {
           conEnd,
           title,
           notes,
+          navState,
           selected,
           setSelected,
           toggleNav,
@@ -222,7 +224,7 @@ const Home = () => {
           />
         )}
 
-        {navState === 6 && <InviteeAddContactForm />}
+        {navState === 6 && (<AdminAddContactForm />)}
 
         {navState === 7 && (
           <Contacts 

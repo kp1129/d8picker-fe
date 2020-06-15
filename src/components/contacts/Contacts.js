@@ -5,12 +5,12 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = ({ setNavState }) => {
+const Contacts = () => {
 
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo } = useContext(Context);
+    const { adminInfo, navState, setNavState } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
     const [navToggle, setNavToggle] = useState(false);
@@ -27,6 +27,12 @@ const Contacts = ({ setNavState }) => {
         setNavToggle(navToggle)
         setNavState(2)
     };
+
+    const handleAddContact = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setNavState(6);
+    }
 
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
@@ -56,8 +62,9 @@ const Contacts = ({ setNavState }) => {
     console.log('Contacts,', viewContacts)
 
     useEffect(() => {
-        getAllContacts()
-    }, [])
+        getAllContacts();
+        console.log('navState from useEffect', navState);
+    }, [navState])
 
     return(
         <Container>
@@ -95,7 +102,7 @@ const Contacts = ({ setNavState }) => {
                 <Button>Add to group</Button>
             </BtnDiv>
             <BtnDiv>
-                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
                 <BtnContact2>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
