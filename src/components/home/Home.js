@@ -12,7 +12,8 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import Contacts from '../contacts/Contacts.js';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../hooks/useWindowDimensions.js';
+
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -136,6 +137,9 @@ const Home = () => {
       setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
+
+  // keep track of window size
+  const { height, width } = useWindowDimensions();
 
   return (
     <Div>

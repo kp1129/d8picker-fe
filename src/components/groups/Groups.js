@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Context} from '../../contexts/Contexts';
+import { Context } from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
-import { useToasts } from 'react-toast-notifications'
+import { useToasts } from 'react-toast-notifications';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
+import CreateNewGroup from './CreateNewGroup';
 
 const Groups = ({ setNavState, setGroupList }) => {
   const { googleApi } = useAuth();
@@ -81,7 +82,6 @@ const Groups = ({ setNavState, setGroupList }) => {
         .catch(error => console.log(error.response))
     } 
 
-  
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
     let sortedGroupList = [];
@@ -113,8 +113,19 @@ const Groups = ({ setNavState, setGroupList }) => {
     getGroupList();
   }, []);
 
+  // controls Add Group button behavior
+  const handleDesktopAddGroup = e => {
+    e.stopPropagation();
+    setAddGroup(true);
+  };
+
+  const handleClickedGroup = (e, id) => {
+    e.stopPropagation();
+    setActiveGroup(id);
+  }
   return (
     <Container>
+
     {width < 768 &&  (<NavContainer>
         <HeaderContainer>
           <Title>Choose Group</Title>
@@ -139,7 +150,6 @@ const Groups = ({ setNavState, setGroupList }) => {
                 <i
                   className={group.groupIcon}
                   style={{
-                    fontSize: '1.6rem',
                     margin: '0 3% 0 0',
                     color: `${group.groupColor}`
                   }}
@@ -183,9 +193,13 @@ const Groups = ({ setNavState, setGroupList }) => {
           
         </BtnDiv>
       </GroupList>
-      <div onClick={handleChange}> 
-      {navToggle && <Contacts />}
-      </div>
+      {width >= 768 && (
+        <AddGroupBtn onClick={e => handleDesktopAddGroup(e)}>
+          Add group{' '}
+        </AddGroupBtn>
+      )}
+      {/* {addGroup && <CreateNewGroup setAddGroup={setAddGroup} />} */}
+      {/* <div onClick={handleChange}>{navToggle && <Contacts />}</div> */}
     </Container>
   );
 };
@@ -345,10 +359,10 @@ const TabsContainer = styled.div`
     font-size: 1rem;
 `;
 const Tabs = styled.button`
-    border: 1px solid #AFC9D9;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 5px 10px;
+  border: 1px solid #afc9d9;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px 10px;
 `;
