@@ -15,6 +15,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
+
   const [deleteGroup, setDeleteGroup] = useState({});
 
   //handles group toggle and calls function to fetch data according to condition
@@ -39,19 +40,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
     setNavToggle(false)
     setNavState(2)
 }
-    // deletes group
-    const handleDelete = (groupId, adminId, token) => {
-        console.log(`/api/groups/${adminId}/${groupId}`)
-        axiosWithAuth(token, googleApi)
-            .delete(`/api/groups/${adminId}/${groupId}`)
-            .then(res => 
-                setDeleteGroup({
-                    ...deleteGroup,
-            }))
-        .catch(error => console.log(error.response))
-    } 
 
-  
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
     let sortedGroupList = [];
@@ -82,6 +71,17 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
   useEffect(() => {
     getGroupList();
   }, []);
+
+  // deletes group
+  const handleDelete = (groupId, adminId, token) => {
+    console.log(`/api/groups/${adminId}/${groupId}`, groupList)
+    axiosWithAuth(token, googleApi)
+        .delete(`/api/groups/${adminId}/${groupId}`, groupList)
+        .then(res => {
+            setGroupList([{ ...groupList }], getGroupList());
+      })
+    .catch(error => console.log(error.response)  
+  )};
 
   return (
     <Container>
@@ -119,7 +119,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
               {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
               {isDisplayingGroup === true && group.id === currentGroup.id && (
-                <ContactList>
+                <ContactList key={group.id}>
                   {currentGroup.contacts.map(contact => {
                     return(
                     <ContactDiv key={contact.id}>
@@ -136,6 +136,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
                     )
                   })}
                   <BtnContainer>
+
                     <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                     <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                   </BtnContainer>
