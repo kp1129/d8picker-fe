@@ -131,8 +131,8 @@ const Groups = () => {
           Add group{' '}
         </AddGroupBtn>
       )}
-      {addGroup && <CreateNewGroup setAddGroup={setAddGroup} />}
-      <div onClick={handleChange}>{navToggle && <Contacts />}</div>
+      {/* {addGroup && <CreateNewGroup setAddGroup={setAddGroup} />} */}
+      {/* <div onClick={handleChange}>{navToggle && <Contacts />}</div> */}
     </Container>
   );
 };
