@@ -12,6 +12,7 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import Contacts from '../contacts/Contacts.js';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -63,6 +64,9 @@ const Home = () => {
 
   // holds the admin Info
   const [adminInfo, setAdminInfo] = useState({});
+
+  // holds window dimentions
+  const { height, width } = useWindowDimensions();
 
   //changes the color of the nav icons depending on which components are rendered
   useEffect(() => {
@@ -137,6 +141,7 @@ const Home = () => {
     <Div>
       <Context.Provider
         value={{
+          width,
           groupList,
           setGroupList,
           adminInfo,

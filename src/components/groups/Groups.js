@@ -7,11 +7,11 @@ import { useToasts } from 'react-toast-notifications'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
 
-const Groups = ({ setNavState, groupList, setGroupList }) => {
+const Groups = ({ setNavState, setGroupList }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo } = useContext(Context)
+  const { adminInfo, groupList, width } = useContext(Context)
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
@@ -115,7 +115,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 
   return (
     <Container>
-      <NavContainer>
+    {width < 768 &&  (<NavContainer>
         <HeaderContainer>
           <Title>Choose Group</Title>
           <BackBtn
@@ -130,7 +130,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           <Tabs className='groups' onClick={handleGroups}>Groups</Tabs>
           <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
         </TabsContainer>
-      </NavContainer>
+      </NavContainer>)}
       <GroupList>
         {groupList.map(group => {
           return (
@@ -175,12 +175,12 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           );
         })}
         <BtnDiv>
-          <Btn
+          {width < 768 && <Btn
             src={btn}
             onClick={() => {
               setNavState(5);
-            }}
-          ></Btn>
+            }}></Btn>}
+          
         </BtnDiv>
       </GroupList>
       <div onClick={handleChange}> 
@@ -191,6 +191,7 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 };
 
 export default Groups;
+
 
 const Container = styled.div`
   width: 100%;
