@@ -15,6 +15,7 @@ const Contacts = () => {
     const [viewContacts, setViewContacts] = useState([]);
     const [navToggle, setNavToggle] = useState(false);
 
+
     const handleChange = () => {
         setViewContacts([
             ...viewContacts
@@ -31,6 +32,7 @@ const Contacts = () => {
     const handleAddContact = (e) => {
         e.stopPropagation();
         e.preventDefault();
+        // set navstate to show AdminAddContactForm
         setNavState(6);
     }
 
@@ -40,7 +42,7 @@ const Contacts = () => {
         axiosWithAuth(token)
         .get(`/api/contacts/${adminInfo.adminId}`)
         .then(res => {
-            console.log(res.data.contacts)
+            // console.log(res.data.contacts)
             sortAllContacts = [...res.data.contacts]
             sortAllContacts.sort((a, b) => {
                 let name1 = a.firstName.toUpperCase();
@@ -59,11 +61,11 @@ const Contacts = () => {
             console.log(error)
         })
     }
-    console.log('Contacts,', viewContacts)
 
     useEffect(() => {
-        getAllContacts();
-        console.log('navState from useEffect', navState);
+        getAllContacts()
+        console.log('navState: ', navState)
+        // console.log('setNavState: ', setNavState)
     }, [navState])
 
     return(

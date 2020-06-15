@@ -6,7 +6,8 @@ import {useAuth} from '../../contexts/auth';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications';
 
-const AddContactForm = () => {
+const AdminAddContactForm = () => {
+  const {groupList} = useContext(Context);
   const { register, handleSubmit, errors } = useForm();
 
   const { addToast } = useToasts();
@@ -15,7 +16,10 @@ const AddContactForm = () => {
   const {currentUser} = googleApi;
 
   // get groupData
+<<<<<<< HEAD
   const {groupList, navState, setNavState, adminInfo} = useContext(Context);
+=======
+>>>>>>> ccea2dadf7fb283f70d868ec8f849578642b7635
 
   const [input, setInput] = useState({
     firstName: '',
@@ -36,9 +40,14 @@ const AddContactForm = () => {
 
 
 
+<<<<<<< HEAD
 
   const handleCancel = () => {
     setNavState(1);
+=======
+  const handleCancel = () => {
+    setNavState(2);
+>>>>>>> ccea2dadf7fb283f70d868ec8f849578642b7635
   }
   const onSubmit = data => {
     // format phone number
@@ -149,6 +158,8 @@ const AddContactForm = () => {
     </AddContact>
   );
 };
+
+export default AdminAddContactForm;
 
 // styled components
 const size = {
@@ -275,5 +286,3 @@ const Label = styled.label`
     position: absolute;
     width: 1px;
 `;
-
-export default AddContactForm;

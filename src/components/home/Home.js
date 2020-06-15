@@ -7,12 +7,17 @@ import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
 import Groups from '../groups/Groups';
 import CreateNewGroup from '../groups/CreateNewGroup';
+<<<<<<< HEAD
 // import InviteeAddContactForm from '../groups/InviteeAddContactForm';
+=======
+import InviteeAddContactForm from '../groups/InviteeAddContactForm';
+import Contacts from '../contacts/Contacts.js';
+import EditGroupForm from '../groups/EditGroupForm';
+>>>>>>> ccea2dadf7fb283f70d868ec8f849578642b7635
 import AdminAddContactForm from '../groups/AdminAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import Contacts from '../contacts/Contacts.js';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -38,7 +43,8 @@ const Home = () => {
   const [templateList, setTemplateList] = useState([]);
 
   const [groupList, setGroupList] = useState([]);
-  const [viewContacts, setViewContacts] = useState([])
+  const [currentGroup, setCurrentGroup] = useState({});
+  const [viewContacts, setViewContacts] = useState([]);
 
   //holds the start and end time of currently selected event.
   const [conStart, setConStart] = useState('');
@@ -122,6 +128,33 @@ const Home = () => {
       });
   };
 
+  //fetches a particular group's data
+  const fetchGroupData = (groupId, adminId, token) => {
+    let sortedGroupContacts = []
+    let group = {}
+    console.log(`/api/groups/${adminId}/${groupId}`)
+    axiosWithAuth(token)
+    .get(`/api/groups/${adminId}/${groupId}`)
+    .then(async res => {
+      sortedGroupContacts = [...res.data.contacts];
+      await sortedGroupContacts.sort((a, b) => {
+        let groupA = a.firstName.toUpperCase();
+        let groupB = b.firstName.toUpperCase();
+        if (groupA < groupB) {
+          return -1;
+        }
+        if (groupA > groupB) {
+          return 1;
+        }
+        return 0;
+      });
+      setCurrentGroup({...res.data, contacts: [...sortedGroupContacts]});
+    })
+    .catch(err => {
+      console.log('Error', err);
+    });
+}
+
   useEffect(() => {
     getGroupList();
   }, [adminInfo]);
@@ -184,6 +217,8 @@ const Home = () => {
             setNavState={setNavState}
             groupList={groupList}
             setGroupList={setGroupList}
+            fetchGroupData={fetchGroupData}
+            currentGroup={currentGroup}
           />
         )}
 
@@ -226,11 +261,11 @@ const Home = () => {
 
         {navState === 6 && (<AdminAddContactForm />)}
 
-        {navState === 7 && (
-          <Contacts 
-            setNavState={setNavState} setViewContacts={setViewContacts}viewContacts={viewContacts}
-          /> 
-        )}
+        {navState === 7 && <Contacts setNavState={setNavState} setViewContacts={setViewContacts} viewContacts={viewContacts} navState={navState}/>}
+
+        {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
+
+        {navState === 9 && <AdminAddContactForm setNavState={setNavState} adminInfo={adminInfo} navState={navState}/>}
 
         {toggleNav && (
           <Nav
