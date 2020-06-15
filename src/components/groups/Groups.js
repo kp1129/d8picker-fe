@@ -15,6 +15,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
+  const [deleteGroup, setDeleteGroup] = useState({});
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -38,6 +39,17 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
     setNavToggle(false)
     setNavState(2)
 }
+    // deletes group
+    const handleDelete = (groupId, adminId, token) => {
+        console.log(`/api/groups/${adminId}/${groupId}`)
+        axiosWithAuth(token, googleApi)
+            .delete(`/api/groups/${adminId}/${groupId}`)
+            .then(res => 
+                setDeleteGroup({
+                    ...deleteGroup,
+            }))
+        .catch(error => console.log(error.response))
+    } 
 
   
   //sets groupList state to state and sorts aplphabetically
@@ -125,7 +137,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
                   })}
                   <BtnContainer>
                     <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
-                    <DeleteBtn>Delete</DeleteBtn>
+                    <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                   </BtnContainer>
                 </ContactList>
               )}
