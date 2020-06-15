@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Context} from '../../contexts/Contexts';
+import { Context } from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
+
+import CreateNewGroup from './CreateNewGroup';
 import Contacts from '../contacts/Contacts.js';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
@@ -11,7 +13,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo } = useContext(Context)
+  const { adminInfo, groupList, setGroupList, width } = useContext(Context)
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
@@ -40,6 +42,20 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
     setNavToggle(false)
     setNavState(2)
 }
+    // deletes group
+    const handleDelete = (groupId, adminId, token) => {
+        console.log(`/api/groups/${adminId}/${groupId}`)
+        axiosWithAuth(token, googleApi)
+            .delete(`/api/groups/${adminId}/${groupId}`)
+            .then(res => {
+                setGroupList(groupList.filter(g => g.id !== groupId));
+            //     setDeleteGroup({
+            //         ...deleteGroup,
+            // })
+          })
+        .catch(error => console.log(error.response))
+    } 
+
 
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
@@ -85,7 +101,8 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
 
   return (
     <Container>
-      <NavContainer>
+
+    {width < 768 &&  (<NavContainer>
         <HeaderContainer>
           <Title>Choose Group</Title>
           <BackBtn
@@ -100,7 +117,7 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
           <button className='groups' onClick={handleGroups}>Groups</button>
           <button className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</button>
         </TabsContainer>
-      </NavContainer>
+      </NavContainer>)}
       <GroupList>
         {groupList.map(group => {
           return (
@@ -109,7 +126,6 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
                 <i
                   className={group.groupIcon}
                   style={{
-                    fontSize: '1.6rem',
                     margin: '0 3% 0 0',
                     color: `${group.groupColor}`
                   }}
@@ -117,7 +133,6 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
                 {group.groupName}
               </GroupTitle>
               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-              {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
               {isDisplayingGroup === true && group.id === currentGroup.id && (
                 <ContactList key={group.id}>
                   {currentGroup.contacts.map(contact => {
@@ -146,22 +161,30 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
           );
         })}
         <BtnDiv>
-          <Btn
+          {width < 768 && <Btn
             src={btn}
             onClick={() => {
               setNavState(5);
-            }}
-          ></Btn>
+            }}></Btn>}
+          
         </BtnDiv>
       </GroupList>
-      <div onClick={handleChange}> 
-      {navToggle && <Contacts />}
-      </div>
+      {/* <div onClick={handleChange}>{navToggle && <Contacts />}</div> */}
     </Container>
   );
 };
 
 export default Groups;
+
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
+
 
 const Container = styled.div`
   width: 100%;
@@ -221,6 +244,11 @@ const GroupList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 22% 5% 30%;
+  @media ${device.desktop} {
+    width: 90%;
+    margin: 0 auto;
+    }
+
 `;
 const Group = styled.div`
   width: 100%;
@@ -233,7 +261,10 @@ const Group = styled.div`
 const GroupTitle = styled.h1`
   width: 80%;
   font-size: 1.6rem;
-  color: ${props => props.color}
+  color: ${props => props.color};
+  @media ${device.desktop} {
+    font-size: 1.25rem;
+    }
 `
 const BtnContainer = styled.div`
   width: 100%;
@@ -268,10 +299,6 @@ const Arrow = styled.i`
   text-align: right;
   color: gray;
   font-size: 1.4rem;
-`;
-
-const GroupDescription = styled.h3`
-  font-size: 1rem;
 `;
 
 const ContactList = styled.div`
@@ -314,12 +341,21 @@ const TabsContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     font-size: 1rem;
-    button{
-      border: 1px solid #AFC9D9;
-      border-radius: 10px 10px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 5px 10px;
-    }
 `;
+const Tabs = styled.button`
+  border: 1px solid #afc9d9;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px 10px;
+`;
+//    button{
+//      border: 1px solid #AFC9D9;
+//      border-radius: 10px 10px 0 0;
+//      display: flex;
+//      align-items: center;
+//      justify-content: space-around;
+//      padding: 5px 10px;
+//    }
+// `;

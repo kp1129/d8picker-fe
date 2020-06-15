@@ -5,11 +5,13 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const CreateNewGroup = ({ setNavState, setGroupList }) => {
+
+const CreateNewGroup = ({ setNavState, setShowCreateNewGroup }) => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo } = useContext(Context);
+  const { adminInfo, setGroupList, width } = useContext(Context);
+
   const { token } = currentUser;
   // const { adminInfo } = useContext(Context)
 
@@ -43,6 +45,8 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
   const [message, setMessage] = useState('');
 
   const handleChange = e => {
+    e.preventDefault();
+    e.stopPropagation();
     setNewGroup({
       ...newGroup,
       [e.target.name]: e.target.value
@@ -51,6 +55,7 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    console.log('submit fired');
     console.log('ADMIN ID: ', adminInfo.adminId);
     if (!newGroup.groupName) {
       setMessage('Please provide a name for your group');
@@ -60,20 +65,33 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
       .post(`/api/groups/${adminInfo.adminId}`, newGroup)
       .then(async res => {
         await setGroupList([...res.data.groups]);
-        setNavState(2);
+        if(width < 768){
+          setNavState(2);
+        } else {
+          setShowCreateNewGroup(false);
+        }
       })
       .catch(err => {
         console.log('ERROR 2: ', err);
       });
   };
 
+  // controls Cancel behavior
+  const handleCancel = () => {
+    // if desktop view
+    if(width >= 768){
+      setShowCreateNewGroup(false);
+    // if mobile view
+    } else {
+      setNavState(2);
+    }
+  }
+
   return (
     <Container>
       <HeaderContainer>
         <CancelBtn
-          onClick={() => {
-            setNavState(2);
-          }}
+          onClick={handleCancel}
         >
           Cancel
         </CancelBtn>
@@ -82,29 +100,18 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
       <Form>
         <Label htmlFor="groupName">
           {' '}
-          Group Name:
+          Group Name
           <Input
             type="text"
             placeholder="New Group Name"
             name="groupName"
             value={newGroup.groupName}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
         </Label>
 
         <br />
-
-        <Label htmlFor="groupName">
-          {' '}
-          Group Description:
-          <Input
-            type="text"
-            placeholder="New Group Description"
-            name="groupDescription"
-            value={newGroup.groupDescription}
-            onChange={handleChange}
-          />
-        </Label>
+        <Label>Group color</Label> 
         <ColorsContainer>
           {colorOptions.map(color => {
             if (selectedColor === color) {
@@ -140,6 +147,7 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
             }
           })}
         </ColorsContainer>
+        <Label>Group icon</Label> 
         <IconsContainer>
           {iconOptions.map(icon => {
             if (selectedIcon === icon) {
@@ -175,8 +183,19 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
             }
           })}
         </IconsContainer>
+        <Label htmlFor="groupName">
+          {' '}
+          Notes
+          <Input
+            type="text"
+            placeholder="Bring uniforms, be ready to WIN!"
+            name="groupDescription"
+            value={newGroup.groupDescription}
+            onChange={(e) => handleChange(e)}
+          />
+        </Label>
         <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>
-          Submit
+          Select members
         </SubmitBtn>
       </Form>
       <p>{message}</p>
@@ -184,6 +203,16 @@ const CreateNewGroup = ({ setNavState, setGroupList }) => {
   );
 };
 export default CreateNewGroup;
+
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
 
 const Container = styled.div`
   width: 100%;
@@ -194,13 +223,23 @@ const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
   padding: 2%;
+  @media ${device.desktop} {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-start;
+    
+    }
+
 `;
 
 const Header = styled.h1`
   width: 60%;
   text-align: right;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
+  @media ${device.desktop} {
+    text-align: left;
+  }
 `;
 
 const CancelBtn = styled.p`
@@ -235,21 +274,18 @@ const Input = styled.input`
     outline: none
 `;
 
-const SubmitBtn = styled.button`
-  width: 70%;
-  background: #28807d;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.25rem;
-  padding: 4%;
-  margin: 8% auto;
-  border: 1px solid #28807d;
-  border-radius: 5rem;
-  &:hover {
-    cursor: pointer;
-  }
+const SubmitBtn = styled.div`
+margin: 0.5rem auto;
+cursor: pointer;
+width: 90%;
+color:  #28807d;
+font-weight: bold;
+border: 2px solid  #28807d;
+border-radius: 0.5rem;
+text-align: center;
+padding: 0.25rem 1rem;
 `;
+
 const ColorsContainer = styled.div`
   width: 100%;
   display: flex;
@@ -261,22 +297,29 @@ const IconsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: 5% 0;
+  margin: 3% 0;
 `;
 
 const Icon = styled.i`
-  font-size: 5rem;
-  paddin: 1%;
+  font-size: 3.5rem;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
+  @media ${device.desktop} {
+    font-size: 40px;
+    }
 `;
 
 const ColorOption = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   background: ${props => props.color};
   margin: 1%;
   paddin: 1%;
   border: ${props => props.border};
   border-radius: 5px;
+
+  @media ${device.desktop} {
+    height: 45px;
+    width: 45px;
+    }
 `;

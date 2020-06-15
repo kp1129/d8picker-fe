@@ -2,16 +2,9 @@ import React, {useContext} from 'react';
 import {Context} from '../../contexts/Contexts';
 import ChooseDateForm from './ChooseDateForm';
 import styled from 'styled-components';
-import useWindowDimensions from '../../hooks/useWindowDimensions.js';
-
-
-
 
 const TemplateContainer = () => {
-  const {templateList} = useContext(Context);
-  const { height, width } = useWindowDimensions();
-
-
+  const {templateList, width} = useContext(Context);
 
   return (
           <>

@@ -12,6 +12,9 @@ import eventsBtnInactive from '../navigation/NavImgs/Events Button-Inactive.png'
 import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import TemplateContainer from '../events/TemplateContainer';
+import Groups from '../groups/Groups';
+import GroupsContainer from '../groups/GroupsContainer';
+
 
 const Nav = ({
   setNavState,
@@ -89,7 +92,8 @@ const Nav = ({
   };
 
   // handles behavior of the Groups tab
-  const handleGroups = () => {
+  const handleGroups = (e) => {
+    e.stopPropagation();
     // toggle arrows and active button for this tab
     setIsDisplayingGroups(!isDisplayingGroups);
     // force toggle-off for all the other tabs
@@ -171,7 +175,7 @@ const Nav = ({
           )}
         </IconDiv>
         {/* groups tab */}
-        <IconDiv className="groupIcon" onClick={handleGroups}>
+        <IconDiv className="groupIcon" onClick={(e) => handleGroups(e)}>
           <div className="popout-div">
             <Img
               src={isDisplayingGroups ? groupsBtnActive : groupsBtnInactive}
@@ -185,7 +189,9 @@ const Nav = ({
             ></Arrow>
           </div>
           {groupsPopoutVisible && (
-            <GroupPlaceholder>groups placeholder</GroupPlaceholder>
+            <GroupPlaceholder>
+              <GroupsContainer />
+            </GroupPlaceholder>
           )}
         </IconDiv>
         {/* settings tab */}
@@ -235,8 +241,7 @@ const EventsPlaceholder = styled.div`
 `;
 
 const GroupPlaceholder = styled.div`
-  width: 90%;
-  border: 1px solid gray;
+  width: 250px;
 `;
 
 const NavContainer = styled.div`
@@ -275,7 +280,7 @@ const Container = styled.div`
     z-index: 100;
     border-top: 1px solid #f2f2f2;
     background: white;
-    width: 25%;
+    max-width: 25%;
     height: 100%;
     left: 0;
 
