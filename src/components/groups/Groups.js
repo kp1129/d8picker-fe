@@ -3,11 +3,11 @@ import {Context} from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
-import { useToasts } from 'react-toast-notifications'
-import axiosWithAuth from '../../utils/axiosWithAuth';
 import Contacts from '../contacts/Contacts.js';
+import axiosWithAuth from '../../utils/axiosWithAuth';
+import { useToasts } from 'react-toast-notifications'
 
-const Groups = ({ setNavState, groupList, setGroupList }) => {
+const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentGroup }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
@@ -15,34 +15,6 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
 
   const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
-  const [currentGroup, setCurrentGroup] = useState({})
-
-  //function to handle particular group data fetch
-  const fetchGroupData = (groupId, adminId, token) => {
-    let sortedGroupContacts = []
-    let group = {}
-    console.log(`/api/groups/${adminId}/${groupId}`)
-    axiosWithAuth(token)
-    .get(`/api/groups/${adminId}/${groupId}`)
-    .then(async res => {
-      sortedGroupContacts = [...res.data.contacts];
-      await sortedGroupContacts.sort((a, b) => {
-        let groupA = a.firstName.toUpperCase();
-        let groupB = b.firstName.toUpperCase();
-        if (groupA < groupB) {
-          return -1;
-        }
-        if (groupA > groupB) {
-          return 1;
-        }
-        return 0;
-      });
-      setCurrentGroup({...res.data, contacts: [...sortedGroupContacts]});
-    })
-    .catch(err => {
-      console.log('Error', err);
-    });
-}
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -57,8 +29,6 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
       setIsDisplayingGroup(false)
     }
   } 
-
-  // console.log('currentGroup: ', currentGroup)
 
   const handleChange = () => {
       setNavToggle(true)
@@ -115,8 +85,8 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
           </BackBtn>
         </HeaderContainer>
         <TabsContainer>
-          <Tabs className='groups' onClick={handleGroups}>Groups</Tabs>
-          <Tabs className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
+          <button className='groups' onClick={handleGroups}>Groups</button>
+          <button className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</button>
         </TabsContainer>
       </NavContainer>
       <GroupList>
@@ -141,20 +111,20 @@ const Groups = ({ setNavState, groupList, setGroupList }) => {
                   {currentGroup.contacts.map(contact => {
                     return(
                     <ContactDiv key={contact.id}>
-                      <ContactIcon className="fas fa-user-alt"></ContactIcon>
+                      <i className="fas fa-user-alt"></i>
                       <ContactInfoContainer>
-                        <Name>{`${contact.firstName} ${contact.lastName}`}</Name>
+                        <p>{`${contact.firstName} ${contact.lastName}`}</p>
                         <IconContainer>
-                          <Icon className="fas fa-phone"></Icon>
-                          <Icon className="fas fa-comment-medical"></Icon>
-                          <Icon className="fas fa-envelope"></Icon>
+                          <i className="fas fa-phone"></i>
+                          <i className="fas fa-comment-medical"></i>
+                          <i className="fas fa-envelope"></i>
                         </IconContainer>
                       </ContactInfoContainer>
                     </ContactDiv>
                     )
                   })}
                   <BtnContainer>
-                    <EditBtn>Edit</EditBtn>
+                    <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                     <DeleteBtn>Delete</DeleteBtn>
                   </BtnContainer>
                 </ContactList>
@@ -299,12 +269,12 @@ const ContactDiv = styled.div`
   margin: 5% 0;
   display: flex;
   justfiy-content: space-between;
-`
-const ContactIcon = styled.i`
-  width: 20%;
-  margin: 2% 0 0 0;
-  font-size: 3rem;
-  color: #28807D;
+  i{
+    width: 20%;
+    margin: 2% 0 0 0;
+    font-size: 3rem;
+    color: #28807D;
+  }
 `
 const ContactInfoContainer = styled.div`
   width: 70%
@@ -319,23 +289,24 @@ const IconContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-`
-const Icon = styled.i`
-  width: 20%;
-  font-size: 1.4rem;
-  color: #AFC9D9;
-`
+  i{
+    width: 20%;
+    font-size: 1.4rem;
+    color: #AFC9D9;
+  }
+  `
+
 const TabsContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
     font-size: 1rem;
-`;
-const Tabs = styled.button`
-    border: 1px solid #AFC9D9;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 5px 10px;
+    button{
+      border: 1px solid #AFC9D9;
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 5px 10px;
+    }
 `;
