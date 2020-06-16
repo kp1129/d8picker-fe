@@ -26,7 +26,7 @@ const InviteeAddContactForm = () => {
   console.log(errors);
 
   // check to see if link is invalid
-  const [linkValidity, setLinkValidity] = useState(true);
+  const [linkValidity, setLinkValidity] = useState(false);
 
   const [inviteeAdded, setInviteeAdded] = useState(false);
 
@@ -34,22 +34,27 @@ const InviteeAddContactForm = () => {
   const { groupInviteHash } = useParams();
   
   // state for adminInfo and groupInfo
-  const [adminInfo, setAdminInfo] = useState({adminId: '1'});
-  const [groupInfo, setGroupInfo] = useState({groupId: '1'});
+  const [adminInfo, setAdminInfo] = useState();
+  const [groupInfo, setGroupInfo] = useState();
   
   
 
   useEffect(() => {
-    // check to see if the URL has groupInviteHash
-      // also use verify endpoint in backend to verify the hash
-      // const response = axios call to backend with groupInviteHash
-      // // if verified, store group and admin information
-        // setLinkValidity(true);
-        // setAdminInfo(res.data.adminInfo);
-        // set groupId in the input
-        // setInput({...input, groupId: res.data.groupInfo.id})
-      // if not verified
-        // setLinkValidity(false);
+    console.log(groupInviteHash);
+    axios
+      .get(`${process.env.REACT_APP_ENDPOINT_URL}/api/inviteToGroup/verify/${groupInviteHash}`)
+      .then(res => {
+        if(res.status == 200){
+          setAdminInfo(res.data.adminInfo);
+          setGroupInfo(res.data.groupInfo);
+          setLinkValidity(true);
+        } else {
+          setLinkValidity(false);
+        }
+      })
+      .catch(err => {
+        console.log('error in verifying invite link', err);
+      })
   }, [groupInviteHash]);
 
 
@@ -101,7 +106,7 @@ const InviteeAddContactForm = () => {
       {linkValidity && !inviteeAdded && (
         <Headline>       
           <Tag>You've been invited to join:</Tag>
-          <GroupName>Girls Junior Varsity Basketball</GroupName>
+          <GroupName>{groupInfo.groupName}</GroupName>
         </Headline>
       )}
       { linkValidity && !inviteeAdded && (
