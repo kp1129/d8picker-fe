@@ -47,8 +47,8 @@ const InviteLink = () => {
         {!groupInviteLink && (
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <GroupDiv>
-                    <Tag>Group</Tag>
-                    <Label htmlFor="groupId">Group</Label>
+                    <Tag>Add Groups</Tag>
+                    <Label htmlFor="groupId">Add Groups</Label>
                     <select onChange={handleChange} name="groupId" id="groupId" ref={register({ required: true })}>
                     {groupList.map(g => {
                         return (
@@ -66,9 +66,9 @@ const InviteLink = () => {
         {groupInviteLink && (
             <LinkContainer>
             <Headline>Invite Link Generated Successfully!</Headline>
-            <GroupDiv>
+            <LinkDiv>
                 {groupInviteLink}
-            </GroupDiv>
+            </LinkDiv>
             </LinkContainer>
         )}
     </InviteLinkContainer>
@@ -90,21 +90,26 @@ const InviteLinkContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
+  width: 100%;
 `;
 
 const Headline = styled.div`
   width: 90%;
   margin: 0 auto;
-`;
-
-const LinkContainer = styled.div`
-  font-size: 1.15rem;
-  width: 80%;
-  text-align: center;
-  border-radius: 5px;
+  padding: 2%;
   color: #c70c00;
   font-weight: bold;
   background: #f8dfde;
+  border-radius: 0.5rem;
+  font-size: 1.15rem;
+`;
+
+const LinkContainer = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 5% auto;
 `;
 
 const Form = styled.form`
@@ -112,11 +117,6 @@ const Form = styled.form`
   flex-direction: column;
   width: 90%;
   margin: 0 auto;
-
-  #firstName,
-  #lastName {
-    width: 45%;
-  }
 `;
 
 const Tag = styled.p`
@@ -129,6 +129,15 @@ const Tag = styled.p`
 const GroupDiv = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const LinkDiv = styled.div`
+  display: flex;
+  width: 80%;
+  height: auto;
+  margin: 2% auto;
+  padding: 2%;
+  word-break: break-all;
 `;
 
 const ButtonDiv = styled.div`
@@ -146,7 +155,7 @@ const SaveBtn = styled.div`
   text-align: center;
   font-weight: bold;
   font-size: 1.15rem;
-  padding: 2%;
+  padding: 2% 5%;
   margin: 2%; auto;
   border: 2px solid #28807d;
   border-radius: 5rem;
