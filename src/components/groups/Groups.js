@@ -1,22 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Context} from '../../contexts/Contexts';
+import { Context } from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
+
+import CreateNewGroup from './CreateNewGroup';
 import Contacts from '../contacts/Contacts.js';
 import AddContactToGroupForm from '../contacts/AddContactToGroupForm';
 import circleBtn from '../navigation/circle-plus.png';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
 
-const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentGroup }) => {
+const Groups = () => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo } = useContext(Context)
+  const { adminInfo, width, setNavState, groupList, setGroupList, fetchGroupData, currentGroup } = useContext(Context)
 
-  const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
+
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
 
@@ -86,28 +88,75 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
     getGroupList();
   }, []);
 
+// // // //   // deletes group
+// // // //   const handleDelete = (groupId, adminId, token) => {
+// // // //     console.log(`/api/groups/${adminId}/${groupId}`, groupList)
+// // // //     axiosWithAuth(token, googleApi)
+// // // //         .delete(`/api/groups/${adminId}/${groupId}`, groupList)
+// // // //         .then(res => {
+// // // //             setGroupList([{ ...groupList }], getGroupList());
+// // // //       })
+// // // //     .catch(error => console.log(error.response)  
+// // // //   )};
+
+// // // //   return (
+// // // //       <GroupList>
+// // // //         {groupList.map(group => {
+// // // //           return (
+// // // //             <Group key={group.id} onClick={()=>{handleGroupDisplay(group.id, adminInfo.adminId, token)}}>
+// // // //               <GroupTitle color={group.groupColor}>
+// // // //                 <i
+// // // //                   className={group.groupIcon}
+// // // //                   style={{
+// // // //                     margin: '0 3% 0 0',
+// // // //                     color: `${group.groupColor}`
+// // // //                   }}
+// // // //                 ></i>
+// // // //                 {group.groupName}
+// // // //               </GroupTitle>
+// // // //               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
+// // // //               {isDisplayingGroup === true && group.id === currentGroup.id && (
+// // // //                 <ContactList key={group.id}>
+// // // //                   {currentGroup.contacts.map(contact => {
+// // // //                     return(
+// // // //                     <ContactDiv key={contact.id}>
+// // // //                       <i className="fas fa-user-alt"></i>
+// // // //                       <ContactInfoContainer>
+// // // //                         <p>{`${contact.firstName} ${contact.lastName}`}</p>
+// // // //                         <IconContainer>
+// // // //                           <i className="fas fa-phone"></i>
+// // // //                           <i className="fas fa-comment-medical"></i>
+// // // //                           <i className="fas fa-envelope"></i>
+// // // //                         </IconContainer>
+// // // //                       </ContactInfoContainer>
+// // // //                     </ContactDiv>
+// // // //                     )
+// // // //                   })}
+// // // //                   <BtnContainer>
+
+// // // //                     <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
+// // // //                     <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
+// // // //                   </BtnContainer>
+// // // //                 </ContactList>
+// // // //               )}
+// // // //             </Group>
+// // // //           );
+// // // //         })}
+// // // //         <BtnDiv>
+// // // //           {width < 768 && <Btn
+// // // //             src={btn}
+// // // //             onClick={() => {
+// // // //               setNavState(5);
+// // // //             }}></Btn>}
+          
+// // // //         </BtnDiv>
+// // // //       </GroupList>
+// // // //   );
  
     if(isAddingContactToGroup){
       return <AddContactToGroupForm currentGroup={currentGroup} setIsAddingContactToGroup={setIsAddingContactToGroup}/>
     }
       return (
-      <Container>
-        <NavContainer>
-          <HeaderContainer>
-            <Title>Choose Group</Title>
-            <BackBtn
-              onClick={() => {
-                setNavState(0);
-              }}
-            >
-              Back
-            </BackBtn>
-          </HeaderContainer>
-          <TabsContainer>
-            <button className='groups' onClick={handleGroups}>Groups</button>
-            <button className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</button>
-          </TabsContainer>
-        </NavContainer>
         <GroupList>
           {groupList.map(group => {
             return (
@@ -161,55 +210,19 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
             ></Btn>
           </BtnDiv>
         </GroupList>
-        <div onClick={handleChange}> 
-        {navToggle && <Contacts />}
-        </div>
-      </Container>
     );
 };
 
 export default Groups;
 
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const NavContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 3% 2.5% 0 2.5%;
-  position: fixed;
-  top: 0;
-  background: white;
-`;
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`
-
-const BackBtn = styled.p`
-  width: 48%;
-  font-size: 1.2rem;
-  text-align: right;
-  line-height: 27px;
-  color: #28807d;
-`;
-
-const Title = styled.h1`
-  width: 48%;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 27px;
-`;
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
 
 const BtnDiv = styled.div`
   width: 100%;
@@ -228,6 +241,11 @@ const GroupList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 22% 5% 30%;
+  @media ${device.desktop} {
+    width: 90%;
+    margin: 0 auto;
+    }
+
 `;
 const Group = styled.div`
   width: 100%;
@@ -240,7 +258,10 @@ const Group = styled.div`
 const GroupTitle = styled.h1`
   width: 80%;
   font-size: 1.6rem;
-  color: ${props => props.color}
+  color: ${props => props.color};
+  @media ${device.desktop} {
+    font-size: 1.25rem;
+    }
 `
 const BtnContainer = styled.div`
   width: 100%;
@@ -277,10 +298,6 @@ const Arrow = styled.i`
   font-size: 1.4rem;
 `;
 
-const GroupDescription = styled.h3`
-  font-size: 1rem;
-`;
-
 const ContactList = styled.div`
   width: 100%;
 `
@@ -300,10 +317,6 @@ const ContactInfoContainer = styled.div`
   width: 70%
   display: flex;
   flex-wrap: wrap;
-`
-const Name = styled.h1`
-  width: 100%;
-  font-size: 1.4rem;
 `
 const IconContainer = styled.div`
   width: 100%;

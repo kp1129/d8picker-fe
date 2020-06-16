@@ -5,15 +5,18 @@ import Events from '../events/Events';
 import Nav from '../navigation/Nav';
 import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
-import Groups from '../groups/Groups';
+import Groups_Contacts from '../groups/Groups_Contacts';
 import CreateNewGroup from '../groups/CreateNewGroup';
 import InviteeAddContactForm from '../groups/InviteeAddContactForm';
-import Contacts from '../contacts/Contacts.js';
 import EditGroupForm from '../groups/EditGroupForm';
 import AdminAddContactForm from '../groups/AdminAddContactForm';
+import InviteLink from '../groups/InviteLink';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
+import useWindowDimensions from '../../hooks/useWindowDimensions.js';
+
+
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -66,6 +69,9 @@ const Home = () => {
 
   // holds the admin Info
   const [adminInfo, setAdminInfo] = useState({});
+
+  // holds window dimentions
+  const { height, width } = useWindowDimensions();
 
   //changes the color of the nav icons depending on which components are rendered
   useEffect(() => {
@@ -161,12 +167,17 @@ const Home = () => {
     })();
   }, [currentUser, formOpen]);
 
+
   return (
     <Div>
       <Context.Provider
         value={{
+          navState,
+          width,
           groupList,
           setGroupList,
+          fetchGroupData,
+          currentGroup,
           adminInfo,
           formOpen,
           setFormOpen,
@@ -207,13 +218,7 @@ const Home = () => {
         )}
 
         {navState === 2 && (
-          <Groups
-            setNavState={setNavState}
-            groupList={groupList}
-            setGroupList={setGroupList}
-            fetchGroupData={fetchGroupData}
-            currentGroup={currentGroup}
-          />
+          <Groups_Contacts />
         )}
 
         {navState === 3 && (
@@ -255,7 +260,7 @@ const Home = () => {
 
         {navState === 6 && (<AdminAddContactForm />)}
 
-        {navState === 7 && <Contacts setNavState={setNavState} setViewContacts={setViewContacts} viewContacts={viewContacts} navState={navState}/>}
+        {navState === 7 && <InviteLink />}
 
         {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
 

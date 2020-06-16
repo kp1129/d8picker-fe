@@ -13,21 +13,11 @@ const Contacts = () => {
     const { adminInfo, navState, setNavState } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
-    const [navToggle, setNavToggle] = useState(false);
 
 
-    const handleChange = () => {
-        setViewContacts([
-            ...viewContacts
-        ])
-        setNavState(7)
-        setNavToggle(true)
-    };
-
-    const handleGroups = () => {
-        setNavToggle(navToggle)
-        setNavState(2)
-    };
+    const handleInvite = e => {
+        setNavState(7);
+    }
 
     const handleAddContact = (e) => {
         e.stopPropagation();
@@ -62,6 +52,7 @@ const Contacts = () => {
         })
     }
 
+
     useEffect(() => {
         getAllContacts()
     }, [navState])
@@ -69,17 +60,7 @@ const Contacts = () => {
     console.log('contacts: ', viewContacts)
 
     return(
-        <Container>
-            <NavContainer>
-                <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
-              
-                <BackBtn onClick={handleGroups}>Back</BackBtn>
-            </NavContainer>
-             <TabsContainer style={{ justifyContent: 'flex-end'}}>
-                    <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
-                    <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
-                </TabsContainer>
-            <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
+        <ContactDiv className='contacts'>
             {viewContacts.map((contact, index) => {
                 return(
                 <Contact key={index} >
@@ -106,10 +87,9 @@ const Contacts = () => {
             </BtnDiv>
             <BtnDiv>
                 <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                <BtnContact2>Invite Contact</BtnContact2>
+                <BtnContact2 onClick = {handleInvite}>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
-        </Container>
     )
 }
 
