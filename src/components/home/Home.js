@@ -10,6 +10,7 @@ import CreateNewGroup from '../groups/CreateNewGroup';
 import InviteeAddContactForm from '../groups/InviteeAddContactForm';
 import EditGroupForm from '../groups/EditGroupForm';
 import AdminAddContactForm from '../groups/AdminAddContactForm';
+import InviteLink from '../groups/InviteLink';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -259,6 +260,8 @@ const Home = () => {
         )}
 
         {navState === 6 && <InviteeAddContactForm />}
+
+        {navState === 7 && <InviteLink />}
 
         {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
 

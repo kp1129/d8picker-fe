@@ -19,6 +19,10 @@ const Contacts = () => {
         setNavState(9)
     }
 
+    const handleInvite = e => {
+        setNavState(7);
+    }
+
 
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
@@ -46,14 +50,9 @@ const Contacts = () => {
         })
     }
 
-    useEffect(() => {
-        getAllContacts()
-        console.log('navState: ', navState)
-        // console.log('setNavState: ', setNavState)
-    }, [navState])
 
     return(
-        <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
+        <ContactDiv className='contacts'>
             {viewContacts.map((contact, index) => {
                 return(
                 <Contact key={index} >
@@ -79,7 +78,7 @@ const Contacts = () => {
             </BtnDiv>
             <BtnDiv>
                 <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                <BtnContact2>Invite Contact</BtnContact2>
+                <BtnContact2 onClick = {handleInvite}>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
     )
