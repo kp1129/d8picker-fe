@@ -40,8 +40,8 @@ const InviteLink = () => {
         .get(`/api/groups/${adminInfo.adminId}/${groupID}`)
         .then(res => {
             console.log(res.data);
-            console.log(`Invite Link Generated: ${process.env.REACT_APP_BASE_URL}/invitee/${res.data.groups[0].groupInviteHash}`);
-            setGroupInviteLink(`${process.env.REACT_APP_BASE_URL}/invitee/${res.data.groups[0].groupInviteHash}`);
+            console.log(`Invite Link Generated: ${process.env.REACT_APP_BASE_URL}/invitee/${res.data.groupInviteHash}`);
+            setGroupInviteLink(`${process.env.REACT_APP_BASE_URL}/invitee/${res.data.groupInviteHash}`);
         })
         .catch(err => console.log('error in getting invite link', err));
   };
