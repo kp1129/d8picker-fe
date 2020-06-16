@@ -23,6 +23,10 @@ const InviteLink = () => {
     setGroupID(e.target.value);
   };
   
+  const handleCopy = () => {
+      document.getElementById('groupInviteLink').select();
+      document.execCommand('copy');
+  }
   console.log(errors);
 
   const {adminInfo, setNavState} = useContext(Context);
@@ -67,8 +71,11 @@ const InviteLink = () => {
             <LinkContainer>
             <Headline>Invite Link Generated Successfully!</Headline>
             <LinkDiv>
-                {groupInviteLink}
+                <textarea id='groupInviteLink' rows='5' cols='50'>{groupInviteLink}</textarea>
             </LinkDiv>
+            <ButtonDiv>
+                <SaveBtn><button onClick={handleCopy}>Copy Link</button></SaveBtn>
+            </ButtonDiv>
             </LinkContainer>
         )}
     </InviteLinkContainer>
