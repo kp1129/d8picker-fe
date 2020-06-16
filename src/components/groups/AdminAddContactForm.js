@@ -49,6 +49,8 @@ const AdminAddContactForm = () => {
       adminId: adminInfo.adminId
       // groupId: groupInfo.groupId
     }   
+
+    console.log('payload: ', payload)
       // create contact
       axiosWithAuth(currentUser.token).post("/api/contacts/", payload)
         .then(res => {
@@ -82,8 +84,6 @@ const AdminAddContactForm = () => {
           })
         .catch(err => console.log(err))
   };
-
-  console.log('our favorite navState', navState);
 
   return (
     <AddContact>

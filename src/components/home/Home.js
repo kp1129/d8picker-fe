@@ -127,8 +127,6 @@ const Home = () => {
   //fetches a particular group's data
   const fetchGroupData = (groupId, adminId, token) => {
     let sortedGroupContacts = []
-    let group = {}
-    console.log(`/api/groups/${adminId}/${groupId}`)
     axiosWithAuth(token)
     .get(`/api/groups/${adminId}/${groupId}`)
     .then(async res => {

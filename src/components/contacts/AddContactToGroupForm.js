@@ -5,36 +5,19 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = () => {
-
+const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
+    // console.log('currentGroup: ', currentGroup)
+    
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
     const { adminInfo, navState, setNavState } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
-    const [navToggle, setNavToggle] = useState(false);
-
-
-    const handleChange = () => {
-        setViewContacts([
-            ...viewContacts
-        ])
-        setNavState(7)
-        setNavToggle(true)
-    };
-
-    const handleGroups = () => {
-        setNavToggle(navToggle)
-        setNavState(2)
-    };
-
-    const handleAddContact = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        // set navstate to show AdminAddContactForm
-        setNavState(9);
-    }
+    const [newMembers, setNewMembers] = useState({
+        groupId: currentGroup.id,
+        contacts: []
+    })
 
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
@@ -62,58 +45,93 @@ const Contacts = () => {
         })
     }
 
+    const handleChange = (e) => {
+        setNewMembers({
+            ...newMembers,
+            contacts: [...newMembers.contacts, e.target.value]
+        })
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        let filtered = new Set(newMembers.contacts)
+        setNewMembers({
+            ...newMembers,
+             contacts: filtered
+            })
+        axiosWithAuth(token)
+        .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
+        .then(res => {
+            console.log(res.data)
+            setIsAddingContactToGroup(false)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    
+
     useEffect(() => {
         getAllContacts()
     }, [navState])
 
-    console.log('contacts: ', viewContacts)
-
     return(
         <Container>
             <NavContainer>
-                <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
-              
-                <BackBtn onClick={handleGroups}>Back</BackBtn>
+                <ContactTitle className='contacts' style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
+                <BackBtn onClick={()=>{setIsAddingContactToGroup(false)}}>Back</BackBtn>
             </NavContainer>
-             <TabsContainer style={{ justifyContent: 'flex-end'}}>
+             {/* <TabsContainer style={{ justifyContent: 'flex-end'}}>
                     <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
                     <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
-                </TabsContainer>
-            <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
-            {viewContacts.map((contact, index) => {
-                return(
-                <Contact key={index} >
-                    {/* Placeholder image */}
-                    <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
-                    <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
-                        <ContactNames>
-                            {contact.firstName} {''}
-                            {contact.lastName}
-                        </ContactNames>
-                        <IconDiv>
-                            <Icons className="fas fa-phone"></Icons>
-                            <Icons className="fas fa-comment-medical"></Icons>
-                            <Icons className="fas fa-envelope"></Icons>
-                        </IconDiv>
-                        {/* <input style={{width: '30%'}} type="radio" value={}/> */}
-                    </div>
-                </Contact>
-                )
-            })}
-            <BtnDiv>
-                <img src={circleBtn} onClick={()=>{setNavState(5)}}></img>
-                <Button>Add to group</Button>
-            </BtnDiv>
-            <BtnDiv>
-                <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                <BtnContact2>Invite Contact</BtnContact2>
-            </BtnDiv>
-            </ContactDiv>
+                </TabsContainer> */}
+            {/* <form> */}
+                <ContactDiv className='contacts'>
+                {viewContacts.map((contact, index) => {
+                    return(
+                    <Contact key={index} >
+                        {/* Placeholder image */}
+                        <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
+                        <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
+                            <ContactNames>
+                                {contact.firstName} {''}
+                                {contact.lastName}
+                            </ContactNames>
+                            <IconDiv>
+                                <Icons className="fas fa-phone"></Icons>
+                                <Icons className="fas fa-comment-medical"></Icons>
+                                <Icons className="fas fa-envelope"></Icons>
+                            </IconDiv>
+                            {/* <label htmlFor="contactId"> */}
+                                <input
+                                type="radio"
+                                style={{width: '30%'}}
+                                id="contactId"
+                                // name="contactId"
+                                value={contact.contactId}
+                                onClick={(e)=>{handleChange(e)}}
+                                />
+                            {/* </label> */}
+                        </div>
+                    </Contact>
+                    )
+                })}
+                <button onClick={handleSubmit}>SUBMIT!</button>
+                <BtnDiv>
+                    <img src={circleBtn} onClick={()=>setNavState(true)}></img>
+                    <Button>Add to group</Button>
+                </BtnDiv>
+                <BtnDiv>
+                    <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                    <BtnContact2>Invite Contact</BtnContact2>
+                </BtnDiv>
+                </ContactDiv>
+            {/* </form> */}
         </Container>
     )
 }
 
-export default Contacts;
+export default AddContactToGroupForm;
 
 const Container = styled.div`
     width: 100%;
