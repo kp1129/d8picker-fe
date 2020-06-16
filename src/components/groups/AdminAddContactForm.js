@@ -7,15 +7,14 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications';
 
 const AdminAddContactForm = () => {
-  const {groupList} = useContext(Context);
+  // get groupData
+  const {groupList, navState, setNavState, adminInfo} = useContext(Context);
   const { register, handleSubmit, errors } = useForm();
 
   const { addToast } = useToasts();
 
   const {googleApi} = useAuth();
   const {currentUser} = googleApi;
-
-  // get groupData
 
   const [input, setInput] = useState({
     firstName: '',
@@ -34,7 +33,7 @@ const AdminAddContactForm = () => {
   
   console.log(errors);
 
-  const {adminInfo, setNavState} = useContext(Context);
+
 
 
   const handleCancel = () => {
@@ -50,6 +49,8 @@ const AdminAddContactForm = () => {
       adminId: adminInfo.adminId
       // groupId: groupInfo.groupId
     }   
+
+    console.log('payload: ', payload)
       // create contact
       axiosWithAuth(currentUser.token).post("/api/contacts/", payload)
         .then(res => {
@@ -79,7 +80,7 @@ const AdminAddContactForm = () => {
               })
           }
           //  redirect user 
-          setNavState(1);
+          setNavState(2);
           })
         .catch(err => console.log(err))
   };

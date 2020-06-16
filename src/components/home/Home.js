@@ -133,8 +133,6 @@ const Home = () => {
   //fetches a particular group's data
   const fetchGroupData = (groupId, adminId, token) => {
     let sortedGroupContacts = []
-    let group = {}
-    console.log(`/api/groups/${adminId}/${groupId}`)
     axiosWithAuth(token)
     .get(`/api/groups/${adminId}/${groupId}`)
     .then(async res => {
@@ -189,6 +187,7 @@ const Home = () => {
           conEnd,
           title,
           notes,
+          navState,
           selected,
           setSelected,
           toggleNav,
@@ -259,7 +258,7 @@ const Home = () => {
           />
         )}
 
-        {navState === 6 && <InviteeAddContactForm />}
+        {navState === 6 && (<AdminAddContactForm />)}
 
         {navState === 7 && <InviteLink />}
 

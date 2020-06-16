@@ -14,15 +14,17 @@ const Contacts = () => {
 
     const [viewContacts, setViewContacts] = useState([]);
 
-    const handleAddContact = (e) => {
-        e.stopPropagation();
-        setNavState(9)
-    }
 
     const handleInvite = e => {
         setNavState(7);
     }
 
+    const handleAddContact = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        // set navstate to show AdminAddContactForm
+        setNavState(9);
+    }
 
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
@@ -51,6 +53,12 @@ const Contacts = () => {
     }
 
 
+    useEffect(() => {
+        getAllContacts()
+    }, [navState])
+
+    console.log('contacts: ', viewContacts)
+
     return(
         <ContactDiv className='contacts'>
             {viewContacts.map((contact, index) => {
@@ -58,16 +66,17 @@ const Contacts = () => {
                 <Contact key={index} >
                     {/* Placeholder image */}
                     <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
-                    <div style={{ marginLeft: '15px'}}>
-                    <ContactNames>
-                        {contact.firstName} {''}
-                        {contact.lastName}
-                    </ContactNames>
-                    <IconDiv>
-                        <Icons className="fas fa-phone"></Icons>
-                        <Icons className="fas fa-comment-medical"></Icons>
-                        <Icons className="fas fa-envelope"></Icons>
-                    </IconDiv>
+                    <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
+                        <ContactNames>
+                            {contact.firstName} {''}
+                            {contact.lastName}
+                        </ContactNames>
+                        <IconDiv>
+                            <Icons className="fas fa-phone"></Icons>
+                            <Icons className="fas fa-comment-medical"></Icons>
+                            <Icons className="fas fa-envelope"></Icons>
+                        </IconDiv>
+                        {/* <input style={{width: '30%'}} type="radio" value={}/> */}
                     </div>
                 </Contact>
                 )
@@ -115,14 +124,14 @@ const Tabs = styled.button`
     padding: 5px 10px;
 `;
 const IconDiv= styled.div`
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: row;
 `;
 const Icons = styled.i`
     font-size: 1.4rem;
     color: #AFC9D9;
-    margin: 0 10%;
+    margin: 0 5%;
 `;
 const ContactDiv = styled.div`
     width: 100%;
@@ -130,6 +139,7 @@ const ContactDiv = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 2%;
+    margin-bottom: 200px;
 `
 const Contact = styled.div`
     width: 100%;
@@ -152,6 +162,7 @@ const BackBtn = styled.p`
   color: #28807d;
 `;
 const ContactNames = styled.p`
+    width: 100%;
     font-size: 1rem;
     color: #2E5780;
     padding-bottom: 2%;
