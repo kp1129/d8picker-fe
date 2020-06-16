@@ -14,9 +14,9 @@ const Contacts = () => {
 
     const [viewContacts, setViewContacts] = useState([]);
 
-    const handleAddContact = () => {
-        console.log('click: ', navState)
-       setNavState(9)
+    const handleAddContact = (e) => {
+        e.stopPropagation();
+        setNavState(9)
     }
 
 
@@ -78,7 +78,7 @@ const Contacts = () => {
                 <Button>Add to group</Button>
             </BtnDiv>
             <BtnDiv>
-                <BtnContact1 onClick={handleAddContact} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
                 <BtnContact2>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
