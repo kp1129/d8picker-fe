@@ -5,16 +5,14 @@ import Events from '../events/Events';
 import Nav from '../navigation/Nav';
 import NewEventForm from '../events/NewEventForm';
 import UpdateEventForm from '../events/UpdateEventForm';
-import Groups from '../groups/Groups';
+import Groups_Contacts from '../groups/Groups_Contacts';
 import CreateNewGroup from '../groups/CreateNewGroup';
 import InviteeAddContactForm from '../groups/InviteeAddContactForm';
-import Contacts from '../contacts/Contacts.js';
 import EditGroupForm from '../groups/EditGroupForm';
 import AdminAddContactForm from '../groups/AdminAddContactForm';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
-import Contacts from '../contacts/Contacts.js';
 import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
 
@@ -175,9 +173,12 @@ const Home = () => {
     <Div>
       <Context.Provider
         value={{
+          navState,
           width,
           groupList,
           setGroupList,
+          fetchGroupData,
+          currentGroup,
           adminInfo,
           formOpen,
           setFormOpen,
@@ -217,13 +218,7 @@ const Home = () => {
         )}
 
         {navState === 2 && (
-          <Groups
-            setNavState={setNavState}
-            groupList={groupList}
-            setGroupList={setGroupList}
-            fetchGroupData={fetchGroupData}
-            currentGroup={currentGroup}
-          />
+          <Groups_Contacts />
         )}
 
         {navState === 3 && (
@@ -264,8 +259,6 @@ const Home = () => {
         )}
 
         {navState === 6 && <InviteeAddContactForm />}
-
-        {navState === 7 && <Contacts setNavState={setNavState} setViewContacts={setViewContacts} viewContacts={viewContacts} navState={navState}/>}
 
         {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
 
