@@ -5,20 +5,16 @@ import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
 
 import CreateNewGroup from './CreateNewGroup';
-import Contacts from '../contacts/Contacts.js';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
 
-const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentGroup }) => {
+const Groups = () => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo, groupList, setGroupList, width } = useContext(Context)
+  const { adminInfo, width, setNavState, groupList, setGroupList, fetchGroupData, currentGroup } = useContext(Context)
 
-  const [navToggle, setNavToggle] = useState(false);
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
-
-  const [deleteGroup, setDeleteGroup] = useState({});
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -33,28 +29,6 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
       setIsDisplayingGroup(false)
     }
   } 
-
-  const handleChange = () => {
-      setNavToggle(true)
-  }
-
-  const handleGroups = e => {
-    setNavToggle(false)
-    setNavState(2)
-}
-    // deletes group
-    const handleDelete = (groupId, adminId, token) => {
-        console.log(`/api/groups/${adminId}/${groupId}`)
-        axiosWithAuth(token, googleApi)
-            .delete(`/api/groups/${adminId}/${groupId}`)
-            .then(res => {
-                setGroupList(groupList.filter(g => g.id !== groupId));
-            //     setDeleteGroup({
-            //         ...deleteGroup,
-            // })
-          })
-        .catch(error => console.log(error.response))
-    } 
 
 
   //sets groupList state to state and sorts aplphabetically
@@ -100,24 +74,6 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
   )};
 
   return (
-    <Container>
-
-    {width < 768 &&  (<NavContainer>
-        <HeaderContainer>
-          <Title>Choose Group</Title>
-          <BackBtn
-            onClick={() => {
-              setNavState(0);
-            }}
-          >
-            Back
-          </BackBtn>
-        </HeaderContainer>
-        <TabsContainer>
-          <button className='groups' onClick={handleGroups}>Groups</button>
-          <button className='contact' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</button>
-        </TabsContainer>
-      </NavContainer>)}
       <GroupList>
         {groupList.map(group => {
           return (
@@ -169,8 +125,6 @@ const Groups = ({ setNavState, groupList, setGroupList, fetchGroupData, currentG
           
         </BtnDiv>
       </GroupList>
-      {/* <div onClick={handleChange}>{navToggle && <Contacts />}</div> */}
-    </Container>
   );
 };
 
@@ -184,48 +138,6 @@ const size = {
 const device = {
   desktop: `(min-width: ${size.desktop})`
 };
-
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const NavContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 3% 2.5% 0 2.5%;
-  position: fixed;
-  top: 0;
-  background: white;
-`;
-
-const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`
-
-const BackBtn = styled.p`
-  width: 48%;
-  font-size: 1.2rem;
-  text-align: right;
-  line-height: 27px;
-  color: #28807d;
-`;
-
-const Title = styled.h1`
-  width: 48%;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 27px;
-`;
 
 const BtnDiv = styled.div`
   width: 100%;
@@ -321,10 +233,6 @@ const ContactInfoContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
 `
-const Name = styled.h1`
-  width: 100%;
-  font-size: 1.4rem;
-`
 const IconContainer = styled.div`
   width: 100%;
   display: flex;
@@ -336,26 +244,3 @@ const IconContainer = styled.div`
   }
   `
 
-const TabsContainer = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    font-size: 1rem;
-`;
-const Tabs = styled.button`
-  border: 1px solid #afc9d9;
-  border-radius: 10px 10px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 5px 10px;
-`;
-//    button{
-//      border: 1px solid #AFC9D9;
-//      border-radius: 10px 10px 0 0;
-//      display: flex;
-//      align-items: center;
-//      justify-content: space-around;
-//      padding: 5px 10px;
-//    }
-// `;

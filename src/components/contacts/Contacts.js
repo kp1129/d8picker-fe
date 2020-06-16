@@ -5,33 +5,19 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = ({navState}) => {
+const Contacts = () => {
 
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo, setNavState } = useContext(Context);
+    const { adminInfo, navState, setNavState } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
-    const [navToggle, setNavToggle] = useState(false);
 
     const handleAddContact = () => {
         console.log('click: ', navState)
        setNavState(9)
     }
-
-    const handleChange = () => {
-        setViewContacts([
-            ...viewContacts
-        ])
-        setNavState(7)
-        setNavToggle(true)
-    };
-
-    const handleGroups = () => {
-        setNavToggle(navToggle)
-        setNavState(2)
-    };
 
 
     // retrieves all contacts and sorts by first name
@@ -67,17 +53,7 @@ const Contacts = ({navState}) => {
     }, [navState])
 
     return(
-        <Container>
-            <NavContainer>
-                <ContactTitle className='contacts' onClick={handleChange} style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
-              
-                <BackBtn onClick={handleGroups}>Back</BackBtn>
-            </NavContainer>
-             <TabsContainer style={{ justifyContent: 'flex-end'}}>
-                    <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
-                    <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
-                </TabsContainer>
-            <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
+        <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
             {viewContacts.map((contact, index) => {
                 return(
                 <Contact key={index} >
@@ -106,7 +82,6 @@ const Contacts = ({navState}) => {
                 <BtnContact2>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
-        </Container>
     )
 }
 
