@@ -81,5 +81,6 @@ const BackBtn = styled.p`
   text-align: right;
   line-height: 27px;
   color: #28807d;
+  cursor: pointer;
 `;
 
