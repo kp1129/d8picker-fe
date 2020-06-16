@@ -65,8 +65,8 @@ const InviteeAddContactForm = () => {
     const payload = {
       ...input,
       phoneNumber: cleanPhoneNumber,
-      adminId: adminInfo.adminId,
-      groupId: groupInfo.groupId
+      adminId: adminInfo.id,
+      groupId: groupInfo.id
     }   
     console.log("payload", payload);
     axios.post(`${process.env.REACT_APP_ENDPOINT_URL}/api/inviteToGroup/addContact`, payload)
