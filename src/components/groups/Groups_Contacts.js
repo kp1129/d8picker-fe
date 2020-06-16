@@ -28,9 +28,9 @@ const Groups_Contacts = () => {
                 <Tabs className='buttons' onClick={() => setNavToggle(false)}>Groups</Tabs>
                 <Tabs className='buttons' onClick={() => setNavToggle(true)}>Contacts</Tabs>
             </TabsContainer>
-            <div>
+            <ContentContainer>
                 {navToggle ? <Contacts /> : <Groups />}
-            </div>
+            </ContentContainer>
         </Container>
     )
 }
@@ -81,3 +81,6 @@ const BackBtn = styled.p`
   cursor: pointer;
 `;
 
+const ContentContainer = styled.div`
+    width: 90%;
+`;
