@@ -14,7 +14,7 @@ const InviteLink = () => {
   const {currentUser} = googleApi;
 
   // state for group id
-  const [groupID, setGroupID] = useState('');
+  const [groupID, setGroupID] = useState(groupList[0].id);
 
   // state for invite link
   const [groupInviteLink, setGroupInviteLink] = useState('');
