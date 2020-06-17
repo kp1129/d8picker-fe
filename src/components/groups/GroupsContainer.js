@@ -3,11 +3,13 @@ import Groups from './Groups';
 import CreateNewGroup from './CreateNewGroup';
 import styled from 'styled-components';
 import Contacts from '../contacts/Contacts';
+import AdminAddContactForm from './AdminAddContactForm';
 
 
 const GroupsContainer = () => {
     const [showCreateNewGroup, setShowCreateNewGroup] = useState(false);
     const [showContacts, setShowContacts] = useState(false);
+    const [showAdminAddContact, setShowAdminAddContact] = useState(false);
 
     const handleGroupsContainer = (e) => {
         e.stopPropagation();
@@ -18,7 +20,8 @@ const GroupsContainer = () => {
             <Groups />
             <AddGroupBtn onClick={() => setShowCreateNewGroup(true)}>Add group</AddGroupBtn>
             {showCreateNewGroup && <CreateNewGroup setShowContacts={setShowContacts} setShowCreateNewGroup={setShowCreateNewGroup} />}
-            {showContacts && <Contacts />}
+            {showContacts && <Contacts setShowAdminAddContact={setShowAdminAddContact} />}
+            {showAdminAddContact && <AdminAddContactForm /> }
         </div>
     )
 }

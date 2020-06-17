@@ -5,7 +5,7 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = () => {
+const Contacts = ({ setShowAdminAddContact }) => {
 
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
@@ -22,8 +22,12 @@ const Contacts = () => {
     const handleAddContact = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        // set navstate to show AdminAddContactForm
-        setNavState(9);
+        if(width < 768){
+            // set navstate to show AdminAddContactForm
+            setNavState(9);
+        } else if (width >= 768){
+            setShowAdminAddContact(true);
+        }
     }
 
     // retrieves all contacts and sorts by first name
@@ -150,6 +154,9 @@ const ContactDiv = styled.div`
     justify-content: center;
     margin-top: 2%;
     margin-bottom: 200px;
+    @media ${device.desktop} {
+        margin-bottom: 0;        
+        }
 `
 const Contact = styled.div`
     width: 100%;
