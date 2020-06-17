@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import Groups from './Groups';
 import CreateNewGroup from './CreateNewGroup';
 import styled from 'styled-components';
+import Contacts from '../contacts/Contacts';
 
 
 const GroupsContainer = () => {
     const [showCreateNewGroup, setShowCreateNewGroup] = useState(false);
+    const [showContacts, setShowContacts] = useState(false);
 
     const handleGroupsContainer = (e) => {
         e.stopPropagation();
@@ -15,7 +17,8 @@ const GroupsContainer = () => {
         <div onClick={(e) => handleGroupsContainer(e)}>
             <Groups />
             <AddGroupBtn onClick={() => setShowCreateNewGroup(true)}>Add group</AddGroupBtn>
-            {showCreateNewGroup && <CreateNewGroup setShowCreateNewGroup={setShowCreateNewGroup} />}
+            {showCreateNewGroup && <CreateNewGroup setShowContacts={setShowContacts} setShowCreateNewGroup={setShowCreateNewGroup} />}
+            {showContacts && <Contacts />}
         </div>
     )
 }
@@ -34,19 +37,8 @@ const AddGroupBtn = styled.div`
     border-radius: 0.5rem;
     text-align: center;
     padding: 0.25rem 1rem;
+    font-size: 1rem;
 `;
 
-
-
-//styled.div`
-//   width: 90%;
-//   margin: 1rem auto;
-//   padding: 0.5rem;
-//   text-align: center;
-//   border: 2px solid #28807D;
-//   border-radius: 15px;
-//   color: #28807D;
-//   background: #ffffff;
-// `;
 
 

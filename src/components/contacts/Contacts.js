@@ -10,7 +10,7 @@ const Contacts = () => {
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo, navState, setNavState } = useContext(Context);
+    const { adminInfo, navState, setNavState, width } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
 
@@ -81,10 +81,10 @@ const Contacts = () => {
                 </Contact>
                 )
             })}
-            <BtnDiv>
+           {width < 768 && ( <BtnDiv>
                 <img src={circleBtn} onClick={()=>{setNavState(5)}}></img>
                 <Button>Add to group</Button>
-            </BtnDiv>
+            </BtnDiv>)}
             <BtnDiv>
                 <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
                 <BtnContact2 onClick = {handleInvite}>Invite Contact</BtnContact2>
@@ -94,6 +94,16 @@ const Contacts = () => {
 }
 
 export default Contacts;
+
+// styled components
+const size = {
+    tablet: '768px',
+    desktop: '1024px'
+  };
+  
+  const device = {
+    desktop: `(min-width: ${size.desktop})`
+  };
 
 const Container = styled.div`
     width: 100%;
@@ -178,6 +188,9 @@ const BtnDiv = styled.div`
     justify-content: flex-start;
     padding-top: 2%;
     font-size: 1.2rem;
+    @media ${device.desktop} {
+        flex-direction: column;        
+        }
 `;
 
 const BtnContact1 = styled.button`
@@ -186,6 +199,19 @@ const BtnContact1 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    @media ${device.desktop} {
+        margin: 0.5rem auto;
+        cursor: pointer;
+        width: 90%;
+        color: #28807d;
+        font-weight: bold;
+        border: 2px solid  #28807d;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.25rem 1rem;   
+        font-size: 1rem;   
+        }
+   
 `;
 const BtnContact2 = styled.button`
     border: 4px solid #28807D;
@@ -195,5 +221,17 @@ const BtnContact2 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    @media ${device.desktop} {
+        margin: 0.5rem auto;
+        cursor: pointer;
+        width: 90%;
+        font-weight: bold;
+        border: 2px solid  #28807d;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.25rem 1rem;      
+        font-size: 1rem;
+        }
+
 `;
 
