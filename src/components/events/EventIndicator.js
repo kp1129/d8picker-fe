@@ -12,7 +12,7 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const {setEvent, setEventDisplay} = useContext(DashboardContext);
   const { templateList } = useContext(Context);
   const { googleApi } = useAuth();
-  const templateId = templateList.filter(t => t.title == eventTitle)[0].id;
+  const templateId = [...templateList.filter(t => t.title == eventTitle)][0].id;
   const [template, setTemplate] = useState({groups: []});
 
   useEffect(() => {
