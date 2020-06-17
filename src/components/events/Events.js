@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import TemplateContainer from './TemplateContainer.js'
 import styled from 'styled-components'
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
+import { Context } from '../../contexts/Contexts';
 
 //gets template list from backend
 const getTemplateList = async ({ googleId, token }) => {
@@ -17,8 +18,9 @@ const getTemplateList = async ({ googleId, token }) => {
   };
 
 
-const Events = ({formOpen, setTemplateList, templateList}) => {
+const Events = () => {
 
+    const { formOpen, setTemplateList } = useContext(Context);
     const { googleApi, api } = useAuth();
     const { currentUser} = googleApi;
 
@@ -47,7 +49,7 @@ const Events = ({formOpen, setTemplateList, templateList}) => {
 
     return(
           <Fixed>
-            <TemplateContainer templateList={templateList}/>
+            <TemplateContainer />
           </Fixed>
     )
 }

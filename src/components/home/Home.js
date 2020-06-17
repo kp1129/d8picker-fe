@@ -180,6 +180,7 @@ const Home = () => {
           currentGroup,
           adminInfo,
           formOpen,
+          colors,
           setFormOpen,
           setTemplateFormOpen,
           templateFormOpen,
@@ -205,78 +206,27 @@ const Home = () => {
           setViewContacts
         }}
       >
-        {navState === 0 && <Dashboard setTemplateList={setTemplateList} />}
+        {navState === 0 && <Dashboard />}
 
-        {navState === 1 && (
-          <>
-            <Events
-              formOpen={formOpen}
-              setTemplateList={setTemplateList}
-              templateList={templateList}
-            />
-          </>
-        )}
+        {navState === 1 && <Events />}
 
-        {navState === 2 && (
-          <Groups_Contacts />
-        )}
+        {navState === 2 && <Groups_Contacts />}
 
-        {navState === 3 && (
-          <NewEventForm
-            setTemplateList={setTemplateList}
-            templateList={templateList}
-            setToggleNav={setToggleNav}
-            setNavState={setNavState}
-            setTitle={setTitle}
-            setNotes={setNotes}
-            setConStart={setConStart}
-            setConEnd={setConEnd}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-          />
-        )}
+        {navState === 3 && <NewEventForm />}
 
-        {navState === 4 && (
-          <UpdateEventForm
-            setTemplateList={setTemplateList}
-            templateList={templateList}
-            setToggleNav={setToggleNav}
-            setNavState={setNavState}
-            setTitle={setTitle}
-            setConStart={setConStart}
-            setConEnd={setConEnd}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-          />
-        )}
+        {navState === 4 && <UpdateEventForm />}
 
-        {navState === 5 && (
-          <CreateNewGroup
-            setNavState={setNavState}
-            setGroupList={setGroupList}
-            groupList={groupList}
-          />
-        )}
+        {navState === 5 && <CreateNewGroup />}
 
-        {navState === 6 && (<AdminAddContactForm />)}
+        {navState === 6 && <AdminAddContactForm />}
 
         {navState === 7 && <InviteLink />}
 
-        {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
+        {navState === 8 && <EditGroupForm />}
 
-        {navState === 9 && <AdminAddContactForm setNavState={setNavState} adminInfo={adminInfo} navState={navState}/>}
+        {navState === 9 && <AdminAddContactForm />}
 
-        {toggleNav && (
-          <Nav
-            navState={navState}
-            setNavState={setNavState}
-            colors={colors}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-            setSelected={setSelected}
-            setToggleNav={setToggleNav}
-          />
-        )}
+        {toggleNav && <Nav />}
       </Context.Provider>
     </Div>
   );

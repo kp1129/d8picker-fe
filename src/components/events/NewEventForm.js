@@ -15,7 +15,9 @@ const EventForm = styled.div`
 `;
 
 const NewEventForm = props => {
-  const {
+
+  const { 
+    formOpen, 
     setTemplateList,
     templateList,
     setToggleNav,
@@ -25,10 +27,8 @@ const NewEventForm = props => {
     setConStart,
     setConEnd,
     setTemplateFormOpen,
-    setFormOpen
-  } = props;
-
-  const { formOpen } = useContext(Context);
+    setFormOpen,
+    groupList } = useContext(Context);
 
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -37,7 +37,8 @@ const NewEventForm = props => {
     title: '',
     notes: '',
     starttime: '',
-    endtime: ''
+    endtime: '',
+    groupId: ''
   });
   const { addToast } = useToasts();
 
@@ -65,6 +66,7 @@ const NewEventForm = props => {
     setNavState(0);
 
     const template = addTemplate(formData, currentUser);
+    console.log('formData', formData);
     console.log('template', template);
     console.log('templateList', templateList);
     // console.log('destructured template list', [...templateList]);
@@ -184,6 +186,28 @@ const NewEventForm = props => {
             />
           </div>
         </div>
+        <div style={{ marginTop: '5%', background: 'white' }}>
+        <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Add Groups</div>
+            {/* <Label htmlFor="groupId">Add Groups</Label> */}
+            <select 
+              onChange={handleChange} 
+              name="groupId" 
+              id="groupId" 
+              ref={register({ required: false })} 
+              style={{
+                width: '100%',
+                border: 'none',
+                background: 'white',
+                padding: '5%'
+              }}>
+                <option value=''>Choose Group</option>
+            {groupList.map(g => {
+                return (
+                <option value={g.id}> {g.groupName} </option>
+                )
+            })}
+            </select>
+        </div>
 
         <div style={{ width: '100%', textAlign: 'center' }}>
           <button
@@ -208,5 +232,6 @@ const NewEventForm = props => {
     </EventForm>
   );
 };
+
 
 export default NewEventForm;
