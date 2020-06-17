@@ -21,8 +21,7 @@ const TemplateContainer = () => {
                   starttime={t.starttime}
                   endtime={t.endtime}
                   title={t.title}
-                  notes={t.notes}
-                  templateList={templateList}/>                
+                  notes={t.notes}/>                
               ))}
               </EventDiv>
           </>

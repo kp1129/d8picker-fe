@@ -24,13 +24,14 @@ const getTemplateList = async ({ googleId, token }) => {
   }
 };
 
-const Dashboard = props => {
+const Dashboard = () => {
   const {
     setSelected,
     toggleNav,
     setToggleNav,
     setNavState,
-    formOpen
+    formOpen,
+    setTemplateList
   } = useContext(Context);
 
   const { height, width } = useWindowDimensions();
@@ -43,7 +44,7 @@ const Dashboard = props => {
   useEffect(() => {
     (async () => {
       const templates = await getTemplateList(currentUser);
-      props.setTemplateList(templates);
+      setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
 

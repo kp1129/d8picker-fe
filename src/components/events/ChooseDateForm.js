@@ -6,10 +6,10 @@ import {convertTime, handleDelete, deleteTemplate} from '../../utils/helperFunct
 import './ChooseDateForm.css'
 
 
-const ChooseDateForm = ({starttime, endtime, title, id, templateList}) => {
+const ChooseDateForm = ({starttime, endtime, title, id}) => {
 
 
-  const { setTemplateIdToUpdate, setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav,setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
+  const { setTemplateIdToUpdate, templateList, setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav, setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
 
   const { googleApi} = useAuth();
   const { currentUser } = googleApi;

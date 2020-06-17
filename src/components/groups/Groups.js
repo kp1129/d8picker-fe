@@ -36,14 +36,6 @@ const Groups = () => {
     }
   } 
 
-  const handleChange = () => {
-      setNavToggle(true)
-  }
-
-  const handleGroups = e => {
-    setNavToggle(false)
-    setNavState(2)
-}
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
     console.log(`/api/groups/${adminId}/${groupId}`)

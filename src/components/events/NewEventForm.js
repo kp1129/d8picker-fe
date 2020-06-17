@@ -15,7 +15,9 @@ const EventForm = styled.div`
 `;
 
 const NewEventForm = props => {
-  const {
+
+  const { 
+    formOpen, 
     setTemplateList,
     templateList,
     setToggleNav,
@@ -25,10 +27,8 @@ const NewEventForm = props => {
     setConStart,
     setConEnd,
     setTemplateFormOpen,
-    setFormOpen
-  } = props;
-
-  const { formOpen } = useContext(Context);
+    setFormOpen,
+    groupList } = useContext(Context);
 
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -37,7 +37,8 @@ const NewEventForm = props => {
     title: '',
     notes: '',
     starttime: '',
-    endtime: ''
+    endtime: '',
+    groupId: ''
   });
   const { addToast } = useToasts();
 

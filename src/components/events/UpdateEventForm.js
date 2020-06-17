@@ -19,10 +19,11 @@ const UpdateEventForm = props => {
     setConStart,
     setConEnd,
     setTemplateFormOpen,
-    setFormOpen
-  } = props;
-
-  const { formOpen, templateIdToUpdate } = useContext(Context);
+    setFormOpen,
+    formOpen, 
+    templateIdToUpdate
+  } = useContext(Context);
+  
   console.log('template id of the template to update', templateIdToUpdate);
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
