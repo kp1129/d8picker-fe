@@ -59,6 +59,7 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
             ...newMembers,
              contacts: filtered
             })
+            console.log('entering submit', filtered);
         axiosWithAuth(token)
         .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
         .then(res => {

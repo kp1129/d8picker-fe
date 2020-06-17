@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import Hamburger from './Hamburger/TopNav.js';
 import AddEventButton from '../events/AddEventButton.js';
@@ -14,16 +14,19 @@ import useWindowDimensions from '../../hooks/useWindowDimensions';
 import TemplateContainer from '../events/TemplateContainer';
 import Groups from '../groups/Groups';
 import GroupsContainer from '../groups/GroupsContainer';
+import { Context } from '../../contexts/Contexts';
 
 
-const Nav = ({
-  setNavState,
-  colors,
-  setFormOpen,
-  setSelected,
-  setToggleNav,
-  setTemplateFormOpen
-}) => {  
+const Nav = () => {  
+
+  const {
+    setNavState,
+    colors,
+    setFormOpen,
+    setSelected,
+    setToggleNav,
+    setTemplateFormOpen
+  } = useContext(Context);
   // this controls the direction of arrows
   // and the display of active button
   const [isDisplayingEvents, setIsDisplayingEvents] = useState(false);

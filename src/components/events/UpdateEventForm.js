@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { updateTemplate } from '../../utils/helperFunctions';
 import { useToasts } from 'react-toast-notifications';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 
 // this component is to update event templates - in the events tab
 
@@ -19,10 +20,12 @@ const UpdateEventForm = props => {
     setConStart,
     setConEnd,
     setTemplateFormOpen,
-    setFormOpen
-  } = props;
+    setFormOpen,
+    formOpen, 
+    templateIdToUpdate,
+    groupList
+  } = useContext(Context);
 
-  const { formOpen, templateIdToUpdate } = useContext(Context);
   console.log('template id of the template to update', templateIdToUpdate);
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -36,7 +39,8 @@ const UpdateEventForm = props => {
     title: templateToUpdate.title,
     notes: templateToUpdate.notes,
     starttime: templateToUpdate.starttime,
-    endtime: templateToUpdate.endtime
+    endtime: templateToUpdate.endtime,
+    groupId: templateToUpdate.groups[0]? templateToUpdate.groups[0].id : ''
   });
   const { addToast } = useToasts();
 
@@ -179,6 +183,29 @@ const UpdateEventForm = props => {
               onChange={handleChange}
             />
           </div>
+        </div>
+
+        <div style={{ marginTop: '5%', background: 'white' }}>
+        <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Add Groups</div>
+            {/* <Label htmlFor="groupId">Add Groups</Label> */}
+            <select 
+              onChange={handleChange} 
+              name="groupId" 
+              id="groupId" 
+              ref={register({ required: false })} 
+              style={{
+                width: '100%',
+                border: 'none',
+                background: 'white',
+                padding: '5%'
+              }}>
+                <option value={input.groupId}>{templateToUpdate.groups[0] ? templateToUpdate.groups[0].groupName : 'Select group'}</option>
+            {groupList.map(g => {
+                return (
+                <option value={g.id}> {g.groupName} </option>
+                )
+            })}
+            </select>
         </div>
 
         <div style={{ width: '100%', textAlign: 'center' }}>
