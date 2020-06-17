@@ -6,7 +6,8 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
 
-const CreateNewGroup = ({ setShowCreateNewGroup }) => {
+const CreateNewGroup = ({ setShowContacts, setNavState, setShowCreateNewGroup }) => {
+
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -59,8 +60,7 @@ const CreateNewGroup = ({ setShowCreateNewGroup }) => {
     console.log('ADMIN ID: ', adminInfo.adminId);
     if (!newGroup.groupName) {
       setMessage('Please provide a name for your group');
-    }
-    console.log('newGroup: ', newGroup);
+    } else {    
     axiosWithAuth(token)
       .post(`/api/groups/${adminInfo.adminId}`, newGroup)
       .then(async res => {
@@ -69,11 +69,13 @@ const CreateNewGroup = ({ setShowCreateNewGroup }) => {
           setNavState(2);
         } else {
           setShowCreateNewGroup(false);
+          setShowContacts(true);
         }
       })
       .catch(err => {
         console.log('ERROR 2: ', err);
       });
+    }
   };
 
   // controls Cancel behavior
