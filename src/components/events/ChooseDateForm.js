@@ -6,7 +6,7 @@ import {convertTime, handleDelete, deleteTemplate} from '../../utils/helperFunct
 import './ChooseDateForm.css'
 
 
-const ChooseDateForm = ({starttime, endtime, title, id}) => {
+const ChooseDateForm = ({starttime, endtime, title, id, group}) => {
 
 
   const { setTemplateIdToUpdate, templateList, setFormOpen, setTemplateFormOpen, conStart, conEnd, setSelected, setToggleNav, setNavState, setConStart, setConEnd, setTitle, setTemplateList} = useContext(Context);
@@ -88,13 +88,15 @@ const ChooseDateForm = ({starttime, endtime, title, id}) => {
     setTemplateIdToUpdate(id);
   }
 
+  console.log('group', group);
 
 
   return (
-    <Container className={eventClass} onClick={handleCalendarView} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>     
+    <Container className={eventClass} onTouchStart={handleTouch} onContextMenu={(e)=> e.preventDefault()}>     
       <EventDiv>
-        <Title>
-          {title}
+        <Title style={{color: group.groupColor}}>
+          <span><i class={group.groupIcon} /></span>
+           {title}
         </Title>
         <Time fontSize="m" fontWeight="normal">
           {convertTime(starttime)}-{convertTime(endtime)}
@@ -106,7 +108,7 @@ const ChooseDateForm = ({starttime, endtime, title, id}) => {
         <DeleteBtn type="button" onClick={handleDeleteClick}>Delete</DeleteBtn>
       </ButtonsDiv>
 
-      <ArrowDiv>
+      <ArrowDiv onClick={handleCalendarView}>
         >
       </ArrowDiv>
     </Container>

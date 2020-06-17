@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import { updateTemplate } from '../../utils/helperFunctions';
 import { useToasts } from 'react-toast-notifications';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 
 // this component is to update event templates - in the events tab
 
@@ -39,7 +40,7 @@ const UpdateEventForm = props => {
     notes: templateToUpdate.notes,
     starttime: templateToUpdate.starttime,
     endtime: templateToUpdate.endtime,
-    groupId: templateToUpdate.groups? templateIdToUpdate.groups[0].id : ''
+    groupId: templateToUpdate.groups[0]? templateToUpdate.groups[0].id : ''
   });
   const { addToast } = useToasts();
 
@@ -198,7 +199,7 @@ const UpdateEventForm = props => {
                 background: 'white',
                 padding: '5%'
               }}>
-                <option value={input.groupId}>{templateIdToUpdate.groups ? templateIdToUpdate.groups[0].groupName : 'Select group'}</option>
+                <option value={input.groupId}>{templateToUpdate.groups[0] ? templateToUpdate.groups[0].groupName : 'Select group'}</option>
             {groupList.map(g => {
                 return (
                 <option value={g.id}> {g.groupName} </option>
