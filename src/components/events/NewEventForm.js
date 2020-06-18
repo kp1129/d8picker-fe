@@ -88,7 +88,10 @@ const NewEventForm = props => {
       >
         <p
           style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }}
-          onClick={() => setNavState(0)}
+          onClick={() => {
+            setNavState(0);
+            props.setShowAddEventForm && props.setShowAddEventForm(false);
+          }}
         >
           Cancel
         </p>

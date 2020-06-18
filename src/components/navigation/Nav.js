@@ -229,13 +229,15 @@ const Nav = () => {
             ></Arrow>
           </div>
         </IconDiv>
-        {width < 768 && (<IconDiv
-          style={{ border: '5px solid blue' }}
-          className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}
-        >
-          <AddEventButton />
-          <Label style={{ color: 'gray', marginTop: '6px' }}>Add Event</Label>
-        </IconDiv>)}
+        {width < 768 && (
+          <IconDiv
+            style={{ border: '5px solid blue' }}
+            className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}
+          >
+            <AddEventButton />
+            <Label style={{ color: 'gray', marginTop: '6px' }}>Add Event</Label>
+          </IconDiv>
+        )}
       </NavContainer>
       {isDisplayingSettings && <Hamburger />}
     </Container>
