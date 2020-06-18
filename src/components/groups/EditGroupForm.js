@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const EditGroupForm = ({ setNavState, currentGroup }) => {
+const EditGroupForm = () => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo } = useContext(Context);
+  const { adminInfo, setNavState, currentGroup } = useContext(Context);
   const { token } = currentUser;
 
   const colorOptions = [

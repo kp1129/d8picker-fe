@@ -36,6 +36,17 @@ const Groups = () => {
     }
   } 
 
+
+//   const handleChange = () => {
+//       setNavToggle(true)
+//   }
+
+//   const handleGroups = e => {
+//     setNavToggle(false)
+//     setNavState(2)
+// }
+
+
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
     console.log(`/api/groups/${adminId}/${groupId}`)
@@ -205,24 +216,24 @@ const Groups = () => {
                       </ContactDiv>
                       )
                     })}
-                    <BtnContainer>
+                   {width < 768 && ( <BtnContainer>
                       <img onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} style={{width: '50px', height: '50px'}}></img>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-                    </BtnContainer>
+                    </BtnContainer>)}
                   </ContactList>
                 )}
               </Group>
             );
           })}
-          <BtnDiv>
+          {width < 768 && (<BtnDiv>
             <Btn
               src={btn}
               onClick={() => {
                 setNavState(5);
               }}
             ></Btn>
-          </BtnDiv>
+          </BtnDiv>)}
         </GroupList>
     );
 };

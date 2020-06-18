@@ -1,19 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../../contexts/auth';
-import { DashboardContext } from '../../contexts/Contexts'
+import { DashboardContext, Context } from '../../contexts/Contexts';
 import EditEventForm from './EditEventForm';
 import styled from 'styled-components';
 import { useToasts } from 'react-toast-notifications';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 
 
 // component for event display
 const EventPage = ({event}) => {
-    const { api } = useAuth();
+    const { api, googleApi } = useAuth();
     
     const { setEventDisplay, setEventsUpdated } = useContext(DashboardContext);
+    const { templateList } = useContext(Context);
     const {addToast} = useToasts();
 
     console.log('***', event);
+    const templateId = templateList.filter(t => t.title == event.title)[0].id;
+    const [template, setTemplate] = useState({groups: []});
+
+    useEffect(() => {
+      axiosWithAuth(googleApi.currentUser.token)
+        .get(`/api/template/templateInfo/${templateId}`)
+        .then(res => {
+          setTemplate(res.data);
+        })
+        .catch(err => console.log(err))
+    }, []);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -68,7 +81,8 @@ const EventPage = ({event}) => {
                 )
                 : (
                     <div className='eventInfo' key={event.id}>
-                        <EventName>{event.title}</EventName>
+                        {template && <span><i class={template.groups[0] ? template.groups[0].groupIcon : ''} /></span>}
+                        <EventName style = {{background: template.groups[0] ? template.groups[0].groupColor : '#1E85C4'}}>{event.title}</EventName>
                         <EventTime>{event.starttime} - {event.endtime}</EventTime>
                         <EventNotes>{event.notes}</EventNotes>
                         <ButtonsDiv>
