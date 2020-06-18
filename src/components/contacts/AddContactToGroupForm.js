@@ -45,6 +45,32 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         })
     }
 
+    //handles comparing new contacts being added to existing contacts to make sure they are not duplicated
+    const compareNewContacts = (newContacts, currentGroupContacts) => {
+        let arr = [...newContacts]
+        arr = arr.map(id => parseInt(id))
+        console.log(arr)
+        const notFound = arr.filter(id => currentGroupContacts.indexOf(id))
+        console.log('notFound: ', notFound)
+        return notFound
+    }
+
+    const compareNewContacts2 = (newContacts, currentGroupContacts) => {
+        for(let i = 0; i<currentGroupContacts.length; i++){
+            let index = undefined;
+            while((index = newContacts.indexOf(currentGroupContacts[i])) !== -1){
+                newContacts.splice(index, 1)
+            }
+        }
+        // let arr = [...newContacts]
+        // arr = arr.map(id => parseInt(id))
+        // let index = arr.map(id => arr.indexOf(id))
+        // if(index >= 0){
+        //     arr.splice(index, 1)
+        // }
+        return newContacts
+    }
+
     const handleChange = (e) => {
         setNewMembers({
             ...newMembers,
@@ -52,19 +78,46 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         })
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
         let filtered = new Set(newMembers.contacts)
+        let currentContacts = []
+        currentGroup.contacts.map(contact => {
+            currentContacts = [...currentContacts, contact.contactId]
+        })
         setNewMembers({
             ...newMembers,
              contacts: filtered
             })
-            console.log('entering submit', filtered);
+        filtered = compareNewContacts(filtered, currentContacts)
+        console.log('FILTERED: ', filtered)
+
         axiosWithAuth(token)
         .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
         .then(res => {
             console.log(res.data)
             setIsAddingContactToGroup(false)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const handleContactDelete = e => {
+        e.preventDefault()
+        let filtered = new Set(newMembers.contacts)
+        let currentContacts = []
+        currentGroup.contacts.map(contact => {
+            currentContacts = [...currentContacts, contact.contactId]
+        })
+        setNewMembers({
+            ...newMembers,
+             contacts: filtered
+            })
+        axiosWithAuth(token)
+        .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
+        .then(res => {
+            console.log('res: ', res.data)
         })
         .catch(err => {
             console.log(err)
