@@ -36,6 +36,17 @@ const Groups = () => {
     }
   } 
 
+
+//   const handleChange = () => {
+//       setNavToggle(true)
+//   }
+
+//   const handleGroups = e => {
+//     setNavToggle(false)
+//     setNavState(2)
+// }
+
+
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
     console.log(`/api/groups/${adminId}/${groupId}`)
@@ -74,7 +85,28 @@ const Groups = () => {
       });
   };
 
-  console.log('currentGroup: ', currentGroup)
+  const handleContactDelete = (e, contactId) => {
+    e.preventDefault()
+    let deleteContact = [contactId]
+    // let filtered = new Set(newMembers.contacts)
+    // let currentContacts = []
+    // currentGroup.contacts.map(contact => {
+    //     currentContacts = [...currentContacts, contact.contactId]
+    // })
+    // setNewMembers({
+    //     ...newMembers,
+    //      contacts: filtered
+    //     })
+    axiosWithAuth(token)
+    .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...deleteContact]})
+    .then(res => {
+        console.log('res: ', res.data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}
+
 
   useEffect(() => {
     getGroupList();
@@ -178,29 +210,30 @@ const Groups = () => {
                             <i className="fas fa-phone"></i>
                             <i className="fas fa-comment-medical"></i>
                             <i className="fas fa-envelope"></i>
+                            <i className="fas fa-trash" onClick={handleContactDelete}></i>
                           </IconContainer>
                         </ContactInfoContainer>
                       </ContactDiv>
                       )
                     })}
-                    <BtnContainer>
+                   {width < 768 && ( <BtnContainer>
                       <img onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} style={{width: '50px', height: '50px'}}></img>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-                    </BtnContainer>
+                    </BtnContainer>)}
                   </ContactList>
                 )}
               </Group>
             );
           })}
-          <BtnDiv>
+          {width < 768 && (<BtnDiv>
             <Btn
               src={btn}
               onClick={() => {
                 setNavState(5);
               }}
             ></Btn>
-          </BtnDiv>
+          </BtnDiv>)}
         </GroupList>
     );
 };

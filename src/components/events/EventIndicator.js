@@ -18,13 +18,11 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
     if(templateList.length > 0){
       let filteredTemplate = [...templateList.filter(t => t.title == eventTitle)]
       if(filteredTemplate.length > 0){
-        console.log('changing templateId to', filteredTemplate[0].id);
         const templateId = filteredTemplate[0].id;
         axiosWithAuth(googleApi.currentUser.token)
           .get(`/api/template/templateInfo/${templateId}`)
           .then(res => {
             setTemplate(res.data);
-            console.log('fetched data for templateId', templateId);
           })
           .catch(err => console.log(err))
           }
