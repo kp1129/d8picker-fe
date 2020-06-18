@@ -15,18 +15,24 @@ const EventPage = ({event}) => {
     const { templateList } = useContext(Context);
     const {addToast} = useToasts();
 
-    console.log('***', event);
-    const templateId = templateList.filter(t => t.title == event.title)[0].id;
-    const [template, setTemplate] = useState({groups: []});
-
-    useEffect(() => {
-      axiosWithAuth(googleApi.currentUser.token)
-        .get(`/api/template/templateInfo/${templateId}`)
-        .then(res => {
-          setTemplate(res.data);
-        })
-        .catch(err => console.log(err))
-    }, []);
+    // console.log('***', event);
+    // const [template, setTemplate] = useState({groups: []});
+    // useEffect(() => {
+    //     if(templateList.length > 0){
+    //       let filteredTemplate = [...templateList.filter(t => t.title == event.title)]
+    //       if(filteredTemplate.length > 0){
+    //         console.log('changing templateId to', filteredTemplate[0].id);
+    //         const templateId = filteredTemplate[0].id;
+    //         axiosWithAuth(googleApi.currentUser.token)
+    //           .get(`/api/template/templateInfo/${templateId}`)
+    //           .then(res => {
+    //             setTemplate(res.data);
+    //             console.log('fetched data for templateId', templateId);
+    //           })
+    //           .catch(err => console.log(err))
+    //           }
+    //     }
+    //   }, [templateList]);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -81,8 +87,7 @@ const EventPage = ({event}) => {
                 )
                 : (
                     <div className='eventInfo' key={event.id}>
-                        {template && <span><i class={template.groups[0] ? template.groups[0].groupIcon : ''} /></span>}
-                        <EventName style = {{background: template.groups[0] ? template.groups[0].groupColor : '#1E85C4'}}>{event.title}</EventName>
+                        <EventName>{event.title}</EventName>
                         <EventTime>{event.starttime} - {event.endtime}</EventTime>
                         <EventNotes>{event.notes}</EventNotes>
                         <ButtonsDiv>

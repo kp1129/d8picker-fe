@@ -12,17 +12,27 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const {setEvent, setEventDisplay} = useContext(DashboardContext);
   const { templateList } = useContext(Context);
   const { googleApi } = useAuth();
-  const templateId = [...templateList.filter(t => t.title == eventTitle)][0].id;
   const [template, setTemplate] = useState({groups: []});
 
   useEffect(() => {
-    axiosWithAuth(googleApi.currentUser.token)
-      .get(`/api/template/templateInfo/${templateId}`)
-      .then(res => {
-        setTemplate(res.data);
-      })
-      .catch(err => console.log(err))
-  }, [])
+    if(templateList.length > 0){
+      let filteredTemplate = [...templateList.filter(t => t.title == eventTitle)]
+      if(filteredTemplate.length > 0){
+        console.log('changing templateId to', filteredTemplate[0].id);
+        const templateId = filteredTemplate[0].id;
+        axiosWithAuth(googleApi.currentUser.token)
+          .get(`/api/template/templateInfo/${templateId}`)
+          .then(res => {
+            setTemplate(res.data);
+            console.log('fetched data for templateId', templateId);
+          })
+          .catch(err => console.log(err))
+          }
+    }
+  }, [templateList]);
+
+  // console.log('templateList', templateList);
+  console.log('template', template);
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
@@ -44,7 +54,9 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   return eventDate ? (
     <EventContainer>
       <Event>
-        <button onClick={loadEventComponent} style = {{background: template.groups[0] ? template.groups[0].groupColor : '#1E85C4'}}>
+        <button onClick={loadEventComponent} 
+        style = {{background: template.groups[0] ? template.groups[0].groupColor : '#1E85C4'}}
+        >
           {template && <span><i class={template.groups[0] ? template.groups[0].groupIcon : ''} /></span>}
           {title}
         </button> 
