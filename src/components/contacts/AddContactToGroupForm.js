@@ -71,10 +71,6 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         currentGroup.contacts.map(contact => {
             currentContacts = [...currentContacts, contact.contactId]
         })
-        setNewMembers({
-            ...newMembers,
-             contacts: filtered
-            })
         filtered = compareNewContacts(filtered, currentContacts)
         console.log('FILTERED: ', filtered)
         axiosWithAuth(token)
@@ -96,56 +92,46 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
 
     return(
         <Container>
-            <NavContainer>
-                <ContactTitle className='contacts' style={{ alignContent: 'flex-start'}}>Contacts</ContactTitle>
-                <BackBtn onClick={()=>{setIsAddingContactToGroup(false)}}>Back</BackBtn>
-            </NavContainer>
-             {/* <TabsContainer style={{ justifyContent: 'flex-end'}}>
-                    <Tabs className='buttons' onClick={handleGroups}>Groups</Tabs>
-                    <Tabs className='buttons' onClick={() => setNavState(7) && setNavToggle(!navToggle)}>Contacts</Tabs>
-                </TabsContainer> */}
-            {/* <form> */}
-                <ContactDiv className='contacts'>
-                {viewContacts.map((contact, index) => {
-                    return(
-                    <Contact key={index} >
-                        {/* Placeholder image */}
-                        <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
-                        <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
-                            <ContactNames>
-                                {contact.firstName} {''}
-                                {contact.lastName}
-                            </ContactNames>
-                            <IconDiv>
-                                <Icons className="fas fa-phone"></Icons>
-                                <Icons className="fas fa-comment-medical"></Icons>
-                                <Icons className="fas fa-envelope"></Icons>
-                            </IconDiv>
-                            {/* <label htmlFor="contactId"> */}
-                                <input
-                                type="radio"
-                                style={{width: '30%'}}
-                                id="contactId"
-                                // name="contactId"
-                                value={contact.contactId}
-                                onClick={(e)=>{handleChange(e)}}
-                                />
-                            {/* </label> */}
-                        </div>
-                    </Contact>
-                    )
-                })}
-                <button onClick={handleSubmit}>SUBMIT!</button>
-                <BtnDiv>
-                    <img src={circleBtn} onClick={()=>setNavState(true)}></img>
-                    <Button>Add to group</Button>
-                </BtnDiv>
-                <BtnDiv>
-                    <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                    <BtnContact2>Invite Contact</BtnContact2>
-                </BtnDiv>
-                </ContactDiv>
-            {/* </form> */}
+            <ContactDiv className='contacts'>
+            {viewContacts.map((contact, index) => {
+                return(
+                <Contact key={index} >
+                    {/* Placeholder image */}
+                    <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
+                    <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
+                        <ContactNames>
+                            {contact.firstName} {''}
+                            {contact.lastName}
+                        </ContactNames>
+                        <IconDiv>
+                            <Icons className="fas fa-phone"></Icons>
+                            <Icons className="fas fa-comment-medical"></Icons>
+                            <Icons className="fas fa-envelope"></Icons>
+                        </IconDiv>
+                        {/* <label htmlFor="contactId"> */}
+                            <input
+                            type="radio"
+                            style={{width: '30%'}}
+                            id="contactId"
+                            // name="contactId"
+                            value={contact.contactId}
+                            onClick={(e)=>{handleChange(e)}}
+                            />
+                        {/* </label> */}
+                    </div>
+                </Contact>
+                )
+            })}
+            <AddToGroupBtnDiv>
+                <i className="fa fa-user-plus" onClick={()=>setNavState(true)}></i>
+                <Button onClick={handleSubmit}>Add to group</Button>
+            </AddToGroupBtnDiv>
+            <BtnDiv>
+                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact2>Invite Contact</BtnContact2>
+            </BtnDiv>
+            </ContactDiv>
+        {/* </form> */}
         </Container>
     )
 }
@@ -203,7 +189,7 @@ const Contact = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    margin: 5% 2%;
+    margin: 5% 0 0 2%;
 `
 const ContactTitle = styled.p`
     width: 48%;
@@ -235,6 +221,20 @@ const BtnDiv = styled.div`
     justify-content: flex-start;
     padding-top: 2%;
     font-size: 1.2rem;
+    margin: 6% 0 0;
+`;
+
+const AddToGroupBtnDiv = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 2%;
+    font-size: 1.2rem;
+    margin: 6% 0 0 34%;
+    i {
+        font-size: 1.4rem;
+        color: #2e8380;
+    }
 `;
 
 const BtnContact1 = styled.button`
