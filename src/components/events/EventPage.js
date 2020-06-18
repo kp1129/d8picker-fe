@@ -16,17 +16,6 @@ const EventPage = ({event}) => {
     const {addToast} = useToasts();
 
     console.log('***', event);
-    const templateId = templateList.filter(t => t.title == event.title)[0].id;
-    const [template, setTemplate] = useState({groups: []});
-
-    useEffect(() => {
-      axiosWithAuth(googleApi.currentUser.token)
-        .get(`/api/template/templateInfo/${templateId}`)
-        .then(res => {
-          setTemplate(res.data);
-        })
-        .catch(err => console.log(err))
-    }, []);
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -81,8 +70,7 @@ const EventPage = ({event}) => {
                 )
                 : (
                     <div className='eventInfo' key={event.id}>
-                        {template && <span><i class={template.groups[0] ? template.groups[0].groupIcon : ''} /></span>}
-                        <EventName style = {{background: template.groups[0] ? template.groups[0].groupColor : '#1E85C4'}}>{event.title}</EventName>
+                        <EventName>{event.title}</EventName>
                         <EventTime>{event.starttime} - {event.endtime}</EventTime>
                         <EventNotes>{event.notes}</EventNotes>
                         <ButtonsDiv>

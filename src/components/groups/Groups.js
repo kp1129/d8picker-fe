@@ -21,7 +21,7 @@ const Groups = () => {
 
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
- 
+
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -36,6 +36,7 @@ const Groups = () => {
       setIsDisplayingGroup(false)
     }
   } 
+
 
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
@@ -75,12 +76,11 @@ const Groups = () => {
       });
   };
 
-  const handleContactDelete = (e, contactId, adminId, groupId) => {
-    console.log('contactId: ', contactId)
+  const handleContactDelete = (e, relationshipId, adminId, groupId) => {
     e.stopPropagation()
     e.preventDefault()
     axiosWithAuth(token)
-    .delete(`/api/groups/${adminId}/${groupId}/contacts/${contactId}`)
+    .delete(`/api/groups/${adminId}/${groupId}/contacts/${relationshipId}`)
     .then(res => {
         console.log('res: ', res.data)
         fetchGroupData(groupId, adminId, token)
@@ -114,12 +114,12 @@ const Groups = () => {
                   {group.groupName}
                 </GroupTitle>
                 <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-                {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
                 {isDisplayingGroup === true && group.id === currentGroup.id && (
                   <ContactList>
                     {currentGroup.contacts.map(contact => {
+                      // console.log('CONTACT: ', contact)
                       return(
-                      <ContactDiv key={contact.id}>
+                      <ContactDiv key={contact.contactId}>
                         <i className="fas fa-user-alt"></i>
                         <ContactInfoContainer>
                           <p>{`${contact.firstName} ${contact.lastName}`}</p>
@@ -127,14 +127,16 @@ const Groups = () => {
                             <i className="fas fa-phone"></i>
                             <i className="fas fa-comment-medical"></i>
                             <i className="fas fa-envelope"></i>
+                            {/* IMPORTANT id key is not the contact's id, instead it is the id in the many to many table (contact_group) */}
                             <i className="fas fa-trash" onClick={(e)=>{handleContactDelete(e, contact.id, adminInfo.adminId, group.id)}}></i>
                           </IconContainer>
                         </ContactInfoContainer>
                       </ContactDiv>
                       )
                     })}
-                  <BtnContainer>
-                      <AddBtnImg onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} />
+
+                   {width < 768 && ( <BtnContainer>
+                      <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                     </BtnContainer>
@@ -191,7 +193,7 @@ const GroupList = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 22% 5% 30%;
+  margin: 6% 5% 30%;
   @media ${device.desktop} {
     width: 90%;
     margin: 0 auto;
@@ -226,7 +228,8 @@ const BtnContainer = styled.div`
     }
 `
 const EditBtn = styled.button`
-    width: 32%;
+    width: 36%;
+    text-align: center;
     background: #FFFFFF;
     font-size: 1.2em;
     line-height: 2em;
@@ -243,7 +246,8 @@ const EditBtn = styled.button`
       }
 `
 const DeleteBtn = styled.button`
-    width: 32%;
+    width: 36%;
+    text-align: center;
     background: #28807D;
     font-size: 1.2em;
     line-height: 2em;
@@ -277,7 +281,7 @@ const ContactDiv = styled.div`
   i{
     width: 20%;
     margin: 2% 0 0 0;
-    font-size: 3rem;
+    font-size: 2.4rem;
     color: #28807D;
   }
 `
@@ -289,11 +293,11 @@ const ContactInfoContainer = styled.div`
 const IconContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
   i{
     width: 20%;
     font-size: 1.4rem;
     color: #AFC9D9;
+    margin: 4px 0 0 24px;
   }
   `
 
