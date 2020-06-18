@@ -6,6 +6,7 @@ import styled from 'styled-components';
 const TemplateContainer = () => {
   const {templateList, width} = useContext(Context);
 
+  console.log(templateList);
   return (
           <>
           {width >= 768}
@@ -22,7 +23,8 @@ const TemplateContainer = () => {
                   endtime={t.endtime}
                   title={t.title}
                   notes={t.notes}
-                  templateList={templateList}/>                
+                  group={t.groups[0] ? t.groups[0] : {groupColor: '', groupIcon: ''}}
+                />                
               ))}
               </EventDiv>
           </>

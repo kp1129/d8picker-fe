@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useAuth } from '../../contexts/auth';
-import { DashboardContext } from '../../contexts/Contexts'
+import { DashboardContext, Context } from '../../contexts/Contexts';
 import EditEventForm from './EditEventForm';
 import styled from 'styled-components';
 import { useToasts } from 'react-toast-notifications';
+import axiosWithAuth from '../../utils/axiosWithAuth';
 
 
 // component for event display
 const EventPage = ({event}) => {
-    const { api } = useAuth();
+    const { api, googleApi } = useAuth();
     
     const { setEventDisplay, setEventsUpdated } = useContext(DashboardContext);
+    const { templateList } = useContext(Context);
     const {addToast} = useToasts();
 
     console.log('***', event);

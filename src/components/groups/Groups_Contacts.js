@@ -8,16 +8,13 @@ const Groups_Contacts = () => {
 
     const { setNavState } = useContext(Context);
 
+    // control display: true = contacts, false = groups
     const [navToggle, setNavToggle] = useState(false);
 
 
     const handleBack = () => {
         setNavState(0);
     }
-    const handleChange = () => {
-        console.log('changing navToggle from ', navToggle);
-        setNavToggle(!navToggle)
-    };
 
     return(
         <Container>
@@ -28,12 +25,12 @@ const Groups_Contacts = () => {
                 <BackBtn onClick={handleBack}>Back</BackBtn>
             </NavContainer>
             <TabsContainer style={{ justifyContent: 'flex-end'}}>
-                <Tabs className='buttons' onClick={handleChange}>Groups</Tabs>
-                <Tabs className='buttons' onClick={handleChange}>Contacts</Tabs>
+                <Tabs className='buttons' onClick={() => setNavToggle(false)}>Groups</Tabs>
+                <Tabs className='buttons' onClick={() => setNavToggle(true)}>Contacts</Tabs>
             </TabsContainer>
-            <div>
+            <ContentContainer>
                 {navToggle ? <Contacts /> : <Groups />}
-            </div>
+            </ContentContainer>
         </Container>
     )
 }
@@ -81,5 +78,9 @@ const BackBtn = styled.p`
   text-align: right;
   line-height: 27px;
   color: #28807d;
+  cursor: pointer;
 `;
 
+const ContentContainer = styled.div`
+    width: 90%;
+`;

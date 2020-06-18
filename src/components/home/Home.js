@@ -10,6 +10,7 @@ import CreateNewGroup from '../groups/CreateNewGroup';
 import InviteeAddContactForm from '../groups/InviteeAddContactForm';
 import EditGroupForm from '../groups/EditGroupForm';
 import AdminAddContactForm from '../groups/AdminAddContactForm';
+import InviteLink from '../groups/InviteLink';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
@@ -19,11 +20,12 @@ import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
+  console.log('googleId: ', googleId, 'token: ', token)
   try {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
-    console.log(token)
+
     return response.data.templates;
   } catch (error) {
     console.log(error);
@@ -133,8 +135,6 @@ const Home = () => {
   //fetches a particular group's data
   const fetchGroupData = (groupId, adminId, token) => {
     let sortedGroupContacts = []
-    let group = {}
-    console.log(`/api/groups/${adminId}/${groupId}`)
     axiosWithAuth(token)
     .get(`/api/groups/${adminId}/${groupId}`)
     .then(async res => {
@@ -164,6 +164,7 @@ const Home = () => {
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
+      console.log('CURRENT USER: ', currentUser)
       const templates = await getTemplateList(currentUser);
       setTemplateList(templates);
     })();
@@ -182,6 +183,7 @@ const Home = () => {
           currentGroup,
           adminInfo,
           formOpen,
+          colors,
           setFormOpen,
           setTemplateFormOpen,
           templateFormOpen,
@@ -189,6 +191,7 @@ const Home = () => {
           conEnd,
           title,
           notes,
+          navState,
           selected,
           setSelected,
           toggleNav,
@@ -206,76 +209,27 @@ const Home = () => {
           setViewContacts
         }}
       >
-        {navState === 0 && <Dashboard setTemplateList={setTemplateList} />}
+        {navState === 0 && <Dashboard />}
 
-        {navState === 1 && (
-          <>
-            <Events
-              formOpen={formOpen}
-              setTemplateList={setTemplateList}
-              templateList={templateList}
-            />
-          </>
-        )}
+        {navState === 1 && <Events />}
 
-        {navState === 2 && (
-          <Groups_Contacts />
-        )}
+        {navState === 2 && <Groups_Contacts />}
 
-        {navState === 3 && (
-          <NewEventForm
-            setTemplateList={setTemplateList}
-            templateList={templateList}
-            setToggleNav={setToggleNav}
-            setNavState={setNavState}
-            setTitle={setTitle}
-            setNotes={setNotes}
-            setConStart={setConStart}
-            setConEnd={setConEnd}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-          />
-        )}
+        {navState === 3 && <NewEventForm />}
 
-        {navState === 4 && (
-          <UpdateEventForm
-            setTemplateList={setTemplateList}
-            templateList={templateList}
-            setToggleNav={setToggleNav}
-            setNavState={setNavState}
-            setTitle={setTitle}
-            setConStart={setConStart}
-            setConEnd={setConEnd}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-          />
-        )}
+        {navState === 4 && <UpdateEventForm />}
 
-        {navState === 5 && (
-          <CreateNewGroup
-            setNavState={setNavState}
-            setGroupList={setGroupList}
-            groupList={groupList}
-          />
-        )}
+        {navState === 5 && <CreateNewGroup />}
 
-        {navState === 6 && <InviteeAddContactForm />}
+        {navState === 6 && <AdminAddContactForm />}
 
-        {navState === 8 && <EditGroupForm setNavState={setNavState} currentGroup={currentGroup}/>}
+        {navState === 7 && <InviteLink />}
 
-        {navState === 9 && <AdminAddContactForm setNavState={setNavState} adminInfo={adminInfo} navState={navState}/>}
+        {navState === 8 && <EditGroupForm />}
 
-        {toggleNav && (
-          <Nav
-            navState={navState}
-            setNavState={setNavState}
-            colors={colors}
-            setTemplateFormOpen={setTemplateFormOpen}
-            setFormOpen={setFormOpen}
-            setSelected={setSelected}
-            setToggleNav={setToggleNav}
-          />
-        )}
+        {navState === 9 && <AdminAddContactForm />}
+
+        {toggleNav && <Nav />}
       </Context.Provider>
     </Div>
   );

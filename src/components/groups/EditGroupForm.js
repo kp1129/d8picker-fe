@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const EditGroupForm = ({ setNavState, currentGroup }) => {
+const EditGroupForm = () => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo } = useContext(Context);
+  const { adminInfo, setNavState, currentGroup } = useContext(Context);
   const { token } = currentUser;
 
   const colorOptions = [
@@ -31,7 +31,11 @@ const EditGroupForm = ({ setNavState, currentGroup }) => {
   const [selectedColor, setSelectedColor] = useState(currentGroup.groupColor);
   const [selectedIcon, setSelectedIcon] = useState(currentGroup.groupIcon);
 
-  const [updateGroup, setUpdateGroup] = useState({...currentGroup});
+  const [updateGroup, setUpdateGroup] = useState({
+                                                  ...currentGroup,
+                                                groupColor: currentGroup.groupColor ? currentGroup.groupColor : '',
+                                                groupIcon: currentGroup.groupIcon ? currentGroup.groupIcon : ''
+                                              });
 
   const [message, setMessage] = useState('');
 
@@ -51,14 +55,14 @@ const EditGroupForm = ({ setNavState, currentGroup }) => {
             console.log(res.data)
             setNavState(2)
         })
+        .catch(err => {
+          console.log(err)
+        })
     }else{
         console.log('bro, these are the same object')
         setNavState(2)
     }
-    console.log('updateGroup: ', updateGroup);
   };
-
-  console.log('initialUpdateGroup: ', updateGroup)
 
   return (
     <Container>

@@ -5,20 +5,30 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
 
-const Contacts = () => {
+const Contacts = ({ setShowAdminAddContact }) => {
 
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo, navState, setNavState } = useContext(Context);
+    const { adminInfo, navState, setNavState, width } = useContext(Context);
 
     const [viewContacts, setViewContacts] = useState([]);
 
-    const handleAddContact = () => {
-        console.log('click: ', navState)
-       setNavState(9)
+
+    const handleInvite = e => {
+        setNavState(7);
     }
 
+    const handleAddContact = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if(width < 768){
+            // set navstate to show AdminAddContactForm
+            setNavState(9);
+        } else if (width >= 768){
+            setShowAdminAddContact(true);
+        }
+    }
 
     // retrieves all contacts and sorts by first name
     const getAllContacts = () => {
@@ -46,46 +56,58 @@ const Contacts = () => {
         })
     }
 
+
     useEffect(() => {
         getAllContacts()
-        console.log('navState: ', navState)
-        // console.log('setNavState: ', setNavState)
     }, [navState])
 
+    console.log('contacts: ', viewContacts)
+
     return(
-        <ContactDiv className='contacts' onClick={() => {setNavState(7)}}>
+        <ContactDiv className='contacts'>
             {viewContacts.map((contact, index) => {
                 return(
                 <Contact key={index} >
                     {/* Placeholder image */}
                     <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
-                    <div style={{ marginLeft: '15px'}}>
-                    <ContactNames>
-                        {contact.firstName} {''}
-                        {contact.lastName}
-                    </ContactNames>
-                    <IconDiv>
-                        <Icons className="fas fa-phone"></Icons>
-                        <Icons className="fas fa-comment-medical"></Icons>
-                        <Icons className="fas fa-envelope"></Icons>
-                    </IconDiv>
+                    <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
+                        <ContactNames>
+                            {contact.firstName} {''}
+                            {contact.lastName}
+                        </ContactNames>
+                        <IconDiv>
+                            <Icons className="fas fa-phone"></Icons>
+                            <Icons className="fas fa-comment-medical"></Icons>
+                            <Icons className="fas fa-envelope"></Icons>
+                        </IconDiv>
+                        {/* <input style={{width: '30%'}} type="radio" value={}/> */}
                     </div>
                 </Contact>
                 )
             })}
-            <BtnDiv>
+           {width < 768 && ( <BtnDiv>
                 <img src={circleBtn} onClick={()=>{setNavState(5)}}></img>
                 <Button>Add to group</Button>
-            </BtnDiv>
+            </BtnDiv>)}
             <BtnDiv>
-                <BtnContact1 onClick={handleAddContact} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                <BtnContact2>Invite Contact</BtnContact2>
+                <BtnContact1 onClick={(e) => handleAddContact(e)} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact2 onClick = {handleInvite}>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
     )
 }
 
 export default Contacts;
+
+// styled components
+const size = {
+    tablet: '768px',
+    desktop: '1024px'
+  };
+  
+  const device = {
+    desktop: `(min-width: ${size.desktop})`
+  };
 
 const Container = styled.div`
     width: 100%;
@@ -116,14 +138,14 @@ const Tabs = styled.button`
     padding: 5px 10px;
 `;
 const IconDiv= styled.div`
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: row;
 `;
 const Icons = styled.i`
     font-size: 1.4rem;
     color: #AFC9D9;
-    margin: 0 10%;
+    margin: 0 5%;
 `;
 const ContactDiv = styled.div`
     width: 100%;
@@ -131,6 +153,10 @@ const ContactDiv = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 2%;
+    margin-bottom: 200px;
+    @media ${device.desktop} {
+        margin-bottom: 0;        
+        }
 `
 const Contact = styled.div`
     width: 100%;
@@ -153,6 +179,7 @@ const BackBtn = styled.p`
   color: #28807d;
 `;
 const ContactNames = styled.p`
+    width: 100%;
     font-size: 1rem;
     color: #2E5780;
     padding-bottom: 2%;
@@ -168,6 +195,9 @@ const BtnDiv = styled.div`
     justify-content: flex-start;
     padding-top: 2%;
     font-size: 1.2rem;
+    @media ${device.desktop} {
+        flex-direction: column;        
+        }
 `;
 
 const BtnContact1 = styled.button`
@@ -176,6 +206,19 @@ const BtnContact1 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    @media ${device.desktop} {
+        margin: 0.5rem auto;
+        cursor: pointer;
+        width: 90%;
+        color: #28807d;
+        font-weight: bold;
+        border: 2px solid  #28807d;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.25rem 1rem;   
+        font-size: 1rem;   
+        }
+   
 `;
 const BtnContact2 = styled.button`
     border: 4px solid #28807D;
@@ -185,5 +228,17 @@ const BtnContact2 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    @media ${device.desktop} {
+        margin: 0.5rem auto;
+        cursor: pointer;
+        width: 90%;
+        font-weight: bold;
+        border: 2px solid  #28807d;
+        border-radius: 0.5rem;
+        text-align: center;
+        padding: 0.25rem 1rem;      
+        font-size: 1rem;
+        }
+
 `;
 
