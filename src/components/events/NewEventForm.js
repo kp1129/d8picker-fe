@@ -8,16 +8,15 @@ import { addTemplate } from '../../utils/helperFunctions';
 import { useToasts } from 'react-toast-notifications';
 
 const EventForm = styled.div`
-  // background-color: #AFC9D9;
+  //border: 5px solid blue;
   background-color: #e5e5e5;
   width: 100%;
   height: 100vh;
 `;
 
 const NewEventForm = props => {
-
-  const { 
-    formOpen, 
+  const {
+    formOpen,
     setTemplateList,
     templateList,
     setToggleNav,
@@ -28,7 +27,8 @@ const NewEventForm = props => {
     setConEnd,
     setTemplateFormOpen,
     setFormOpen,
-    groupList } = useContext(Context);
+    groupList
+  } = useContext(Context);
 
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -88,7 +88,10 @@ const NewEventForm = props => {
       >
         <p
           style={{ paddingLeft: '2%', color: '#28807D', cursor: 'pointer' }}
-          onClick={() => setNavState(0)}
+          onClick={() => {
+            setNavState(0);
+            props.setShowAddEventForm && props.setShowAddEventForm(false);
+          }}
         >
           Cancel
         </p>
@@ -187,26 +190,27 @@ const NewEventForm = props => {
           </div>
         </div>
         <div style={{ marginTop: '5%', background: 'white' }}>
-        <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Add Groups</div>
-            {/* <Label htmlFor="groupId">Add Groups</Label> */}
-            <select 
-              onChange={handleChange} 
-              name="groupId" 
-              id="groupId" 
-              ref={register({ required: false })} 
-              style={{
-                width: '100%',
-                border: 'none',
-                background: 'white',
-                padding: '5%'
-              }}>
-                <option value=''>Choose Group</option>
+          <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>
+            Add Groups
+          </div>
+          {/* <Label htmlFor="groupId">Add Groups</Label> */}
+          <select
+            onChange={handleChange}
+            name="groupId"
+            id="groupId"
+            ref={register({ required: false })}
+            style={{
+              width: '100%',
+              border: 'none',
+              background: 'white',
+              padding: '5%'
+            }}
+          >
+            <option value="">Choose Group</option>
             {groupList.map(g => {
-                return (
-                <option value={g.id}> {g.groupName} </option>
-                )
+              return <option value={g.id}> {g.groupName} </option>;
             })}
-            </select>
+          </select>
         </div>
 
         <div style={{ width: '100%', textAlign: 'center' }}>
@@ -232,6 +236,5 @@ const NewEventForm = props => {
     </EventForm>
   );
 };
-
 
 export default NewEventForm;

@@ -16,10 +16,11 @@ import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
-
-
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
+
+  console.log('googleId: ', googleId, 'token: ', token);
+
   try {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
@@ -132,28 +133,28 @@ const Home = () => {
 
   //fetches a particular group's data
   const fetchGroupData = (groupId, adminId, token) => {
-    let sortedGroupContacts = []
+    let sortedGroupContacts = [];
     axiosWithAuth(token)
-    .get(`/api/groups/${adminId}/${groupId}`)
-    .then(async res => {
-      sortedGroupContacts = [...res.data.contacts];
-      await sortedGroupContacts.sort((a, b) => {
-        let groupA = a.firstName.toUpperCase();
-        let groupB = b.firstName.toUpperCase();
-        if (groupA < groupB) {
-          return -1;
-        }
-        if (groupA > groupB) {
-          return 1;
-        }
-        return 0;
+      .get(`/api/groups/${adminId}/${groupId}`)
+      .then(async res => {
+        sortedGroupContacts = [...res.data.contacts];
+        await sortedGroupContacts.sort((a, b) => {
+          let groupA = a.firstName.toUpperCase();
+          let groupB = b.firstName.toUpperCase();
+          if (groupA < groupB) {
+            return -1;
+          }
+          if (groupA > groupB) {
+            return 1;
+          }
+          return 0;
+        });
+        setCurrentGroup({ ...res.data, contacts: [...sortedGroupContacts] });
+      })
+      .catch(err => {
+        console.log('Error', err);
       });
-      setCurrentGroup({...res.data, contacts: [...sortedGroupContacts]});
-    })
-    .catch(err => {
-      console.log('Error', err);
-    });
-}
+  };
 
   useEffect(() => {
     getGroupList();
@@ -166,7 +167,6 @@ const Home = () => {
       setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
-
 
   return (
     <Div>
