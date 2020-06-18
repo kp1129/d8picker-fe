@@ -16,16 +16,14 @@ import { useAuth } from '../../contexts/auth';
 import styled from 'styled-components';
 import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
-
-
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
-  console.log('googleId: ', googleId, 'token: ', token)
+  console.log('googleId: ', googleId, 'token: ', token);
   try {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
-    console.log('line 28: ', response.data)
+    console.log('line 28: ', response.data);
     return response.data.templates;
   } catch (error) {
     console.log(error);
@@ -134,28 +132,28 @@ const Home = () => {
 
   //fetches a particular group's data
   const fetchGroupData = (groupId, adminId, token) => {
-    let sortedGroupContacts = []
+    let sortedGroupContacts = [];
     axiosWithAuth(token)
-    .get(`/api/groups/${adminId}/${groupId}`)
-    .then(async res => {
-      sortedGroupContacts = [...res.data.contacts];
-      await sortedGroupContacts.sort((a, b) => {
-        let groupA = a.firstName.toUpperCase();
-        let groupB = b.firstName.toUpperCase();
-        if (groupA < groupB) {
-          return -1;
-        }
-        if (groupA > groupB) {
-          return 1;
-        }
-        return 0;
+      .get(`/api/groups/${adminId}/${groupId}`)
+      .then(async res => {
+        sortedGroupContacts = [...res.data.contacts];
+        await sortedGroupContacts.sort((a, b) => {
+          let groupA = a.firstName.toUpperCase();
+          let groupB = b.firstName.toUpperCase();
+          if (groupA < groupB) {
+            return -1;
+          }
+          if (groupA > groupB) {
+            return 1;
+          }
+          return 0;
+        });
+        setCurrentGroup({ ...res.data, contacts: [...sortedGroupContacts] });
+      })
+      .catch(err => {
+        console.log('Error', err);
       });
-      setCurrentGroup({...res.data, contacts: [...sortedGroupContacts]});
-    })
-    .catch(err => {
-      console.log('Error', err);
-    });
-}
+  };
 
   useEffect(() => {
     getGroupList();
@@ -164,12 +162,11 @@ const Home = () => {
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
-      console.log('CURRENT USER: ', currentUser)
+      console.log('CURRENT USER: ', currentUser);
       const templates = await getTemplateList(currentUser);
       setTemplateList(templates);
     })();
   }, [currentUser, formOpen]);
-
 
   return (
     <Div>
@@ -215,7 +212,7 @@ const Home = () => {
 
         {navState === 2 && <Groups_Contacts />}
 
-        {navState === 3 && <NewEventForm />}
+        {navState === 3 && width <= 768 && <NewEventForm />}
 
         {navState === 4 && <UpdateEventForm />}
 
