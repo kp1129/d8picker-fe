@@ -37,16 +37,6 @@ const Groups = () => {
   } 
 
 
-//   const handleChange = () => {
-//       setNavToggle(true)
-//   }
-
-//   const handleGroups = e => {
-//     setNavToggle(false)
-//     setNavState(2)
-// }
-
-
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
     console.log(`/api/groups/${adminId}/${groupId}`)
@@ -85,22 +75,14 @@ const Groups = () => {
       });
   };
 
-  const handleContactDelete = (e, contactId) => {
+  const handleContactDelete = (e, relationshipId, adminId, groupId) => {
+    e.stopPropagation()
     e.preventDefault()
-    let deleteContact = [contactId]
-    // let filtered = new Set(newMembers.contacts)
-    // let currentContacts = []
-    // currentGroup.contacts.map(contact => {
-    //     currentContacts = [...currentContacts, contact.contactId]
-    // })
-    // setNewMembers({
-    //     ...newMembers,
-    //      contacts: filtered
-    //     })
     axiosWithAuth(token)
-    .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...deleteContact]})
+    .delete(`/api/groups/${adminId}/${groupId}/contacts/${relationshipId}`)
     .then(res => {
         console.log('res: ', res.data)
+        fetchGroupData(groupId, adminId, token)
     })
     .catch(err => {
         console.log(err)
@@ -111,71 +93,6 @@ const Groups = () => {
   useEffect(() => {
     getGroupList();
   }, []);
-
-// // // //   // deletes group
-// // // //   const handleDelete = (groupId, adminId, token) => {
-// // // //     console.log(`/api/groups/${adminId}/${groupId}`, groupList)
-// // // //     axiosWithAuth(token, googleApi)
-// // // //         .delete(`/api/groups/${adminId}/${groupId}`, groupList)
-// // // //         .then(res => {
-// // // //             setGroupList([{ ...groupList }], getGroupList());
-// // // //       })
-// // // //     .catch(error => console.log(error.response)  
-// // // //   )};
-
-// // // //   return (
-// // // //       <GroupList>
-// // // //         {groupList.map(group => {
-// // // //           return (
-// // // //             <Group key={group.id} onClick={()=>{handleGroupDisplay(group.id, adminInfo.adminId, token)}}>
-// // // //               <GroupTitle color={group.groupColor}>
-// // // //                 <i
-// // // //                   className={group.groupIcon}
-// // // //                   style={{
-// // // //                     margin: '0 3% 0 0',
-// // // //                     color: `${group.groupColor}`
-// // // //                   }}
-// // // //                 ></i>
-// // // //                 {group.groupName}
-// // // //               </GroupTitle>
-// // // //               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-// // // //               {isDisplayingGroup === true && group.id === currentGroup.id && (
-// // // //                 <ContactList key={group.id}>
-// // // //                   {currentGroup.contacts.map(contact => {
-// // // //                     return(
-// // // //                     <ContactDiv key={contact.id}>
-// // // //                       <i className="fas fa-user-alt"></i>
-// // // //                       <ContactInfoContainer>
-// // // //                         <p>{`${contact.firstName} ${contact.lastName}`}</p>
-// // // //                         <IconContainer>
-// // // //                           <i className="fas fa-phone"></i>
-// // // //                           <i className="fas fa-comment-medical"></i>
-// // // //                           <i className="fas fa-envelope"></i>
-// // // //                         </IconContainer>
-// // // //                       </ContactInfoContainer>
-// // // //                     </ContactDiv>
-// // // //                     )
-// // // //                   })}
-// // // //                   <BtnContainer>
-
-// // // //                     <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
-// // // //                     <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-// // // //                   </BtnContainer>
-// // // //                 </ContactList>
-// // // //               )}
-// // // //             </Group>
-// // // //           );
-// // // //         })}
-// // // //         <BtnDiv>
-// // // //           {width < 768 && <Btn
-// // // //             src={btn}
-// // // //             onClick={() => {
-// // // //               setNavState(5);
-// // // //             }}></Btn>}
-          
-// // // //         </BtnDiv>
-// // // //       </GroupList>
-// // // //   );
  
     if(isAddingContactToGroup){
       return <AddContactToGroupForm currentGroup={currentGroup} setIsAddingContactToGroup={setIsAddingContactToGroup}/>
@@ -197,12 +114,12 @@ const Groups = () => {
                   {group.groupName}
                 </GroupTitle>
                 <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-                {/* <GroupDescription>{group.groupDescription}</GroupDescription> */}
                 {isDisplayingGroup === true && group.id === currentGroup.id && (
                   <ContactList>
                     {currentGroup.contacts.map(contact => {
+                      // console.log('CONTACT: ', contact)
                       return(
-                      <ContactDiv key={contact.id}>
+                      <ContactDiv key={contact.contactId}>
                         <i className="fas fa-user-alt"></i>
                         <ContactInfoContainer>
                           <p>{`${contact.firstName} ${contact.lastName}`}</p>
@@ -210,14 +127,15 @@ const Groups = () => {
                             <i className="fas fa-phone"></i>
                             <i className="fas fa-comment-medical"></i>
                             <i className="fas fa-envelope"></i>
-                            <i className="fas fa-trash" onClick={handleContactDelete}></i>
+                            {/* IMPORTANT id key is not the contact's id, instead it is the id in the many to many table (contact_group) */}
+                            <i className="fas fa-trash" onClick={(e)=>{handleContactDelete(e, contact.id, adminInfo.adminId, group.id)}}></i>
                           </IconContainer>
                         </ContactInfoContainer>
                       </ContactDiv>
                       )
                     })}
                    {width < 768 && ( <BtnContainer>
-                      <img onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} style={{width: '50px', height: '50px'}}></img>
+                      <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                     </BtnContainer>)}
@@ -265,7 +183,7 @@ const GroupList = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin: 22% 5% 30%;
+  margin: 6% 5% 30%;
   @media ${device.desktop} {
     width: 90%;
     margin: 0 auto;
@@ -295,7 +213,8 @@ const BtnContainer = styled.div`
   margin: 4% 0 0 0;
 `
 const EditBtn = styled.button`
-    width: 32%;
+    width: 36%;
+    text-align: center;
     background: #FFFFFF;
     font-size: 1.2em;
     line-height: 2em;
@@ -306,7 +225,8 @@ const EditBtn = styled.button`
     border-radius: 15px;
 `
 const DeleteBtn = styled.button`
-    width: 32%;
+    width: 36%;
+    text-align: center;
     background: #28807D;
     font-size: 1.2em;
     line-height: 2em;
@@ -334,7 +254,7 @@ const ContactDiv = styled.div`
   i{
     width: 20%;
     margin: 2% 0 0 0;
-    font-size: 3rem;
+    font-size: 2.4rem;
     color: #28807D;
   }
 `
@@ -346,11 +266,11 @@ const ContactInfoContainer = styled.div`
 const IconContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
   i{
     width: 20%;
     font-size: 1.4rem;
     color: #AFC9D9;
+    margin: 4px 0 0 24px;
   }
   `
 
