@@ -25,14 +25,6 @@ const ConfirmDatesBtn = () => {
         //add events to google calendar, clear currently selected dates, ends date selection mode (formOpen and templateFormOpen)
         eventList.forEach(event => {
           api.addEvent(event)
-          axiosWithAuth(googleApi.currentUser.token)
-          .post('/api/sms')
-          .then(res => {
-            console.log('message sent')
-          })
-          .catch(error => {
-            console.log('error sending message', error)
-          })
         });
         setSelected([]);
         setFormOpen(false);
@@ -52,6 +44,14 @@ const ConfirmDatesBtn = () => {
         })
         //no state setup yet for the description, so it is set to be blank
         applyTemplate(title, notes, conStart, conEnd);
+        axiosWithAuth(googleApi.currentUser.token)
+          .post('/api/sms')
+          .then(res => {
+            console.log('message sent')
+          })
+          .catch(error => {
+            console.log('error sending message', error)
+          });
     }
 
     const[shortTitle, setShortTitle] = useState(title)
