@@ -12,22 +12,36 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const {setEvent, setEventDisplay} = useContext(DashboardContext);
   const { templateList } = useContext(Context);
   const { googleApi } = useAuth();
-  const templateId = [...templateList.filter(t => t.title == eventTitle)][0].id;
+  console.log('LINE 15: ', templateList)
+  // const templateId = !templateList ? '' : if(templateList.length > 0) [...templateList.filter(t => t.title == eventTitle)][0].id ;
+  let templateId = ''
   const [template, setTemplate] = useState({groups: []});
 
   useEffect(() => {
+    if(templateId){ 
     axiosWithAuth(googleApi.currentUser.token)
       .get(`/api/template/templateInfo/${templateId}`)
       .then(res => {
+        console.log('RES.DATA: ', res.data)
         setTemplate(res.data);
       })
       .catch(err => console.log(err))
-  }, [])
+    }
+  }, [templateId])
 
   //if name of event is greater than 5 characters, shorten it to fit within a day box at mobile size
   useEffect(()=>{
       eventTitle.length > 5 ? setTitle(eventTitle.substring(0,5)) : setTitle(eventTitle)
   },[eventTitle])
+
+  useEffect(()=> {
+    if(templateList.length > 0){
+      let filterTemplate =  [...templateList.filter(t => t.title == eventTitle)]
+      if(filterTemplate.length > 0){
+        templateId = filterTemplate[0].id
+      }
+    }
+  }, [templateList])
 
   const loadEventComponent = e => {
     e.preventDefault();
