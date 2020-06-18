@@ -10,7 +10,7 @@ const TemplateContainer = () => {
   console.log(templateList);
   return (
     <div style={{ border: '2px solid green' }}>
-      {width >= 768 && navState === 3 ? <NewEventForm /> : ''}
+      {/* {width >= 768 && navState === 3 ? <NewEventForm /> : ''} */}
 
       <Title as="h2">Events</Title>
 

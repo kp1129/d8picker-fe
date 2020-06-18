@@ -212,7 +212,7 @@ const Home = () => {
 
         {navState === 2 && <Groups_Contacts />}
 
-        {navState === 3 && width <= 768 && <NewEventForm />}
+        {navState === 3 && <NewEventForm />}
 
         {navState === 4 && <UpdateEventForm />}
 

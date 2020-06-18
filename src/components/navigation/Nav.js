@@ -13,6 +13,7 @@ import eventsBtnActive from '../navigation/NavImgs/Events Button-Active.png';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import TemplateContainer from '../events/TemplateContainer';
 import Groups from '../groups/Groups';
+import EventsContainer from '../events/EventsContainer';
 import GroupsContainer from '../groups/GroupsContainer';
 import { Context } from '../../contexts/Contexts';
 
@@ -182,7 +183,7 @@ const Nav = () => {
           </div>
           {eventsPopoutVisible && (
             <EventsPlaceholder>
-              <TemplateContainer />
+              <EventsContainer />
             </EventsPlaceholder>
           )}
         </IconDiv>
@@ -228,15 +229,13 @@ const Nav = () => {
             ></Arrow>
           </div>
         </IconDiv>
-        <IconDiv
+        {width < 768 && (<IconDiv
           style={{ border: '5px solid blue' }}
           className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}
         >
-          <h1>mobile</h1>
           <AddEventButton />
-          <h1>mobile 2</h1>
           <Label style={{ color: 'gray', marginTop: '6px' }}>Add Event</Label>
-        </IconDiv>
+        </IconDiv>)}
       </NavContainer>
       {isDisplayingSettings && <Hamburger />}
     </Container>
