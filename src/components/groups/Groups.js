@@ -3,26 +3,20 @@ import { Context } from '../../contexts/Contexts';
 import styled from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
-
 import CreateNewGroup from './CreateNewGroup';
 import Contacts from '../contacts/Contacts.js';
 import AddContactToGroupForm from '../contacts/AddContactToGroupForm';
 import circleBtn from '../navigation/circle-plus.png';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
-
 const Groups = () => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
   const { adminInfo, width, setNavState, groupList, setGroupList, fetchGroupData, currentGroup } = useContext(Context)
-
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
-
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
-
-
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
     if(isDisplayingGroup === true && groupId !== currentGroup.id){
@@ -36,8 +30,6 @@ const Groups = () => {
       setIsDisplayingGroup(false)
     }
   } 
-
-
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
     console.log(`/api/groups/${adminId}/${groupId}`)
@@ -49,7 +41,6 @@ const Groups = () => {
     }))
     .catch(error => console.log(error.response))
   } 
-
   //sets groupList state to state and sorts aplphabetically
   const getGroupList = () => {
     let sortedGroupList = [];
@@ -60,7 +51,6 @@ const Groups = () => {
         sortedGroupList.sort((a, b) => {
           let nameA = a.groupName.toUpperCase();
           let nameB = b.groupName.toUpperCase();
-
           if (nameA < nameB) {
             return -1;
           }
@@ -75,7 +65,6 @@ const Groups = () => {
         console.log(err);
       });
   };
-
   const handleContactDelete = (e, relationshipId, adminId, groupId) => {
     e.stopPropagation()
     e.preventDefault()
@@ -89,11 +78,9 @@ const Groups = () => {
         console.log(err)
     })
 }
-
   useEffect(() => {
     getGroupList();
   }, []);
- 
     if(isAddingContactToGroup){
       return <AddContactToGroupForm currentGroup={currentGroup} setIsAddingContactToGroup={setIsAddingContactToGroup}/>
     }
@@ -134,12 +121,11 @@ const Groups = () => {
                       </ContactDiv>
                       )
                     })}
-
                    {width < 768 && ( <BtnContainer>
                       <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-                    </BtnContainer>
+                    </BtnContainer>)}
                   </ContactList>
                 )}
               </Group>
@@ -156,9 +142,7 @@ const Groups = () => {
         </GroupList>
     );
 };
-
 export default Groups;
-
 // styled components
 const size = {
   tablet: '768px',
@@ -167,28 +151,16 @@ const size = {
 const device = {
   desktop: `(min-width: ${size.desktop})`
 };
-
 const BtnDiv = styled.div`
   width: 100%;
   display: flex;
   margin: 2% 0 0;
 `;
-
-const AddBtnImg = styled.img`
-width: 50px;
-height: 50px;
-@media ${device.desktop} {
-  width: 20%;
-  height: auto;
-  }
-`;
-
 const Btn = styled.img`
   width: 40px;
   height: 40px;
   cursor: pointer;
 `;
-
 const GroupList = styled.div`
   width: 100%;
   display: flex;
@@ -198,7 +170,6 @@ const GroupList = styled.div`
     width: 90%;
     margin: 0 auto;
     }
-
 `;
 const Group = styled.div`
   width: 100%;
@@ -207,7 +178,6 @@ const Group = styled.div`
   justify-content: space-between;
   margin: 3% 0 1%;
 `;
-
 const GroupTitle = styled.h1`
   width: 80%;
   font-size: 1.6rem;
@@ -221,11 +191,6 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 4% 0 0 0;
-  @media ${device.desktop} {
-    font-size: 1rem;
-    margin: 0;
-    padding: 0;
-    }
 `
 const EditBtn = styled.button`
     width: 36%;
@@ -238,12 +203,6 @@ const EditBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
-    @media ${device.desktop} {
-      // width: 25%;
-      padding: 0;
-      margin: 0;
-      line-height: 0;
-      }
 `
 const DeleteBtn = styled.button`
     width: 36%;
@@ -256,12 +215,6 @@ const DeleteBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
-    @media ${device.desktop} {
-      // width: 35%;
-      padding: 0;
-      margin: 0;
-      line-height: 0;
-      }
 `
 const Arrow = styled.i`
   width: 10%;
@@ -269,7 +222,6 @@ const Arrow = styled.i`
   color: gray;
   font-size: 1.4rem;
 `;
-
 const ContactList = styled.div`
   width: 100%;
 `
@@ -300,7 +252,6 @@ const IconContainer = styled.div`
     margin: 4px 0 0 24px;
   }
   `
-
 const TabsContainer = styled.div`
     width: 100%;
     display: flex;
