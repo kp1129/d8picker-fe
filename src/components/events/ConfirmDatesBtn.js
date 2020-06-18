@@ -44,6 +44,7 @@ const ConfirmDatesBtn = () => {
         })
         //no state setup yet for the description, so it is set to be blank
         applyTemplate(title, notes, conStart, conEnd);
+        // axios call to send sms message dynamically. We were approved to only get a free trial of Twilio, it only sends to one number. Future cohorts will need to upgrade and get a different account to send SMS to multiple contacts.
         axiosWithAuth(googleApi.currentUser.token)
           .post('/api/sms')
           .then(res => {
