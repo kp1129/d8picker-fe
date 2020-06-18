@@ -20,7 +20,6 @@ import useWindowDimensions from '../../hooks/useWindowDimensions.js';
 
 //gets list of templates from backend
 const getTemplateList = async ({ googleId, token }) => {
-  console.log('googleId: ', googleId, 'token: ', token)
   try {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`

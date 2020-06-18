@@ -21,6 +21,7 @@ const Groups = () => {
 
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
+  const [contactToDelete, setContactToDelete] = useState({})
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -86,19 +87,14 @@ const Groups = () => {
   };
 
   const handleContactDelete = (e, contactId) => {
+    console.log('contactId: ', contactId)
+    e.stopPropagation()
     e.preventDefault()
-    let deleteContact = [contactId]
-    // let filtered = new Set(newMembers.contacts)
-    // let currentContacts = []
-    // currentGroup.contacts.map(contact => {
-    //     currentContacts = [...currentContacts, contact.contactId]
-    // })
-    // setNewMembers({
-    //     ...newMembers,
-    //      contacts: filtered
-    //     })
+    setContactToDelete({
+      contacts: [contactId]
+    })
     axiosWithAuth(token)
-    .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...deleteContact]})
+    .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, contactToDelete)
     .then(res => {
         console.log('res: ', res.data)
     })
@@ -210,7 +206,7 @@ const Groups = () => {
                             <i className="fas fa-phone"></i>
                             <i className="fas fa-comment-medical"></i>
                             <i className="fas fa-envelope"></i>
-                            <i className="fas fa-trash" onClick={handleContactDelete}></i>
+                            <i className="fas fa-trash" onClick={(e)=>{handleContactDelete(e, contact.id)}}></i>
                           </IconContainer>
                         </ContactInfoContainer>
                       </ContactDiv>

@@ -12,7 +12,6 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
   const {setEvent, setEventDisplay} = useContext(DashboardContext);
   const { templateList } = useContext(Context);
   const { googleApi } = useAuth();
-  console.log('LINE 15: ', templateList)
   // const templateId = !templateList ? '' : if(templateList.length > 0) [...templateList.filter(t => t.title == eventTitle)][0].id ;
   let templateId = ''
   const [template, setTemplate] = useState({groups: []});
@@ -22,7 +21,6 @@ const EventIndicator = ({ event, eventDate, eventTitle}) => {
     axiosWithAuth(googleApi.currentUser.token)
       .get(`/api/template/templateInfo/${templateId}`)
       .then(res => {
-        console.log('RES.DATA: ', res.data)
         setTemplate(res.data);
       })
       .catch(err => console.log(err))
