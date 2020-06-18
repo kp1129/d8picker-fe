@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
 import { useToasts } from 'react-toast-notifications'
-
+import axiosWithAuth from '../../utils/axiosWithAuth.js';
 
 const ConfirmDatesBtn = () => {
 
   const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected, setToggleNav} = useContext(Context);
 
   const { setEventsUpdated } = useContext(DashboardContext);
-    const { api } = useAuth();
+    const { api, googleApi } = useAuth();
     const { addToast } = useToasts();
 
     //takes input from date selection and add template form and sends to google calendar api
@@ -44,6 +44,15 @@ const ConfirmDatesBtn = () => {
         })
         //no state setup yet for the description, so it is set to be blank
         applyTemplate(title, notes, conStart, conEnd);
+        // axios call to send sms message dynamically. We were approved to only get a free trial of Twilio, it only sends to one number. Future cohorts will need to upgrade and get a different account to send SMS to multiple contacts.
+        axiosWithAuth(googleApi.currentUser.token)
+          .post('/api/sms')
+          .then(res => {
+            console.log('message sent')
+          })
+          .catch(error => {
+            console.log('error sending message', error)
+          });
     }
 
     const[shortTitle, setShortTitle] = useState(title)
