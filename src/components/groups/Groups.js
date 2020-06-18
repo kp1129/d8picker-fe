@@ -22,6 +22,7 @@ const Groups = () => {
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
 
+
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
     if(isDisplayingGroup === true && groupId !== currentGroup.id){
@@ -89,7 +90,6 @@ const Groups = () => {
     })
 }
 
-
   useEffect(() => {
     getGroupList();
   }, []);
@@ -134,11 +134,12 @@ const Groups = () => {
                       </ContactDiv>
                       )
                     })}
+
                    {width < 768 && ( <BtnContainer>
                       <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-                    </BtnContainer>)}
+                    </BtnContainer>
                   </ContactList>
                 )}
               </Group>
@@ -171,6 +172,15 @@ const BtnDiv = styled.div`
   width: 100%;
   display: flex;
   margin: 2% 0 0;
+`;
+
+const AddBtnImg = styled.img`
+width: 50px;
+height: 50px;
+@media ${device.desktop} {
+  width: 20%;
+  height: auto;
+  }
 `;
 
 const Btn = styled.img`
@@ -211,6 +221,11 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 4% 0 0 0;
+  @media ${device.desktop} {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    }
 `
 const EditBtn = styled.button`
     width: 36%;
@@ -223,6 +238,12 @@ const EditBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    @media ${device.desktop} {
+      // width: 25%;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+      }
 `
 const DeleteBtn = styled.button`
     width: 36%;
@@ -235,6 +256,12 @@ const DeleteBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    @media ${device.desktop} {
+      // width: 35%;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+      }
 `
 const Arrow = styled.i`
   width: 10%;

@@ -21,7 +21,7 @@ const GroupsContainer = () => {
             <AddGroupBtn onClick={() => setShowCreateNewGroup(true)}>Add group</AddGroupBtn>
             {showCreateNewGroup && <CreateNewGroup setShowContacts={setShowContacts} setShowCreateNewGroup={setShowCreateNewGroup} />}
             {showContacts && <Contacts setShowAdminAddContact={setShowAdminAddContact} />}
-            {showAdminAddContact && <AdminAddContactForm /> }
+            {showAdminAddContact && <AdminAddContactForm setShowAdminAddContact={setShowAdminAddContact} /> }
         </div>
     )
 }

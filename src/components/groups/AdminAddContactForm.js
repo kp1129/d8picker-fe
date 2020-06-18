@@ -6,9 +6,9 @@ import {useAuth} from '../../contexts/auth';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications';
 
-const AdminAddContactForm = () => {
+const AdminAddContactForm = ({ setShowAdminAddContact }) => {
   // get groupData
-  const {groupList, navState, setNavState, adminInfo} = useContext(Context);
+  const {groupList, navState, setNavState, adminInfo, width} = useContext(Context);
   const { register, handleSubmit, errors } = useForm();
 
   const { addToast } = useToasts();
@@ -33,11 +33,13 @@ const AdminAddContactForm = () => {
   
   console.log(errors);
 
-
-
-
   const handleCancel = () => {
-    setNavState(2);
+    if (width < 768) {
+      setNavState(2);
+    } else {
+      setShowAdminAddContact(false);
+    }
+    
   }
   const onSubmit = data => {
     // format phone number
@@ -47,15 +49,13 @@ const AdminAddContactForm = () => {
       ...input,
       phoneNumber: cleanPhoneNumber,
       adminId: adminInfo.adminId
-      // groupId: groupInfo.groupId
     }   
-
     console.log('payload: ', payload)
       // create contact
       axiosWithAuth(currentUser.token).post("/api/contacts/", payload)
         .then(res => {
           console.log("response from the post request", res);
-
+          let newContactId = res.data[0];
           // notify that contact was created!
           addToast('Contact created!', {
             appearance: 'info',
@@ -64,8 +64,10 @@ const AdminAddContactForm = () => {
           });
           //  add contact to group
           if(payload.groupId){
-            axiosWithAuth(currentUser.token).post(`/api/groups/${payload.adminId}/${payload.groupId}/contacts`)
+            console.log("PAYLOAD GROUPID", payload.groupId)
+            axiosWithAuth(currentUser.token).post(`/api/groups/${payload.adminId}/${payload.groupId}/contacts`, {contacts: [newContactId]})
               .then(res => {
+                console.log('the second res', res);
                 if(res.status === 201){
                   //  notify the user that contact was successfully added to group
                   addToast('Contact added to the group!', {
@@ -80,7 +82,12 @@ const AdminAddContactForm = () => {
               })
           }
           //  redirect user 
-          setNavState(2);
+          if(width < 768){
+            setNavState(2);
+          } else {
+            setShowAdminAddContact(false);
+          }
+          
           })
         .catch(err => console.log(err))
   };

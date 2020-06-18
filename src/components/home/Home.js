@@ -188,7 +188,6 @@ const Home = () => {
           conEnd,
           title,
           notes,
-          navState,
           selected,
           setSelected,
           toggleNav,
