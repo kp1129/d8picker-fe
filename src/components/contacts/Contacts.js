@@ -10,9 +10,9 @@ const Contacts = ({ setShowAdminAddContact }) => {
     const { googleApi } = useAuth();
     const { currentUser } = googleApi;
     const { token } = currentUser;
-    const { adminInfo, navState, setNavState, width } = useContext(Context);
+    const { adminInfo, navState, setNavState, width, viewContacts, setViewContacts } = useContext(Context);
 
-    const [viewContacts, setViewContacts] = useState([]);
+    //const [viewContacts, setViewContacts] = useState([]);
 
 
     const handleInvite = e => {
@@ -79,6 +79,7 @@ const Contacts = ({ setShowAdminAddContact }) => {
                             <Icons className="fas fa-phone"></Icons>
                             <Icons className="fas fa-comment-medical"></Icons>
                             <Icons className="fas fa-envelope"></Icons>
+                            
                         </IconDiv>
                         {/* <input style={{width: '30%'}} type="radio" value={}/> */}
                     </div>

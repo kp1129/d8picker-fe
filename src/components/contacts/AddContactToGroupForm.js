@@ -50,9 +50,10 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         let arr = [...newContacts]
         arr = arr.map(id => parseInt(id))
         console.log(arr)
-        //const notFound = arr.filter(id => currentGroupContacts.indexOf(id))
+        console.log("first typeof", typeof(arr[0]))
         const notFound = arr.filter(eachId => !currentGroupContacts.includes(eachId))
         console.log('notFound: ', notFound)
+        console.log("second typeof", typeof(notFound[0]))
         return notFound
     }
 
@@ -78,7 +79,7 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         filtered = compareNewContacts(filtered, currentContacts)
         console.log('FILTERED: ', filtered)
         axiosWithAuth(token)
-        .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
+        .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: filtered})
         .then(res => {
             console.log(res.data)
             setIsAddingContactToGroup(false)
@@ -86,9 +87,7 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
         .catch(err => {
             console.log(err)
         })
-    }
-
-    
+    }    
 
     useEffect(() => {
         getAllContacts()

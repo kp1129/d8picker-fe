@@ -21,7 +21,7 @@ const Groups = () => {
 
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
-  const [contactToDelete, setContactToDelete] = useState({})
+ 
 
   //handles group toggle and calls function to fetch data according to condition
   const handleGroupDisplay = async (groupId, adminId, token) => {
@@ -36,17 +36,6 @@ const Groups = () => {
       setIsDisplayingGroup(false)
     }
   } 
-
-
-//   const handleChange = () => {
-//       setNavToggle(true)
-//   }
-
-//   const handleGroups = e => {
-//     setNavToggle(false)
-//     setNavState(2)
-// }
-
 
   // deletes group
   const handleDelete = (groupId, adminId, token) => {
@@ -101,75 +90,9 @@ const Groups = () => {
     })
 }
 
-
   useEffect(() => {
     getGroupList();
   }, []);
-
-// // // //   // deletes group
-// // // //   const handleDelete = (groupId, adminId, token) => {
-// // // //     console.log(`/api/groups/${adminId}/${groupId}`, groupList)
-// // // //     axiosWithAuth(token, googleApi)
-// // // //         .delete(`/api/groups/${adminId}/${groupId}`, groupList)
-// // // //         .then(res => {
-// // // //             setGroupList([{ ...groupList }], getGroupList());
-// // // //       })
-// // // //     .catch(error => console.log(error.response)  
-// // // //   )};
-
-// // // //   return (
-// // // //       <GroupList>
-// // // //         {groupList.map(group => {
-// // // //           return (
-// // // //             <Group key={group.id} onClick={()=>{handleGroupDisplay(group.id, adminInfo.adminId, token)}}>
-// // // //               <GroupTitle color={group.groupColor}>
-// // // //                 <i
-// // // //                   className={group.groupIcon}
-// // // //                   style={{
-// // // //                     margin: '0 3% 0 0',
-// // // //                     color: `${group.groupColor}`
-// // // //                   }}
-// // // //                 ></i>
-// // // //                 {group.groupName}
-// // // //               </GroupTitle>
-// // // //               <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
-// // // //               {isDisplayingGroup === true && group.id === currentGroup.id && (
-// // // //                 <ContactList key={group.id}>
-// // // //                   {currentGroup.contacts.map(contact => {
-// // // //                     return(
-// // // //                     <ContactDiv key={contact.id}>
-// // // //                       <i className="fas fa-user-alt"></i>
-// // // //                       <ContactInfoContainer>
-// // // //                         <p>{`${contact.firstName} ${contact.lastName}`}</p>
-// // // //                         <IconContainer>
-// // // //                           <i className="fas fa-phone"></i>
-// // // //                           <i className="fas fa-comment-medical"></i>
-// // // //                           <i className="fas fa-envelope"></i>
-// // // //                         </IconContainer>
-// // // //                       </ContactInfoContainer>
-// // // //                     </ContactDiv>
-// // // //                     )
-// // // //                   })}
-// // // //                   <BtnContainer>
-
-// // // //                     <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
-// // // //                     <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-// // // //                   </BtnContainer>
-// // // //                 </ContactList>
-// // // //               )}
-// // // //             </Group>
-// // // //           );
-// // // //         })}
-// // // //         <BtnDiv>
-// // // //           {width < 768 && <Btn
-// // // //             src={btn}
-// // // //             onClick={() => {
-// // // //               setNavState(5);
-// // // //             }}></Btn>}
-          
-// // // //         </BtnDiv>
-// // // //       </GroupList>
-// // // //   );
  
     if(isAddingContactToGroup){
       return <AddContactToGroupForm currentGroup={currentGroup} setIsAddingContactToGroup={setIsAddingContactToGroup}/>
@@ -210,11 +133,11 @@ const Groups = () => {
                       </ContactDiv>
                       )
                     })}
-                   {width < 768 && ( <BtnContainer>
-                      <img onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} style={{width: '50px', height: '50px'}}></img>
+                  <BtnContainer>
+                      <AddBtnImg onClick={()=>{setIsAddingContactToGroup(true)}} src={circleBtn} />
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
-                    </BtnContainer>)}
+                    </BtnContainer>
                   </ContactList>
                 )}
               </Group>
@@ -247,6 +170,15 @@ const BtnDiv = styled.div`
   width: 100%;
   display: flex;
   margin: 2% 0 0;
+`;
+
+const AddBtnImg = styled.img`
+width: 50px;
+height: 50px;
+@media ${device.desktop} {
+  width: 20%;
+  height: auto;
+  }
 `;
 
 const Btn = styled.img`
@@ -287,6 +219,11 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 4% 0 0 0;
+  @media ${device.desktop} {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+    }
 `
 const EditBtn = styled.button`
     width: 32%;
@@ -298,6 +235,12 @@ const EditBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    @media ${device.desktop} {
+      // width: 25%;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+      }
 `
 const DeleteBtn = styled.button`
     width: 32%;
@@ -309,6 +252,12 @@ const DeleteBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    @media ${device.desktop} {
+      // width: 35%;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+      }
 `
 const Arrow = styled.i`
   width: 10%;
