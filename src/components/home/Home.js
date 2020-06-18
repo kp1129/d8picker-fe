@@ -23,6 +23,7 @@ const getTemplateList = async ({ googleId, token }) => {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
+    console.log(token)
     return response.data.templates;
   } catch (error) {
     console.log(error);

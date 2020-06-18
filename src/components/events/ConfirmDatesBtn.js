@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import {useAuth} from '../../contexts/auth'
 import {convertTime, convertEvents} from '../../utils/helperFunctions'
 import { useToasts } from 'react-toast-notifications'
-
+import axiosWithAuth from '../../utils/axiosWithAuth.js';
 
 const ConfirmDatesBtn = () => {
 
   const {setFormOpen, setTemplateFormOpen, conStart, conEnd, title, notes, selected, setSelected, setToggleNav} = useContext(Context);
 
   const { setEventsUpdated } = useContext(DashboardContext);
-    const { api } = useAuth();
+    const { api, googleApi } = useAuth();
     const { addToast } = useToasts();
 
     //takes input from date selection and add template form and sends to google calendar api
@@ -25,6 +25,14 @@ const ConfirmDatesBtn = () => {
         //add events to google calendar, clear currently selected dates, ends date selection mode (formOpen and templateFormOpen)
         eventList.forEach(event => {
           api.addEvent(event)
+          axiosWithAuth(googleApi.currentUser.token)
+          .post('/api/sms')
+          .then(res => {
+            console.log('message sent')
+          })
+          .catch(error => {
+            console.log('error sending message', error)
+          })
         });
         setSelected([]);
         setFormOpen(false);
