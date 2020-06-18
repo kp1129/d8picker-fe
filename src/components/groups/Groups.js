@@ -86,17 +86,15 @@ const Groups = () => {
       });
   };
 
-  const handleContactDelete = (e, contactId) => {
+  const handleContactDelete = (e, contactId, adminId, groupId) => {
     console.log('contactId: ', contactId)
     e.stopPropagation()
     e.preventDefault()
-    setContactToDelete({
-      contacts: [contactId]
-    })
     axiosWithAuth(token)
-    .delete(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, contactToDelete)
+    .delete(`/api/groups/${adminId}/${groupId}/contacts/${contactId}`)
     .then(res => {
         console.log('res: ', res.data)
+        fetchGroupData(groupId, adminId, token)
     })
     .catch(err => {
         console.log(err)
@@ -206,7 +204,7 @@ const Groups = () => {
                             <i className="fas fa-phone"></i>
                             <i className="fas fa-comment-medical"></i>
                             <i className="fas fa-envelope"></i>
-                            <i className="fas fa-trash" onClick={(e)=>{handleContactDelete(e, contact.id)}}></i>
+                            <i className="fas fa-trash" onClick={(e)=>{handleContactDelete(e, contact.id, adminInfo.adminId, group.id)}}></i>
                           </IconContainer>
                         </ContactInfoContainer>
                       </ContactDiv>

@@ -91,16 +91,15 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
             })
         filtered = compareNewContacts(filtered, currentContacts)
         console.log('FILTERED: ', filtered)
-
-        axiosWithAuth(token)
-        .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
-        .then(res => {
-            console.log(res.data)
-            setIsAddingContactToGroup(false)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        // axiosWithAuth(token)
+        // .post(`/api/groups/${adminInfo.adminId}/${currentGroup.id}/contacts`, {contacts: [...filtered]})
+        // .then(res => {
+        //     console.log(res.data)
+        //     setIsAddingContactToGroup(false)
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
     }
 
     const handleContactDelete = e => {

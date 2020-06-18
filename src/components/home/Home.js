@@ -24,7 +24,6 @@ const getTemplateList = async ({ googleId, token }) => {
     const response = await axiosWithAuth(token).get(
       `${process.env.REACT_APP_ENDPOINT_URL}/api/template/${googleId}`
     );
-    console.log('line 28: ', response.data)
     return response.data.templates;
   } catch (error) {
     console.log(error);
@@ -163,7 +162,6 @@ const Home = () => {
   //gets list of templates from backend when the user or date selection mode has changed, may be unnecessary given new organization of components
   useEffect(() => {
     (async () => {
-      console.log('CURRENT USER: ', currentUser)
       const templates = await getTemplateList(currentUser);
       setTemplateList(templates);
     })();
