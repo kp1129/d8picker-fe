@@ -126,7 +126,7 @@ const Groups = () => {
                       )
                     })}
                    { ( <BtnContainer>
-                      <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
+                      <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                     </BtnContainer>)}
@@ -196,10 +196,16 @@ const BtnContainer = styled.div`
   justify-content: space-around;
   margin: 4% 0 0 0;
 
+  i{
+    width: 20%;
+    font-size: 2.4rem;
+    color: #2e8380
+  }
+
   @media ${device.desktop} {
     i{
-      width: 28%;
-      font-size: 0.2rem;
+      width: 20%;
+      font-size: 1.8rem;
     }
   }
 `
@@ -215,7 +221,7 @@ const EditBtn = styled.button`
     border-radius: 15px;
 
     @media ${device.desktop} {
-      width: 28%;
+      width: 30%;
       font-size: 0.9rem;
     }
 `
@@ -231,7 +237,7 @@ const DeleteBtn = styled.button`
     border-radius: 15px;
 
     @media ${device.desktop} {
-      width: 28%;
+      width: 30%;
       font-size: 0.9rem;
     }
 `

@@ -245,18 +245,26 @@ const AddToGroupBtnDiv = styled.div`
 
 const BtnContact1 = styled.button`
     border: 4px solid #28807D;
-    padding: 3px 55px;
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+
+    @media ${device.desktop} {
+        width: 48%;
+        font-size: 1rem;
+    }
 `;
 const BtnContact2 = styled.button`
     border: 4px solid #28807D;
     background: #28807D;
     color: white;
-    padding: 3px 55px;
     border-radius: 9px;
     margin: 3% 0 0 1%;
-    width: 50%;
+    width: 48%;
+
+    @media ${device.desktop} {
+        width: 48%;
+        font-size: 1rem;
+    }
 `;
 
