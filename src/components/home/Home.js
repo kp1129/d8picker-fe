@@ -105,6 +105,7 @@ const Home = () => {
     })();
   }, [currentUser]);
 
+ 
   //fetches list of groups for current user
   const getGroupList = () => {
     let sortedGroupList = [];
@@ -176,6 +177,7 @@ const Home = () => {
           width,
           groupList,
           setGroupList,
+          getGroupList,
           fetchGroupData,
           currentGroup,
           adminInfo,
