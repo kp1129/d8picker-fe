@@ -4,6 +4,8 @@ import { Context } from '../../contexts/Contexts';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import styled from 'styled-components';
 import circleBtn from '../navigation/circle-plus.png';
+import AdminAddContactForm from '../groups/AdminAddContactForm';
+import InviteLink from '../groups/InviteLink'
 
 const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
     // console.log('currentGroup: ', currentGroup)
@@ -84,6 +86,16 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
             console.log(err)
         })
     }    
+    
+    const handleInvite = () => {
+        setNavState(7);
+    }
+
+    const handleAddContact = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setNavState(9);
+    }
 
     useEffect(() => {
         getAllContacts()
@@ -126,8 +138,8 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
                 <Button onClick={handleSubmit}>Add to group</Button>
             </AddToGroupBtnDiv>
             <BtnDiv>
-                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
-                <BtnContact2>Invite Contact</BtnContact2>
+                <BtnContact1 onClick={(e) => {handleAddContact(e)}} style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact2 onClick={handleInvite}>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
         {/* </form> */}
