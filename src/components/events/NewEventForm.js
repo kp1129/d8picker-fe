@@ -7,11 +7,23 @@ import styled from 'styled-components';
 import { addTemplate } from '../../utils/helperFunctions';
 import { useToasts } from 'react-toast-notifications';
 
+//style
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
+
 const EventForm = styled.div`
   //border: 5px solid blue;
   background-color: #e5e5e5;
   width: 100%;
   height: 100vh;
+  @media ${device.desktop} {
+    background-color: white;
+  }
 `;
 
 const NewEventForm = props => {
@@ -27,7 +39,8 @@ const NewEventForm = props => {
     setConEnd,
     setTemplateFormOpen,
     setFormOpen,
-    groupList
+    groupList,
+    width
   } = useContext(Context);
 
   const { googleApi } = useAuth();
@@ -135,7 +148,12 @@ const NewEventForm = props => {
           />
         </div>
 
-        <div style={{ background: 'white' }}>
+        <div
+          style={{
+            background: 'white'
+          }}
+        >
+          {' '}
           <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Time</div>
           <div
             style={{
@@ -154,7 +172,7 @@ const NewEventForm = props => {
               ref={register({ required: true })}
               style={{
                 width: '65%',
-                border: 'none',
+                //border: 'none',
                 background: 'white',
                 paddingLeft: '5%'
               }}

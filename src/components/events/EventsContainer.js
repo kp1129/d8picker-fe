@@ -27,7 +27,7 @@ export default EventsContainer;
 
 const EventsContainerDiv = styled.div`
   width: 100%;
-  border: 3px solid purple;
+  //border: 3px solid purple;
 `;
 
 const AddGroupBtn = styled.div`
