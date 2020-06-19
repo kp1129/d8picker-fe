@@ -199,7 +199,11 @@ const BtnContainer = styled.div`
   i{
     width: 20%;
     font-size: 2.4rem;
-    color: #2e8380
+    color: #2e8380;
+
+    &:hover {
+      color: #64AEAB;
+    }
   }
 
   @media ${device.desktop} {
@@ -219,6 +223,13 @@ const EditBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    transition: .3;
+
+    &:hover {
+      border: 2px solid #64AEAB;
+      color: #64AEAB;
+      transition: .3;
+  }
 
     @media ${device.desktop} {
       width: 30%;
@@ -235,6 +246,13 @@ const DeleteBtn = styled.button`
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+    transition: .3;
+
+    &:hover {
+    border: 2px solid #64AEAB;
+    background: #64AEAB;
+    transition: .3;
+  }
 
     @media ${device.desktop} {
       width: 30%;

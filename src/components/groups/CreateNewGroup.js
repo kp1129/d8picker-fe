@@ -68,7 +68,6 @@ const CreateNewGroup = ({ setShowContacts, setShowCreateNewGroup }) => {
           setNavState(2);
         } else {
           setShowCreateNewGroup(false);
-          setShowContacts(true);
         }
       })
       .catch(err => {
@@ -196,7 +195,7 @@ const CreateNewGroup = ({ setShowContacts, setShowCreateNewGroup }) => {
           />
         </Label>
         <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>
-          Select members
+          Create Group
         </SubmitBtn>
       </Form>
       <p>{message}</p>
@@ -266,13 +265,13 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-    width: 100%;
-    padding 1%;
-    border: none;
-    border-bottom: solid 1px #999898;
-    background-color: #F4F8F9;
-    margin: 1% 0;
-    outline: none
+  width: 100%;
+  padding 1%;
+  border: none;
+  border-bottom: solid 1px #999898;
+  background-color: #F4F8F9;
+  margin: 1% 0;
+  outline: none
 `;
 
 const SubmitBtn = styled.div`
@@ -305,6 +304,7 @@ const Icon = styled.i`
   font-size: 3.5rem;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
+  
   @media ${device.desktop} {
     font-size: 40px;
     }

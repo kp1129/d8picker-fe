@@ -96,7 +96,7 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
                 return(
                 <Contact key={index} >
                     {/* Placeholder image */}
-                    <i className="fas fa-user-alt" style={{ fontSize: '2.6rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
+                    <i className="fas fa-user-alt" style={{ fontSize: '2.4rem', color: '#28807D', padding: '5px 2px 1px 2px', borderRadius: '0 9px 9px 9px' }}></i>
                     <div style={{ width: '100%', marginLeft: '15px', display: 'flex', flexWrap: 'wrap'}}>
                         <ContactNames>
                             {contact.firstName} {''}
@@ -122,11 +122,10 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
                 )
             })}
             <AddToGroupBtnDiv>
-                <i className="fa fa-user-plus" onClick={()=>setNavState(true)}></i>
-                <Button onClick={handleSubmit}>Add to group</Button>
+                <Button onClick={handleSubmit}><i className="fa fa-user-plus" onClick={()=>setNavState(true)}></i> Add to group</Button>
             </AddToGroupBtnDiv>
             <BtnDiv>
-                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Add Contact</BtnContact1>
+                <BtnContact1 style={{ background: 'white', border: '2px solid #28807D', color: '#28807D' }}>Create New Contact</BtnContact1>
                 <BtnContact2>Invite Contact</BtnContact2>
             </BtnDiv>
             </ContactDiv>
@@ -220,6 +219,12 @@ const Button = styled.button`
     background: white;
     color: #28807D;
     border-radius: 9px;
+    transition: .3s;
+
+    &:hover {
+        color: #7CBDBA;
+        transition: .3;
+    }
 `;
 const BtnDiv = styled.div`
     width: 100%;
@@ -237,9 +242,9 @@ const AddToGroupBtnDiv = styled.div`
     padding-top: 2%;
     font-size: 1.2rem;
     margin: 6% 0 0 34%;
-    i {
-        font-size: 1.4rem;
-        color: #2e8380;
+
+    @media ${device.desktop} {
+        margin: 8% 0 0 20%;
     }
 `;
 
