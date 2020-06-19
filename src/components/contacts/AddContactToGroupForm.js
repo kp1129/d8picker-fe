@@ -261,6 +261,7 @@ const BtnContact1 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    text-align: center;
 `;
 const BtnContact2 = styled.button`
     border: 4px solid #28807D;
@@ -270,5 +271,6 @@ const BtnContact2 = styled.button`
     border-radius: 9px;
     margin: 3% 0 0 1%;
     width: 50%;
+    text-align: center;
 `;
 
