@@ -64,7 +64,7 @@ const AdminAddContactForm = ({ setShowAdminAddContact }) => {
           });
           //  add contact to group
           if(payload.groupId){
-            console.log("PAYLOAD GROUPID", payload.groupId)
+            console.log("PAYLOAD GROUPID", payload.groupId, newContactId)
             axiosWithAuth(currentUser.token).post(`/api/groups/${payload.adminId}/${payload.groupId}/contacts`, {contacts: [newContactId]})
               .then(res => {
                 console.log('the second res', res);
