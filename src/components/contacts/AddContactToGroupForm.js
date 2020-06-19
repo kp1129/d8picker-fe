@@ -136,6 +136,13 @@ const AddContactToGroupForm = ({currentGroup, setIsAddingContactToGroup}) => {
 }
 
 export default AddContactToGroupForm;
+const size = {
+    tablet: '768px',
+    desktop: '1024px'
+  };
+  const device = {
+    desktop: `(min-width: ${size.desktop})`
+  };
 
 const Container = styled.div`
     width: 100%;

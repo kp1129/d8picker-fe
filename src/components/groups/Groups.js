@@ -36,10 +36,12 @@ const Groups = () => {
     console.log(`/api/groups/${adminId}/${groupId}`)
     axiosWithAuth(token, googleApi)
     .delete(`/api/groups/${adminId}/${groupId}`)
-    .then(res => 
+    .then(res => {
         setDeleteGroup({
             ...deleteGroup,
-    }))
+    })
+    getGroupList()
+  })
     .catch(error => console.log(error.response))
   } 
   //sets groupList state to state and sorts aplphabetically
@@ -123,7 +125,7 @@ const Groups = () => {
                       </ContactDiv>
                       )
                     })}
-                   {width < 768 && ( <BtnContainer>
+                   { ( <BtnContainer>
                       <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
                       <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
@@ -193,6 +195,13 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin: 4% 0 0 0;
+
+  @media ${device.desktop} {
+    i{
+      width: 28%;
+      font-size: 0.2rem;
+    }
+  }
 `
 const EditBtn = styled.button`
     width: 36%;
@@ -201,10 +210,14 @@ const EditBtn = styled.button`
     font-size: 1.2em;
     line-height: 2em;
     color: #28807D;
-    padding: 2% 10%;
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+
+    @media ${device.desktop} {
+      width: 28%;
+      font-size: 0.9rem;
+    }
 `
 const DeleteBtn = styled.button`
     width: 36%;
@@ -213,10 +226,14 @@ const DeleteBtn = styled.button`
     font-size: 1.2em;
     line-height: 2em;
     color: #FFFFFF;
-    padding: 1% 8%;
     border: 2px solid #28807D;
     box-sizing: border-box;
     border-radius: 15px;
+
+    @media ${device.desktop} {
+      width: 28%;
+      font-size: 0.9rem;
+    }
 `
 const Arrow = styled.i`
   width: 10%;

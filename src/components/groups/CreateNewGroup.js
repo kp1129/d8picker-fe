@@ -6,15 +6,14 @@ import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
 
-const CreateNewGroup = ({ setShowContacts, setNavState, setShowCreateNewGroup }) => {
+const CreateNewGroup = ({ setShowContacts, setShowCreateNewGroup }) => {
 
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo, setGroupList, width } = useContext(Context);
+  const { adminInfo, setGroupList, width, setNavState } = useContext(Context);
 
   const { token } = currentUser;
-  // const { adminInfo } = useContext(Context)
 
   const colorOptions = [
     '#c70c00',
