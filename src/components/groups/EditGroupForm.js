@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 // import { useToasts } from 'react-toast-notifications';
 
-const EditGroupForm = () => {
+const EditGroupForm = ({ setShowEditGroupForm }) => {
   //needed variables for first axios call, current user object and token from currentUser object
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
-  const { adminInfo, setNavState, currentGroup } = useContext(Context);
+  const { adminInfo, width, setNavState, currentGroup, getGroupList } = useContext(Context);
   const { token } = currentUser;
 
   const colorOptions = [
@@ -52,15 +52,24 @@ const EditGroupForm = () => {
         axiosWithAuth(token)
         .put(`/api/groups/${adminInfo.adminId}/${currentGroup.id}`, updateGroup)
         .then(res => {
-            console.log(res.data)
-            setNavState(2)
-        })
+            console.log(res.data);
+            if(width < 768){
+              setNavState(2);
+            } else if (width >= 768) {
+              setShowEditGroupForm(false);
+              getGroupList();
+            }         
+        })        
         .catch(err => {
           console.log(err)
         })
     }else{
         console.log('bro, these are the same object')
-        setNavState(2)
+        if(width < 768){
+          setNavState(2);
+        } else if (width >= 768) {
+          setShowEditGroupForm(false);
+        }
     }
   };
 
@@ -177,6 +186,17 @@ const EditGroupForm = () => {
 };
 export default EditGroupForm;
 
+// styled components
+const size = {
+  tablet: '768px',
+  desktop: '1024px'
+};
+
+const device = {
+  desktop: `(min-width: ${size.desktop})`
+};
+
+
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -261,6 +281,9 @@ const Icon = styled.i`
   paddin: 1%;
   border: ${props => props.border};
   border-radius: ${props => props.borderRadius};
+  @media ${device.desktop} {
+    font-size: 40px;
+    }
 `;
 
 const ColorOption = styled.div`
@@ -271,4 +294,9 @@ const ColorOption = styled.div`
   paddin: 1%;
   border: ${props => props.border};
   border-radius: 5px;
+  @media ${device.desktop} {
+    height: 45px;
+    width: 45px;
+    }
+
 `;

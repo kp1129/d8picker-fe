@@ -10,11 +10,11 @@ import circleBtn from '../navigation/circle-plus.png';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
 
-const Groups = () => {
+const Groups = ({ setShowEditGroupForm }) => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
   const { token } = currentUser;
-  const { adminInfo, width, setNavState, groupList, setGroupList, fetchGroupData, currentGroup } = useContext(Context)
+  const { adminInfo, width, setNavState, groupList, setGroupList, getGroupList, fetchGroupData, currentGroup } = useContext(Context)
   const [isDisplayingGroup, setIsDisplayingGroup] = useState(false);
   const [deleteGroup, setDeleteGroup] = useState({});
   const [isAddingContactToGroup, setIsAddingContactToGroup] = useState(false)
@@ -44,30 +44,39 @@ const Groups = () => {
   })
     .catch(error => console.log(error.response))
   } 
+
+  // handle edit group
+  const handleEdit = () => {
+    if(width < 768){
+      setNavState(8);
+    } else {
+      setShowEditGroupForm(true);
+    }
+  }
   //sets groupList state to state and sorts aplphabetically
-  const getGroupList = () => {
-    let sortedGroupList = [];
-    axiosWithAuth(token)
-      .get(`/api/groups/${adminInfo.adminId}`)
-      .then(res => {
-        sortedGroupList = [...res.data.groups];
-        sortedGroupList.sort((a, b) => {
-          let nameA = a.groupName.toUpperCase();
-          let nameB = b.groupName.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        });
-        setGroupList([...sortedGroupList]);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  // const getGroupList = () => {
+  //   let sortedGroupList = [];
+  //   axiosWithAuth(token)
+  //     .get(`/api/groups/${adminInfo.adminId}`)
+  //     .then(res => {
+  //       sortedGroupList = [...res.data.groups];
+  //       sortedGroupList.sort((a, b) => {
+  //         let nameA = a.groupName.toUpperCase();
+  //         let nameB = b.groupName.toUpperCase();
+  //         if (nameA < nameB) {
+  //           return -1;
+  //         }
+  //         if (nameA > nameB) {
+  //           return 1;
+  //         }
+  //         return 0;
+  //       });
+  //       setGroupList([...sortedGroupList]);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  //};
   const handleContactDelete = (e, relationshipId, adminId, groupId) => {
     e.stopPropagation()
     e.preventDefault()
@@ -127,7 +136,7 @@ const Groups = () => {
                     })}
                    { ( <BtnContainer>
                       <i className="fa fa-user-plus" onClick={()=>{setIsAddingContactToGroup(true)}} style={{fontSize: '3rem', color: '#2e8380'}}></i>
-                      <EditBtn onClick={()=>{setNavState(8)}}>Edit</EditBtn>
+                      <EditBtn onClick={handleEdit}>Edit</EditBtn>
                       <DeleteBtn onClick={() => handleDelete(group.id, adminInfo.adminId, token)}>Delete</DeleteBtn>
                     </BtnContainer>)}
                   </ContactList>
