@@ -55,7 +55,7 @@ const AdminAddContactForm = ({ setShowAdminAddContact }) => {
       axiosWithAuth(currentUser.token).post("/api/contacts/", payload)
         .then(res => {
           console.log("response from the post request", res);
-          let newContactId = res.data[0];
+          let newContactId = res.data;
           // notify that contact was created!
           addToast('Contact created!', {
             appearance: 'info',
@@ -140,6 +140,7 @@ const AdminAddContactForm = ({ setShowAdminAddContact }) => {
             <Tag>Group</Tag>
             <Label htmlFor="groupId">Group</Label>
             <select onChange={handleChange} name="groupId" id="groupId" ref={register({ required: true })}>
+              <option value=''> Select Group </option>
               {groupList.map(g => {
                 return (
                   <option value={g.id}> {g.groupName} </option>
