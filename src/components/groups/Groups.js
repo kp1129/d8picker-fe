@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../../contexts/Contexts';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import btn from '../navigation/NavImgs/addgroupbtn.png';
 import { useAuth } from '../../contexts/auth';
 import CreateNewGroup from './CreateNewGroup';
@@ -9,6 +9,7 @@ import AddContactToGroupForm from '../contacts/AddContactToGroupForm';
 import circleBtn from '../navigation/circle-plus.png';
 import axiosWithAuth from '../../utils/axiosWithAuth';
 import { useToasts } from 'react-toast-notifications'
+
 const Groups = () => {
   const { googleApi } = useAuth();
   const { currentUser } = googleApi;
@@ -100,13 +101,14 @@ const Groups = () => {
                   ></i>
                   {group.groupName}
                 </GroupTitle>
-                <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/>
+                {/* <Arrow className={group.id === currentGroup.id  && isDisplayingGroup === true ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}/> */}
+                <Arrow className={'fas fa-chevron-down'} isDisplayingGroup={isDisplayingGroup} group={group} currentGroup={currentGroup}/>
                 {isDisplayingGroup === true && group.id === currentGroup.id && (
-                  <ContactList>
+                  <ContactList isDisplayingGroup={isDisplayingGroup} group={group} currentGroup={currentGroup}>
                     {currentGroup.contacts.map(contact => {
                       // console.log('CONTACT: ', contact)
                       return(
-                      <ContactDiv key={contact.contactId}>
+                      <ContactDiv key={contact.contactId} isDisplayingGroup={isDisplayingGroup} group={group} currentGroup={currentGroup}>
                         <i className="fas fa-user-alt"></i>
                         <ContactInfoContainer>
                           <p>{`${contact.firstName} ${contact.lastName}`}</p>
@@ -221,21 +223,38 @@ const Arrow = styled.i`
   text-align: right;
   color: gray;
   font-size: 1.4rem;
-`;
+  transform: rotate(0deg);
+  transition: transform .3s ease-out;
+
+  ${props => props.isDisplayingGroup && props.group.id === props.currentGroup.id && css`
+    transform: rotateY(180deg) scale(1.4);
+  `}
+`
 const ContactList = styled.div`
+  visibility: ${({isDisplayingGroup}) => isDisplayingGroup ? 'visible' : 'none'};
   width: 100%;
+  opacity: ${({isDisplayingGroup}) => isDisplayingGroup ? '1' : '0'};
+  transition: all 5s linear;
+
+
 `
 const ContactDiv = styled.div`
   width: 100%;
   margin: 5% 0;
   display: flex;
   justfiy-content: space-between;
+  opacity: 0;
+  transition: opacity 5s linear;
   i{
     width: 20%;
     margin: 2% 0 0 0;
     font-size: 2.4rem;
     color: #28807D;
   }
+
+  ${props => props.isDisplayingGroup && props.group.id === props.currentGroup.id && css`
+  opacity: 1;
+`}
 `
 const ContactInfoContainer = styled.div`
   width: 70%
