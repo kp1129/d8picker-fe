@@ -150,10 +150,10 @@ const NewEventForm = props => {
 
         <div
           style={{
-            background: 'white'
+            background: 'white',
+            borderBottom: '1px solid #28807D'
           }}
         >
-          {' '}
           <div style={{ paddingLeft: '5%', background: '#E5E5E5' }}>Time</div>
           <div
             style={{
