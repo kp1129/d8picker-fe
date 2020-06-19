@@ -5,14 +5,12 @@ import styled from 'styled-components';
 import NewEventForm from '../events/NewEventForm';
 
 const TemplateContainer = () => {
-  const { templateList, width, navState } = useContext(Context);
+  const { templateList, width } = useContext(Context);
 
   console.log(templateList);
   return (
-    <div style={{ border: '2px solid green' }}>
-      {/* {width >= 768 && navState === 3 ? <NewEventForm /> : ''} */}
-
-      <Title as="h2">Events</Title>
+    <div>
+      {width < 768 && <Title as="h2">Events</Title>}
 
       <EventDiv>
         {templateList &&

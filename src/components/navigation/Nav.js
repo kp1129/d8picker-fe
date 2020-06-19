@@ -230,10 +230,7 @@ const Nav = () => {
           </div>
         </IconDiv>
         {width < 768 && (
-          <IconDiv
-            style={{ border: '5px solid blue' }}
-            className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}
-          >
+          <IconDiv className={isDisplayingEvents ? 'addEventIcon' : 'eventBtn'}>
             <AddEventButton />
             <Label style={{ color: 'gray', marginTop: '6px' }}>Add Event</Label>
           </IconDiv>
@@ -261,7 +258,6 @@ const CalendarPlaceholder = styled.div`
 const EventsPlaceholder = styled.div`
   width: 100%;
   //border: 1px solid gray;
-  border: 5px solid red;
 `;
 
 const GroupPlaceholder = styled.div`
