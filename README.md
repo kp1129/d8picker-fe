@@ -4,33 +4,30 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3d26f594475564dc6550/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/school-calendar-fe/test_coverage)
 
 # School Calendar
-d8picker.com
+You can find the project live at [D8Picker](https://www.d8picker.com/)
 
 
 ## :one:  Developers and Designers
-<!-- ~ DeAndre Johnson ~
-![DeAndre](./src/img/DeAndre.png)
-Github Handle: https://github.com/drejohnson
+### Team Lead
+Vladislav Mogilevskiy |
+------------- |
+[Github](https://github.com/vladmog) |
+[LinkedIn](https://www.linkedin.com/in/vladmog/) |
 
-~ Jeremy McWilliams ~
-![IMG_5896](./src/img/IMG_5896.jpg)
-Github handle: https://github.com/J2Macwilliams
+### UX Designer
+Dariush Khansari |
+------------- |
 
-~ Daniel Stadler ~
-![IMG_4767](./src/img/IMG-4767.JPG)
-Github handle: https://github.com/dstadz
 
-~ Mark French ~
-![Mark](./src/img/Mark.jpg)
-Github handle: https://github.com/juarezfrench
+### Fullstack Engineers
+Aldair Balanzar | Nagasar "Dan" Hamraj | Katya Pavlopoulos | Vanshika Pundir | Devanee Reid
+------------- | ---------------------- | ------------------ | ------------------ | ------------------ |
+[Github]| [Github](https://github.com/danhamraj7) |[Github](https://github.com/kp1129) |[Github](https://github.com/VanshikaP) | [Github](http://github.com/devaneereid)
+[LinkedIn]| [LinkedIn](https://www.linkedin.com/in/nagasar-hamraj-90ab2b193/) |[LinkedIn](https://www.linkedin.com/in/katyapavlopoulos/) | [LinkedIn](https://www.linkedin.com/in/vanshikapundir/) | [LinkedIn](https://www.linkedin.com/in/devanee-reid/)
 
-~ Kenneth Austin ~
-![Kenneth](./src/img/Kenneth.jpg)
-Github handle: https://github.com/Kennethaustin
 
-~ Andrew Ogle ~
-![Kenneth](./src/img/Andrew.jpg)
-Github handle: https://github.com/andrewogle -->
+
+
 ## :three: Project Overview
 
 :memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
