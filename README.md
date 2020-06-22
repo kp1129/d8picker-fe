@@ -10,19 +10,22 @@ You can find the project live at [D8Picker](https://www.d8picker.com/)
 ## :one:  Developers and Designers
 ### Team Lead
 Vladislav Mogilevskiy |
-------------- |
+:-: |
+<img width="150" src="https://ca.slack-edge.com/ESZCHB482-W012X6RQ5G9-833633f70058-512" />|  
 [Github](https://github.com/vladmog) |
 [LinkedIn](https://www.linkedin.com/in/vladmog/) |
 
 ### UX Designer
 Dariush Khansari |
-------------- |
+:-: |
+<img width="150" src="https://ca.slack-edge.com/ESZCHB482-W0123RQ0631-012e227f2a76-512" />| 
 [The Sunday Lab](http://thesundaylab.com/)
 [LinkedIn](https://www.linkedin.com/in/dariush-khansari-8b8a068/)
 
 ### Fullstack Engineers
 Aldair Balanzar | Nagasar "Dan" Hamraj | Katya Pavlopoulos | Vanshika Pundir | Devanee Reid
-------------- | ---------------------- | ------------------ | ------------------ | ------------------ |
+:-: | :-: | :-: | :-: | :-: |
+<img width="150" src="https://ca.slack-edge.com/ESZCHB482-W0123RSADV5-029b65971ee0-512" />| <img width="150" src="https://ca.slack-edge.com/ESZCHB482-W012QNSNQMA-e9b8122a3e86-512" /> | <img width="150" src="https://ca.slack-edge.com/ESZCHB482-W012JHWK0UA-2fad76ae07b1-512" /> | <img width="150" src="https://ca.slack-edge.com/ESZCHB482-W012X6Y74SD-a18656d79276-512" /> | <img width="150" src="https://ca.slack-edge.com/ESZCHB482-W0123RNG7CP-c4270c21af39-512" />
 [Github](https://github.com/aldairbalanzar) | [Github](https://github.com/danhamraj7) |[Github](https://github.com/kp1129) |[Github](https://github.com/VanshikaP) | [Github](http://github.com/devaneereid)
 [LinkedIn](https://www.linkedin.com/in/aldair-balanzar-390185177/)| [LinkedIn](https://www.linkedin.com/in/nagasar-hamraj-90ab2b193/) |[LinkedIn](https://www.linkedin.com/in/katyapavlopoulos/) | [LinkedIn](https://www.linkedin.com/in/vanshikapundir/) | [LinkedIn](https://www.linkedin.com/in/devanee-reid/) |
 
