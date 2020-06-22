@@ -17,13 +17,15 @@ Vladislav Mogilevskiy |
 ### UX Designer
 Dariush Khansari |
 ------------- |
-
+[The Sunday Lab](http://thesundaylab.com/)
+[LinkedIn](https://www.linkedin.com/in/dariush-khansari-8b8a068/)
 
 ### Fullstack Engineers
 Aldair Balanzar | Nagasar "Dan" Hamraj | Katya Pavlopoulos | Vanshika Pundir | Devanee Reid
 ------------- | ---------------------- | ------------------ | ------------------ | ------------------ |
-[Github]| [Github](https://github.com/danhamraj7) |[Github](https://github.com/kp1129) |[Github](https://github.com/VanshikaP) | [Github](http://github.com/devaneereid)
-[LinkedIn]| [LinkedIn](https://www.linkedin.com/in/nagasar-hamraj-90ab2b193/) |[LinkedIn](https://www.linkedin.com/in/katyapavlopoulos/) | [LinkedIn](https://www.linkedin.com/in/vanshikapundir/) | [LinkedIn](https://www.linkedin.com/in/devanee-reid/)
+[Github](https://github.com/aldairbalanzar) | [Github](https://github.com/danhamraj7) |[Github](https://github.com/kp1129) |[Github](https://github.com/VanshikaP) | [Github](http://github.com/devaneereid)
+[LinkedIn](https://www.linkedin.com/in/aldair-balanzar-390185177/)| [LinkedIn](https://www.linkedin.com/in/nagasar-hamraj-90ab2b193/) |[LinkedIn](https://www.linkedin.com/in/katyapavlopoulos/) | [LinkedIn](https://www.linkedin.com/in/vanshikapundir/) | [LinkedIn](https://www.linkedin.com/in/devanee-reid/) |
+
 
 
 
