@@ -106,35 +106,79 @@ any changes made to previously-scheduled events.
 
 ## :six: Environment Variables
 
-In order for the app to function correctly, the user must set up their own environment variables. These variables are stored securely on Heroku.
+In order for the app to function correctly, the user must set up their own environment variables. 
+These variables are stored securely on Heroku.
 
 REACT_APP_GOOGLE_CLIENT_ID  
 REACT_APP_GOOGLE_API_KEY  
 REACT_APP_BASE_URL  
 REACT_APP_ENDPOINT_URL  
 
-
 ## :seven: Open Questions ❓
 
 -   Can the application push existing calendars and/or events to a user's Apple Calendar or other calendars?
--   Imagine a calendar is full of events, how to can a user search for a particular event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia?
+-   Imagine a calendar is full of events, how to can a user search for a particular event? 
+Should the search algorithm be built from scratch or using existing third-party service such as Algolia?
 
 ## :eight: Installation Instructions
 
-With this project Yarn was used for the frontend and NPM was used for the backend. The Dependancies are as followed; ```"@chakra-ui/core": "^0.5.2",
-  "@emotion/core": "^10.0.27", "@emotion/styled": "^10.0.27", "@material-ui/core": "^4.9.1", "axios": "^0.19.2", "dayjs": "^1.8.20", "dotenv": "^8.2.0", "emotion-theming": "^10.0.27", "googleapis": "47.0.0", "history": "^4.10.1", "react": "^16.12.0", "react-dom": "^16.12.0", "react-ga": "^2.7.0", "react-hook-form": "^4.8.2", "react-router-dom": "^5.1.2", "react-scripts": "3.3.1"```
+With this project Yarn was used for the frontend and NPM was used for the backend. 
+
+### Project dependencies: 
+```
+  "@chakra-ui/core": "^0.5.2",  
+  "@emotion/core": "^10.0.27",  
+  "@emotion/styled": "^10.0.27",  
+  "@fortawesome/fontawesome-svg-core": "^1.2.28",  
+  "@fortawesome/free-solid-svg-icons": "^5.13.0",  
+  "@fortawesome/react-fontawesome": "^0.1.10",  
+  "axios": "^0.19.2",  
+  "dayjs": "^1.8.20",  
+  "dot-env": "0.0.1",  
+  "dotenv": "^8.2.0",  
+  "emotion-theming": "^10.0.27",  
+  "googleapis": "47.0.0",  
+  "history": "^4.10.1",  
+  "node-sass": "^4.13.1",  
+  "react": "^16.12.0",  
+  "react-dom": "^16.12.0",  
+  "react-ga": "^2.7.0",  
+  "react-hook-form": "^4.10.1",  
+  "react-router-dom": "^5.1.2",  
+  "react-scripts": "3.4.0",  
+  "react-toast-notifications": "^2.4.0",  
+  "react-virtualized-auto-sizer": "^1.0.2",  
+  "react-window": "^1.8.5",  
+  "react-window-infinite-loader": "^1.0.5",  
+  "styled-components": "^5.0.1"  
+```
+### Dev Dependencies:
+```
+  "@testing-library/jest-dom": "^4.2.4",  
+  "@testing-library/react": "^9.4.0",  
+  "@testing-library/react-hooks": "^3.2.1",  
+  "@testing-library/user-event": "^7.1.2",  
+  "enzyme": "^3.11.0",  
+  "enzyme-adapter-react-16": "^1.15.2",  
+  "enzyme-to-json": "^3.4.4",  
+  "mutationobserver-shim": "^0.3.5",  
+  "prettier": "^1.19.1",  
+  "react-test-renderer": "^16.12.0"  
+```
 
 ## Other Scripts
-
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-
-
+```
+  "start": "react-scripts start",  
+  "build": "react-scripts build",  
+  "test": "react-scripts test",  
+  "eject": "react-scripts eject",  
+  "coverage": "npm run test -- --coverage || true"  
+```
+    
 ## :one: :zero: Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+When contributing to this repository, please first discuss the change you wish to make 
+via issue, email, or any other method with the owners of this repository.
 
 Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
 
