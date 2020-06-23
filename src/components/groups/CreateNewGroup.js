@@ -196,7 +196,7 @@ const CreateNewGroup = ({ setShowContacts, setShowCreateNewGroup }) => {
           />
         </Label>
         <SubmitBtn type="submit" label="submit" onClick={handleSubmit}>
-          Select members
+          Add members
         </SubmitBtn>
       </Form>
       <p>{message}</p>
