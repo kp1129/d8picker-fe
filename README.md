@@ -95,7 +95,7 @@ any changes made to previously-scheduled events.
 
 #### Front end deployed to `Netlify`
 
--   Makes it easy to rapidly deploy code by connection Netlify and Github
+-   Continuous integration makes deploying new features and bug fixes easy
 
 ### Back End build using:
 
@@ -115,6 +115,10 @@ any changes made to previously-scheduled events.
 -   Light, portable, easy to set up and get started
 -   Development database
 -   Testing database
+  
+#### Back end deployed to `Heroku`
+
+-   Continuous integration makes deploying new features and bug fixes easy
   
 
 ## :six: Environment Variables
