@@ -84,11 +84,11 @@ any changes made to previously-scheduled events.
 -    Hooks makes things more simple.
 -    Context API provides state-management and seemlessly intergrates with browser's local storage
 
-### Styled-Components
+#### Styled-Components
 
 -   Easy to implement custom UX design
 
-### Chakra-UI
+#### Chakra-UI
 
 -   Legacy
 -   Used to build and render the calendar itself
@@ -103,7 +103,18 @@ any changes made to previously-scheduled events.
 
 -   Provides an easy way to implement code following MVC model
 -   Knex JS allows simple and flexible query-building
--   API routes are implemented using Express.
+-   API routes are implemented using Express
+
+#### PostgreSQL
+
+-   Powerful and reliable
+-   Production database
+
+#### SQLite
+
+-   Light, portable, easy to set up and get started
+-   Development database
+-   Testing database
   
 
 ## :six: Environment Variables
