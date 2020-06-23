@@ -90,13 +90,14 @@ any changes made to previously-scheduled events.
 
 ### Chakra-UI
 
--   Legacy; one of the previous teams built the calendar using this library
+-   Legacy
+-   Used to build and render the calendar itself
 
 #### Front end deployed to `Netlify`
 
 -   Makes it easy to rapidly deploy code by connection Netlify and Github
 
-### Back End build using
+### Back End build using:
 
 #### Node.JS
 
@@ -215,4 +216,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## :one: :six: Documentation
 
-See [Backend Documentation]https://github.com/Lambda-School-Labs/school-calendar-be for details on the backend of our project.
+See [Backend Documentation](https://github.com/Lambda-School-Labs/school-calendar-be) for details on the backend of our project.
