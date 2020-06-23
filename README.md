@@ -53,11 +53,12 @@ any changes made to previously-scheduled events.
 
 ## 4️⃣ Key Features
 
--    Users authentication with Google Sign In
+-    User authentication with Google Sign In
 -    Create, Edit, and Delete events (templates that can be reused across multiple days)
 -    Create, Edit, and Delete event dates (actual events created from event templates that show up on the calendar view)
 -    Display upcoming event dates
 -    Sync event dates to admin's Google Calendar
+-    Toaster notifications (user feedback in admin flow)
 -    Easily create new event dates from past event templates
 -    Create, Edit, and Delete groups (teams)
 -    Add contacts (the admin can add a contact and their info)
