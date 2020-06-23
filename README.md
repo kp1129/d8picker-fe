@@ -35,22 +35,41 @@ Aldair Balanzar | Nagasar "Dan" Hamraj | Katya Pavlopoulos | Vanshika Pundir | D
 
 ## :three: Project Overview
 
-:memo: [Trello Board](https://https://trello.com/b/DsQe2Rf5/school-calendar-main)
+:memo: [Trello Board](https://trello.com/b/FrBXcG1x/labs-24-d8picker)
 
 :memo: [Product Canvas](https://www.notion.so/School-Calendar-4f6d59c69ed5456c9b78174ac6292e00)
 
-School Calendar was an app idea brought to Lambda from a school coach. The coach would like a calendar that he could update with various events and push to a larger source i.e. google, outlook, or Ical.
+School Calendar was an app idea brought to Lambda from a high school basketball coach. 
+The coach would like a calendar that would make it easy for him to schedule events that have an irregular schedule. 
+Currently on Google Calendar, you can set an event to repeat daily, weekly, monthly, etc, 
+but to create an event that repeats, for example, 3 times a week and has a different start/end time depending 
+on the day of the week, the user has to create each event manually. As a result, it takes the coach a long time 
+to schedule practice sessions for his teams each time a new season starts.
 
-Along with these things notifying changes to a schedule the coach would like to update things inside the events such as time and location. The last key feature would be event templates that can be placed in bulk across unrelated days.
+Along with increased efficiency in creating events that have an irregular schedule, the coach would like
+an easy way to notify the teams of upcoming practice sessions, games, workout sessions, as well as 
+any changes made to previously-scheduled events.
 
 
 ## 4️⃣ Key Features
 
--    Users authentication
--    Create, Edit, and Delete calendars
--    Create, Edit, and Delete simple events
--    Display upcoming events
--    Handle Re-Occuring Events
+-    Users authentication with Google Sign In
+-    Create, Edit, and Delete events (templates that can be reused across multiple days)
+-    Create, Edit, and Delete event dates (actual events created from event templates that show up on the calendar view)
+-    Display upcoming event dates
+-    Sync event dates to admin's Google Calendar
+-    Easily create new event dates from past event templates
+-    Create, Edit, and Delete groups (teams)
+-    Add contacts (the admin can add a contact and their info)
+-    Add contacts via an invite link (the contacts themselves can fill out their info)
+-    Assign and remove contacts from groups
+-    Assign an entire group to an event
+
+### Coming soon
+
+-    Send SMS notifications to contacts about relevant events (work in progress)
+-    Day, Week, Season, and Year calendar views (future release)
+-    Add attachments to events (future release)
 
 
 ## :five: Tech Stack
@@ -64,10 +83,13 @@ Along with these things notifying changes to a schedule the coach would like to 
 -    Hooks makes things more simple.
 -    Context API provides state-management and seemlessly intergrates with browser's local storage
 
-### Material-UI
+### Styled-Components
 
--   Integrates seemlessly with React
--   Provides custom and overiding styles to match the design color pallete
+-   Easy to implement custom UX design
+
+### Chakra-UI
+
+-   Legacy; one of the previous teams built the calendar using this library
 
 #### Front end deployed to `Netlify`
 
@@ -86,26 +108,16 @@ Along with these things notifying changes to a schedule the coach would like to 
 
 In order for the app to function correctly, the user must set up their own environment variables. These variables are stored securely on Heroku.
 
-REACT_APP_GOOGLE_CLIENT_ID
-REACT_APP_GOOGLE_API_KEY
-REACT_APP_BASE_URL
-REACT_APP_ENDPOINT_URL
-FRONTEND_URL
-BASE_URL
-SESSION_SECRET 
-GOOGLE_CLIENT_REDIRECT
-GOOGLE_CLIENT_SECRET
-GOOGLE_CLIENT_ID
-DB_CONNECT=MONGODB
+REACT_APP_GOOGLE_CLIENT_ID  
+REACT_APP_GOOGLE_API_KEY  
+REACT_APP_BASE_URL  
+REACT_APP_ENDPOINT_URL  
+
 
 ## :seven: Open Questions ❓
 
--   What if a users want to use their Google credential to log into the application?
--   Can the application push existing calendars and/or events to a user's Google calendar or Apple Calendar?
--   How can an calendar creator restrict access to the calendar subscribers.  For example, a subscriber may view the event but can not edit or delete the event.
--   What are some ways for a user to get notify of a new events?
--   Imagine a calendar is full of events, how to can a user search for an interested event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia.
-
+-   Can the application push existing calendars and/or events to a user's Apple Calendar or other calendars?
+-   Imagine a calendar is full of events, how to can a user search for a particular event? Should the search algorithm be built from scratch or using existing third-party service such as Algolia?
 
 ## :eight: Installation Instructions
 
