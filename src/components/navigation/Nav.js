@@ -294,6 +294,7 @@ const Container = styled.div`
   bottom: 0;
   border-top: 1px solid #f2f2f2;
   background: white;
+  font-family: 'Open Sans', sans-serif;
 
   @media ${device.desktop} {
     position: static;
@@ -352,7 +353,6 @@ const IconDiv = styled.div`
 `;
 const Label = styled.p`
   font-size: 14px;
-  font-family: Open Sans;
 
   @media ${device.desktop} {
     font-size: 18px;
