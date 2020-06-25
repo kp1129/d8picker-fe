@@ -138,7 +138,7 @@ REACT_APP_ENDPOINT_URL
 ## :seven: Open Questions ❓
 
 -   Can the application push existing calendars and/or events to a user's Apple Calendar or other calendars?
--   Imagine a calendar is full of events, how to can a user search for a particular event? 
+-   Imagine a calendar is full of events, how can a user search for a particular event? 
 Should the search algorithm be built from scratch or using existing third-party service such as Algolia?
 
 ## :eight: Installation Instructions
