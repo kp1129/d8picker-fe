@@ -93,6 +93,10 @@ any changes made to previously-scheduled events.
 -   Legacy
 -   Used to build and render the calendar itself
 
+#### Component composition
+
+-   [Overview of component tree](https://app.lucidchart.com/documents/view/a4ece8db-5341-47c1-923e-bb0e05734e1c/YGcM5DNywbTK)  
+
 #### Front end deployed to `Netlify`
 
 -   Continuous integration makes deploying new features and bug fixes easy
