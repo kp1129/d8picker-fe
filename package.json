@@ -49,7 +49,7 @@
   "emotion-theming": "^10.0.27",
   "googleapis": "47.0.0",
   "history": "^4.10.1",
-  "node-sass": "^4.13.1",
+  "node-sass": "^7.0.0",
   "react": "^16.12.0",
   "react-dom": "^16.12.0",
   "react-ga": "^2.7.0",
